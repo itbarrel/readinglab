@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Account types</h1>
+
+<div id="account_types">
+  <% @account_types.each do |account_type| %>
+    <%= render account_type %>
+    <p>
+      <%= link_to "Show this account type", account_type %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New account type", new_account_type_path %>

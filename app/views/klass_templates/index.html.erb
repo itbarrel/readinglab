@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Klass templates</h1>
+
+<div id="klass_templates">
+  <% @klass_templates.each do |klass_template| %>
+    <%= render klass_template %>
+    <p>
+      <%= link_to "Show this klass template", klass_template %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New klass template", new_klass_template_path %>

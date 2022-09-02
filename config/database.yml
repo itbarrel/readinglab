@@ -1,0 +1,9 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: readinglab2_development
+  pool: 5
+  host: localhost
+  port: 5432
+  username: mashal
+  password: 123

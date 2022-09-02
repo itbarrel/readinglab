@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @form_detail %>
+
+<div>
+  <%= link_to "Edit this form detail", edit_form_detail_path(@form_detail) %> |
+  <%= link_to "Back to form details", form_details_path %>
+
+  <%= button_to "Destroy this form detail", @form_detail, method: :delete %>
+</div>

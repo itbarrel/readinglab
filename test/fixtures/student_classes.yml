@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start: 2022-08-30
+  deleted_at: 2022-08-30 18:06:03
+  avtive: false
+  account: one
+  student: one
+  klass: one
+
+two:
+  start: 2022-08-30
+  deleted_at: 2022-08-30 18:06:03
+  avtive: false
+  account: two
+  student: two
+  klass: two

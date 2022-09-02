@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start: 2022-08-26 18:42:38
+  cancel: false
+  deleted_at: 2022-08-26 18:42:38
+  active: false
+  account: one
+  klass: one
+  form: one
+
+two:
+  start: 2022-08-26 18:42:38
+  cancel: false
+  deleted_at: 2022-08-26 18:42:38
+  active: false
+  account: two
+  klass: two
+  form: two

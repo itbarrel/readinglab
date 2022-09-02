@@ -1,0 +1,45 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  max_students: 1
+  active: false
+  start: 2022-08-26 16:29:04
+  monday: false
+  tuesday: false
+  wednesday: false
+  thursday: false
+  friday: false
+  saturday: false
+  sunday: false
+  settings: 
+  session_range: 1
+  duration: 1
+  min_students: 1
+  name: MyString
+  description: MyText
+  deleted_at: 2022-08-26 16:29:04
+  account: one
+  user: one
+  room: one
+
+two:
+  max_students: 1
+  active: false
+  start: 2022-08-26 16:29:04
+  monday: false
+  tuesday: false
+  wednesday: false
+  thursday: false
+  friday: false
+  saturday: false
+  sunday: false
+  settings: 
+  session_range: 1
+  duration: 1
+  min_students: 1
+  name: MyString
+  description: MyText
+  deleted_at: 2022-08-26 16:29:04
+  account: two
+  user: two
+  room: two

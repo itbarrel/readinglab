@@ -1,0 +1,41 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first: MyString
+  last: MyString
+  dob: 2022-08-30
+  grade: MyString
+  school: MyString
+  sex: MyString
+  string: MyString
+  active: false
+  settings: 
+  deleted_at: MyString
+  datetime: MyString
+  dates: MyString
+  programs: MyString
+  status: 1
+  prepaid_sessions: 1
+  credit_session: 1
+  registration_date: 2022-08-30 17:48:58
+  account: one
+
+two:
+  first: MyString
+  last: MyString
+  dob: 2022-08-30
+  grade: MyString
+  school: MyString
+  sex: MyString
+  string: MyString
+  active: false
+  settings: 
+  deleted_at: MyString
+  datetime: MyString
+  dates: MyString
+  programs: MyString
+  status: 1
+  prepaid_sessions: 1
+  credit_session: 1
+  registration_date: 2022-08-30 17:48:58
+  account: two

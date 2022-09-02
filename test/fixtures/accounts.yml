@@ -1,0 +1,41 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  currency: MyString
+  string: MyString
+  settings: 
+  email: MyString
+  address: MyText
+  mobile: MyString
+  string: MyString
+  timezone: MyString
+  province: MyString
+  postal_code: 1
+  country_code: MyString
+  parent_id: 
+  deleted_at: 2022-08-23 13:46:10
+  active: false
+  notify_emails: false
+  billing_scheme: 1
+  account_types: one
+
+two:
+  name: MyString
+  currency: MyString
+  string: MyString
+  settings: 
+  email: MyString
+  address: MyText
+  mobile: MyString
+  string: MyString
+  timezone: MyString
+  province: MyString
+  postal_code: 1
+  country_code: MyString
+  parent_id: 
+  deleted_at: 2022-08-23 13:46:10
+  active: false
+  notify_emails: false
+  billing_scheme: 1
+  account_types: two

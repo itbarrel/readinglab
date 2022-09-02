@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2022-09-02 14:49:12
+  feedback: MyString
+  status: 1
+  deleted_at: 2022-09-02 14:49:12
+  active: false
+  account: one
+  form: one
+  student: one
+
+two:
+  date: 2022-09-02 14:49:12
+  feedback: MyString
+  status: 1
+  deleted_at: 2022-09-02 14:49:12
+  active: false
+  account: two
+  form: two
+  student: two

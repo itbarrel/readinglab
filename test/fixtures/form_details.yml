@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  form_values: 
+  active: false
+  deleted_at: 2022-09-02 15:02:00
+  parent_types: MyString
+  user: one
+  form: one
+  account: one
+  parent: one
+
+two:
+  form_values: 
+  active: false
+  deleted_at: 2022-09-02 15:02:00
+  parent_types: MyString
+  user: two
+  form: two
+  account: two
+  parent: two
