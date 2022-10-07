@@ -104,6 +104,10 @@ GEM
       responders
       warden (~> 1.2.3)
     digest (3.1.0)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     erubi (1.11.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -268,6 +272,7 @@ DEPENDENCIES
   date_validator (~> 0.12.0)
   debug
   devise (~> 4.8)
+  dotenv-rails
   jbuilder
   letter_opener
   paranoia
