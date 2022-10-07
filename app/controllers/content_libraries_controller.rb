@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ContentLibrariesController < ApplicationController
-  before_action :set_content_library, only: %i[ show edit update destroy ]
+  before_action :set_content_library, only: %i[show edit update destroy]
 
   # GET /content_libraries or /content_libraries.json
   def index
@@ -7,8 +9,7 @@ class ContentLibrariesController < ApplicationController
   end
 
   # GET /content_libraries/1 or /content_libraries/1.json
-  def show
-  end
+  def show; end
 
   # GET /content_libraries/new
   def new
@@ -16,8 +17,7 @@ class ContentLibrariesController < ApplicationController
   end
 
   # GET /content_libraries/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /content_libraries or /content_libraries.json
   def create
@@ -25,7 +25,9 @@ class ContentLibrariesController < ApplicationController
 
     respond_to do |format|
       if @content_library.save
-        format.html { redirect_to content_library_url(@content_library), notice: "Content library was successfully created." }
+        format.html do
+          redirect_to content_library_url(@content_library), notice: 'Content library was successfully created.'
+        end
         format.json { render :show, status: :created, location: @content_library }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,9 @@ class ContentLibrariesController < ApplicationController
   def update
     respond_to do |format|
       if @content_library.update(content_library_params)
-        format.html { redirect_to content_library_url(@content_library), notice: "Content library was successfully updated." }
+        format.html do
+          redirect_to content_library_url(@content_library), notice: 'Content library was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @content_library }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +56,20 @@ class ContentLibrariesController < ApplicationController
     @content_library.destroy
 
     respond_to do |format|
-      format.html { redirect_to content_libraries_url, notice: "Content library was successfully destroyed." }
+      format.html { redirect_to content_libraries_url, notice: 'Content library was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_content_library
-      @content_library = ContentLibrary.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def content_library_params
-      params.require(:content_library).permit(:public, :title, :deleted_at, :active, :account_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_content_library
+    @content_library = ContentLibrary.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def content_library_params
+    params.require(:content_library).permit(:public, :title, :deleted_at, :active, :account_id)
+  end
 end

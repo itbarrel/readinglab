@@ -1,0 +1,32 @@
+# == Schema Information
+#
+# Table name: student_forms
+#
+#  id               :uuid             not null, primary key
+#  deleted_at       :datetime
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  klass_form_id    :uuid             not null
+#  student_class_id :uuid             not null
+#
+# Indexes
+#
+#  index_student_forms_on_klass_form_id     (klass_form_id)
+#  index_student_forms_on_student_class_id  (student_class_id)
+#  student_forms_id                         (student_class_id,klass_form_id,deleted_at) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (klass_form_id => klass_forms.id)
+#  fk_rails_...  (student_class_id => student_classes.id)
+#
+
+one:
+  deleted_at: 2022-09-12 17:20:05
+  student_class: one
+  klass_form: one
+
+two:
+  deleted_at: 2022-09-12 17:20:05
+  student_class: two
+  klass_form: two

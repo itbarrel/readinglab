@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ReceiptTypesController < ApplicationController
-  before_action :set_receipt_type, only: %i[ show edit update destroy ]
+  before_action :set_receipt_type, only: %i[show edit update destroy]
 
   # GET /receipt_types or /receipt_types.json
   def index
@@ -7,8 +9,7 @@ class ReceiptTypesController < ApplicationController
   end
 
   # GET /receipt_types/1 or /receipt_types/1.json
-  def show
-  end
+  def show; end
 
   # GET /receipt_types/new
   def new
@@ -16,8 +17,7 @@ class ReceiptTypesController < ApplicationController
   end
 
   # GET /receipt_types/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /receipt_types or /receipt_types.json
   def create
@@ -25,7 +25,7 @@ class ReceiptTypesController < ApplicationController
 
     respond_to do |format|
       if @receipt_type.save
-        format.html { redirect_to receipt_type_url(@receipt_type), notice: "Receipt type was successfully created." }
+        format.html { redirect_to receipt_type_url(@receipt_type), notice: 'Receipt type was successfully created.' }
         format.json { render :show, status: :created, location: @receipt_type }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class ReceiptTypesController < ApplicationController
   def update
     respond_to do |format|
       if @receipt_type.update(receipt_type_params)
-        format.html { redirect_to receipt_type_url(@receipt_type), notice: "Receipt type was successfully updated." }
+        format.html { redirect_to receipt_type_url(@receipt_type), notice: 'Receipt type was successfully updated.' }
         format.json { render :show, status: :ok, location: @receipt_type }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +52,20 @@ class ReceiptTypesController < ApplicationController
     @receipt_type.destroy
 
     respond_to do |format|
-      format.html { redirect_to receipt_types_url, notice: "Receipt type was successfully destroyed." }
+      format.html { redirect_to receipt_types_url, notice: 'Receipt type was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_receipt_type
-      @receipt_type = ReceiptType.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def receipt_type_params
-      params.require(:receipt_type).permit(:name, :active, :deleted_at, :account_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_receipt_type
+    @receipt_type = ReceiptType.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def receipt_type_params
+    params.require(:receipt_type).permit(:name, :active, :deleted_at, :account_id)
+  end
 end

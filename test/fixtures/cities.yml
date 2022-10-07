@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: cities
+#
+#  id         :uuid             not null, primary key
+#  deleted_at :datetime
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  cities_name  (name,deleted_at) UNIQUE
+#
+
+one:
+  name: MyString
+  deleted_at: 2022-09-05 18:15:32
+
+two:
+  name: MyString
+  deleted_at: 2022-09-05 18:15:32

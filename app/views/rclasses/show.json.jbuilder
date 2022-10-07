@@ -1,1 +1,3 @@
-json.partial! "rclasses/rclass", rclass: @rclass
+# frozen_string_literal: true
+
+json.partial! 'rclasses/rclass', rclass: @rclass

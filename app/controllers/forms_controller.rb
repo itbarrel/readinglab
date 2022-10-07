@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class FormsController < ApplicationController
-  before_action :set_form, only: %i[ show edit update destroy ]
+  before_action :set_form, only: %i[show edit update destroy]
 
   # GET /forms or /forms.json
   def index
@@ -7,8 +9,7 @@ class FormsController < ApplicationController
   end
 
   # GET /forms/1 or /forms/1.json
-  def show
-  end
+  def show; end
 
   # GET /forms/new
   def new
@@ -16,8 +17,7 @@ class FormsController < ApplicationController
   end
 
   # GET /forms/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /forms or /forms.json
   def create
@@ -25,7 +25,7 @@ class FormsController < ApplicationController
 
     respond_to do |format|
       if @form.save
-        format.html { redirect_to form_url(@form), notice: "Form was successfully created." }
+        format.html { redirect_to form_url(@form), notice: 'Form was successfully created.' }
         format.json { render :show, status: :created, location: @form }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class FormsController < ApplicationController
   def update
     respond_to do |format|
       if @form.update(form_params)
-        format.html { redirect_to form_url(@form), notice: "Form was successfully updated." }
+        format.html { redirect_to form_url(@form), notice: 'Form was successfully updated.' }
         format.json { render :show, status: :ok, location: @form }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +52,20 @@ class FormsController < ApplicationController
     @form.destroy
 
     respond_to do |format|
-      format.html { redirect_to forms_url, notice: "Form was successfully destroyed." }
+      format.html { redirect_to forms_url, notice: 'Form was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_form
-      @form = Form.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def form_params
-      params.require(:form).permit(:lesson, :fields, :assessment, :name, :deleted_at, :active, :attendance, :account_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_form
+    @form = Form.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def form_params
+    params.require(:form).permit(:lesson, :fields, :assessment, :name, :deleted_at, :active, :attendance, :account_id)
+  end
 end

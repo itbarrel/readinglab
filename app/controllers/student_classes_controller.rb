@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class StudentClassesController < ApplicationController
-  before_action :set_student_class, only: %i[ show edit update destroy ]
+  before_action :set_student_class, only: %i[show edit update destroy]
 
   # GET /student_classes or /student_classes.json
   def index
@@ -7,8 +9,7 @@ class StudentClassesController < ApplicationController
   end
 
   # GET /student_classes/1 or /student_classes/1.json
-  def show
-  end
+  def show; end
 
   # GET /student_classes/new
   def new
@@ -16,8 +17,7 @@ class StudentClassesController < ApplicationController
   end
 
   # GET /student_classes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /student_classes or /student_classes.json
   def create
@@ -25,7 +25,7 @@ class StudentClassesController < ApplicationController
 
     respond_to do |format|
       if @student_class.save
-        format.html { redirect_to student_class_url(@student_class), notice: "Student class was successfully created." }
+        format.html { redirect_to student_class_url(@student_class), notice: 'Student class was successfully created.' }
         format.json { render :show, status: :created, location: @student_class }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class StudentClassesController < ApplicationController
   def update
     respond_to do |format|
       if @student_class.update(student_class_params)
-        format.html { redirect_to student_class_url(@student_class), notice: "Student class was successfully updated." }
+        format.html { redirect_to student_class_url(@student_class), notice: 'Student class was successfully updated.' }
         format.json { render :show, status: :ok, location: @student_class }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +52,20 @@ class StudentClassesController < ApplicationController
     @student_class.destroy
 
     respond_to do |format|
-      format.html { redirect_to student_classes_url, notice: "Student class was successfully destroyed." }
+      format.html { redirect_to student_classes_url, notice: 'Student class was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_student_class
-      @student_class = StudentClass.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def student_class_params
-      params.require(:student_class).permit(:start, :deleted_at, :avtive, :account_id, :student_id, :klass_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_student_class
+    @student_class = StudentClass.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def student_class_params
+    params.require(:student_class).permit(:start, :deleted_at, :avtive, :account_id, :student_id, :klass_id)
+  end
 end

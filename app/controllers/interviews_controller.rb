@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class InterviewsController < ApplicationController
-  before_action :set_interview, only: %i[ show edit update destroy ]
+  before_action :set_interview, only: %i[show edit update destroy]
 
   # GET /interviews or /interviews.json
   def index
@@ -7,8 +9,7 @@ class InterviewsController < ApplicationController
   end
 
   # GET /interviews/1 or /interviews/1.json
-  def show
-  end
+  def show; end
 
   # GET /interviews/new
   def new
@@ -16,8 +17,7 @@ class InterviewsController < ApplicationController
   end
 
   # GET /interviews/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /interviews or /interviews.json
   def create
@@ -25,7 +25,7 @@ class InterviewsController < ApplicationController
 
     respond_to do |format|
       if @interview.save
-        format.html { redirect_to interview_url(@interview), notice: "Interview was successfully created." }
+        format.html { redirect_to interview_url(@interview), notice: 'Interview was successfully created.' }
         format.json { render :show, status: :created, location: @interview }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class InterviewsController < ApplicationController
   def update
     respond_to do |format|
       if @interview.update(interview_params)
-        format.html { redirect_to interview_url(@interview), notice: "Interview was successfully updated." }
+        format.html { redirect_to interview_url(@interview), notice: 'Interview was successfully updated.' }
         format.json { render :show, status: :ok, location: @interview }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +52,21 @@ class InterviewsController < ApplicationController
     @interview.destroy
 
     respond_to do |format|
-      format.html { redirect_to interviews_url, notice: "Interview was successfully destroyed." }
+      format.html { redirect_to interviews_url, notice: 'Interview was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_interview
-      @interview = Interview.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def interview_params
-      params.require(:interview).permit(:date, :feedback, :status, :deleted_at, :active, :account_id, :form_id, :student_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_interview
+    @interview = Interview.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def interview_params
+    params.require(:interview).permit(:date, :feedback, :status, :deleted_at, :active, :account_id, :form_id,
+                                      :student_id)
+  end
 end

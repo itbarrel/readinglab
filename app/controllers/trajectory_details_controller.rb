@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class TrajectoryDetailsController < ApplicationController
-  before_action :set_trajectory_detail, only: %i[ show edit update destroy ]
+  before_action :set_trajectory_detail, only: %i[show edit update destroy]
 
   # GET /trajectory_details or /trajectory_details.json
   def index
@@ -7,8 +9,7 @@ class TrajectoryDetailsController < ApplicationController
   end
 
   # GET /trajectory_details/1 or /trajectory_details/1.json
-  def show
-  end
+  def show; end
 
   # GET /trajectory_details/new
   def new
@@ -16,8 +17,7 @@ class TrajectoryDetailsController < ApplicationController
   end
 
   # GET /trajectory_details/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /trajectory_details or /trajectory_details.json
   def create
@@ -25,7 +25,9 @@ class TrajectoryDetailsController < ApplicationController
 
     respond_to do |format|
       if @trajectory_detail.save
-        format.html { redirect_to trajectory_detail_url(@trajectory_detail), notice: "Trajectory detail was successfully created." }
+        format.html do
+          redirect_to trajectory_detail_url(@trajectory_detail), notice: 'Trajectory detail was successfully created.'
+        end
         format.json { render :show, status: :created, location: @trajectory_detail }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,9 @@ class TrajectoryDetailsController < ApplicationController
   def update
     respond_to do |format|
       if @trajectory_detail.update(trajectory_detail_params)
-        format.html { redirect_to trajectory_detail_url(@trajectory_detail), notice: "Trajectory detail was successfully updated." }
+        format.html do
+          redirect_to trajectory_detail_url(@trajectory_detail), notice: 'Trajectory detail was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @trajectory_detail }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +56,21 @@ class TrajectoryDetailsController < ApplicationController
     @trajectory_detail.destroy
 
     respond_to do |format|
-      format.html { redirect_to trajectory_details_url, notice: "Trajectory detail was successfully destroyed." }
+      format.html { redirect_to trajectory_details_url, notice: 'Trajectory detail was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_trajectory_detail
-      @trajectory_detail = TrajectoryDetail.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def trajectory_detail_params
-      params.require(:trajectory_detail).permit(:error_count, :wpm, :active, :deleted_at, :grade, :season, :entry_date, :account_id, :user_id, :klass_id, :book_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_trajectory_detail
+    @trajectory_detail = TrajectoryDetail.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def trajectory_detail_params
+    params.require(:trajectory_detail).permit(:error_count, :wpm, :active, :deleted_at, :grade, :season, :entry_date,
+                                              :account_id, :user_id, :klass_id, :book_id)
+  end
 end
