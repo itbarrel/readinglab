@@ -300,9 +300,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_12_122005) do
     t.index ["student_class_id"], name: "index_student_forms_on_student_class_id"
   end
 
-  create_table "student_mettings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "student_meetings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "attendance"
-    t.integer "status"
     t.uuid "account_id", null: false
     t.uuid "meeting_id", null: false
     t.uuid "student_id", null: false
@@ -310,9 +309,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_12_122005) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.index ["account_id", "meeting_id", "student_id", "deleted_at"], name: "student_meeting_id", unique: true
-    t.index ["account_id"], name: "index_student_mettings_on_account_id"
-    t.index ["meeting_id"], name: "index_student_mettings_on_meeting_id"
-    t.index ["student_id"], name: "index_student_mettings_on_student_id"
+    t.index ["account_id"], name: "index_student_meetings_on_account_id"
+    t.index ["meeting_id"], name: "index_student_meetings_on_meeting_id"
+    t.index ["student_id"], name: "index_student_meetings_on_student_id"
   end
 
   create_table "students", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -453,9 +452,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_12_122005) do
   add_foreign_key "student_classes", "students"
   add_foreign_key "student_forms", "klass_forms"
   add_foreign_key "student_forms", "student_classes"
-  add_foreign_key "student_mettings", "accounts"
-  add_foreign_key "student_mettings", "meetings"
-  add_foreign_key "student_mettings", "students"
+  add_foreign_key "student_meetings", "accounts"
+  add_foreign_key "student_meetings", "meetings"
+  add_foreign_key "student_meetings", "students"
   add_foreign_key "students", "accounts"
   add_foreign_key "students", "parents"
   add_foreign_key "trajectory_details", "accounts"

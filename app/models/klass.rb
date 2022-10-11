@@ -48,6 +48,7 @@ class Klass < ApplicationRecord
   belongs_to :teacher, class_name: 'User'
   belongs_to :room
   belongs_to :klass_template
+
   has_many :meetings, dependent: :destroy
   has_many :student_classes, dependent: :destroy
   has_many :students, through: :student_classes
@@ -124,16 +125,8 @@ class Klass < ApplicationRecord
     extend_meetings(session_range, starts_at)
   end
 
-  # def attendance_stt(start_date)
-  #   return.klasses.where.Student.count(start_date)
-  # end
-
   def est_end_date
     meetings.maximum(:starts_at)
-  end
-
-  def student_state_at(date)
-    students + student_classes.with_deleted.where('created_at <= ? and deleted_at >= ?', date, date).map(&:student)
   end
 
   def send_email

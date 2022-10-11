@@ -52,6 +52,6 @@ group :test do
   gem 'webdrivers'
 end
 
-gem 'dotenv-rails', groups: [:development, :test]
+gem 'dotenv-rails', groups: %i[development test]
 
 gem 'date_validator', '~> 0.12.0'

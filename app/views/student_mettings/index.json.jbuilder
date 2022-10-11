@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-json.array! @student_mettings, partial: 'student_mettings/student_metting', as: :student_metting
+json.array! @student_meeting, partial: 'student_meeting/student_meeting', as: :student_meeting

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :klass_tempelate_forms
   resources :parents
   resources :cities
-  resources :student_mettings
+  resources :student_meetings
   resources :form_details
   resources :interviews
   resources :student_classes

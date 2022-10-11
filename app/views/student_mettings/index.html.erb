@@ -1,14 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Student mettings</h1>
+<h1>student_meetings</h1>
 
-<div id="student_mettings">
-  <% @student_mettings.each do |student_metting| %>
-    <%= render student_metting %>
+<div id="student_meetings">
+  <% @student_meetingss.each do |student_meetings| %>
+    <%= render student_meetings %>
     <p>
-      <%= link_to "Show this student metting", student_metting %>
+      <%= link_to "Show this student_meetings", student_meetings %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New student metting", new_student_metting_path %>
+<%= link_to "New student_meetings", new_student_meeting_path %>
