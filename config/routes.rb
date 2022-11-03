@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :vacation_types
   resources :rooms
   devise_for :users
+  resources :users, :only => [:index]
   resources :accounts
   resources :account_types
 
@@ -38,4 +39,5 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   # root : "home#index"
+
 end

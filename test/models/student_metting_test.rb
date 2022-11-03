@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: student_mettings
+# Table name: student_meetings
 #
 #  id         :uuid             not null, primary key
 #  attendance :integer
@@ -16,9 +16,9 @@
 #
 # Indexes
 #
-#  index_student_mettings_on_account_id  (account_id)
-#  index_student_mettings_on_meeting_id  (meeting_id)
-#  index_student_mettings_on_student_id  (student_id)
+#  index_student_meetings_on_account_id  (account_id)
+#  index_student_meetings_on_meeting_id  (meeting_id)
+#  index_student_meetings_on_student_id  (student_id)
 #  student_meeting_id                    (account_id,meeting_id,student_id,deleted_at) UNIQUE
 #
 # Foreign Keys
@@ -29,7 +29,7 @@
 #
 require 'test_helper'
 
-class StudentMettingTest < ActiveSupport::TestCase
+class StudentMeetingTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

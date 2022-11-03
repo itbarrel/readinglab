@@ -2,49 +2,49 @@
 
 require 'test_helper'
 
-class StudentMettingsControllerTest < ActionDispatch::IntegrationTest
+class StudentMeetingsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @student_metting = student_mettings(:one)
+    @student_meetings = student_meetings(:one)
   end
 
   test 'should get index' do
-    get student_mettings_url
+    get student_meetings_url
     assert_response :success
   end
 
   test 'should get new' do
-    get new_student_metting_url
+    get new_student_meetings_url
     assert_response :success
   end
 
-  test 'should create student_metting' do
-    assert_difference('StudentMetting.count') do
-      post student_mettings_url, params: { student_metting: {} }
+  test 'should create student_meetings' do
+    assert_difference('StudentMeeting.count') do
+      post student_meetings_url, params: { student_meetings: {} }
     end
 
-    assert_redirected_to student_metting_url(StudentMetting.last)
+    assert_redirected_to student_meetings_url(StudentMeeting.last)
   end
 
-  test 'should show student_metting' do
-    get student_metting_url(@student_metting)
+  test 'should show student_meetings' do
+    get student_meetings_url(@student_meeting)
     assert_response :success
   end
 
   test 'should get edit' do
-    get edit_student_metting_url(@student_metting)
+    get edit_student_meetings_url(@student_meeting)
     assert_response :success
   end
 
-  test 'should update student_metting' do
-    patch student_metting_url(@student_metting), params: { student_metting: {} }
-    assert_redirected_to student_metting_url(@student_metting)
+  test 'should update student_meetings' do
+    patch student_meetings_url(@student_meeting), params: { student_meetings: {} }
+    assert_redirected_to student_meetings_url(@student_meeting)
   end
 
-  test 'should destroy student_metting' do
-    assert_difference('StudentMetting.count', -1) do
-      delete student_metting_url(@student_metting)
+  test 'should destroy student_meetings' do
+    assert_difference('StudentMeeting.count', -1) do
+      delete student_meetings_url(@student_meeting)
     end
 
-    assert_redirected_to student_mettings_url
+    assert_redirected_to student_meetings_url
   end
 end

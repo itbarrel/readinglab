@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-json.partial! 'student_mettings/student_metting', student_metting: @student_metting
+json.partial! 'student_meetings/student_meeting', student_meeting: @student_meeting

@@ -55,3 +55,5 @@ end
 gem 'dotenv-rails', groups: %i[development test]
 
 gem 'date_validator', '~> 0.12.0'
+
+gem 'cancancan'

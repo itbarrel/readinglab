@@ -2,40 +2,40 @@
 
 require 'application_system_test_case'
 
-class StudentMettingsTest < ApplicationSystemTestCase
+class StudentMeetingsTest < ApplicationSystemTestCase
   setup do
-    @student_metting = student_mettings(:one)
+    @student_meeting = student_meetings(:one)
   end
 
   test 'visiting the index' do
-    visit student_mettings_url
-    assert_selector 'h1', text: 'Student mettings'
+    visit student_meetings_url
+    assert_selector 'h1', text: 'student  meetings'
   end
 
-  test 'should create student metting' do
-    visit student_mettings_url
-    click_on 'New student metting'
+  test 'should create student  meeting' do
+    visit student_meetings_url
+    click_on 'New student  meeting'
 
-    click_on 'Create Student metting'
+    click_on 'Create student  meeting'
 
-    assert_text 'Student metting was successfully created'
+    assert_text 'student  meeting was successfully created'
     click_on 'Back'
   end
 
-  test 'should update Student metting' do
-    visit student_metting_url(@student_metting)
-    click_on 'Edit this student metting', match: :first
+  test 'should update student  meeting' do
+    visit student_meeting_url(@student_meeting)
+    click_on 'Edit this student  meeting', match: :first
 
-    click_on 'Update Student metting'
+    click_on 'Update student  meeting'
 
-    assert_text 'Student metting was successfully updated'
+    assert_text 'student  meeting was successfully updated'
     click_on 'Back'
   end
 
-  test 'should destroy Student metting' do
-    visit student_metting_url(@student_metting)
-    click_on 'Destroy this student metting', match: :first
+  test 'should destroy student  meeting' do
+    visit student_meeting_url(@student_meeting)
+    click_on 'Destroy this student  meeting', match: :first
 
-    assert_text 'Student metting was successfully destroyed'
+    assert_text 'student  meeting was successfully destroyed'
   end
 end
