@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Klass tempelate forms</h1>
+
+<div id="klass_tempelate_forms">
+  <% @klass_tempelate_forms.each do |klass_tempelate_form| %>
+    <%= render klass_tempelate_form %>
+    <p>
+      <%= link_to "Show this klass tempelate form", klass_tempelate_form %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New klass tempelate form", new_klass_tempelate_form_path %>

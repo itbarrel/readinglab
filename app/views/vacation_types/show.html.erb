@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @vacation_type %>
+
+<div>
+  <%= link_to "Edit this vacation type", edit_vacation_type_path(@vacation_type) %> |
+  <%= link_to "Back to vacation types", vacation_types_path %>
+
+  <%= button_to "Destroy this vacation type", @vacation_type, method: :delete %>
+</div>

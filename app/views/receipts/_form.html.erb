@@ -1,0 +1,77 @@
+<%= form_with(model: receipt) do |form| %>
+  <% if receipt.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(receipt.errors.count, "error") %> prohibited this receipt from being saved:</h2>
+
+      <ul>
+        <% receipt.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :amount, style: "display: block" %>
+    <%= form.text_field :amount %>
+  </div>
+
+  <div>
+    <%= form.label :deleted_at, style: "display: block" %>
+    <%= form.text_field :deleted_at %>
+  </div>
+
+  <div>
+    <%= form.label :datetime, style: "display: block" %>
+    <%= form.text_field :datetime %>
+  </div>
+
+  <div>
+    <%= form.label :active, style: "display: block" %>
+    <%= form.check_box :active %>
+  </div>
+
+  <div>
+    <%= form.label :leave_count, style: "display: block" %>
+    <%= form.number_field :leave_count %>
+  </div>
+
+  <div>
+    <%= form.label :detail, style: "display: block" %>
+    <%= form.text_area :detail %>
+  </div>
+
+  <div>
+    <%= form.label :discount, style: "display: block" %>
+    <%= form.number_field :discount %>
+  </div>
+
+  <div>
+    <%= form.label :discount_reason, style: "display: block" %>
+    <%= form.text_field :discount_reason %>
+  </div>
+
+  <div>
+    <%= form.label :sessions_count, style: "display: block" %>
+    <%= form.number_field :sessions_count %>
+  </div>
+
+  <div>
+    <%= form.label :acoount_id, style: "display: block" %>
+    <%= form.text_field :acoount_id %>
+  </div>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :receipt_type_id, style: "display: block" %>
+    <%= form.text_field :receipt_type_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
