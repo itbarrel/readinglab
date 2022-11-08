@@ -25,11 +25,8 @@ Layout/EndOfLine:
 Metrics/LineLength:
   Max: 120
 
-Style/Documentation:
-  Enabled: false
-
 Naming/FileName:
-    Enabled: false
+  Enabled: false
 
 # Disables "Use nested module/class definitions instead of compact style" warning
 ClassAndModuleChildren:

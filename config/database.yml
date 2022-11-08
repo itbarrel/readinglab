@@ -6,6 +6,8 @@ development:
   password: <%= ENV['DB_PASS'] %>
   host: <%= ENV['DB_HOST'] %>
   port: <%= ENV['DB_PORT'] %>
+  statement_limit: 200
+
 test:
   adapter: postgresql
   encoding: utf8
@@ -14,6 +16,8 @@ test:
   password: <%= ENV['DB_PASS'] %>
   host: <%= ENV['DB_HOST'] %>
   port: <%= ENV['DB_PORT'] %>
+  statement_limit: 200
+
 production:
   adapter: postgresql
   encoding: utf8
@@ -22,3 +26,4 @@ production:
   password: <%= ENV['DB_PASS'] %>
   host: <%= ENV['DB_HOST'] %>
   port: <%= ENV['DB_PORT'] %>
+  statement_limit: 200
