@@ -1,0 +1,80 @@
+# == Schema Information
+#
+# Table name: klass_templates
+#
+#  id            :uuid             not null, primary key
+#  deleted_at    :datetime
+#  description   :text
+#  duration      :integer
+#  friday        :boolean          default(FALSE)
+#  max_students  :integer
+#  monday        :boolean          default(FALSE)
+#  name          :string
+#  saturday      :boolean          default(FALSE)
+#  session_range :integer
+#  settings      :jsonb
+#  start         :datetime
+#  sunday        :boolean          default(FALSE)
+#  thursday      :boolean          default(FALSE)
+#  tuesday       :boolean          default(FALSE)
+#  wednesday     :boolean          default(FALSE)
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  account_id    :uuid             not null
+#  user_id       :uuid
+#
+# Indexes
+#
+#  index_klass_templates_on_account_id  (account_id)
+#  index_klass_templates_on_user_id     (user_id)
+#  klass_templates_name                 (account_id,name,deleted_at) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (account_id => accounts.id)
+#  fk_rails_...  (user_id => users.id)
+#
+
+one:
+  max_students: 1
+  active: false
+  start: 2022-08-26 16:29:04
+  monday: false
+  tuesday: false
+  wednesday: false
+  thursday: false
+  friday: false
+  saturday: false
+  sunday: false
+  settings: 
+  session_range: 1
+  duration: 1
+  min_students: 1
+  name: MyString
+  description: MyText
+  deleted_at: 2022-08-26 16:29:04
+  account: one
+  user: one
+  room: one
+
+two:
+  max_students: 1
+  active: false
+  start: 2022-08-26 16:29:04
+  monday: false
+  tuesday: false
+  wednesday: false
+  thursday: false
+  friday: false
+  saturday: false
+  sunday: false
+  settings: 
+  session_range: 1
+  duration: 1
+  min_students: 1
+  name: MyString
+  description: MyText
+  deleted_at: 2022-08-26 16:29:04
+  account: two
+  user: two
+  room: two

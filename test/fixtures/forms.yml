@@ -1,0 +1,43 @@
+# == Schema Information
+#
+# Table name: forms
+#
+#  id            :uuid             not null, primary key
+#  attendancable :boolean          default(FALSE)
+#  deleted_at    :datetime
+#  fields        :jsonb
+#  lessonable    :boolean          default(FALSE)
+#  name          :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  account_id    :uuid             not null
+#
+# Indexes
+#
+#  forms_name                 (account_id,name,deleted_at) UNIQUE
+#  index_forms_on_account_id  (account_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (account_id => accounts.id)
+#
+
+one:
+  lesson: 1
+  fields: 
+  assessment: false
+  name: MyString
+  deleted_at: 2022-08-26 18:36:24
+  active: false
+  attendance: false
+  account: one
+
+two:
+  lesson: 1
+  fields: 
+  assessment: false
+  name: MyString
+  deleted_at: 2022-08-26 18:36:24
+  active: false
+  attendance: false
+  account: two

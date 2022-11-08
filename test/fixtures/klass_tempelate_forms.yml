@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  deleted_at: 2022-09-05 18:57:11
+  klass_tempelate: one
+  form: one
+
+two:
+  deleted_at: 2022-09-05 18:57:11
+  klass_tempelate: two
+  form: two
