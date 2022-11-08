@@ -259,6 +259,8 @@ var options4 = {
 	labels: ['Flu', 'Covid-19', 'Pheumoniae', 'Diabeties'],
 };
 
+import ApexCharts from '../plugins/apexcharts/apexcharts.min'
+
 var chart = new ApexCharts(document.querySelector("#activities-chart"), options);
 chart.render();
 
