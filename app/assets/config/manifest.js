@@ -3,3 +3,5 @@
 //= link_tree ../images
 
 //= link core.min.js
+//= link_directory ../plugins/datatables/js
+//= link_directory ../javascript/controllers

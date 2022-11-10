@@ -17,10 +17,10 @@ require("esbuild").build({
   // watch: true,
   plugins: [rails()],
   loader: {
-    ".png": "file",
+    ".png": "dataurl",
     ".jpg": "file",
     ".jpeg": "file",
-    ".svg": "file",
+    ".svg": "text",
     ".gif": "file",
     ".ttf": "file",
     ".eot": "file",
