@@ -273,26 +273,5 @@ $('document').ready(function(){
 	var chart4 = new ApexCharts(document.querySelector("#diseases-chart"), options4);
 	chart4.render();
 
-	$('.data-table').DataTable({
-		scrollCollapse: false,
-		autoWidth: false,
-		responsive: true,
-		searching: false,
-		bLengthChange: false,
-		bPaginate: true,
-		bInfo: false,
-		columnDefs: [{
-			targets: "datatable-nosort",
-			orderable: false,
-		}],
-		"lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
-		"language": {
-			"info": "_START_-_END_ of _TOTAL_ entries",
-			searchPlaceholder: "Search",
-			paginate: {
-				next: '<i class="ion-chevron-right"></i>',
-				previous: '<i class="ion-chevron-left"></i>'
-			}
-		},
-	});
+	initializeDataTable('.data-table')
 });

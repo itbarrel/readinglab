@@ -6,3 +6,5 @@ import './script'
 import './process'
 import './layout-settings'
 import './apexcharts'
+
+import './datatable-settings'
