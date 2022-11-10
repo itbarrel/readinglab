@@ -685,5 +685,6 @@
   </div>
 </div>
 
-<%# content_for :javascript_includes do %>
-<%# end %>
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
+<% end %>

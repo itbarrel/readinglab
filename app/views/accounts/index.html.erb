@@ -35,3 +35,7 @@
     <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
   </div>
 </div>
+
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
+<% end %>

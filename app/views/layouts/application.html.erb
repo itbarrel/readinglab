@@ -65,10 +65,8 @@
     <%= render 'shared/datatables_js' %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 
-    <%#= javascript_include_tag params[:controller], "data-turbo-track": "reload", defer: true %>
-
-    <%= javascript_include_tag "controllers/#{params[:controller]}" %>
-    <%#= yield :javascript_includes %>
+    <%= yield :javascript_includes %>
+    <%#= javascript_include_tag "controllers/#{params[:controller]}" %>
 
     <!-- Google Tag Manager (noscript) -->
     <noscript

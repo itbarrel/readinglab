@@ -4,4 +4,4 @@
 
 //= link core.min.js
 //= link_directory ../plugins/datatables/js
-//= link_directory ../javascript/controllers
+//= link_tree ../javascript/controllers
