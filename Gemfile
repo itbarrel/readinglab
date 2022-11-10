@@ -26,8 +26,6 @@ gem 'apexcharts'
 gem 'cssbundling-rails'
 gem 'jsbundling-rails'
 
-gem 'devise', '~> 4.8'
-
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

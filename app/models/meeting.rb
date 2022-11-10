@@ -67,9 +67,18 @@ class Meeting < ApplicationRecord
   end
 
   def current_students
-    scs = student_classes.includes(:student).where('created_at <= ?',
-                                                   starts_at) + student_classes.with_deleted.includes(:student).where('created_at <= ? and deleted_at >= ?',
-                                                                                                                      starts_at, starts_at)
+    scs = student_classes
+          .includes(:student)
+          .where('created_at <= ?', starts_at) + student_classes
+          .with_deleted
+          .includes(:student)
+          .where('created_at <= ? and deleted_at >= ?', starts_at, starts_at)
+
+
+
+
+
+          
     scs.map(&:student)
   end
 end
