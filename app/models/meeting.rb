@@ -74,11 +74,6 @@ class Meeting < ApplicationRecord
           .includes(:student)
           .where('created_at <= ? and deleted_at >= ?', starts_at, starts_at)
 
-
-
-
-
-          
     scs.map(&:student)
   end
 end
