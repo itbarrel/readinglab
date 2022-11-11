@@ -1,0 +1,15 @@
+.logo-icon{
+  color: black;
+}
+
+.logo-text{
+  color: black;
+  font-size: 23px;
+  font-weight: 700;
+  text-transform: none;
+  margin-left: 7px !important;
+}
+
+.brand-logo{
+  padding-left: 15px !important;
+}

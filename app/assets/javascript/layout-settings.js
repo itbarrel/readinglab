@@ -106,6 +106,8 @@
 			jQuery(this).addClass("active");
 			sidebar_light.removeClass("active");
 			body.removeClass("sidebar-light").addClass("sidebar-dark");
+			jQuery('.logo-icon').css("color", "white");
+			jQuery('.logo-text').css("color", "white");
 
 			//Store in local storage
 			setOptions("navigationBackground", "sidebar-dark");
@@ -121,6 +123,8 @@
 			jQuery(this).addClass("active");
 			sidebar_dark.removeClass("active");
 			body.removeClass("sidebar-dark").addClass("sidebar-light");
+			jQuery('.logo-icon').css("color", "black");
+			jQuery('.logo-text').css("color", "black");
 
 			//Store in local storage
 			setOptions("navigationBackground", "sidebar-light");
