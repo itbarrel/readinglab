@@ -13,7 +13,7 @@
       <ul id="accordion-menu">
         <% @menu_list.each do |item| %>
           <li class="dropdown">
-            <a href="javascript:;" class="dropdown-toggle <%= 'no-arrow' unless item[:sub_items].present? %>">
+            <a href="<%= (item[:sub_items].present?)? 'javascript:;' : item[:url] %>" class="dropdown-toggle <%= 'no-arrow' unless item[:sub_items].present? %>">
               <span class="<%= item[:icon] %>"></span>
               <span class="mtext"><%= item[:text] %></span>
             </a>
@@ -21,14 +21,14 @@
               <ul class="submenu">
                 <% item[:sub_items].each do |sub_item_one| %>
                   <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle <%= 'no-arrow' unless sub_item_one[:sub_items].present? %>">
+                    <a href="<%= (sub_item_one[:sub_items].present?)? 'javascript:;' : sub_item_one[:url] %>" class="dropdown-toggle <%= 'no-arrow' unless sub_item_one[:sub_items].present? %>">
                       <span class="<%= sub_item_one[:icon] %>"></span
                       ><span class="mtext"><%= sub_item_one[:text] %></span>
                     </a>
                     <% if sub_item_one[:sub_items].present? %>
                       <ul class="submenu child">
                         <% sub_item_one[:sub_items].each do |sub_item_two| %>
-                          <li><a href="javascript:;"><%= sub_item_two[:text] %></a></li>
+                          <li><a href="<%= (sub_item_two[:sub_items].present?)? 'javascript:;' : sub_item_two[:url] %>"><%= sub_item_two[:text] %></a></li>
                         <% end %>
                       </ul>
                     <% end %>
