@@ -2,7 +2,7 @@
   <div class="min-height-200px">
     <div class="card-box mb-30">
       <div class="pd-20">
-        <h4 class="text-blue h4">Vacations</h4>
+        <h4 class="text-blue h4">Accounts</h4>
       </div>
       <div class="pb-20">
         <table class="data-table-resources table stripe hover nowrap">
@@ -15,17 +15,17 @@
                 </div>
               </th>
               <th>Name</th>
-              <th>Starting Date</th>
-              <th>Ending Date</th>
-              <th>Vacation Type</th>
+              <th>Role</th>
+              <th>Date Hired</th>
+              
 
               <th class="datatable-nosort">Action</th>
 
             </tr>
           </thead>
           <tbody>
-            <% @vacations.each do |vacation| %>
-              <%= render vacation %>
+            <% @staffs.each do |staff| %>
+            <%= render :partial => "staff", :locals => { :staff => staff } %>
             <% end %>
           </tbody>
         </table>
