@@ -22,6 +22,8 @@ gem 'paranoia'
 
 gem 'apexcharts'
 
+gem 'pagy', '~> 5.10'
+
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'cssbundling-rails'
 gem 'jsbundling-rails'

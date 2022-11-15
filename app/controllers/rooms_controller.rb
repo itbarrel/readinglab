@@ -5,7 +5,7 @@ class RoomsController < ApplicationController
 
   # GET /rooms or /rooms.json
   def index
-    @rooms = Room.all
+    @pagy, @rooms = pagy(Room.all, items: 10)
   end
 
   # GET /rooms/1 or /rooms/1.json

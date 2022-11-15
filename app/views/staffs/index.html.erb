@@ -2,10 +2,10 @@
   <div class="min-height-200px">
     <div class="card-box mb-30">
       <div class="pd-20">
-        <h4 class="text-blue h4">Accounts</h4>
+        <h4 class="text-blue h4">Staff</h4>
       </div>
       <div class="pb-20">
-        <table class="data-table-resources table stripe hover nowrap">
+        <table >
           <thead>
             <tr>
               <th>
@@ -17,21 +17,19 @@
               <th>Name</th>
               <th>Role</th>
               <th>Date Hired</th>
-              
-
               <th class="datatable-nosort">Action</th>
-
             </tr>
           </thead>
           <tbody>
             <% @staffs.each do |staff| %>
-            <%= render :partial => "staff", :locals => { :staff => staff } %>
+              <%= render partial: "staff", :locals => { staff:  staff} %>
             <% end %>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+  <%== pagy_nav(@pagy) %> 
   <div class="footer-wrap pd-20 mb-20 card-box">
     DeskApp - Bootstrap 4 Admin Template By
     <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
@@ -39,5 +37,5 @@
 </div>
 
 <% content_for :javascript_includes do %>
-  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
+<%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
 <% end %>
