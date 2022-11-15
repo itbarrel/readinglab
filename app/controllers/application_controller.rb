@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include Pagy::Backend
+  # include EsbuildErrorRendering if Rails.env.development?
   before_action :generate_sidebar, unless: :json_request?
 
   def generate_sidebar

@@ -53,8 +53,8 @@ class Meeting < ApplicationRecord
     meets.each do |meet|
       meet.students.each do |student|
         meet.student_meetings
-            .find_or_create_by!(account_id: meet.account_id, student: student)
-            .update(attendance: attendance)
+            .find_or_create_by!(account_id: meet.account_id, student:)
+            .update(attendance:)
       end
     end
   end

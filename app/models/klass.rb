@@ -94,7 +94,7 @@ class Klass < ApplicationRecord
         next
       end
 
-      vacation_dates = vacation_dates.where(account_id: account_id)
+      vacation_dates = vacation_dates.where(account_id:)
 
       day_to_check = DateTime.new(
         day.year,
@@ -117,7 +117,7 @@ class Klass < ApplicationRecord
 
   def extend_meetings(limit, start_date)
     extended_meeting_dates(limit, start_date).each do |expected_date|
-      meetings.create!(starts_at: expected_date, account_id: account_id)
+      meetings.create!(starts_at: expected_date, account_id:)
     end
   end
 

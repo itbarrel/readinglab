@@ -1,17 +1,28 @@
-const path = require('path')
-const rails = require('esbuild-rails')
+import path from 'path'
+import rails from 'esbuild-rails'
+import esbuild from "esbuild"
+
+const watch = process.argv.includes('--watch')
 
 const railsEnv = process.env.RAILS_ENV || 'development'
 const optimize = railsEnv !== 'development'
+const errorFilePath = `esbuild_error_${railsEnv}.txt`
 
-require("esbuild").build({
+import fs from 'fs'
+
+function handleError(error) {
+  if (error) fs.writeFileSync(errorFilePath, error.toString())
+  else if (fs.existsSync(errorFilePath)) fs.truncate(errorFilePath, 0, () => {})
+}
+
+esbuild.build({
   // logLevel: 'debug',
   metafile: true,
   entryPoints: ['javascript/application.js'],
   bundle: true,
   outdir: 'builds',
   absWorkingDir: path.join(process.cwd(), "app/assets"),
-  watch: process.argv.includes("--watch"),
+  watch: watch && { onRebuild: handleError },
   minify: optimize,
   sourcemap: false,
   // watch: true,
