@@ -13,3 +13,8 @@
 .brand-logo{
   padding-left: 15px !important;
 }
+
+#calendar {
+  max-width: 1100px;
+  margin: 40px auto;
+}

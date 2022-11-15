@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  # include EsbuildErrorRendering if Rails.env.development?
   before_action :generate_sidebar, unless: :json_request?
 
   def generate_sidebar
