@@ -5,7 +5,8 @@ class KlassesController < ApplicationController
 
   # GET /klasses or /klasses.json
   def index
-    @klasses = Klass.all
+    # @klasses = Klass.all
+    @pagy, @klasses = pagy(Klass.all, items: params[:per_page] || '10')
   end
 
   # GET /klasses/1 or /klasses/1.json

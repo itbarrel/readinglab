@@ -5,7 +5,8 @@ class VacationsController < ApplicationController
 
   # GET /vacations or /vacations.json
   def index
-    @vacations = Vacation.all
+    # @vacations = Vacation.all
+    @pagy, @vacations = pagy(Vacation.all, items: params[:per_page] || '10')
   end
 
   # GET /vacations/1 or /vacations/1.json

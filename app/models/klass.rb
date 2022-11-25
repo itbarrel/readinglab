@@ -45,7 +45,7 @@
 #
 class Klass < ApplicationRecord
   belongs_to :account
-  belongs_to :teacher, class_name: 'User'
+  belongs_to :teacher
   belongs_to :room
   belongs_to :klass_template
 
@@ -59,6 +59,17 @@ class Klass < ApplicationRecord
   validates :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, inclusion: { in: [true, false] }
 
   after_create :create_meetings
+
+  def days_abbr
+    (monday ? 'M' : '.') + (tuesday ? 'T' : '.') + (wednesday ? 'W' : '.') + \
+      (thursday ? 'T' : '.') + (friday ? 'F' : '.') + (saturday ? 'S' : '.') + \
+      (sunday ? 'S' : '.')
+  end
+
+  def name
+    rclass_time = starts_at.strftime('%H:%M')
+    "#{teacher.name} in #{room.name} on #{days_abbr} at #{rclass_time}"
+  end
 
   def extended_meeting_dates(limit, starting_date, extend_type = :sessional, vacation_dates = Vacation.all)
     return if limit.zero?

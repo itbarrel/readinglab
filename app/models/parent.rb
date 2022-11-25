@@ -50,4 +50,8 @@ class Parent < ApplicationRecord
   def notify_about_klass
     ParentMailer.klass_mailer(self).deliver
   end
+
+  def name
+    "(#{father_first} #{father_last} + #{mother_first} #{mother_last})"
+  end
 end

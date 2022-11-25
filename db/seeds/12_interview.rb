@@ -1,8 +1,10 @@
+5.times do
 Interview.find_or_create_by(
-  date: Date.yesterday, 
-  status: 'waiting',
-  account: Account.last,
-  student: Student.last,
-  form: Form.last,
+  date: Faker::Date.between(from: 5.days.ago, to: Date.today),
+  status: Interview.statuses.keys.sample,
+  account: Account.sample,
+  student: Student.sample,
+  form: Form.sample,
 
 )
+end

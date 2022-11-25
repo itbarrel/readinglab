@@ -3,12 +3,12 @@
 Vacation.find_each do |x|
   x.destroy
 end
-
-Vacation.find_or_create_by(
-  name: 'mashal',
+5.times do
+  Vacation.find_or_create_by(
+  name: Faker::Name.name,
   starting_at: Date.today + 1.day,
   ending_at:   Date.today + 3.days,
-  account: Account.last,
-  vacation_type: VacationType.last,
-
+  account: Account.sample,
+  vacation_type: VacationType.sample,
 )
+end

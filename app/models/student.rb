@@ -44,17 +44,28 @@ class Student < ApplicationRecord
 
   validates :first_name, :last_name, :school, presence: true
 
-  def self.available_at(start_date = DateTime.now, duration = 60)
+  def self.ids_studing_at(start_date = DateTime.now, duration = 60)
     end_date = start_date + duration.minutes
-    meetings = Meeting.where('starts_at <= ? and ? <= ends_at', end_date, start_date).includes(:students)
+    meetings = Meeting.where('starts_at <= ? and ? <= ends_at', end_date, start_date).includes(klass: :students)
     student_ids = meetings.map do |m|
-      m.students.ids
+      m.klass.students.ids
     end
+    student_ids.flatten
+  end
 
-    Student.where.not(id: student_ids.flatten)
+  def self.studing_at(start_date = DateTime.now, duration = 60)
+    Student.where(id: ids_studing_at(start_date, duration))
+  end
+
+  def self.available_at(start_date = DateTime.now, duration = 60)
+    Student.where.not(id: studing_at(start_date, duration))
   end
 
   def set_status
     update(status: 'registrated') if status.blank?
+  end
+
+  def name
+    "Mr/Mrs. #{first_name.capitalize} #{last_name}"
   end
 end

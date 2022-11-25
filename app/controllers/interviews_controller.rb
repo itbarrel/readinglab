@@ -5,7 +5,8 @@ class InterviewsController < ApplicationController
 
   # GET /interviews or /interviews.json
   def index
-    @interviews = Interview.all
+    # @interviews = Interview.all
+    @pagy, @interviews = pagy(Interview.all, items: params[:per_page] || '10')
   end
 
   # GET /interviews/1 or /interviews/1.json

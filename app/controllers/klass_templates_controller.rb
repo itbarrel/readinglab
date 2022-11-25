@@ -5,7 +5,8 @@ class KlassTemplatesController < ApplicationController
 
   # GET /klass_templates or /klass_templates.json
   def index
-    @klass_templates = KlassTemplate.all
+    # @klass_templates = KlassTemplate.all
+    @pagy, @klass_templates = pagy(KlassTemplate.all, items: params[:per_page] || '10')
   end
 
   # GET /klass_templates/1 or /klass_templates/1.json

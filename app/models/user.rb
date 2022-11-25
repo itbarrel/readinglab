@@ -53,4 +53,8 @@ class User < ApplicationRecord
   enum role: { admin: 0, staff: 1, teacher: 2, super_admin: 3, admin_junior: 4, supervisor: 5 }
 
   validates :first_name, :last_name, :email, presence: true
+
+  def name
+    "(#{first_name} #{last_name})"
+  end
 end

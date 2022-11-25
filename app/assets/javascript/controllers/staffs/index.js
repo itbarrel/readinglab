@@ -1,4 +1,4 @@
 $('document').ready(function(){
-    initializeDataTable('.data-table-resources', true, true, true, true)
-  });
+  initializeDataTable('.data-table-resources', true, true, true)
+});
   

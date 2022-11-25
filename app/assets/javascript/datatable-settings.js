@@ -1,4 +1,4 @@
-const initializeDataTable = (selector, checkBoxNeeded = false, buttonsNeeded = false, scrollCollapse = false, searching = false) => {
+const initializeDataTable = (selector, checkBoxNeeded = false, buttonsNeeded = false, scrollCollapse = false, searching = false, bPaginate = false) => {
   const columnDefs = (checkBoxNeeded)? [{
     'targets': 0,
     'searchable': false,
@@ -25,7 +25,7 @@ const initializeDataTable = (selector, checkBoxNeeded = false, buttonsNeeded = f
     responsive: true,
     searching,
     bLengthChange: false,
-    bPaginate: true,
+    bPaginate,
     bInfo: false,
     columnDefs,
     lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],

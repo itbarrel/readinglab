@@ -6,11 +6,17 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs
-  resources :klass_templates
+  resources :klass_templates, :parents, :klasses
+  resources :students do
+    collection do
+      get :present_search
+    end
+  end
 
   scope module: :pages do
     get :home
     get :calendar
+    get :communication
   end
 
   # Defines the root path route ("/")

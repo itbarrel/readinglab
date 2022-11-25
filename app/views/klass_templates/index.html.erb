@@ -25,11 +25,12 @@
             </thead>
             <tbody>
               <% @klass_templates.each do |klass_template| %>
-                <%= render klass_template %>
-              <% end %>
+              <%= render klass_template %>
+            <% end %>
             </tbody>
           </table>
         </div>
+        <%= pagy_bootstrap_nav(@pagy).html_safe %>
       </div>
     </div>
     <div class="footer-wrap pd-20 mb-20 card-box">

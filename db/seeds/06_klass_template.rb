@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-
+5.times do
 KlassTemplate.find_or_create_by!(
-  name: 'zareen',
+  name: Faker::Name.name,
   monday: true,
   tuesday: true,
   wednesday: false,
@@ -9,6 +9,7 @@ KlassTemplate.find_or_create_by!(
   friday: false,
   saturday: false,
   sunday: false,
-  user: User.last,
-  account: Account.last
+  user: User.sample,
+  account: Account.sample
 )
+end

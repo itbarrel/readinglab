@@ -1,3 +1,9 @@
 # frozen_string_literal: true
 
-City.find_or_create_by(name: 'lahore')
+5.times do
+    City.find_or_create_by(
+        name: Faker::Name.name,
+        )
+end
+
+

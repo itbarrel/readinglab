@@ -2,7 +2,7 @@
     <div class="min-height-200px">
       <div class="card-box mb-30">
         <div class="pd-20">
-          <h4 class="text-blue h4">Interviews</h4>
+          <h4 class="text-blue h4">Active</h4>
         </div>
         <div class="pb-20">
           <table class="data-table-resources table stripe hover nowrap">
@@ -14,23 +14,24 @@
                     <span class="dt-checkbox-label"></span>
                   </div>
                 </th>
-                <th>Student</th>
-                <th>Date</th>
-                <th>Status</th>
-               
+                <th>Name</th>
+                <th>Teacher</th>
+                <th>Room</th>
+                <th># of students</th>
+                <th>Session</th>
+                <th># of Session</th>
   
                 <th class="datatable-nosort">Action</th>
   
               </tr>
             </thead>
             <tbody>
-              <% @interviews.each do |interview| %>
-                <%= render interview %>
+              <% @klasses.each do |klass| %>
+                <%= render klass %>
               <% end %>
             </tbody>
           </table>
         </div>
-        <%= pagy_bootstrap_nav(@pagy).html_safe %>
       </div>
     </div>
     <div class="footer-wrap pd-20 mb-20 card-box">

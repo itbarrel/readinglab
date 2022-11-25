@@ -5,7 +5,8 @@ class ParentsController < ApplicationController
 
   # GET /parents or /parents.json
   def index
-    @parents = Parent.all
+    # @parents = Parent.all
+    @pagy, @parents = pagy(Parent.all, items: params[:per_page] || '10')
   end
 
   # GET /parents/1 or /parents/1.json

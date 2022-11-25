@@ -6,8 +6,9 @@ end
 
 teacher = Teacher.last
 
+5.times do
 Klass.find_or_create_by!(
-  starts_at: Time.now,
+  starts_at: Faker::Date.between(from: 5.days.ago, to: Date.today),
   duration: 60,
   monday: true,
   tuesday: true,
@@ -16,8 +17,9 @@ Klass.find_or_create_by!(
   friday: true,
   saturday: true,
   sunday: true,
-  teacher: teacher,
-  room: Room.last,
-  klass_template: KlassTemplate.last,
-  account: Account.last
+  teacher: Teacher.sample,
+  room: Room.sample,
+  klass_template: KlassTemplate.sample,
+  account: Account.sample
 )
+end

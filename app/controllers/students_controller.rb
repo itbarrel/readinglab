@@ -5,8 +5,25 @@ class StudentsController < ApplicationController
 
   # GET /students or /students.json
   def index
-    StudentMailer.example(User.new(email: 'Churail@softwarehouse.com')).deliver
+    # StudentMailer.example(User.new(email: 'Churail@softwarehouse.com')).deliver
     @students = Student.all
+
+    params[:classes_at].present? && @students = Student.studing_at(params[:classes_at].to_datetime)
+    @pagy, @students = pagy(@students, items: params[:per_page] || 10)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def present_search
+    if params[:search][:date].present?
+      present_student = params[:search][:date]
+      @present_student = Student.studing_at(present_student)
+    end
+
+    redirect_to communication_path
   end
 
   # GET /students/1 or /students/1.json

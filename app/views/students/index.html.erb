@@ -2,7 +2,7 @@
     <div class="min-height-200px">
       <div class="card-box mb-30">
         <div class="pd-20">
-          <h4 class="text-blue h4">Interviews</h4>
+          <h4 class="text-blue h4">Student Listing</h4>
         </div>
         <div class="pb-20">
           <table class="data-table-resources table stripe hover nowrap">
@@ -14,23 +14,23 @@
                     <span class="dt-checkbox-label"></span>
                   </div>
                 </th>
-                <th>Student</th>
-                <th>Date</th>
-                <th>Status</th>
-               
-  
+                <th>Name</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>Grade</th>
+                <th>Parents</th>
                 <th class="datatable-nosort">Action</th>
-  
               </tr>
             </thead>
             <tbody>
-              <% @interviews.each do |interview| %>
-                <%= render interview %>
+              <% @students.each do |student| %>
+                <%= render student %>
               <% end %>
             </tbody>
           </table>
         </div>
         <%= pagy_bootstrap_nav(@pagy).html_safe %>
+  
       </div>
     </div>
     <div class="footer-wrap pd-20 mb-20 card-box">
@@ -40,6 +40,5 @@
   </div>
   
   <% content_for :javascript_includes do %>
-    <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
+  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
   <% end %>
-  
