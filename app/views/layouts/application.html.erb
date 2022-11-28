@@ -39,11 +39,12 @@
 
     <%= render 'shared/sidebar_settings' %>
 
-    <%= yield :javascript_includes %>
     
     <%#= javascript_include_tag "theme_conf", type: "module" %>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
     <script src="assets/list.js/list.min.js"></script>
+    <script src="assets/fullcalendar/main"></script>
+    <%= yield :javascript_includes %>
   </body>
 </html>
