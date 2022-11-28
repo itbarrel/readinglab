@@ -1,81 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US" dir="ltr">
   <head>
-		<meta charset="utf-8" />
-		<title>Readinglab</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-		<%= csrf_meta_tags %>
-		<%= csp_meta_tag %>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Readinglab</title>
+    <meta name="msapplication-TileImage" content="assets/img/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
 
-		<%= favicon_link_tag("apple-touch-icon.png", rel: 'apple-touch-icon') %>
-		<%= favicon_link_tag("favicon-32x32.png", rel: 'icon', type: 'image/png') %>
-		<%= favicon_link_tag("favicon-16x16.png", rel: 'icon', type: 'image/png') %>
+    <%= favicon_link_tag("favicons/apple-touch-icon.png", rel: 'apple-touch-icon') %>
+		<%= favicon_link_tag("favicons/favicon-32x32.png", rel: 'icon', type: 'image/png') %>
+		<%= favicon_link_tag("favicons/favicon-16x16.png", rel: 'icon', type: 'image/png') %>
+		<%= favicon_link_tag("favicons/favicon.ico", rel: 'shortcut icon', type: 'image/x-icon') %>
+		<%= favicon_link_tag("favicons/manifest.json", rel: 'manifest') %>
 
-		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-			rel="stylesheet"
-		/>
-		
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
+
     <%= stylesheet_link_tag "application" %>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-		<script
-			async
-			src="https://www.googletagmanager.com/gtag/js?id=G-GBZ3SGGX85"
-		></script>
-		<script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag() {
-				dataLayer.push(arguments);
-			}
-			gtag("js", new Date());
-			gtag("config", "G-GBZ3SGGX85");
-		</script>
-
-		<script>
-			(function (w, d, s, l, i) {
-				w[l] = w[l] || [];
-				w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-				var f = d.getElementsByTagName(s)[0],
-					j = d.createElement(s),
-					dl = l != "dataLayer" ? "&l=" + l : "";
-				j.async = true;
-				j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-				f.parentNode.insertBefore(j, f);
-			})(window, document, "script", "dataLayer", "GTM-NXZMQSS");
-		</script>
   </head>
 
   <body>
-    <%= render 'shared/loader' %>
-    <%= render 'shared/header' %>
-    <%= render 'shared/settings_bar' %>
-    <%= render 'shared/sidebar' %>
-    
-    <div class="mobile-menu-overlay"></div>
+    <main class="main" id="top">
+      <div class="container" data-layout="container">
+        <%= render 'shared/sidebar' %>
+        <div class="content">
+          <%= render 'shared/header' %>
+          <%= yield %>
+          <%= render 'shared/footer' %>
+        </div>
+        <%= render 'shared/modals/index' %>
+      </div>
+    </main>
 
-    <div class="main-container">
-      <%= yield %>
-    </div>
-
-    <%= render 'modals/welcome' %>
-
-    <%= javascript_include_tag "core.min" %>
-    <%= render 'shared/plugins_js' %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <%= render 'shared/sidebar_settings' %>
 
     <%= yield :javascript_includes %>
-    <%#= javascript_include_tag "controllers/#{params[:controller]}" %>
-
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-NXZMQSS"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
-      ></iframe
-    ></noscript>
+    
+    <%#= javascript_include_tag "theme_conf", type: "module" %>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <script src="assets/list.js/list.min.js"></script>
   </body>
 </html>

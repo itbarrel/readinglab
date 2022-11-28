@@ -38,3 +38,4 @@
 .byebug_history
 *.env
 /esbuild_error_*
+

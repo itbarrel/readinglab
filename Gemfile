@@ -20,8 +20,6 @@ gem 'devise', '~> 4.8'
 gem 'jbuilder'
 gem 'paranoia'
 
-gem 'apexcharts'
-
 gem 'pagy', '~> 5.10'
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]

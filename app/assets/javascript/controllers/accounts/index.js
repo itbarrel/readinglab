@@ -1,3 +1,1 @@
-$('document').ready(function(){
-  initializeDataTable('.data-table-resources', true, true, true, true)
-});
+$("document").ready(function () {});

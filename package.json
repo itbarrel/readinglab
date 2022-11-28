@@ -1,25 +1,14 @@
 {
   "name": "app",
   "private": "true",
-  "type": "module",
   "dependencies": {
     "@popperjs/core": "^2.11.6",
-    "apexcharts": "^3.36.3",
-    "bootstrap": "^5.2.2",
-    "bootstrap-icons": "^1.9.1",
-    "datatables.net": "^1.13.1",
-    "datatables.net-bs4": "^1.13.1",
-    "datatables.net-bs5": "^1.13.1",
-    "datatables.net-buttons": "^2.3.1",
-    "datatables.net-responsive": "^2.4.0",
-    "esbuild": "^0.15.12",
+    "esbuild": "^0.15.15",
     "esbuild-rails": "^1.0.3",
-    "jquery-mousewheel": "^3.1.13",
-    "popper.js": "^1.16.1",
-    "sass": "^1.55.0"
+    "sass": "^1.56.1"
   },
   "scripts": {
-    "build": "node esbuild.config.mjs",
+    "build": "node esbuild.config.js",
     "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
     "rubocop": "bundle exec rubocop"
   },

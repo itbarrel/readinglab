@@ -22,7 +22,7 @@ Style/Documentation:
 Layout/EndOfLine:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 
 Naming/FileName:
@@ -50,10 +50,6 @@ Metrics/BlockLength:
 # Disables "Missing top-level class documentation comment" warning
 Documentation:
   Enabled: false
-
-# Disables "Line is too long" warning
-LineLength:
-  Enabled: true
 
 CyclomaticComplexity:
   Enabled: false
