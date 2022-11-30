@@ -5805,164 +5805,154 @@ var events = [
 -----------------------------------------------*/
 
 var appCalendarInit = function appCalendarInit() {
-  var Selectors = {
-    ACTIVE: ".active",
-    ADD_EVENT_FORM: "#addEventForm",
-    ADD_EVENT_MODAL: "#addEventModal",
-    CALENDAR: "#appCalendar",
-    CALENDAR_TITLE: ".calendar-title",
-    DATA_CALENDAR_VIEW: "[data-fc-view]",
-    DATA_EVENT: "[data-event]",
-    DATA_VIEW_TITLE: "[data-view-title]",
-    EVENT_DETAILS_MODAL: "#eventDetailsModal",
-    EVENT_DETAILS_MODAL_CONTENT: "#eventDetailsModal .modal-content",
-    EVENT_START_DATE: '#addEventModal [name="startDate"]',
-    INPUT_TITLE: '[name="title"]',
-  };
-  var Events = {
-    CLICK: "click",
-    SHOWN_BS_MODAL: "shown.bs.modal",
-    SUBMIT: "submit",
-  };
-  var DataKeys = {
-    EVENT: "event",
-    FC_VIEW: "fc-view",
-  };
-  var ClassNames = {
-    ACTIVE: "active",
-  };
-  var eventList = events.reduce(function (acc, val) {
-    return val.schedules
-      ? acc.concat(val.schedules.concat(val))
-      : acc.concat(val);
-  }, []);
-
-  var updateTitle = function updateTitle(title) {
-    document.querySelector(Selectors.CALENDAR_TITLE).textContent = title;
-  };
-
-  var appCalendar = document.querySelector(Selectors.CALENDAR);
-  var addEventForm = document.querySelector(Selectors.ADD_EVENT_FORM);
-  var addEventModal = document.querySelector(Selectors.ADD_EVENT_MODAL);
-  var eventDetailsModal = document.querySelector(Selectors.EVENT_DETAILS_MODAL);
-
-  if (appCalendar) {
-    var calendar = renderCalendar(appCalendar, {
-      headerToolbar: false,
-      dayMaxEvents: 2,
-      height: 800,
-      stickyHeaderDates: false,
-      views: {
-        week: {
-          eventLimit: 3,
-        },
-      },
-      eventTimeFormat: {
-        hour: "numeric",
-        minute: "2-digit",
-        omitZeroMinute: true,
-        meridiem: true,
-      },
-      events: eventList,
-      eventClick: function eventClick(info) {
-        if (info.event.url) {
-          window.open(info.event.url, "_blank");
-          info.jsEvent.preventDefault();
-        } else {
-          var template = getTemplate(info.event);
-          document.querySelector(
-            Selectors.EVENT_DETAILS_MODAL_CONTENT
-          ).innerHTML = template;
-          var modal = new window.bootstrap.Modal(eventDetailsModal);
-          modal.show();
-        }
-      },
-      dateClick: function dateClick(info) {
-        var modal = new window.bootstrap.Modal(addEventModal);
-        modal.show();
-        /*eslint-disable-next-line*/
-
-        var flatpickr = document.querySelector(
-          Selectors.EVENT_START_DATE
-        )._flatpickr;
-
-        flatpickr.setDate([info.dateStr]);
-      },
-    });
-    updateTitle(calendar.currentData.viewTitle);
-    document.querySelectorAll(Selectors.DATA_EVENT).forEach(function (button) {
-      button.addEventListener(Events.CLICK, function (e) {
-        var el = e.currentTarget;
-        var type = utils.getData(el, DataKeys.EVENT);
-
-        switch (type) {
-          case "prev":
-            calendar.prev();
-            updateTitle(calendar.currentData.viewTitle);
-            break;
-
-          case "next":
-            calendar.next();
-            updateTitle(calendar.currentData.viewTitle);
-            break;
-
-          case "today":
-            calendar.today();
-            updateTitle(calendar.currentData.viewTitle);
-            break;
-
-          default:
-            calendar.today();
-            updateTitle(calendar.currentData.viewTitle);
-            break;
-        }
-      });
-    });
-    document
-      .querySelectorAll(Selectors.DATA_CALENDAR_VIEW)
-      .forEach(function (link) {
-        link.addEventListener(Events.CLICK, function (e) {
-          e.preventDefault();
-          var el = e.currentTarget;
-          var text = el.textContent;
-          el.parentElement
-            .querySelector(Selectors.ACTIVE)
-            .classList.remove(ClassNames.ACTIVE);
-          el.classList.add(ClassNames.ACTIVE);
-          document.querySelector(Selectors.DATA_VIEW_TITLE).textContent = text;
-          calendar.changeView(utils.getData(el, DataKeys.FC_VIEW));
-          updateTitle(calendar.currentData.viewTitle);
-        });
-      });
-    addEventForm &&
-      addEventForm.addEventListener(Events.SUBMIT, function (e) {
-        e.preventDefault();
-        var _e$target = e.target,
-          title = _e$target.title,
-          startDate = _e$target.startDate,
-          endDate = _e$target.endDate,
-          label = _e$target.label,
-          description = _e$target.description,
-          allDay = _e$target.allDay;
-        calendar.addEvent({
-          title: title.value,
-          start: startDate.value,
-          end: endDate.value ? endDate.value : null,
-          allDay: allDay.checked,
-          className:
-            allDay.checked && label.value ? "bg-soft-".concat(label.value) : "",
-          description: description.value,
-        });
-        e.target.reset();
-        window.bootstrap.Modal.getInstance(addEventModal).hide();
-      });
-  }
-
-  addEventModal &&
-    addEventModal.addEventListener(Events.SHOWN_BS_MODAL, function (_ref13) {
-      var currentTarget = _ref13.currentTarget;
-      currentTarget.querySelector(Selectors.INPUT_TITLE).focus();
-    });
+  // var Selectors = {
+  //   ACTIVE: ".active",
+  //   ADD_EVENT_FORM: "#addEventForm",
+  //   ADD_EVENT_MODAL: "#addEventModal",
+  //   CALENDAR: "#appCalendar",
+  //   CALENDAR_TITLE: ".calendar-title",
+  //   DATA_CALENDAR_VIEW: "[data-fc-view]",
+  //   DATA_EVENT: "[data-event]",
+  //   DATA_VIEW_TITLE: "[data-view-title]",
+  //   EVENT_DETAILS_MODAL: "#eventDetailsModal",
+  //   EVENT_DETAILS_MODAL_CONTENT: "#eventDetailsModal .modal-content",
+  //   EVENT_START_DATE: '#addEventModal [name="startDate"]',
+  //   INPUT_TITLE: '[name="title"]',
+  // };
+  // var Events = {
+  //   CLICK: "click",
+  //   SHOWN_BS_MODAL: "shown.bs.modal",
+  //   SUBMIT: "submit",
+  // };
+  // var DataKeys = {
+  //   EVENT: "event",
+  //   FC_VIEW: "fc-view",
+  // };
+  // var ClassNames = {
+  //   ACTIVE: "active",
+  // };
+  // var eventList = events.reduce(function (acc, val) {
+  //   return val.schedules
+  //     ? acc.concat(val.schedules.concat(val))
+  //     : acc.concat(val);
+  // }, []);
+  // var updateTitle = function updateTitle(title) {
+  //   document.querySelector(Selectors.CALENDAR_TITLE).textContent = title;
+  // };
+  // var appCalendar = document.querySelector(Selectors.CALENDAR);
+  // var addEventForm = document.querySelector(Selectors.ADD_EVENT_FORM);
+  // var addEventModal = document.querySelector(Selectors.ADD_EVENT_MODAL);
+  // var eventDetailsModal = document.querySelector(Selectors.EVENT_DETAILS_MODAL);
+  // if (appCalendar) {
+  //   var calendar = renderCalendar(appCalendar, {
+  //     headerToolbar: false,
+  //     dayMaxEvents: 2,
+  //     height: 800,
+  //     stickyHeaderDates: false,
+  //     views: {
+  //       week: {
+  //         eventLimit: 3,
+  //       },
+  //     },
+  //     eventTimeFormat: {
+  //       hour: "numeric",
+  //       minute: "2-digit",
+  //       omitZeroMinute: true,
+  //       meridiem: true,
+  //     },
+  //     events: eventList,
+  //     eventClick: function eventClick(info) {
+  //       if (info.event.url) {
+  //         window.open(info.event.url, "_blank");
+  //         info.jsEvent.preventDefault();
+  //       } else {
+  //         var template = getTemplate(info.event);
+  //         document.querySelector(
+  //           Selectors.EVENT_DETAILS_MODAL_CONTENT
+  //         ).innerHTML = template;
+  //         var modal = new window.bootstrap.Modal(eventDetailsModal);
+  //         modal.show();
+  //       }
+  //     },
+  //     dateClick: function dateClick(info) {
+  //       var modal = new window.bootstrap.Modal(addEventModal);
+  //       modal.show();
+  //       /*eslint-disable-next-line*/
+  //       var flatpickr = document.querySelector(
+  //         Selectors.EVENT_START_DATE
+  //       )._flatpickr;
+  //       flatpickr.setDate([info.dateStr]);
+  //     },
+  //   });
+  //   updateTitle(calendar.currentData.viewTitle);
+  //   document.querySelectorAll(Selectors.DATA_EVENT).forEach(function (button) {
+  //     button.addEventListener(Events.CLICK, function (e) {
+  //       var el = e.currentTarget;
+  //       var type = utils.getData(el, DataKeys.EVENT);
+  //       switch (type) {
+  //         case "prev":
+  //           calendar.prev();
+  //           updateTitle(calendar.currentData.viewTitle);
+  //           break;
+  //         case "next":
+  //           calendar.next();
+  //           updateTitle(calendar.currentData.viewTitle);
+  //           break;
+  //         case "today":
+  //           calendar.today();
+  //           updateTitle(calendar.currentData.viewTitle);
+  //           break;
+  //         default:
+  //           calendar.today();
+  //           updateTitle(calendar.currentData.viewTitle);
+  //           break;
+  //       }
+  //     });
+  //   });
+  //   document
+  //     .querySelectorAll(Selectors.DATA_CALENDAR_VIEW)
+  //     .forEach(function (link) {
+  //       link.addEventListener(Events.CLICK, function (e) {
+  //         e.preventDefault();
+  //         var el = e.currentTarget;
+  //         var text = el.textContent;
+  //         el.parentElement
+  //           .querySelector(Selectors.ACTIVE)
+  //           .classList.remove(ClassNames.ACTIVE);
+  //         el.classList.add(ClassNames.ACTIVE);
+  //         document.querySelector(Selectors.DATA_VIEW_TITLE).textContent = text;
+  //         calendar.changeView(utils.getData(el, DataKeys.FC_VIEW));
+  //         updateTitle(calendar.currentData.viewTitle);
+  //       });
+  //     });
+  //   addEventForm &&
+  //     addEventForm.addEventListener(Events.SUBMIT, function (e) {
+  //       e.preventDefault();
+  //       var _e$target = e.target,
+  //         title = _e$target.title,
+  //         startDate = _e$target.startDate,
+  //         endDate = _e$target.endDate,
+  //         label = _e$target.label,
+  //         description = _e$target.description,
+  //         allDay = _e$target.allDay;
+  //       calendar.addEvent({
+  //         title: title.value,
+  //         start: startDate.value,
+  //         end: endDate.value ? endDate.value : null,
+  //         allDay: allDay.checked,
+  //         className:
+  //           allDay.checked && label.value ? "bg-soft-".concat(label.value) : "",
+  //         description: description.value,
+  //       });
+  //       e.target.reset();
+  //       window.bootstrap.Modal.getInstance(addEventModal).hide();
+  //     });
+  // }
+  // addEventModal &&
+  //   addEventModal.addEventListener(Events.SHOWN_BS_MODAL, function (_ref13) {
+  //     var currentTarget = _ref13.currentTarget;
+  //     currentTarget.querySelector(Selectors.INPUT_TITLE).focus();
+  //   });
 };
 /*-----------------------------------------------
 |   Project Management Calendar

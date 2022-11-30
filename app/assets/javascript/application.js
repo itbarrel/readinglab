@@ -16,3 +16,4 @@ import "../plugins/fontawesome/all.min";
 import "./lodash";
 
 import "./theme/theme";
+import "./theme/calendarInit";
