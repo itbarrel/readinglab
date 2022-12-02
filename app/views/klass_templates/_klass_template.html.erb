@@ -1,33 +1,20 @@
-<tr>
-    <td></td>
-    <td><%= klass_template.name %></td>
-    <td><%= klass_template.duration %></td>
-    <td><%= klass_template.max_students %></td>
-    
-    <td>
-      <div class="dropdown">
-        <a
-          class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
-          href="#"
-          role="button"
-          data-toggle="dropdown"
-        >
-          <i class="dw dw-more"></i>
-        </a>
-        <div
-          class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
-        >
-          <a class="dropdown-item" href="#"
-            ><i class="dw dw-eye"></i> View</a
-          >
-          <a class="dropdown-item" href="#"
-            ><i class="dw dw-edit2"></i> Edit</a
-          >
-          <a class="dropdown-item" href="#"
-            ><i class="dw dw-delete-3"></i> Delete</a
-          >
-        </div>
+<tr class="btn-reveal-trigger">
+  <td class="align-middle py-2" style="width: 28px;">
+    <div class="form-check fs-0 mb-0 d-flex align-items-center">
+      <input class="form-check-input" type="checkbox" id="customer-0" data-bulk-select-row="data-bulk-select-row" />
+    </div>
+  </td>
+  <td class="name align-middle white-space-nowrap py-2"><%= klass_template.name %></td>
+  <td class="email align-middle py-2"><%= klass_template.duration%></td>
+  <td class="phone align-middle white-space-nowrap py-2"><%= klass_template.max_students %></td>
+  <td class="align-middle white-space-nowrap py-2 text-end">
+    <div class="dropdown font-sans-serif position-static">
+      <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+      <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
+      <div class="bg-white py-2">
+        <a class="dropdown-item" href="#!">Edit</a>
+        <a class="dropdown-item text-danger" href="#!">Delete</a></div>
       </div>
-    </td>
-  </tr>
-  
+    </div>
+  </td>
+</tr>

@@ -1,44 +1,59 @@
-<div class="pd-ltr-20 xs-pd-20-10">
-    <div class="min-height-200px">
-      <div class="card-box mb-30">
-        <div class="pd-20">
-          <h4 class="text-blue h4">Student Listing</h4>
+  <div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
+    <div class="card-header">
+      <div class="row flex-between-center">
+        <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+            <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Student Listing</h5>
         </div>
-        <div class="pb-20">
-          <table class="data-table-resources table stripe hover nowrap">
-            <thead>
-              <tr>
-                <th>
-                  <div class="dt-checkbox">
-                    <input type="checkbox" name="select_all" value="1" id="example-select-all" />
-                    <span class="dt-checkbox-label"></span>
-                  </div>
-                </th>
-                <th>Name</th>
-                <th>Date of Birth</th>
-                <th>Gender</th>
-                <th>Grade</th>
-                <th>Parents</th>
-                <th class="datatable-nosort">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @students.each do |student| %>
-                <%= render student %>
-              <% end %>
-            </tbody>
-          </table>
+        <div class="col-8 col-sm-auto text-end ps-2">
+          <div class="d-none" id="table-customers-actions">
+            <div class="d-flex">
+              <select class="form-select form-select-sm" aria-label="Bulk actions">
+              <option selected="">Bulk actions</option>
+              <option value="Refund">Refund</option>
+              <option value="Delete">Delete</option>
+              <option value="Archive">Archive</option>
+              </select>
+              <button class="btn btn-falcon-default btn-sm ms-2" type="button">Apply</button>
+            </div>
+          </div>
+          <div id="table-customers-replace-element">
+            <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">New</span></button>
+            <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Filter</span></button>
+            <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Export</span></button>
+          </div>
         </div>
-        <%= pagy_bootstrap_nav(@pagy).html_safe %>
-  
       </div>
     </div>
-    <div class="footer-wrap pd-20 mb-20 card-box">
-      DeskApp - Bootstrap 4 Admin Template By
-      <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+          <thead class="bg-200 text-900">
+            <tr>
+              <th>
+                <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                  <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox" data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
+                </div>
+              </th>
+              <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">Name</th>
+              <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Date of Birth</th>
+              <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Gender</th>
+              <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Grade</th>
+              <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Parents</th>
+              <th class="sort pe-1 align-middle white-space-nowrap"></th>
+            </tr>
+          </thead>
+          <tbody class="list" id="table-customers-body">
+            <% @students.each do |student| %>
+              <%= render student %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <%= pagy_bootstrap_nav(@pagy).html_safe %>
     </div>
   </div>
   
   <% content_for :javascript_includes do %>
-  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
+    <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
   <% end %>
+  

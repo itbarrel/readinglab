@@ -5,8 +5,23 @@ class InterviewsController < ApplicationController
 
   # GET /interviews or /interviews.json
   def index
-    # @interviews = Interview.all
-    @pagy, @interviews = pagy(Interview.all, items: params[:per_page] || '10')
+    @interviews = Interview.all
+
+    if params[:start].present?
+      start_date = params[:start]
+      @interviews = @interviews.where(
+        '(start)::date > ?', start_date.to_date
+      )
+    end
+
+    if params[:end].present?
+      end_date = params[:end]
+      @interviews = @interviews.where(
+        '(end)::date < ?', end_date.to_date
+      )
+    end
+
+    @pagy, @interviews = pagy(@interviews.includes(:student), items: params[:per_page] || '10')
   end
 
   # GET /interviews/1 or /interviews/1.json

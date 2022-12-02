@@ -7,7 +7,8 @@ class AccountsController < ApplicationController
 
   # GET /accounts or /accounts.json
   def index
-    @accounts = Account.all
+    # @accounts = Account.all
+    @pagy, @accounts = pagy(Account.all, items: params[:per_page] || '10')
   end
 
   # GET /accounts/1 or /accounts/1.json

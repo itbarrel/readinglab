@@ -12,14 +12,17 @@ document.addEventListener("DOMContentLoaded", () => {
       url: "/interviews.json",
       method: "GET",
       extraParams: {
-        custom_param1: "something",
-        custom_param2: "somethingelse",
-      },
-      failure: function () {
-        alert("there was an error while fetching events!");
-      },
-      color: "yellow", // a non-ajax option
-      textColor: "black", // a non-ajax option
+        cachebuster: new Date().valueOf(),
+        pagination: false
+      }
+    },
+    {
+      url: "/meetings.json",
+      method: "GET",
+      extraParams: {
+        cachebuster: new Date().valueOf(),
+        pagination: false
+      }
     },
   ];
   calendarInit(undefined, events, true);
