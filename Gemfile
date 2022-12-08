@@ -16,11 +16,10 @@ gem 'sprockets-rails'
 
 gem 'cancancan'
 gem 'date_validator', '~> 0.12.0'
-gem 'devise', '~> 4.8'
+gem 'devise'
 gem 'jbuilder'
-gem 'paranoia'
-
 gem 'pagy', '~> 5.10'
+gem 'paranoia'
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'cssbundling-rails'

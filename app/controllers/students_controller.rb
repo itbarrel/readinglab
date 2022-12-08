@@ -7,10 +7,8 @@ class StudentsController < ApplicationController
   def index
     # StudentMailer.example(User.new(email: 'Churail@softwarehouse.com')).deliver
     @students = Student.all
-
     params[:classes_at].present? && @students = Student.studing_at(params[:classes_at].to_datetime)
     @pagy, @students = pagy(@students, items: params[:per_page] || 10)
-
     respond_to do |format|
       format.html
       format.js

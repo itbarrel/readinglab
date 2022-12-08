@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   # include EsbuildErrorRendering if Rails.env.development?
   before_action :generate_sidebar, unless: :json_request?
+  before_action :authenticate_user!
 
   def generate_sidebar
     @menu_list = {
@@ -30,6 +31,14 @@ class ApplicationController < ActionController::Base
         { url: '/profile', text: 'Profile', class: '', icon: 'micon bi bi-person' }
       ]
     }
+  end
+  layout :set_layout
+  def set_layout
+    if user_signed_in?
+      'application'
+    else
+      'welcome'
+    end
   end
 
   private

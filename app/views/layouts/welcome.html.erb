@@ -26,18 +26,14 @@
 
   <body>
     <main class="main" id="top">
-      <div class="container" data-layout="container">
-        <%= render 'shared/sidebar' %>
-        <div class="content">
-          <%= render 'shared/header' %>
-          <%= yield %>
-          <%= render 'shared/footer' %>
-        </div>
-        <%= render 'shared/modals/index' %>
+      <div class="container-fluid">
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+        <%= yield %>
       </div>
     </main>
 
-    <%= render 'shared/sidebar_settings' %>
+    <%#= render 'shared/sidebar_settings' %>
     
     <%#= javascript_include_tag "theme_conf", type: "module" %>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>

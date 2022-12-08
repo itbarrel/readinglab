@@ -274,7 +274,7 @@ DEPENDENCIES
   cssbundling-rails
   date_validator (~> 0.12.0)
   debug
-  devise (~> 4.8)
+  devise
   dotenv-rails
   faker
   jbuilder
