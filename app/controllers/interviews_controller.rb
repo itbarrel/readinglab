@@ -10,14 +10,14 @@ class InterviewsController < ApplicationController
     if params[:start].present?
       start_date = params[:start]
       @interviews = @interviews.where(
-        '(start)::date > ?', start_date.to_date
+        '(date)::date > ?', start_date.to_date
       )
     end
 
     if params[:end].present?
       end_date = params[:end]
       @interviews = @interviews.where(
-        '(end)::date < ?', end_date.to_date
+        '(date)::date < ?', end_date.to_date
       )
     end
 
