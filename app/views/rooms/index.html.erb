@@ -1,10 +1,5 @@
 
 
-<% content_for :javascript_includes do %>
-  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
-<% end %>
-
-
 <div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
   <div class="card-header">
     <div class="row flex-between-center">
@@ -31,6 +26,7 @@
       </div>
     </div>
   </div>
+  <%= render 'rooms/search' %>
   <div class="card-body p-0">
     <div class="table-responsive">
       <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
@@ -41,8 +37,8 @@
                 <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox" data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
               </div>
             </th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">Name</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Capacity</th>
+            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :name, default_order: :asc)%></th>
+            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :capacity, default_order: :asc)%></th>
             <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Color</th>
             <th class="sort pe-1 align-middle white-space-nowrap" ></th>
           </tr>

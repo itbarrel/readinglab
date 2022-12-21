@@ -20,6 +20,7 @@ gem 'devise'
 gem 'jbuilder'
 gem 'pagy', '~> 5.10'
 gem 'paranoia'
+gem 'ransack'
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'cssbundling-rails'

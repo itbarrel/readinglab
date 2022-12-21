@@ -5,7 +5,11 @@ class RoomsController < ApplicationController
 
   # GET /rooms or /rooms.json
   def index
-    @pagy, @rooms = pagy(Room.all, items: params[:per_page] || '10')
+    @rooms = Room.all
+    @search = @rooms.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @rooms = pagy(@search.result,
+                         items: params[:per_page] || '10')
   end
 
   # GET /rooms/1 or /rooms/1.json
