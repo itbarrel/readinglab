@@ -5,8 +5,12 @@ class ParentsController < ApplicationController
 
   # GET /parents or /parents.json
   def index
-    # @parents = Parent.all
-    @pagy, @parents = pagy(Parent.all, items: params[:per_page] || '10')
+    @parents = Parent.all
+    @search = @parents.ransack(params[:q])
+    @search.sorts = 'father_first asc' if @search.sorts.empty?
+    @pagy, @parents = pagy(@search.result,
+                           items: params[:per_page] || '10')
+    # @pagy, @parents = pagy(Parent.all, items: params[:per_page] || '10')
   end
 
   # GET /parents/1 or /parents/1.json

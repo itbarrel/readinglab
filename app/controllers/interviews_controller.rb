@@ -6,7 +6,6 @@ class InterviewsController < ApplicationController
   # GET /interviews or /interviews.json
   def index
     @interviews = Interview.all
-
     if params[:start].present?
       start_date = params[:start]
       @interviews = @interviews.where(
@@ -21,7 +20,10 @@ class InterviewsController < ApplicationController
       )
     end
 
-    @pagy, @interviews = pagy(@interviews.includes(:student), items: params[:per_page] || '10')
+    @search = @interviews.ransack(params[:q])
+    @search.sorts = 'student_first_name asc' if @search.sorts.empty?
+    @pagy, @interviews = pagy(@search.result.includes(:student),
+                              items: params[:per_page] || '10')
   end
 
   # GET /interviews/1 or /interviews/1.json

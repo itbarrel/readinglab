@@ -8,7 +8,10 @@ class StudentsController < ApplicationController
     # StudentMailer.example(User.new(email: 'Churail@softwarehouse.com')).deliver
     @students = Student.all
     params[:classes_at].present? && @students = Student.studing_at(params[:classes_at].to_datetime)
-    @pagy, @students = pagy(@students, items: params[:per_page] || 10)
+    @search = @students.ransack(params[:q])
+    @search.sorts = 'first_name asc' if @search.sorts.empty?
+    @pagy, @students = pagy(@search.result,
+                            items: params[:per_page] || '10')
     respond_to do |format|
       format.html
       format.js

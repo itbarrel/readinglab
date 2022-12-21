@@ -16,6 +16,7 @@
               <button class="btn btn-falcon-default btn-sm ms-2" type="button">Apply</button>
             </div>
           </div>
+          <%= render 'students/search' %>
           <div id="table-customers-replace-element">
             <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">New</span></button>
             <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Filter</span></button>
@@ -34,7 +35,7 @@
                   <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox" data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
                 </div>
               </th>
-              <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">Name</th>
+              <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name"><%= sort_link(@search, :first_name, default_order: :asc)%></th>
               <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Date of Birth</th>
               <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Gender</th>
               <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Grade</th>

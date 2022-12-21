@@ -24,6 +24,7 @@
       </div>
     </div>
   </div>
+  <%= render 'vacations/search' %>
   <div class="card-body p-0">
     <div class="table-responsive">
       <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
@@ -34,7 +35,7 @@
                 <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox" data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
               </div>
             </th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">Name</th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name"><%= sort_link(@search, :name, default_order: :asc)%></th>
             <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Starting Date</th>
             <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Endig Date</th>
             <th class="sort pe-1 align-middle white-space-nowrap ps-5" data-sort="address" style="min-width: 50px;">Vacation Type</th>

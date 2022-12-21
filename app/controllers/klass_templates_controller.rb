@@ -5,8 +5,15 @@ class KlassTemplatesController < ApplicationController
 
   # GET /klass_templates or /klass_templates.json
   def index
-    # @klass_templates = KlassTemplate.all
-    @pagy, @klass_templates = pagy(KlassTemplate.all, items: params[:per_page] || '10')
+    @klass_templates = KlassTemplate.all
+
+    @search = @klass_templates.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @klass_templates = pagy(@search.result,
+                                   items: params[:per_page] || '10')
+    # @q = KlassTemplate.ransack(params[:q])
+    # @klass_templates = @q.result(distinct: true)
+    # @pagy, @klass_templates = pagy(@klass_templates.all, items: params[:per_page] || '10')
   end
 
   # GET /klass_templates/1 or /klass_templates/1.json
