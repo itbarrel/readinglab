@@ -13,6 +13,7 @@ import "../plugins/flatpickr/flatpickr";
 import "./dayjs";
 import "../plugins/echarts/echarts.min";
 import "../plugins/fontawesome/all.min";
+
 import "./lodash";
 
 import "./theme/theme";
