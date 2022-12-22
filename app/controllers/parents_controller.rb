@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class ParentsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_parent, only: %i[show edit update destroy]
 
   # GET /parents or /parents.json
   def index
-    @parents = Parent.all
+    # @parents = Parent.all
     @search = @parents.ransack(params[:q])
     @search.sorts = 'father_first asc' if @search.sorts.empty?
     @pagy, @parents = pagy(@search.result,

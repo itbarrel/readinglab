@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class KlassTemplatesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_klass_template, only: %i[show edit update destroy]
 
   # GET /klass_templates or /klass_templates.json
   def index
-    @klass_templates = KlassTemplate.all
-
+    # @klass_templates = KlassTemplate.all
     @search = @klass_templates.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
     @pagy, @klass_templates = pagy(@search.result,

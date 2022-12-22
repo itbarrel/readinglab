@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class InterviewsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_interview, only: %i[show edit update destroy]
 
   # GET /interviews or /interviews.json
   def index
-    @interviews = Interview.all
     if params[:start].present?
       start_date = params[:start]
       @interviews = @interviews.where(
@@ -31,7 +31,7 @@ class InterviewsController < ApplicationController
 
   # GET /interviews/new
   def new
-    @interview = Interview.new
+    # @interview = Interview.new
   end
 
   # GET /interviews/1/edit
@@ -79,7 +79,7 @@ class InterviewsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_interview
-    @interview = Interview.find(params[:id])
+    # @interview = Interview.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

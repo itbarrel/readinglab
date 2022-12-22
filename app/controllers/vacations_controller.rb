@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class VacationsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_vacation, only: %i[show edit update destroy]
 
   # GET /vacations or /vacations.json
   def index
-    @vacations = Vacation.all
+    # @vacations = Vacation.all
     @search = @vacations.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
     @pagy, @vacations = pagy(@search.result,
