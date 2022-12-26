@@ -26,13 +26,14 @@ class RoomsController < ApplicationController
   # POST /rooms or /rooms.json
   def create
     @room = Room.new(room_params)
+    attach_account_for(@room)
 
     respond_to do |format|
       if @room.save
-        format.html { redirect_to room_url(@room), notice: 'Room was successfully created.' }
+        format.html { redirect_to rooms_url, notice: 'Room was successfully created.' }
         format.json { render :show, status: :created, location: @room }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :index, status: :unprocessable_entity }
         format.json { render json: @room.errors, status: :unprocessable_entity }
       end
     end
@@ -42,10 +43,10 @@ class RoomsController < ApplicationController
   def update
     respond_to do |format|
       if @room.update(room_params)
-        format.html { redirect_to room_url(@room), notice: 'Room was successfully updated.' }
+        format.html { redirect_to rooms_url, notice: 'Room was successfully updated.' }
         format.json { render :show, status: :ok, location: @room }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :index, status: :unprocessable_entity }
         format.json { render json: @room.errors, status: :unprocessable_entity }
       end
     end

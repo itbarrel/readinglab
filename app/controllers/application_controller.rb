@@ -33,6 +33,7 @@ class ApplicationController < ActionController::Base
     }
   end
   layout :set_layout
+
   def set_layout
     if user_signed_in?
       'application'
@@ -45,5 +46,9 @@ class ApplicationController < ActionController::Base
 
   def json_request?
     request.format.symbol == :json
+  end
+
+  def attach_account_for(resource)
+    resource.account = current_user.account
   end
 end
