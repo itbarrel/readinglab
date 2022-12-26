@@ -58,7 +58,7 @@
 </div>
 
 <% content_for :modal_includes do %>
-  <%= render 'shared/modals/rooms/modal' %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'roomModal' } %>
 <% end %>
 
 <% content_for :javascript_includes do %>
