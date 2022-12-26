@@ -5,6 +5,7 @@ import "../plugins/overlayscrollbars/OverlayScrollbars.min";
 import "../plugins/popper/popper.min";
 
 import "./jquery";
+import "./jquery-ujs"
 import "./bootstrap";
 
 import "./anchorJS";

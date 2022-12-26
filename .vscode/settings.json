@@ -1,14 +1,15 @@
 {
-    "editor.formatOnSave": true,
-    "javascript.format.enable": false,
-    "javascript.validate.enable": false,
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true,
-    "editor.detectIndentation": false,
-    "search.exclude": {
-        "**/build": true,
-        "**/node_modules": true,
-        "**/yarn-error.log": true,
-        "**/yarn.lock": true
-    }
+  "editor.formatOnSave": false,
+  "files.eol": "\r\n",
+  "javascript.format.enable": false,
+  "javascript.validate.enable": false,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "search.exclude": {
+    "**/build": true,
+    "**/node_modules": true,
+    "**/yarn-error.log": true,
+    "**/yarn.lock": true
+  }
 }
