@@ -3,6 +3,7 @@
   "private": "true",
   "dependencies": {
     "@popperjs/core": "^2.11.6",
+    "@rails/ujs": "^7.0.4",
     "bootstrap-icons": "^1.10.2",
     "esbuild": "^0.15.15",
     "esbuild-rails": "^1.0.3",
