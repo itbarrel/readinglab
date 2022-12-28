@@ -145,7 +145,7 @@ const renderCalendar = (el, option) => {
   return calendar;
 };
 
-window.calendarInit = (selectors = {}, events = [], external = false) => {
+window.calendarInit = (selectors = {}, events = [], external = false, domEvents = {}) => {
   const Selectors = {
     ACTIVE: selectors.ACTIVE || ".active",
     ADD_EVENT_FORM: selectors.ADD_EVENT_FORM || "#addEventForm",
@@ -196,32 +196,6 @@ window.calendarInit = (selectors = {}, events = [], external = false) => {
   );
 
   if (appCalendar) {
-    const eventClick = (info) => {
-      if (info.event.url) {
-        window.open(info.event.url, "_blank");
-        info.jsEvent.preventDefault();
-      } else {
-        const template = getTemplate(info.event);
-        document.querySelector(
-          Selectors.EVENT_DETAILS_MODAL_CONTENT
-        ).innerHTML = template;
-        const modal = new window.bootstrap.Modal(eventDetailsModal);
-        modal.show();
-      }
-    };
-
-    const dateClick = (info) => {
-      const modal = new window.bootstrap.Modal(addEventModal);
-      modal.show();
-      /*eslint-disable-next-line*/
-
-      const flatpickr = document.querySelector(
-        Selectors.EVENT_START_DATE
-      )._flatpickr;
-
-      flatpickr.setDate([info.dateStr]);
-    };
-
     const eventSourcesKey = external ? "eventSources" : "events";
     const calendar = renderCalendar(appCalendar, {
       headerToolbar: false,
@@ -240,8 +214,7 @@ window.calendarInit = (selectors = {}, events = [], external = false) => {
         meridiem: true,
       },
       [eventSourcesKey]: eventList,
-      eventClick: eventClick,
-      dateClick: dateClick,
+      ...domEvents
     });
     updateTitle(calendar.currentData.viewTitle);
     document.querySelectorAll(Selectors.DATA_EVENT).forEach(function (button) {
@@ -287,28 +260,6 @@ window.calendarInit = (selectors = {}, events = [], external = false) => {
           calendar.changeView(getData(el, DataKeys.FC_VIEW));
           updateTitle(calendar.currentData.viewTitle);
         });
-      });
-    addEventForm &&
-      addEventForm.addEventListener(Events.SUBMIT, function (e) {
-        e.preventDefault();
-        const _e$target = e.target,
-          title = _e$target.title,
-          startDate = _e$target.startDate,
-          endDate = _e$target.endDate,
-          label = _e$target.label,
-          description = _e$target.description,
-          allDay = _e$target.allDay;
-        calendar.addEvent({
-          title: title.value,
-          start: startDate.value,
-          end: endDate.value ? endDate.value : null,
-          allDay: allDay.checked,
-          className:
-            allDay.checked && label.value ? "bg-soft-".concat(label.value) : "",
-          description: description.value,
-        });
-        e.target.reset();
-        window.bootstrap.Modal.getInstance(addEventModal).hide();
       });
   }
 
