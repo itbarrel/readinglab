@@ -15,7 +15,9 @@
         <hr />
       </div>
       <div class="col-auto d-flex order-md-0">
-        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#addEventModal"> <span class="fas fa-plus me-2"></span>Add Schedule</button>
+        <%= link_to(new_klass_path, remote: true, class: 'btn btn-primary btn-sm') do %>
+          <span class="fas fa-plus me-2"></span>Add Schedule
+        <% end %>
       </div>
       <div class="col d-flex justify-content-end order-md-2">
         <div class="dropdown font-sans-serif me-md-2">
@@ -30,6 +32,10 @@
     <div class="calendar-outline" id="appCalendar"></div>
   </div>
 </div>
+
+<% content_for :modal_includes do %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addEventModal' } %>
+<% end %>
 
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true, module: true %>
