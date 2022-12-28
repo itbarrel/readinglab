@@ -5,23 +5,25 @@ class MeetingsController < ApplicationController
 
   # GET /meetings or /meetings.json
   def index
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
     @meetings = Meeting.all
 
     if params[:start].present?
       start_date = params[:start]
       @meetings = @meetings.where(
-        '(starts_at)::date > ?', start_date.to_date
+        '(starts_at)::date >= ?', start_date.to_date
       )
     end
 
     if params[:end].present?
       end_date = params[:end]
       @meetings = @meetings.where(
-        '(ends_at)::date < ?', end_date.to_date
+        '(ends_at)::date <= ?', end_date.to_date
       )
     end
 
-    @pagy, @meetings = pagy(@meetings.includes(:klass), items: params[:per_page] || '10')
+    @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room]), items: per_page)
   end
 
   # GET /meetings/1 or /meetings/1.json

@@ -1,16 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const _window3 = window,
-    dayjs = _window3.dayjs;
-  const currentDay = dayjs && dayjs().format("DD");
-  const currentMonth = dayjs && dayjs().format("MM");
-  const prevMonth = dayjs && dayjs().subtract(1, "month").format("MM");
-  const nextMonth = dayjs && dayjs().add(1, "month").format("MM");
-  const currentYear = dayjs && dayjs().format("YYYY");
-
   const events = [
     {
       url: "/interviews.json",
       method: "GET",
+      color: 'yellow',
       extraParams: {
         cachebuster: new Date().valueOf(),
         pagination: false
@@ -19,15 +12,18 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       url: "/meetings.json",
       method: "GET",
+      // color: '#fef0e8',
+      // textColor: '#f2600e',
       extraParams: {
         cachebuster: new Date().valueOf(),
         pagination: false
       }
-    },
+    }
   ];
   const domEvents = {
     eventClick: (info) => {
-      console.log('>>>>event>>>>>>...', info)
+      const { event } = info
+      console.log('>>>>event>>>>>>...', event.id)
       // if (info.event.url) {
       //   window.open(info.event.url, "_blank");
       //   info.jsEvent.preventDefault();
