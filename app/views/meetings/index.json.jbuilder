@@ -2,8 +2,7 @@
 
 json.array! @meetings do |meeting|
   json.id meeting.id
-  json.start meeting.starts_at
-  json.end meeting.ends_at
+  json.start meeting.starts_at.to_date
+  json.end meeting.ends_at.to_date
   json.title meeting.klass.name
-  json.className 'bg-soft-primary'
 end
