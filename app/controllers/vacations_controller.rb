@@ -30,10 +30,10 @@ class VacationsController < ApplicationController
 
     respond_to do |format|
       if @vacation.save
-        format.html { redirect_to vacation_url(@vacation), notice: 'Vacation was successfully created.' }
+        format.html { redirect_to vacation_url, notice: 'Vacation was successfully created.' }
         format.json { render :show, status: :created, location: @vacation }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :index, status: :unprocessable_entity }
         format.json { render json: @vacation.errors, status: :unprocessable_entity }
       end
     end

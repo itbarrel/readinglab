@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dateClick: (info) => {
       console.log('>>>>>date>>>>>...', info)
       $.ajax({
-        url: "/klasses/new", 
+        url: "/interviews/new", 
         data: { start_date: info.date.toISOString() }
       });
   

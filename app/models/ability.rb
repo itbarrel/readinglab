@@ -12,7 +12,7 @@ class Ability
       can :manage, :all
     else
       user.admin?
-      can :read, :all
+      can :manage, :all
     end
   end
 end

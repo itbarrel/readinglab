@@ -28,13 +28,14 @@ class ParentsController < ApplicationController
   # POST /parents or /parents.json
   def create
     @parent = Parent.new(parent_params)
+    attach_account_for(@parent)
 
     respond_to do |format|
       if @parent.save
-        format.html { redirect_to parent_url(@parent), notice: 'Parent was successfully created.' }
+        format.html { redirect_to parents_url, notice: 'Parent was successfully created.' }
         format.json { render :show, status: :created, location: @parent }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to parents_url, status: :unprocessable_entity }
         format.json { render json: @parent.errors, status: :unprocessable_entity }
       end
     end

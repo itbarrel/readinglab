@@ -34,11 +34,11 @@ class KlassTemplatesController < ApplicationController
     respond_to do |format|
       if @klass_template.save
         format.html do
-          redirect_to klass_template_url(@klass_template), notice: 'Klass template was successfully created.'
+          redirect_to klass_template_url, notice: 'Klass template was successfully created.'
         end
         format.json { render :show, status: :created, location: @klass_template }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :index, status: :unprocessable_entity }
         format.json { render json: @klass_template.errors, status: :unprocessable_entity }
       end
     end
