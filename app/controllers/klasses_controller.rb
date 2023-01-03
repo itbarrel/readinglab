@@ -14,7 +14,7 @@ class KlassesController < ApplicationController
 
   # GET /klasses/new
   def new
-    start_date = params[:start_date] ? params[:start_date].to_date : DateTime.now
+    start_date = params[:start_date] ? params[:start_date].to_date : Time.zone.today
     @klass = Klass.new(starts_at: start_date)
   end
 

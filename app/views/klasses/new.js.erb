@@ -1,6 +1,5 @@
 $('#addEventModal .modal-content').html("<%= j render 'shared/modals/klasses/new', klass: @klass, title: 'Schedule Class' %>");
 document.querySelector('#addEventModal [name="startDate"]').flatpickr({
   enableTime: true,
-  dateFormat: "H:i d/m/Y"
 });
 $('#addEventModal').modal('show');

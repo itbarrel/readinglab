@@ -1,46 +1,64 @@
-<form id="addEventForm" autocomplete="off">
-  <div class="modal-header px-card bg-light border-bottom-0">
-    <h5 class="modal-title">Create Schedule</h5>
-    <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+  <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body p-0">
+  <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+    <h4 class="mb-1" id="staticBackdropLabel">Add new Class Schedule</h4>
+    <p class="fs--2 mb-0">Added by <a class="link-600 fw-semi-bold" href="#!">Saad Mahmood</a></p>
   </div>
-  <div class="modal-body p-card">
-    <div class="mb-3">
-      <label class="fs-0" for="eventTitle">Title</label>
-      <input class="form-control" id="eventTitle" type="text" name="title" required="required" />
+  <%= form_for(klass, id: 'addKlassForm') do |f| %>
+    <div class="p-4">
+      <div class="row">
+        <div class="col-lg-7">
+          <div class="mb-3">
+            <%= f.label :start_date, class: 'fs-0' %>
+            <%= f.text_field :starts_at, name: 'startDate', class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
+          </div>
+          <div class="mb-3">
+            <label class="fs-0" for="eventEndDate">End Date</label>
+            <input class="form-control datetimepicker" id="eventEndDate" type="text" name="endDate" placeholder="yyyy/mm/dd hh:mm" data-options='{"static":"true","enableTime":"true","dateFormat":"Y-m-d H:i"}' />
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="eventAllDay" name="allDay" />
+            <label class="form-check-label" for="eventAllDay">All Day
+            </label>
+          </div>
+          <div class="mb-3">
+            <label class="fs-0">Schedule Meeting</label>
+            <div><a class="btn badge-soft-success btn-sm" href="#!"><span class="fas fa-video me-2"></span>Add video conference link</a></div>
+          </div>
+          <div class="mb-3">
+            <label class="fs-0" for="eventDescription">Description</label>
+            <textarea class="form-control" rows="3" name="description" id="eventDescription"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="fs-0" for="eventLabel">Label</label>
+            <select class="form-select" id="eventLabel" name="label">
+              <option value="" selected="selected">None</option>
+              <option value="primary">Business</option>
+              <option value="danger">Important</option>
+              <option value="success">Personal</option>
+              <option value="warning">Must Attend</option>
+            </select>
+          </div>
+          <div class="d-flex"><span class="fa-stack ms-n1 me-3"><i class="fas fa-circle fa-stack-2x text-200"></i><i class="fa-inverse fa-stack-1x text-primary fas fa-align-left" data-fa-transform="shrink-2"></i></span>
+            <div class="flex-1">
+              <h5 class="mb-2 fs-0">Description</h5>
+              <p class="text-word-break fs--1">The illustration must match to the contrast of the theme. The illustraion must described the concept of the design. To know more about the theme visit the page. </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="mb-3">
+            <%= f.label :available_teacher, class: 'fs-0' %>
+            <%= f.collection_select :teacher_id, Teacher.available_at(f.object.starts_at), :id, :name, { include_blank: true }, { class: 'form-control' } %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :available_room, class: 'fs-0' %>
+            <%= f.collection_select :room_id, Room.available_at(f.object.starts_at), :id, :name, { include_blank: true }, { class: 'form-control' } %>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      <label class="fs-0" for="eventStartDate">Start Date</label>
-      <input class="form-control datetimepicker" id="eventStartDate" type="text" required="required" name="startDate" placeholder="hh:mm /dd/mm/yyyy" data-options='{"static":"true","enableTime":"true","dateFormat":"Y-m-d H:i"}' />
-    </div>
-    <div class="mb-3">
-      <label class="fs-0" for="eventEndDate">End Date</label>
-      <input class="form-control datetimepicker" id="eventEndDate" type="text" name="endDate" placeholder="yyyy/mm/dd hh:mm" data-options='{"static":"true","enableTime":"true","dateFormat":"Y-m-d H:i"}' />
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="eventAllDay" name="allDay" />
-      <label class="form-check-label" for="eventAllDay">All Day
-      </label>
-    </div>
-    <div class="mb-3">
-      <label class="fs-0">Schedule Meeting</label>
-      <div><a class="btn badge-soft-success btn-sm" href="#!"><span class="fas fa-video me-2"></span>Add video conference link</a></div>
-    </div>
-    <div class="mb-3">
-      <label class="fs-0" for="eventDescription">Description</label>
-      <textarea class="form-control" rows="3" name="description" id="eventDescription"></textarea>
-    </div>
-    <div class="mb-3">
-      <label class="fs-0" for="eventLabel">Label</label>
-      <select class="form-select" id="eventLabel" name="label">
-        <option value="" selected="selected">None</option>
-        <option value="primary">Business</option>
-        <option value="danger">Important</option>
-        <option value="success">Personal</option>
-        <option value="warning">Must Attend</option>
-      </select>
-    </div>
-  </div>
-  <div class="card-footer d-flex justify-content-end align-items-center bg-light"><a class="me-3 text-600" href="../app/events/create-an-event.html">More options</a>
-    <button class="btn btn-primary px-4" type="submit">Save</button>
-  </div>
-</form>
+  <% end %>
+</div>

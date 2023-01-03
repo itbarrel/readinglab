@@ -8,11 +8,7 @@ class Ability
     # user ||= User.new
 
     # Define a few sample abilities
-    if user.super_admin?
-      can :manage, :all
-    else
-      user.admin?
-      can :manage, :all
-    end
+    user.admin? unless user.super_admin?
+    can :manage, :all
   end
 end
