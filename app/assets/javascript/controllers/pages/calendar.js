@@ -23,36 +23,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const domEvents = {
     eventClick: (info) => {
       const { event } = info
-      console.log('>>>>event>>>>>>...', event.id)
-      // if (info.event.url) {
-      //   window.open(info.event.url, "_blank");
-      //   info.jsEvent.preventDefault();
-      // } else {
-      //   const template = getTemplate(info.event);
-      //   document.querySelector(
-      //     Selectors.EVENT_DETAILS_MODAL_CONTENT
-      //   ).innerHTML = template;
-      //   const modal = new window.bootstrap.Modal(eventDetailsModal);
-      //   modal.show();
-      // }
+      $.ajax({
+        url: `/meetings/${event.id}`,
+        dataType: 'script'
+      });
+    },
+    eventDrop: (info) => {
+      const { event, oldEvent } = info
+      const date = event.start
+      const prevDate = oldEvent.start
+
+      date.setHours(prevDate.getHours())
+      date.setMinutes(prevDate.getMinutes())
+      date.getSeconds(prevDate.getSeconds())
+
+      $.ajax({
+        url: `/meetings/${event.id}`,
+        method: 'PUT',
+        dataType: 'script',
+        data: { meeting: { starts_at: date.toISOString() }}
+      });
     },
     dateClick: (info) => {
-      console.log('>>>>>date>>>>>...', info)
       $.ajax({
-        url: "/interviews/new", 
+        url: "/interviews/new",
+        dataType: 'script',
         data: { start_date: info.date.toISOString() }
       });
-  
-      
-      // const modal = new window.bootstrap.Modal(addEventModal);
-      // modal.show();
-      // /*eslint-disable-next-line*/
-
-      // const flatpickr = document.querySelector(
-      //   Selectors.EVENT_START_DATE
-      // )._flatpickr;
-
-      // flatpickr.setDate([info.dateStr]);
     }
   }
   calendarInit(undefined, events, true, domEvents);

@@ -4,8 +4,12 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   include ApplicationHelper
   # include EsbuildErrorRendering if Rails.env.development?
+
   before_action :generate_sidebar, unless: :json_request?
   before_action :authenticate_user!
+
+  layout :set_layout
+  helper_method :zone_date
 
   def generate_sidebar
     @menu_list = {
@@ -33,7 +37,6 @@ class ApplicationController < ActionController::Base
       ]
     }
   end
-  layout :set_layout
 
   def set_layout
     if user_signed_in?
@@ -51,5 +54,14 @@ class ApplicationController < ActionController::Base
 
   def attach_account_for(resource)
     resource.account = current_user.account
+  end
+
+  def current_account
+    current_user.account
+  end
+
+  def zone_date(date)
+    timezone = current_account.timezone || 'Asia/Karachi'
+    date.in_time_zone(timezone)
   end
 end
