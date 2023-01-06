@@ -161,12 +161,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_104850) do
     t.jsonb "settings"
     t.datetime "deleted_at"
     t.uuid "account_id", null: false
-    t.uuid "user_id"
+    t.uuid "teacher_id"
+    t.uuid "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "name", "deleted_at"], name: "klass_templates_name", unique: true
     t.index ["account_id"], name: "index_klass_templates_on_account_id"
-    t.index ["user_id"], name: "index_klass_templates_on_user_id"
+    t.index ["room_id"], name: "index_klass_templates_on_room_id"
+    t.index ["teacher_id"], name: "index_klass_templates_on_teacher_id"
   end
 
   create_table "klasses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -433,7 +435,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_104850) do
   add_foreign_key "klass_template_forms", "forms"
   add_foreign_key "klass_template_forms", "klass_templates"
   add_foreign_key "klass_templates", "accounts"
-  add_foreign_key "klass_templates", "users"
+  add_foreign_key "klass_templates", "rooms"
+  add_foreign_key "klass_templates", "users", column: "teacher_id"
   add_foreign_key "klasses", "accounts"
   add_foreign_key "klasses", "forms", column: "attendance_form_id"
   add_foreign_key "klasses", "klass_templates"

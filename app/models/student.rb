@@ -38,8 +38,9 @@
 class Student < ApplicationRecord
   belongs_to :account
   belongs_to :parent
+  has_one :interview, dependent: :destroy
   has_many :student_classes, dependent: :destroy
-  enum :status, %i[registrated on_interview wait_list active]
+  enum :status, %i[registered scheduled wait_list active]
   before_create :set_status
 
   validates :first_name, :last_name, :school, presence: true
@@ -62,7 +63,7 @@ class Student < ApplicationRecord
   end
 
   def set_status
-    update(status: 'registrated') if status.blank?
+    registered! if status.blank?
   end
 
   def name

@@ -1,7 +1,3 @@
-
-
-
-
 <div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
   <div class="card-header">
     <div class="row flex-between-center">
@@ -21,7 +17,10 @@
           </div>
         </div>
         <div id="table-customers-replace-element">
-          <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">New</span></button>
+          <%= link_to(new_staff_path, remote: true, class: 'btn btn-falcon-default btn-sm') do %>
+          <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+          <span class="d-none d-sm-inline-block ms-1">New</span>
+          <% end %>
           <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Filter</span></button>
           <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Export</span></button>
         </div>
@@ -54,6 +53,10 @@
     <%= pagy_bootstrap_nav(@pagy).html_safe %>
   </div>
 </div>
+
+<% content_for :modal_includes do %>
+<%= render partial: 'shared/modals/basic', locals: { modal_id: 'addStaffModal' } %>
+<% end %>
 
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>

@@ -13,14 +13,15 @@ class CreateKlassTemplates < ActiveRecord::Migration[7.0]
       t.boolean :friday, default: false
       t.boolean :saturday, default: false
       t.boolean :sunday, default: false
-      t.integer :session_range
+      t.integer :session_range, default: 8
       t.integer :duration
       t.integer :max_students, default: Float::INFINITY
       t.jsonb :settings
       t.datetime :deleted_at
 
       t.references :account, null: false, foreign_key: true, type: :uuid
-      t.references :user, foreign_key: true, type: :uuid
+      t.references :teacher, type: :uuid, foreign_key: { to_table: :users }
+      t.references :room, foreign_key: true, type: :uuid
 
       t.timestamps
     end

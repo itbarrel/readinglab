@@ -9,7 +9,7 @@ class CreateAccounts < ActiveRecord::Migration[7.0]
       t.string :email
       t.text :address
       t.string :mobile
-      t.string :timezone
+      t.string :timezone, default: 'Asia/Karachi'
       t.string :province
       t.integer :postal_code
       t.string :country_code

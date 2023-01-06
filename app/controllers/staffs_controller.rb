@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
 class StaffsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_staff, only: %i[show edit update destroy]
 
   # GET /staffs or /staffs.json
   def index
-    @pagy, @staffs = pagy(User.all)
-  end
+      @search = @staffs.ransack(params[:q])
+      @search.sorts = 'firts_name asc' if @search.sorts.empty?
+      @pagy, @staffs = pagy(@search.result,
+                              items: params[:per_page] || '10')
+                              end
 
   # GET /staffs/1 or /staffs/1.json
   def show; end
@@ -25,10 +29,10 @@ class StaffsController < ApplicationController
 
     respond_to do |format|
       if @staff.save
-        format.html { redirect_to staff_url(@staff), notice: 'staff was successfully created.' }
+        format.html { redirect_to staff_url, notice: 'staff was successfully created.' }
         format.json { render :show, status: :created, location: @staff }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :index, status: :unprocessable_entity }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end
