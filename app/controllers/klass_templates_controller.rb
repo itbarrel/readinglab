@@ -2,7 +2,7 @@
 
 class KlassTemplatesController < ApplicationController
   load_and_authorize_resource
-  before_action :set_klass_template, only: %i[show edit update destroy]
+  before_action :set_klass_template, only: %i[show edit update destroy assign]
 
   # GET /klass_templates or /klass_templates.json
   def index
@@ -16,18 +16,14 @@ class KlassTemplatesController < ApplicationController
     # @pagy, @klass_templates = pagy(@klass_templates.all, items: params[:per_page] || '10')
   end
 
-  # GET /klass_templates/1 or /klass_templates/1.json
   def show; end
 
-  # GET /klass_templates/new
   def new
     @klass_template = KlassTemplate.new
   end
 
-  # GET /klass_templates/1/edit
   def edit; end
 
-  # POST /klass_templates or /klass_templates.json
   def create
     @klass_template = KlassTemplate.new(klass_template_params)
 
@@ -44,7 +40,6 @@ class KlassTemplatesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /klass_templates/1 or /klass_templates/1.json
   def update
     respond_to do |format|
       if @klass_template.update(klass_template_params)
@@ -68,6 +63,8 @@ class KlassTemplatesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def assign; end
 
   private
 

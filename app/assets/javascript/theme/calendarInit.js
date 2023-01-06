@@ -262,10 +262,4 @@ window.calendarInit = (selectors = {}, events = [], external = false, domEvents 
         });
       });
   }
-
-  addEventModal &&
-    addEventModal.addEventListener(Events.SHOWN_BS_MODAL, function (_ref13) {
-      const currentTarget = _ref13.currentTarget;
-      currentTarget.querySelector(Selectors.INPUT_TITLE).focus();
-    });
 };

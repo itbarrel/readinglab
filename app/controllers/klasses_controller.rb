@@ -3,27 +3,29 @@
 class KlassesController < ApplicationController
   before_action :set_klass, only: %i[show edit update destroy]
 
-  # GET /klasses or /klasses.json
   def index
-    # @klasses = Klass.all
     @pagy, @klasses = pagy(Klass.all, items: params[:per_page] || '10')
   end
 
-  # GET /klasses/1 or /klasses/1.json
   def show; end
 
-  # GET /klasses/new
   def new
-    start_date = params[:start_date] ? params[:start_date].to_date : Time.zone.today
+    start_date = params[:start_date] ? params[:start_date].to_date : Time.zone.today + 8.hours
     @klass = Klass.new(starts_at: start_date)
+    check_availability_for(start_date)
   end
 
-  # GET /klasses/1/edit
+  def availability
+    start_date = params[:start_date] ? params[:start_date].to_date : Time.zone.today
+    check_availability_for(start_date)
+  end
+
   def edit; end
 
   # POST /klasses or /klasses.json
   def create
     @klass = Klass.new(klass_params)
+    attach_account_for(@klass)
 
     respond_to do |format|
       if @klass.save
@@ -33,6 +35,7 @@ class KlassesController < ApplicationController
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @klass.errors, status: :unprocessable_entity }
       end
+      format.js
     end
   end
 
@@ -61,6 +64,11 @@ class KlassesController < ApplicationController
 
   private
 
+  def check_availability_for(start_date)
+    @filtered_teachers = Teacher.available_at(start_date)
+    @filtered_rooms = Room.available_at(start_date)
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_klass
     @klass = Klass.find(params[:id])
@@ -68,9 +76,9 @@ class KlassesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def klass_params
-    params.require(:klass).permit(:max_students, :active, :start, :monday, :tuesday, :wednesday, :thursday, :friday,
+    params.require(:klass).permit(:max_students, :active, :starts_at, :monday, :tuesday, :wednesday, :thursday, :friday,
                                   :saturday, :sunday, :session_range, :duration,
                                   :est_end_date, :min_students, :name, :description,
-                                  :deleted_at, :account_id, :teacher_id, :room_id)
+                                  :deleted_at, :account_id, :teacher_id, :room_id, :klass_template_id)
   end
 end

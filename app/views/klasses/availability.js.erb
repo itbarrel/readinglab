@@ -1,0 +1,2 @@
+$('select#klass_teacher_id').html('<%= j options_from_collection_for_select(@filtered_teachers, :id, :name) %>');
+$('select#klass_room_id').html('<%= j options_from_collection_for_select(@filtered_rooms, :id, :name) %>');
