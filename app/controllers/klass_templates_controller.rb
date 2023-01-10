@@ -26,6 +26,7 @@ class KlassTemplatesController < ApplicationController
 
   def create
     @klass_template = KlassTemplate.new(klass_template_params)
+    attach_account_for(@klass_template)
 
     respond_to do |format|
       if @klass_template.save
@@ -78,6 +79,6 @@ class KlassTemplatesController < ApplicationController
     params.require(:klass_template).permit(:max_students, :active, :start, :monday, :tuesday, :wednesday, :thursday,
                                            :friday, :saturday, :sunday, :settings, :session_range,
                                            :duration, :min_students, :name, :description, :deleted_at,
-                                           :account_id, :user_id, :room_id)
+                                           :account_id, :teacher_id, :room_id)
   end
 end
