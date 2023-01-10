@@ -5329,28 +5329,6 @@ var tinymceInit = function tinymceInit() {
 };
 /* -------------------------------------------------------------------------- */
 
-/*                                    Toast                                   */
-
-/* -------------------------------------------------------------------------- */
-
-var toastInit = function toastInit() {
-  var toastElList = [].slice.call(document.querySelectorAll(".toast"));
-  toastElList.map(function (toastEl) {
-    return new window.bootstrap.Toast(toastEl);
-  });
-  var liveToastBtn = document.getElementById("liveToastBtn");
-
-  if (liveToastBtn) {
-    var liveToast = new window.bootstrap.Toast(
-      document.getElementById("liveToast")
-    );
-    liveToastBtn.addEventListener("click", function () {
-      liveToast && liveToast.show();
-    });
-  }
-};
-/* -------------------------------------------------------------------------- */
-
 /*                                   Tooltip                                  */
 
 /* -------------------------------------------------------------------------- */
@@ -13284,7 +13262,6 @@ docReady(topProductsInit);
 docReady(navbarTopDropShadow);
 docReady(tooltipInit);
 docReady(popoverInit);
-docReady(toastInit);
 docReady(progressAnimationToggle);
 docReady(glightboxInit);
 docReady(plyrInit);
