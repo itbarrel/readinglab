@@ -40,8 +40,8 @@ class InterviewsController < ApplicationController
   # POST /interviews or /interviews.json
   def create
     @interview = Interview.new(interview_params)
-
     attach_account_for(@interview)
+
     respond_to do |format|
       if @interview.save
         format.html { redirect_to interviews_url, notice: 'Interview was successfully created.' }

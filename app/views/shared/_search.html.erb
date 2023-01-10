@@ -1,0 +1,10 @@
+<% if @search.present? %>
+  <%= search_form_for @search, { class: 'position-relative', data: {'bs-toggle': 'search', 'bs-display': 'static'} } do |f| %>
+    <%= f.search_field search_key, class: 'form-control search-input fuzzy-search', type: 'search', placeholder: 'Search...', 'aria-label': 'Search' %>
+    <span class="fas fa-search search-box-icon"></span>
+  <% end %>
+
+  <div class="btn-close-falcon-container position-absolute end-0 top-50 translate-middle shadow-none" data-bs-dismiss="search">
+    <div class="btn-close-falcon" aria-label="Close"></div>
+  </div>
+<% end %>

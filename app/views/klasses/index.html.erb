@@ -1,3 +1,7 @@
+<% content_for :search_includes do %>
+  <%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
+<% end %>
+
 <div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
   <div class="card-header">
     <div class="row flex-between-center">

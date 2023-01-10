@@ -1,3 +1,7 @@
+<% content_for :search_includes do %>
+  <%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
+<% end %>
+
 <div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
   <div class="card-header">
     <div class="row flex-between-center">
@@ -16,7 +20,7 @@
             <button class="btn btn-falcon-default btn-sm ms-2" type="button">Apply</button>
           </div>
         </div>
-        <%= render 'klass_templates/search' %>
+
         <div id="table-customers-replace-element">
           <%= link_to(new_klass_template_path, remote: true, class: 'btn btn-falcon-default btn-sm') do %>
           <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
@@ -40,7 +44,9 @@
             </th>
             <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :name, default_order: :asc)%></th>
             <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Duration</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Max Student</th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="max_students">Max Student</th>
+            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :teacher_first_name, default_order: :asc)%></th>
+            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :room_name, default_order: :asc)%></th>
             <th class="sort pe-1 align-middle white-space-nowrap" ></th>
           </tr>
         </thead>
@@ -56,7 +62,7 @@
 </div>
 
 <% content_for :modal_includes do %>
-<%= render partial: 'shared/modals/basic', locals: { modal_id: 'addKlassTemplateModal' } %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addKlassTemplateModal', modal_size: 'modal-lg' } %>
 <% end %>
 
 <% content_for :javascript_includes do %>

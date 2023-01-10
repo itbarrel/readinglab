@@ -1,28 +1,54 @@
-
-<%= form_for(klass_template, id: 'addKlassTemplateForm') do |f| %>
-<div class="modal-header px-card bg-light border-bottom-0">
-  <h5 class="modal-title"><%= title %></h5>
-  <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+  <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
-<div class="modal-body p-card">
-  <div class="mb-3">
-    <%= f.label :name, class: 'fs-0' %>
-    <%= f.text_field :name, class: 'form-control' %>
+<%= form_for(klass_template, id: 'addKlassTemplateForm', remote: true) do |f| %>
+  <div class="modal-body p-0">
+    <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+      <h4 class="mb-1" id="staticBackdropLabel">Add new Class Template</h4>
+    </div>
+    <div class="p-4">
+      <div class="row">
+        <div class="col-lg-7">
+          <div class="mb-3">
+            <%= f.label :name, class: 'fs-0' %>
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :start, class: 'fs-0' %>
+            <%= f.text_field :start, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :duration, class: 'fs-0' %>
+            <%= f.select :duration, options_for_select([['1 hour', 60], ['1.5 hour', 90], ['2 hour', 120]], klass_template.duration), { prompt: true }, class: 'form-control' %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :session_range, class: 'fs-0' %>
+            <%= f.number_field :session_range, class: 'form-control' %>
+          </div>
+          <div class="mb-3">
+            <% [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday].each do |day| %>
+              <div class="form-check form-check-inline">
+                <%= f.label day, class: 'fs-0 orm-check-label' %>
+                <%= f.check_box day, class: 'form-check-input' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="mb-3">
+            <%= f.label :available_teacher, class: 'fs-0' %>
+            <%= f.collection_select :teacher_id, Teacher.all, :id, :name, {}, { class: 'form-control' } %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :available_room, class: 'fs-0' %>
+            <%= f.collection_select :room_id, Room.all, :id, :name, {}, { class: 'form-control' } %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-    <%= f.label :duration, class: 'fs-0' %>
-    <%= f.text_field :duration, class: 'form-control' %>
+  <div class="card-footer d-flex justify-content-end align-items-center bg-light">
+    <%= f.submit 'Save', class: 'btn btn-primary px-4' %>
+    <%= f.button 'Cancel', class: 'btn btn-default px-4', type: 'button', data: { 'bs-dismiss': 'modal'} %>
   </div>
-  <div class="mb-3">
-    <%= f.label :max_students, class: 'fs-0' %>
-    <%= f.text_field :max_students, class: 'form-control' %>
-  </div>
-  <div class="mb-3">
-    <%= f.label :room, class: 'fs-0' %>
-    <%= f.text_field :room, class: 'form-control' %>
-  </div>
-</div>
-<div class="card-footer d-flex justify-content-end align-items-center bg-light">
-  <%= f.submit 'Save', class: 'btn btn-primary px-4' %>
-  <%= f.button 'Cancel', class: 'btn btn-default px-4', type: 'button', data: { 'bs-dismiss': 'modal'} %>
-</div>
 <% end %>

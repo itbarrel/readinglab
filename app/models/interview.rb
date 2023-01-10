@@ -45,7 +45,7 @@ class Interview < ApplicationRecord
   end
 
   def set_status
-    waiting! if status.blank?
+    # waiting! if status.blank?
   end
 
   def set_student_default_status
