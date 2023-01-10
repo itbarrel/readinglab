@@ -15,7 +15,7 @@ class CreateKlasses < ActiveRecord::Migration[7.0]
       t.integer :session_range, default: 8
       t.integer :range_type
       t.integer :max_students
-      t.integer :min_students
+      t.integer :min_students, default: 0
       t.datetime :deleted_at
 
       t.references :account, null: false, foreign_key: true, type: :uuid

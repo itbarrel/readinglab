@@ -35,4 +35,21 @@ class Interview < ApplicationRecord
   enum :status, %i[done waiting cancel]
 
   validates :date, :status, presence: true
+
+  after_create :set_student_status
+  after_destroy :set_student_default_status
+  before_validation :set_status
+
+  def set_student_status
+    student.scheduled! if student.registered?
+  end
+
+  def set_status
+    waiting! if status.blank?
+  end
+
+  def set_student_default_status
+    student.registered! if student.scheduled? && waiting?
+  end
+
 end

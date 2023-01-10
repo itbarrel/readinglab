@@ -23,22 +23,26 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  account_id    :uuid             not null
-#  user_id       :uuid
+#  room_id       :uuid
+#  teacher_id    :uuid
 #
 # Indexes
 #
 #  index_klass_templates_on_account_id  (account_id)
-#  index_klass_templates_on_user_id     (user_id)
+#  index_klass_templates_on_room_id     (room_id)
+#  index_klass_templates_on_teacher_id  (teacher_id)
 #  klass_templates_name                 (account_id,name,deleted_at) UNIQUE
 #
 # Foreign Keys
 #
 #  fk_rails_...  (account_id => accounts.id)
-#  fk_rails_...  (user_id => users.id)
+#  fk_rails_...  (room_id => rooms.id)
+#  fk_rails_...  (teacher_id => users.id)
 #
 class KlassTemplate < ApplicationRecord
   belongs_to :account
-  belongs_to :user
+  belongs_to :teacher
+  belongs_to :room
   has_many :klass_template_forms, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }

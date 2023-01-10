@@ -6,12 +6,19 @@
 </div>
 <div class="modal-body p-card">
   <div class="mb-3">
+    <%= f.label :name, class: 'fs-0' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
     <%= f.label :duration, class: 'fs-0' %>
     <%= f.text_field :duration, class: 'form-control' %>
   </div>
   <div class="mb-3">
     <%= f.label :max_students, class: 'fs-0' %>
     <%= f.text_field :max_students, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :room, class: 'fs-0' %>
+    <%= f.text_field :room, class: 'form-control' %>
   </div>
 </div>
 <div class="card-footer d-flex justify-content-end align-items-center bg-light">

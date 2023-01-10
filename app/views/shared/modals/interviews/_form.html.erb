@@ -10,8 +10,12 @@
     <%= f.date_field :date, class: 'form-control' %>
   </div>
   <div class="mb-3">
-    <%= f.label :status, class: 'fs-0' %>
-    <%= f.text_field :status, class: 'form-control' %>
+    <%= f.label :students, class: 'fs-0' %>
+    <%= f.collection_select :student_id, Student.registered.order(:first_name), :id, :name, { include_blank: true }, { class: 'form-control' } %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :forms, class: 'fs-0' %>
+    <%= f.collection_select :form_id, Form.order(:name), :id, :name, { include_blank: true }, { class: 'form-control' } %>
   </div>
 </div>
 <div class="card-footer d-flex justify-content-end align-items-center bg-light">
