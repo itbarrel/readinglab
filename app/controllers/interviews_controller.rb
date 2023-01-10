@@ -40,7 +40,7 @@ class InterviewsController < ApplicationController
   # POST /interviews or /interviews.json
   def create
     @interview = Interview.new(interview_params)
-byebug
+
     attach_account_for(@interview)
     respond_to do |format|
       if @interview.save
