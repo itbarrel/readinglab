@@ -27,8 +27,7 @@
   <body>
     <main class="main" id="top">
       <div class="container-fluid">
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
+        <%= render 'shared/flash' %>
         <%= yield %>
       </div>
     </main>
