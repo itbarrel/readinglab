@@ -27,7 +27,6 @@ class VacationsController < ApplicationController
   # POST /vacations or /vacations.json
   def create
     @vacation = Vacation.new(vacation_params)
-
     respond_to do |format|
       if @vacation.save
         format.html { redirect_to vacation_url, notice: 'Vacation was successfully created.' }

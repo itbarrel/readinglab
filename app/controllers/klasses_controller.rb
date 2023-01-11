@@ -29,10 +29,10 @@ class KlassesController < ApplicationController
 
     respond_to do |format|
       if @klass.save
-        format.html { redirect_to klass_url(@klass), notice: 'Klass was successfully created.' }
+        format.html { redirect_to klass_url, notice: 'Klass was successfully created.' }
         format.json { render :show, status: :created, location: @klass }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :index, status: :unprocessable_entity }
         format.json { render json: @klass.errors, status: :unprocessable_entity }
       end
       format.js

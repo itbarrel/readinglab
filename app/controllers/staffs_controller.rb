@@ -6,8 +6,9 @@ class StaffsController < ApplicationController
 
   # GET /staffs or /staffs.json
   def index
+    @staffs = Staff.all
     @search = @staffs.ransack(params[:q])
-    @search.sorts = 'firts_name asc' if @search.sorts.empty?
+    @search.sorts = 'first_name asc' if @search.sorts.empty?
     @pagy, @staffs = pagy(@search.result,
                           items: params[:per_page] || '10')
   end
