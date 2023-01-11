@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   layout :set_layout
-  helper_method :zone_date, :bootstrap_class_for
+  helper_method :zone_date, :bootstrap_class_for, :status_for_interview, :interview_status_icon
 
   def generate_sidebar
     @menu_list = {
@@ -77,6 +77,32 @@ class ApplicationController < ActionController::Base
       'bg-warning'
     else
       flash_type.to_s
+    end
+  end
+
+  def status_for_interview(status_type)
+    case status_type.to_sym
+    when :done
+      'success'
+    when :waiting
+      'secondary'
+    when :cancel
+      'warning'
+    else
+      status_type.to_s
+    end
+  end
+
+  def interview_status_icon(status_type)
+    case status_type.to_sym
+    when :done
+      'fa-check'
+    when :waiting
+      'fa-stream'
+    when :cancel
+      'fa-ban'
+    else
+      status_type.to_s
     end
   end
 end
