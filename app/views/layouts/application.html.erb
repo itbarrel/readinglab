@@ -30,7 +30,9 @@
         <%= render 'shared/sidebar' %>
         <div class="content">
           <%= render 'shared/header' %>
-          <%= render 'shared/flash' %>
+          <div id = "flash_messages">
+            <%= render 'shared/flash' %>
+          </div>
           <%= yield %>
           <%= render 'shared/footer' %>
         </div>

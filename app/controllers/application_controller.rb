@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   layout :set_layout
-  helper_method :zone_date
+  helper_method :zone_date, :bootstrap_class_for
 
   def generate_sidebar
     @menu_list = {
@@ -52,6 +52,10 @@ class ApplicationController < ActionController::Base
     request.format.symbol == :json
   end
 
+  def js_request?
+    request.format.symbol == :js
+  end
+
   def attach_account_for(resource)
     resource.account = current_account
   end
@@ -63,5 +67,16 @@ class ApplicationController < ActionController::Base
   def zone_date(date)
     timezone = current_account.timezone || 'Asia/Karachi'
     date.in_time_zone(timezone)
+  end
+
+  def bootstrap_class_for(flash_type)
+    case flash_type.to_sym
+    when :success || :notice
+      'bg-success'
+    when :error || :alert
+      'bg-warning'
+    else
+      flash_type.to_s
+    end
   end
 end

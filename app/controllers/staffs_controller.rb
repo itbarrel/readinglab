@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StaffsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :staff, class: User
   before_action :set_staff, only: %i[show edit update destroy]
 
   # GET /staffs or /staffs.json
