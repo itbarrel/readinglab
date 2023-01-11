@@ -13,7 +13,7 @@
 #  monday        :boolean          default(FALSE)
 #  name          :string
 #  saturday      :boolean          default(FALSE)
-#  session_range :integer
+#  session_range :integer          default(8)
 #  settings      :jsonb
 #  start         :datetime
 #  sunday        :boolean          default(FALSE)

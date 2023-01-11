@@ -9,7 +9,7 @@
 #  duration           :integer
 #  friday             :boolean          default(FALSE)
 #  max_students       :integer
-#  min_students       :integer
+#  min_students       :integer          default(0)
 #  monday             :boolean          default(FALSE)
 #  range_type         :integer
 #  saturday           :boolean          default(FALSE)

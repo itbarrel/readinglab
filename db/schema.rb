@@ -31,7 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_104850) do
     t.string "email"
     t.text "address"
     t.string "mobile"
-    t.string "timezone"
+    t.string "timezone", default: "Asia/Karachi"
     t.string "province"
     t.integer "postal_code"
     t.string "country_code"
@@ -155,7 +155,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_104850) do
     t.boolean "friday", default: false
     t.boolean "saturday", default: false
     t.boolean "sunday", default: false
-    t.integer "session_range"
+    t.integer "session_range", default: 8
     t.integer "duration"
     t.integer "max_students"
     t.jsonb "settings"
@@ -184,7 +184,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_104850) do
     t.integer "session_range", default: 8
     t.integer "range_type"
     t.integer "max_students"
-    t.integer "min_students"
+    t.integer "min_students", default: 0
     t.datetime "deleted_at"
     t.uuid "account_id", null: false
     t.uuid "teacher_id"
@@ -279,15 +279,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_104850) do
   end
 
   create_table "student_classes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "account_id", null: false
     t.uuid "student_id", null: false
     t.uuid "klass_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["account_id", "student_id", "klass_id", "deleted_at"], name: "student_classes_id", unique: true
-    t.index ["account_id"], name: "index_student_classes_on_account_id"
     t.index ["klass_id"], name: "index_student_classes_on_klass_id"
+    t.index ["student_id", "klass_id", "deleted_at"], name: "student_classes_id", unique: true
     t.index ["student_id"], name: "index_student_classes_on_student_id"
   end
 
@@ -451,7 +449,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_07_104850) do
   add_foreign_key "receipts", "receipt_types"
   add_foreign_key "receipts", "students"
   add_foreign_key "rooms", "accounts"
-  add_foreign_key "student_classes", "accounts"
   add_foreign_key "student_classes", "klasses"
   add_foreign_key "student_classes", "students"
   add_foreign_key "student_forms", "klass_forms"

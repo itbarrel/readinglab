@@ -6,7 +6,7 @@ class StaffsController < ApplicationController
 
   # GET /staffs or /staffs.json
   def index
-    @staffs = Staff.all
+    # @staffs = Staff.all
     @search = @staffs.ransack(params[:q])
     @search.sorts = 'first_name asc' if @search.sorts.empty?
     @pagy, @staffs = pagy(@search.result,
@@ -17,9 +17,7 @@ class StaffsController < ApplicationController
   def show; end
 
   # GET /staffs/new
-  def new
-    @staff = Staff.new
-  end
+  def new; end
 
   # GET /staffs/1/edit
   def edit; end
