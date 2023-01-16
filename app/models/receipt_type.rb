@@ -25,5 +25,5 @@ class ReceiptType < ApplicationRecord
   belongs_to :account
   enum :status, %i[tution_fee addmission_fee sports_fee]
 
-  validates :name, :status, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
+  validates :name, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
 end

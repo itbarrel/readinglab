@@ -26,13 +26,19 @@ class ApplicationController < ActionController::Base
           { url: '/rooms', text: 'Obselote', class: '', icon: 'micon fa fa-bank' }
 
         ] },
+        { text: 'Billing', class: '', icon: 'micon bi bi-basket', sub_items: [
+          { url: '/receipts', text: 'Receipt', class: '', icon: 'micon bi bi-calendar4-week', sub_items: [] }
+
+        ] },
         { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-calendar4-week', sub_items: [] }
+
       ],
       'Settings': [
         { url: '/klass_templates', text: 'Class tempelate ', class: '', icon: 'micon bi bi-book' },
         { url: '/rooms', text: 'Rooms', class: '', icon: 'micon bi bi-bank' },
         { url: '/staffs', text: 'Staff', class: '', icon: 'micon bi bi-people' },
         { url: '/vacations', text: 'Vacations', class: '', icon: 'micon fa fa-plane' },
+        { url: '/receipt_types', text: 'Receipt Type', class: '', icon: 'micon fa fa-plane' },
         { url: '/profile', text: 'Profile', class: '', icon: 'micon bi bi-person' }
       ]
     }

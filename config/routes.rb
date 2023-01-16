@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   mount Sidekiq::Web => '/sidekiq'
 
-  resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs
+  resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs, :receipt_types, :receipts
   resources :parents, :meetings
 
   resources :klass_templates do
@@ -24,7 +24,6 @@ Rails.application.routes.draw do
       get :present_search
     end
   end
-
   scope module: :pages do
     get :home
     get :calendar

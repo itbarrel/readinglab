@@ -9,7 +9,7 @@ class KlassTemplatesController < ApplicationController
     # @klass_templates = KlassTemplate.all
     @search = @klass_templates.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
-    @pagy, @klass_templates = pagy(@search.result,
+    @pagy, @klass_templates = pagy(@search.result.includes(:teacher, :room),
                                    items: params[:per_page] || '10')
     # @q = KlassTemplate.ransack(params[:q])
     # @klass_templates = @q.result(distinct: true)
