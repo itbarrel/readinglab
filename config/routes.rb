@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs
-  resources :parents, :meetings, :forms
+  resources :parents, :meetings, :forms, :receipt_types, :receipts
 
   resources :klass_templates do
     member do
@@ -24,7 +24,6 @@ Rails.application.routes.draw do
       get :present_search
     end
   end
-
   scope module: :pages do
     get :home
     get :calendar

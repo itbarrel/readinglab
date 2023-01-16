@@ -11,7 +11,7 @@ class StudentsController < ApplicationController
     params[:classes_at].present? && @students = Student.studing_at(params[:classes_at].to_datetime)
     @search = @students.ransack(params[:q])
     @search.sorts = 'first_name asc' if @search.sorts.empty?
-    @pagy, @students = pagy(@search.result,
+    @pagy, @students = pagy(@search.result.includes(:parent),
                             items: params[:per_page] || '10')
     respond_to do |format|
       format.html

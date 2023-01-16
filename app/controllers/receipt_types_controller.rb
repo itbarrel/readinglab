@@ -6,6 +6,10 @@ class ReceiptTypesController < ApplicationController
   # GET /receipt_types or /receipt_types.json
   def index
     @receipt_types = ReceiptType.all
+    @search = @receipt_types.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @receipt_types = pagy(@search.result,
+                                 items: params[:per_page] || '10')
   end
 
   # GET /receipt_types/1 or /receipt_types/1.json
@@ -25,10 +29,10 @@ class ReceiptTypesController < ApplicationController
 
     respond_to do |format|
       if @receipt_type.save
-        format.html { redirect_to receipt_type_url(@receipt_type), notice: 'Receipt type was successfully created.' }
+        format.html { redirect_to receipt_type_url, notice: 'Receipt type was successfully created.' }
         format.json { render :show, status: :created, location: @receipt_type }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to receipt_type_url, status: :unprocessable_entity }
         format.json { render json: @receipt_type.errors, status: :unprocessable_entity }
       end
     end

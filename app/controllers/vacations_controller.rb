@@ -9,7 +9,7 @@ class VacationsController < ApplicationController
     # @vacations = Vacation.all
     @search = @vacations.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
-    @pagy, @vacations = pagy(@search.result,
+    @pagy, @vacations = pagy(@search.result.includes(:vacation_type),
                              items: params[:per_page] || '10')
   end
 

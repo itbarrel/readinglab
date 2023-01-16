@@ -17,8 +17,7 @@ class StaffsController < ApplicationController
   def show; end
 
   # GET /staffs/new
-  def new
-  end
+  def new; end
 
   # GET /staffs/1/edit
   def edit; end

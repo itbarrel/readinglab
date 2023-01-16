@@ -9,7 +9,7 @@ class ParentsController < ApplicationController
     # @parents = Parent.all
     @search = @parents.ransack(params[:q])
     @search.sorts = 'father_first asc' if @search.sorts.empty?
-    @pagy, @parents = pagy(@search.result,
+    @pagy, @parents = pagy(@search.result.includes(:account, :city),
                            items: params[:per_page] || '10')
     # @pagy, @parents = pagy(Parent.all, items: params[:per_page] || '10')
   end
