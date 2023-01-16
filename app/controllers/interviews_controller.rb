@@ -41,13 +41,12 @@ class InterviewsController < ApplicationController
   def create
     @interview = Interview.new(interview_params)
     attach_account_for(@interview)
-
     respond_to do |format|
       if @interview.save
         format.html { redirect_to interviews_url, notice: 'Interview was successfully created.' }
         format.json { render :show, status: :created, location: @interview }
       else
-        format.html { render :index, status: :unprocessable_entity }
+        format.html { redirect_to interviews_url, status: :unprocessable_entity }
         format.json { render json: @interview.errors, status: :unprocessable_entity }
       end
     end

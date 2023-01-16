@@ -17,7 +17,7 @@
 #  postal_code     :integer
 #  province        :string
 #  settings        :jsonb
-#  timezone        :string
+#  timezone        :string           default("Asia/Karachi")
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  account_type_id :uuid             not null
