@@ -67,6 +67,6 @@ class Student < ApplicationRecord
   end
 
   def name
-    "Mr/Mrs. #{first_name.capitalize} #{last_name}"
+    "#{first_name.capitalize} #{last_name}"
   end
 end

@@ -32,6 +32,8 @@ class Meeting < ApplicationRecord
 
   ##### All klass students #####
   delegate :students, to: :klass
+  delegate :teacher, to: :klass
+  delegate :room, to: :klass
   delegate :meetings, to: :klass
   delegate :student_classes, to: :klass
 
@@ -43,6 +45,9 @@ class Meeting < ApplicationRecord
   validates :ends_at, presence: true, date: { after_or_equal_to: :starts_at }
 
   before_validation :set_end_time
+
+  delegate :name, to: :klass
+  delegate :short_name, to: :klass
 
   def set_end_time
     self.ends_at = starts_at + klass.duration.minutes

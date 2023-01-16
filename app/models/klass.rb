@@ -71,6 +71,11 @@ class Klass < ApplicationRecord
     "#{teacher.name} in #{room.name} on #{days_abbr} at #{rclass_time}"
   end
 
+  def short_name
+    rclass_time = starts_at.strftime('%H:%M')
+    "Class in #{room.name} on #{days_abbr} at #{rclass_time}"
+  end
+
   def extended_meeting_dates(limit, starting_date, extend_type = :sessional, vacation_dates = Vacation.all)
     return if limit.zero?
     return if !sunday && !monday &&

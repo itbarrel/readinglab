@@ -8,7 +8,6 @@ class FormsController < ApplicationController
     @forms = Form.all
   end
 
-  # GET /forms/1 or /forms/1.json
   def show; end
 
   # GET /forms/new
