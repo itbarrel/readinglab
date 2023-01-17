@@ -4,8 +4,9 @@ class InterviewsController < ApplicationController
   load_and_authorize_resource
   before_action :set_interview, only: %i[show edit update destroy]
 
-  # GET /interviews or /interviews.json
   def index
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
     if params[:start].present?
       start_date = params[:start]
       @interviews = @interviews.where(
@@ -22,8 +23,7 @@ class InterviewsController < ApplicationController
 
     @search = @interviews.ransack(params[:q])
     @search.sorts = 'student_first_name asc' if @search.sorts.empty?
-    @pagy, @interviews = pagy(@search.result.includes(:student),
-                              items: params[:per_page] || '10')
+    @pagy, @interviews = pagy(@search.result.includes(:student), items: per_page)
   end
 
   # GET /interviews/1 or /interviews/1.json
