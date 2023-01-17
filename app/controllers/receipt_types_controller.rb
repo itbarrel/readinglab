@@ -70,6 +70,6 @@ class ReceiptTypesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def receipt_type_params
-    params.require(:receipt_type).permit(:name, :active, :deleted_at, :account_id)
+    params.require(:receipt_type).permit(:name)
   end
 end

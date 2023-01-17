@@ -71,6 +71,6 @@ class StaffsController < ApplicationController
   def staff_params
     params.require(:staff).permit(:first_name, :last_name, :email, :postal_code, :phone, :emergency_name,
                                   :emergency_contact, :date_of_hire, :date_of_inactive, :setting,
-                                  :undeletable, :external_user, :termination_date, :role, :account_id)
+                                  :undeletable, :external_user, :termination_date, :role)
   end
 end

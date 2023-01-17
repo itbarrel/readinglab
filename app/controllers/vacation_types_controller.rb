@@ -66,7 +66,7 @@ class VacationTypesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def vacation_type_params
-    params.require(:vacation_type).permit(:name, :description, :deleted_at, :active, :boolean, :account_id,
+    params.require(:vacation_type).permit(:name, :description, :boolean,
                                           :references)
   end
 end

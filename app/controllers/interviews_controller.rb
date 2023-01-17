@@ -84,7 +84,7 @@ class InterviewsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def interview_params
-    params.require(:interview).permit(:date, :feedback, :status, :deleted_at, :active, :account_id, :form_id,
+    params.require(:interview).permit(:date, :feedback, :status, :form_id,
                                       :student_id)
   end
 end
