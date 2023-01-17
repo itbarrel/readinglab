@@ -66,6 +66,6 @@ class FormsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def form_params
-    params.require(:form).permit(:lesson, :fields, :assessment, :name, :deleted_at, :active, :attendance, :account_id)
+    params.require(:form).permit(:fields, :name, :purpose)
   end
 end

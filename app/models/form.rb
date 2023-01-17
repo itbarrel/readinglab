@@ -4,15 +4,14 @@
 #
 # Table name: forms
 #
-#  id            :uuid             not null, primary key
-#  attendancable :boolean          default(FALSE)
-#  deleted_at    :datetime
-#  fields        :jsonb
-#  lessonable    :boolean          default(FALSE)
-#  name          :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  account_id    :uuid             not null
+#  id         :uuid             not null, primary key
+#  deleted_at :datetime
+#  fields     :jsonb
+#  name       :string
+#  purpose    :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  account_id :uuid             not null
 #
 # Indexes
 #
@@ -29,6 +28,7 @@ class Form < ApplicationRecord
 
   has_many :attendance_meetings, class_name: 'Meeting', foreign_key: 'attendance_form_id', dependent: :destroy,
                                  inverse_of: :meeting
+  enum :purpose, %i[lessonable attendancable]
 
   validates :name, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
 end

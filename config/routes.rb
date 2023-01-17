@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   mount Sidekiq::Web => '/sidekiq'
 
-  resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs, :receipt_types, :receipts
-  resources :parents, :meetings
+  resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs
+  resources :parents, :meetings, :forms, :receipt_types, :receipts
 
   resources :klass_templates do
     member do
