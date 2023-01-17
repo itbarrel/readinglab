@@ -72,6 +72,6 @@ class KlassTempelateFormsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def klass_tempelate_form_params
-    params.require(:klass_tempelate_form).permit(:deleted_at, :klass_tempelate_id, :form_id)
+    params.require(:klass_tempelate_form).permit(:klass_tempelate_id, :form_id)
   end
 end

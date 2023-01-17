@@ -70,7 +70,7 @@ class TrajectoryDetailsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def trajectory_detail_params
-    params.require(:trajectory_detail).permit(:error_count, :wpm, :active, :deleted_at, :grade, :season, :entry_date,
-                                              :account_id, :user_id, :klass_id, :book_id)
+    params.require(:trajectory_detail).permit(:error_count, :wpm, :grade, :season, :entry_date,
+                                              :user_id, :klass_id, :book_id)
   end
 end

@@ -70,7 +70,7 @@ class ReceiptsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def receipt_params
-    params.require(:receipt).permit(:amount, :deleted_at, :datetime, :active, :leave_count, :detail, :discount,
-                                    :discount_reason, :sessions_count, :acoount_id, :user_id, :receipt_type_id)
+    params.require(:receipt).permit(:amount, :deleted_at, :datetime, :leave_count, :detail, :discount,
+                                    :discount_reason, :sessions_count, :user_id, :receipt_type_id)
   end
 end

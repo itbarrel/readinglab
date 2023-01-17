@@ -66,6 +66,6 @@ class KlassFormsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def klass_form_params
-    params.require(:klass_form).permit(:deleted_at, :form_id, :klass_id)
+    params.require(:klass_form).permit(:form_id, :klass_id)
   end
 end

@@ -78,7 +78,7 @@ class KlassTemplatesController < ApplicationController
   def klass_template_params
     params.require(:klass_template).permit(:max_students, :active, :start, :monday, :tuesday, :wednesday, :thursday,
                                            :friday, :saturday, :sunday, :settings, :session_range,
-                                           :duration, :min_students, :name, :description, :deleted_at,
-                                           :account_id, :teacher_id, :room_id)
+                                           :duration, :min_students, :name, :description,
+                                           :teacher_id, :room_id)
   end
 end
