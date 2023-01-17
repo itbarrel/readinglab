@@ -70,6 +70,6 @@ class ContentLibrariesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def content_library_params
-    params.require(:content_library).permit(:public, :title, :deleted_at, :active, :account_id)
+    params.require(:content_library).permit(:public, :title)
   end
 end

@@ -66,7 +66,7 @@ class FormDetailsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def form_detail_params
-    params.require(:form_detail).permit(:form_values, :active, :deleted_at, :parent_types, :user_id, :form_id,
-                                        :account_id, :parent_id)
+    params.require(:form_detail).permit(:form_values, :parent_types, :user_id, :form_id,
+                                        :parent_id)
   end
 end

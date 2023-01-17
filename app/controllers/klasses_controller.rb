@@ -76,9 +76,9 @@ class KlassesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def klass_params
-    params.require(:klass).permit(:max_students, :active, :starts_at, :monday, :tuesday, :wednesday, :thursday, :friday,
+    params.require(:klass).permit(:max_students, :starts_at, :monday, :tuesday, :wednesday, :thursday, :friday,
                                   :saturday, :sunday, :session_range, :duration,
                                   :est_end_date, :min_students, :name, :description,
-                                  :deleted_at, :account_id, :teacher_id, :room_id, :klass_template_id)
+                                  :teacher_id, :room_id, :klass_template_id)
   end
 end
