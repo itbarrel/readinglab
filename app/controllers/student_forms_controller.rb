@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class StudentFormsController < ApplicationController
-  before_action :set_student_form, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_student_form, only: %i[]
 
   # GET /student_forms or /student_forms.json
   def index

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class KlassesController < ApplicationController
-  before_action :set_klass, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_klass, only: %i[]
 
   def index
     @pagy, @klasses = pagy(Klass.all, items: params[:per_page] || '10')

@@ -2,7 +2,7 @@
 
 class RoomsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_room, only: %i[show edit update destroy]
+  before_action :set_room, only: %i[]
 
   # GET /rooms or /rooms.json
   def index
@@ -72,7 +72,6 @@ class RoomsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def room_params
-    params.require(:room).permit(:capacity, :integer, :name, :string, :color, :string,
-                                 :boolean, :references)
+    params.require(:room).permit(:capacity, :name, :color)
   end
 end

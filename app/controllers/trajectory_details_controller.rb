@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class TrajectoryDetailsController < ApplicationController
-  before_action :set_trajectory_detail, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_trajectory_detail, only: %i[]
 
   # GET /trajectory_details or /trajectory_details.json
   def index

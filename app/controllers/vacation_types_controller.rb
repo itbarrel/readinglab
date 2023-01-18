@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class VacationTypesController < ApplicationController
-  before_action :set_vacation_type, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_vacation_type, only: %i[]
 
   # GET /vacation_types or /vacation_types.json
   def index
@@ -66,7 +67,6 @@ class VacationTypesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def vacation_type_params
-    params.require(:vacation_type).permit(:name, :description, :boolean,
-                                          :references)
+    params.require(:vacation_type).permit(:name, :description)
   end
 end

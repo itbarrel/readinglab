@@ -2,7 +2,7 @@
 
 class VacationsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_vacation, only: %i[show edit update destroy]
+  before_action :set_vacation, only: %i[]
 
   # GET /vacations or /vacations.json
   def index
@@ -70,7 +70,7 @@ class VacationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def vacation_params
-    params.require(:vacation).permit(:day, :name, :strating_at, :ending_at, :vacation_type,
+    params.require(:vacation).permit(:day, :name, :starting_at, :ending_at, :vacation_type,
                                      :boolean, :references)
   end
 end

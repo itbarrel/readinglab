@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class StudentMeetingsController < ApplicationController
-  before_action :set_student_meetings, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_student_meetings, only: %i[]
 
   # GET /student_meetings or /student_meetings.json
   def index

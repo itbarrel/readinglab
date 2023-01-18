@@ -2,7 +2,7 @@
 
 class StudentsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_student, only: %i[show edit update destroy]
+  before_action :set_student, only: %i[]
 
   # GET /students or /students.json
   def index
@@ -86,8 +86,8 @@ class StudentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def student_params
-    params.require(:student).permit(:first, :last, :dob, :grade, :school, :sex, :string, :settings,
-                                    :datetime, :dates, :programs, :status,
+    params.require(:student).permit(:first_name, :last_name, :dob, :grade, :school, :sex, :settings,
+                                    :dates, :programs, :status,
                                     :prepaid_sessions, :credit_session, :registration_date)
   end
 end

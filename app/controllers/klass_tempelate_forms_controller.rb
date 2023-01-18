@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class KlassTempelateFormsController < ApplicationController
-  before_action :set_klass_tempelate_form, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_klass_tempelate_form, only: %i[]
 
   # GET /klass_tempelate_forms or /klass_tempelate_forms.json
   def index

@@ -2,7 +2,7 @@
 
 class StaffsController < ApplicationController
   load_and_authorize_resource :staff, class: User
-  before_action :set_staff, only: %i[show edit update destroy]
+  before_action :set_staff, only: %i[]
 
   # GET /staffs or /staffs.json
   def index

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ContentLibrariesController < ApplicationController
-  before_action :set_content_library, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_content_library, only: %i[]
 
   # GET /content_libraries or /content_libraries.json
   def index
