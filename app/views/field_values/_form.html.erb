@@ -1,0 +1,89 @@
+<%= form_with model: @client do |form| %>
+  <div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5 card_design">
+      <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+          <div class="col-lg-7" style = "align : center;">
+            <div class="p-5">
+              <div class="text-center">
+              </div>
+              <form class="user">
+
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <%= form.text_field :name, :required => true,class: "form-control form-control-user",placeholder: "Name", id: "exampleFirstName" %>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <%= form.text_field :company_name, class: "form-control form-control-user",placeholder: "Company Name", id: "exampleLastName" %>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <%= form.text_field :username, class: "form-control form-control-user",placeholder: "User Name", id: "exampleInputEmail" %>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <%= form.text_field :password, :required => true,class: "form-control form-control-user",placeholder: "Password", id: "exampleInputPassword" %>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <%= form.email_field :notify_email, class: "form-control form-control-user",placeholder: "Enter a valid email address", id: "exampleInputPassword" %>
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <label for="FTP Server Details">FTP Server Details</label>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <%= form.text_field :ftp_host, class: "form-control form-control-user",placeholder: "FTP Host", id: "exampleInputPassword" %>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <%= form.text_field :ftp_port, class: "form-control form-control-user",placeholder: "FTP Port", id: "exampleInputPassword" %>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <%= form.text_field :ftp_user, class: "form-control form-control-user",placeholder: "FTP User", id: "exampleInputPassword" %>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <%= form.text_field :ftp_password, class: "form-control form-control-user",placeholder: "FTP Password", id: "exampleInputPassword" %>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 row">
+                </div>
+
+                <%= form.fields_for :login_api do |ff| %>
+                  <br />
+                  <%= ff.label :api_method %>
+                  <div class="col-sm-6 row">
+                    <%= ff.collection_select :api_method, Api.api_methods, :first, :first, {include_blank: true}, {class: "form-control form-control-user text-capitalize"}  %>
+                  </div>
+
+                  <br />
+                  <div class="col-sm-6 row">
+                    <%= ff.text_field :api_url, class: "form-control form-control-user", placeholder: "API URL"  %>
+                  </div>
+                <%end%>
+                
+                <br />
+                <div class="actions">
+                  <%= form.submit class:"btn btn-primary btn-user" %> |
+                  <%= link_to "Back", clients_path, class: "btn btn-primary"%>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

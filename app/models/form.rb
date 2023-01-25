@@ -6,7 +6,6 @@
 #
 #  id         :uuid             not null, primary key
 #  deleted_at :datetime
-#  fields     :jsonb
 #  name       :string
 #  purpose    :integer
 #  created_at :datetime         not null
@@ -25,10 +24,12 @@
 class Form < ApplicationRecord
   belongs_to :account, dependent: :destroy
   has_many :klass_tempelate_forms, dependent: :destroy
+  has_many :form_fields, dependent: :destroy
 
   has_many :attendance_meetings, class_name: 'Meeting', foreign_key: 'attendance_form_id', dependent: :destroy,
                                  inverse_of: :meeting
   enum :purpose, %i[lessonable attendancable]
 
+  accepts_nested_attributes_for :form_fields, allow_destroy: true
   validates :name, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
 end

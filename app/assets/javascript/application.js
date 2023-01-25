@@ -1,10 +1,9 @@
-// Entry point for the build script in your package.json
-
 import "./theme/config";
 import "../plugins/overlayscrollbars/OverlayScrollbars.min";
 import "../plugins/popper/popper.min";
 
 import "./jquery";
+import "cocoon";
 import "./jquery-ujs"
 import "./bootstrap";
 

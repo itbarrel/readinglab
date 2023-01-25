@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs
-  resources :parents, :meetings, :forms, :receipt_types, :receipts
+  resources :parents, :meetings, :forms, :receipt_types, :receipts, :form_fields, :field_values
 
   resources :klass_templates do
     member do
