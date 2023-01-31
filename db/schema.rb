@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_16_125619) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_23_103300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -211,6 +211,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_16_125619) do
     t.datetime "deleted_at"
     t.index ["account_id"], name: "index_meetings_on_account_id"
     t.index ["klass_id"], name: "index_meetings_on_klass_id"
+  end
+
+  create_table "message_templates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.uuid "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["account_id"], name: "index_message_templates_on_account_id"
+    t.index ["name", "account_id", "deleted_at"], name: "message_template_index", unique: true
   end
 
   create_table "parents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -440,6 +451,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_16_125619) do
   add_foreign_key "klasses", "users", column: "teacher_id"
   add_foreign_key "meetings", "accounts"
   add_foreign_key "meetings", "klasses"
+  add_foreign_key "message_templates", "accounts"
   add_foreign_key "parents", "accounts"
   add_foreign_key "parents", "cities"
   add_foreign_key "receipt_types", "accounts"

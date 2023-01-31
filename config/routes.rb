@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs
   resources :parents, :meetings, :forms, :receipt_types, :receipts
+  resources :message_templates
 
   resources :student_classes, only: %i[create destroy]
 

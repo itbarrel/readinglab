@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   layout :set_layout
-  helper_method :zone_date, :bootstrap_class_for, :status_for_interview, :interview_status_icon
+  helper_method :zone_date, :bootstrap_class_for, :status_for_interview, :interview_status_icon, :current_account
 
   def generate_sidebar
     @menu_list = {
@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
 
         ] },
         { text: 'Billing', class: '', icon: 'micon bi bi-basket', sub_items: [
-          { url: '/receipts', text: 'Receipt', class: '', icon: 'micon bi bi-calendar4-week', sub_items: [] }
+          { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-calendar4-week', sub_items: [] }
 
         ] },
         { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-calendar4-week', sub_items: [] }
@@ -38,7 +38,8 @@ class ApplicationController < ActionController::Base
         { url: '/rooms', text: 'Rooms', class: '', icon: 'micon bi bi-bank' },
         { url: '/staffs', text: 'Staff', class: '', icon: 'micon bi bi-people' },
         { url: '/vacations', text: 'Vacations', class: '', icon: 'micon fa fa-plane' },
-        { url: '/receipt_types', text: 'Receipt Type', class: '', icon: 'micon fa fa-plane' },
+        { url: '/receipt_types', text: 'Receipt Types', class: '', icon: 'micon fa fa-plane' },
+        { url: '/message_templates', text: 'Message Templates', class: '', icon: 'far fa-envelope' },
         { url: '/profile', text: 'Profile', class: '', icon: 'micon bi bi-person' }
       ]
     }
@@ -63,7 +64,7 @@ class ApplicationController < ActionController::Base
   end
 
   def attach_account_for(resource)
-    resource.account = current_account
+    resource.account = current_user.account
   end
 
   def current_account
