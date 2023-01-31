@@ -48,6 +48,7 @@ class Klass < ApplicationRecord
   belongs_to :teacher
   belongs_to :room
   belongs_to :klass_template
+  belongs_to :attendance_form, optional: true, class_name: 'Form'
 
   has_many :meetings, dependent: :destroy
   has_many :student_classes, dependent: :destroy
@@ -86,10 +87,15 @@ class Klass < ApplicationRecord
     virtual = []
 
     meetings = self.meetings.order(starts_at: :desc).load
-    est_last_date = [meetings.try(:first).try(:starts_at).presence.to_d, starting_date].max
+
+    est_last_date = if meetings.empty?
+                      starting_date
+                    else
+                      [meetings.try(:first).try(:starts_at).presence, starting_date].max
+                    end
 
     end_day = est_last_date.to_date + limit.weeks if extend_type == :monthly
-    day = est_last_date.to_date - 1.day
+    day = est_last_date.to_date
 
     day_limit = limit
     loop do

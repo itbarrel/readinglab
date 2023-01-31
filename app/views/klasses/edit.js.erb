@@ -1,2 +1,3 @@
-$('#addKlassModal .modal-content').html("<%= j render 'shared/modals/klass/form', klass: @klass, title: 'Edit klass' %>");
-$('#addKlassModal').modal('show');
+$('#showEventModal').modal('hide');
+$('#editKlassModal .modal-content').html("<%= j render 'shared/modals/klasses/edit', klass: @klass, title: 'Edit klass' %>");
+$('#editKlassModal').modal('show');

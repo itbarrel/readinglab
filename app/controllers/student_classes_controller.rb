@@ -48,13 +48,14 @@ class StudentClassesController < ApplicationController
     end
   end
 
-  # DELETE /student_classes/1 or /student_classes/1.json
   def destroy
     @student_class.destroy
+    flash[:notice] = 'Student has been removed from class successfully.'
 
     respond_to do |format|
       format.html { redirect_to student_classes_url, notice: 'Student class was successfully destroyed.' }
       format.json { head :no_content }
+      format.js { render 'shared/flash' }
     end
   end
 

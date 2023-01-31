@@ -9,4 +9,6 @@ class PagesController < ApplicationController
     @students = []
     @users = []
   end
+
+  def profile; end
 end
