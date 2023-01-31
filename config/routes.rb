@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     get :home
     get :calendar
     get :communication
+    get :profile
   end
 
   # Defines the root path route ("/")

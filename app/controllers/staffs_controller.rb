@@ -2,7 +2,7 @@
 
 class StaffsController < ApplicationController
   load_and_authorize_resource :staff, class: User
-  before_action :set_staff, only: %i[show edit update destroy]
+  before_action :set_staff, only: %i[]
 
   # GET /staffs or /staffs.json
   def index
@@ -41,7 +41,7 @@ class StaffsController < ApplicationController
   def update
     respond_to do |format|
       if @staff.update(staff_params)
-        format.html { redirect_to book_url(@staff), notice: 'staff was successfully updated.' }
+        format.html { redirect_to request.referer, notice: 'staff was successfully updated.' }
         format.json { render :show, status: :ok, location: @staff }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -63,7 +63,7 @@ class StaffsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_book
+  def set_staff
     @staff = Staff.find(params[:id])
   end
 

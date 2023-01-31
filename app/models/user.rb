@@ -54,6 +54,7 @@ class User < ApplicationRecord
   enum role: { admin: 0, staff: 1, teacher: 2, super_admin: 3, admin_junior: 4, supervisor: 5 }
 
   validates :first_name, :last_name, :email, presence: true
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   def name
     "Mr/s. #{first_name} #{last_name}"
