@@ -2,7 +2,7 @@
 
 class ParentsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_parent, only: %i[show edit update destroy]
+  before_action :set_parent, only: %i[]
 
   # GET /parents or /parents.json
   def index

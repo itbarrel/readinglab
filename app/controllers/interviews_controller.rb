@@ -2,7 +2,7 @@
 
 class InterviewsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_interview, only: %i[show edit update destroy]
+  before_action :set_interview, only: %i[]
 
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)

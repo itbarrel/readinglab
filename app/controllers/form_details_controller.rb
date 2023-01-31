@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class FormDetailsController < ApplicationController
-  before_action :set_form_detail, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_form_detail, only: %i[]
 
   # GET /form_details or /form_details.json
   def index

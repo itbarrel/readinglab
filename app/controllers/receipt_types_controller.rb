@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ReceiptTypesController < ApplicationController
-  before_action :set_receipt_type, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_receipt_type, only: %i[]
 
   # GET /receipt_types or /receipt_types.json
   def index

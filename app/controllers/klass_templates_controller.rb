@@ -2,7 +2,7 @@
 
 class KlassTemplatesController < ApplicationController
   load_and_authorize_resource
-  before_action :set_klass_template, only: %i[show edit update destroy assign]
+  before_action :set_klass_template, only: %i[]
 
   # GET /klass_templates or /klass_templates.json
   def index
@@ -76,7 +76,7 @@ class KlassTemplatesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def klass_template_params
-    params.require(:klass_template).permit(:max_students, :active, :start, :monday, :tuesday, :wednesday, :thursday,
+    params.require(:klass_template).permit(:max_students, :start, :monday, :tuesday, :wednesday, :thursday,
                                            :friday, :saturday, :sunday, :settings, :session_range,
                                            :duration, :min_students, :name, :description,
                                            :teacher_id, :room_id)

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class CitiesController < ApplicationController
-  before_action :set_city, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_city, only: %i[]
 
   # GET /cities or /cities.json
   def index

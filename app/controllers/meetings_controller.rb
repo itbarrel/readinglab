@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class MeetingsController < ApplicationController
-  before_action :set_meeting, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_meeting, only: %i[]
 
   # GET /meetings or /meetings.json
   def index

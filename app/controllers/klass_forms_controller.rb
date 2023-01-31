@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class KlassFormsController < ApplicationController
-  before_action :set_klass_form, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_klass_form, only: %i[]
 
   # GET /klass_forms or /klass_forms.json
   def index

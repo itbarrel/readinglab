@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ReceiptsController < ApplicationController
-  before_action :set_receipt, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_receipt, only: %i[]
 
   # GET /receipts or /receipts.json
   def index
@@ -70,7 +71,7 @@ class ReceiptsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def receipt_params
-    params.require(:receipt).permit(:amount, :deleted_at, :datetime, :leave_count, :detail, :discount,
+    params.require(:receipt).permit(:amount, :leave_count, :detail, :discount,
                                     :discount_reason, :sessions_count, :user_id, :receipt_type_id)
   end
 end
