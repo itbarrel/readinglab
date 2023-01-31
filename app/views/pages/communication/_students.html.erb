@@ -1,15 +1,11 @@
-<% content_for :search_includes do %>
-  <%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
-<% end %>
-
-<div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
+<div class="card mb-3" id="studentsTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
   <div class="card-header">
     <div class="row flex-between-center">
       <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-          <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Receipt Types</h5>
+          <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Students</h5>
       </div>
       <div class="col-8 col-sm-auto text-end ps-2">
-        <div class="d-none" id="table-customers-actions">
+        <div class="d-none" id="table-students-actions">
           <div class="d-flex">
             <select class="form-select form-select-sm" aria-label="Bulk actions">
             <option selected="">Bulk actions</option>
@@ -20,9 +16,8 @@
             <button class="btn btn-falcon-default btn-sm ms-2" type="button">Apply</button>
           </div>
         </div>
-
-        <div id="table-customers-replace-element">
-          <%= link_to(new_receipt_type_path, remote: true, class: 'btn btn-falcon-default btn-sm') do %>
+        <div id="table-students-replace-element">
+          <%= link_to(new_student_path, remote: true, class: 'btn btn-falcon-default btn-sm') do %>
           <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
           <span class="d-none d-sm-inline-block ms-1">New</span>
           <% end %>
@@ -39,28 +34,30 @@
           <tr>
             <th>
               <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox" data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
+                <input class="form-check-input" id="checkbox-bulk-students-select" type="checkbox" data-bulk-select='{"body":"table-students-body","actions":"table-students-actions","replacedElement":"table-students-replace-element"}' />
               </div>
             </th>
-            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :name, default_order: :asc)%></th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Name</th>
             <th class="sort pe-1 align-middle white-space-nowrap"></th>
           </tr>
         </thead>
-        <tbody class="list" id="table-customers-body">
-          <% @receipt_types.each do |receipt_type| %>
-            <%= render receipt_types %>
+        <tbody class="list" id="table-students-body">
+          <% students.each do |student| %>
+            <tr class="btn-reveal-trigger">
+              <td class="align-middle py-2" style="width: 28px;">
+                <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                  <input class="form-check-input communications-students" type="checkbox" id="<%= student.id %>" data-bulk-select-row="data-bulk-select-row" />
+                </div>
+              </td>
+              <td class="name align-middle white-space-nowrap py-2">
+                <%= student.name %>
+              </td>
+              <td class="name align-middle white-space-nowrap py-2">
+              </td>
+            </tr>
           <% end %>
         </tbody>
       </table>
     </div>
-    <%= pagy_bootstrap_nav(@pagy).html_safe %>
   </div>
 </div>
-
-<% content_for :modal_includes do %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addReceiptTypeModal', modal_size: 'modal-lg' } %>
-<% end %>
-
-<% content_for :javascript_includes do %>
-  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
-<% end %>
