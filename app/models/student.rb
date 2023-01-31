@@ -40,10 +40,14 @@ class Student < ApplicationRecord
   belongs_to :parent
   has_one :interview, dependent: :destroy
   has_many :student_classes, dependent: :destroy
-  enum :status, %i[registered scheduled wait_list active]
+  enum :status, %i[registered scheduled wait_listed active]
   before_create :set_status
 
   validates :first_name, :last_name, :school, presence: true
+
+  ransacker :status do |parent|
+    parent.table[:status]
+  end
 
   def self.ids_studing_at(start_date = DateTime.now, duration = 60)
     end_date = start_date + duration.minutes

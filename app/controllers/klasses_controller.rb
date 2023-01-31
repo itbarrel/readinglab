@@ -5,7 +5,30 @@ class KlassesController < ApplicationController
   before_action :set_klass, only: %i[]
 
   def index
-    @pagy, @klasses = pagy(Klass.all, items: params[:per_page] || '10')
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    if params[:classes_at].present?
+      @klasses_for_date = true
+      @klasses = @klasses.at(params[:classes_at])
+    end
+
+    # if params[:start].present?
+    #   start_date = params[:start]
+    #   @interviews = @interviews.where(
+    #     '(date)::date > ?', start_date.to_date
+    #   )
+    # end
+
+    # if params[:end].present?
+    #   end_date = params[:end]
+    #   @interviews = @interviews.where(
+    #     '(date)::date < ?', end_date.to_date
+    #   )
+    # end
+
+    @search = @klasses.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @klasses = pagy(@search.result, items: per_page)
   end
 
   def show; end

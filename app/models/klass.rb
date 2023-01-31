@@ -149,4 +149,9 @@ class Klass < ApplicationRecord
     parents = students.map(&:parent).uniq
     parents.notify_all_about_klass
   end
+
+  def self.at(date)
+    klass_ids = Meeting.where(starts_at: date).map(&:klass_id)
+    all.where(id: klass_ids)
+  end
 end
