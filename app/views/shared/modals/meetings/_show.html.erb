@@ -38,7 +38,7 @@
             <div class="p-2 mb-3">
               <div class="row">
                 <div class="col-lg-8">
-                  <%= select_tag(:form_id, options_from_collection_for_select(Form.all.order("name ASC"), :id, :name), class: 'form-control') %>
+                  <%= select_tag(:form_id, options_from_collection_for_select(Form.all.order("name ASC"), :id, :name), include_blank: 'Please select form', class: 'form-control', required: true) %>
                 </div>
                 <div class="col-lg-4">
                   <%= submit_tag "Open Form", class: "btn btn-info" %>
@@ -46,9 +46,18 @@
               </div>
             </div>
           <% end %>
+          <% if meeting.attendance_form.present? %>
+            <div class="d-grid gap-2">
+              <%= link_to('Attendance', form_path(meeting.attendance_form), remote: true, class: 'btn btn-primary') %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
+  </div>
+  <div class="card-footer d-flex justify-content-end align-items-center bg-light">
+    <%= link_to('Edit Class', edit_klass_path(meeting.klass), remote: true, class: 'btn btn-info px-4') %>
+    <button class="btn btn-default px-4" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
   </div>
 </div>
 

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs
   resources :parents, :meetings, :forms, :receipt_types, :receipts
 
+  resources :student_classes, only: %i[create destroy]
+
   resources :klass_templates do
     member do
       get :assign
@@ -17,6 +19,9 @@ Rails.application.routes.draw do
   resources :klasses do
     collection do
       get :availability
+    end
+    member do
+      post :extend_sessions
     end
   end
   resources :students do
