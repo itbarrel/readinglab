@@ -7,9 +7,9 @@ MessageTemplate.find_or_create_by(
 )
 
 if Rails.env.development?
-  5.times do
+  5.times do |index|
     MessageTemplate.find_or_create_by!(
-      name: 'Calling',
+      name: "Calling_#{index}",
       description: Faker::Name.name,
       account: Account.sample
     )
