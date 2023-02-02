@@ -25,4 +25,6 @@
 class StudentClass < ApplicationRecord
   belongs_to :student
   belongs_to :klass
+
+  validates :student_id, uniqueness: { scope: %i[klass_id deleted_at] }
 end
