@@ -28,18 +28,17 @@
 class Meeting < ApplicationRecord
   belongs_to :account
   belongs_to :klass
-  belongs_to :attendace_form, optional: true, class_name: 'Form'
 
-  ##### All klass students #####
+  ##### Klass associations #####
   delegate :students, to: :klass
   delegate :teacher, to: :klass
   delegate :room, to: :klass
   delegate :meetings, to: :klass
   delegate :student_classes, to: :klass
+  delegate :attendance_form, to: :klass
 
   has_many :student_meetings, dependent: :destroy
   has_many :attentive_students, through: :student_meetings, source: 'student'
-  # belongs_to :attendance_form, class_name: 'Form', optional: true
 
   validates :starts_at, presence: true
   validates :ends_at, presence: true, date: { after_or_equal_to: :starts_at }

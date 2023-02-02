@@ -2,7 +2,7 @@
 
 class KlassesController < ApplicationController
   load_and_authorize_resource
-  before_action :set_klass, only: %i[]
+  before_action :set_klass, only: %i[extend_sessions]
 
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
@@ -86,6 +86,12 @@ class KlassesController < ApplicationController
     end
   end
 
+  def extend_sessions
+    session_count = params[:session_count].to_i || 0
+    @klass.extend_meetings(session_count, @klass.starts_at)
+    flash[:notice] = "#{session_count} Meetings have been extended successfully."
+  end
+
   private
 
   def check_availability_for(start_date)
@@ -103,6 +109,6 @@ class KlassesController < ApplicationController
     params.require(:klass).permit(:max_students, :starts_at, :monday, :tuesday, :wednesday, :thursday, :friday,
                                   :saturday, :sunday, :session_range, :duration,
                                   :est_end_date, :min_students, :name, :description,
-                                  :teacher_id, :room_id, :klass_template_id)
+                                  :teacher_id, :room_id, :klass_template_id, :attendance_form_id)
   end
 end

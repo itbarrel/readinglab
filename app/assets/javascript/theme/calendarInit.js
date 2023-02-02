@@ -238,6 +238,10 @@ window.calendarInit = (selectors = {}, events = [], external = false, domEvents 
             updateTitle(calendar.currentData.viewTitle);
             break;
 
+          case "reload":
+            calendar.refetchEvents();
+            break;
+
           default:
             calendar.today();
             updateTitle(calendar.currentData.viewTitle);

@@ -42,6 +42,7 @@ class Account < ApplicationRecord
   has_many :students, dependent: :destroy
   has_many :interviews, dependent: :destroy
   has_many :klass_templates, dependent: :destroy
+  has_many :message_templates, dependent: :destroy
 
   validates :email, :mobile, :postal_code, presence: true
   validates :name, presence: true, uniqueness: { scope: %i[name deleted_at] }
