@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ParentMailer < ApplicationMailer
-  def klass_mailer(parent, email_data)
+  def mailer(record, email_data)
+    @record = record
     @email_data = email_data
-    @parent = parent.map(&:father_email)
-    mail(to: @parent, subject: 'Test Email for Letter Opener')
+    mail(to: @record.parent.father_email, subject: email_data[:title])
   end
 end

@@ -43,15 +43,17 @@ class Parent < ApplicationRecord
 
   validates :father_email, :mother_email, presence: true
 
-  def self.notify_all_about_klass
-    all.find_each(batch_size: 10, &:notify_about_klass)
+  def self.notify_all_about_klass(options)
+    all.find_each(batch_size: 10) do |p|
+      p.notify_all_about_klass(options)
+    end
   end
 
-  def notify_about_klass
-    ParentMailer.klass_mailer(self).deliver
+  def notify_about_klass(options)
+    ParentMailer.mailer(self, options).deliver
   end
 
   def name
-    "(#{father_first} #{father_last} + #{mother_first} #{mother_last})"
+    "#{father_first} #{father_last} & #{mother_first} #{mother_last}"
   end
 end

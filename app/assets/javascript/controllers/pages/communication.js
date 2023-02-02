@@ -35,5 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
       dataType: 'script',
       data
     });
+
   });
+
+  $('#predefined').change(() => {
+    $('#message').val($(this).find(':selected').data('icon'))
+  });
+
 })

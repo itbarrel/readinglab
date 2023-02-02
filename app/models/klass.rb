@@ -151,8 +151,8 @@ class Klass < ApplicationRecord
     meetings.maximum(:starts_at)
   end
 
-  def send_email
+  def send_email(options)
     parents = students.map(&:parent).uniq
-    parents.notify_all_about_klass
+    parents.notify_all_about_klass(options)
   end
 end

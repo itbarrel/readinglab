@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class StaffMailer < ApplicationMailer
-  def staff_mailer(staff, email_data)
+  def mailer(record, email_data)
+    @record = record
     @email_data = email_data
-    @staff = staff.map(&:email)
-    mail(to: @staff, subject: 'Test Email for Letter Opener', body: @email_data)
+    mail(to: @record.email, subject: email_data[:title])
   end
 end
