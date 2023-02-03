@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
-  $('#predefined').change(() => {
+  $('#predefined').change(function() {
     $('#message').val($(this).find(':selected').data('icon'))
   });
 

@@ -28,6 +28,7 @@ class EmailsController < ApplicationController
     message_template = MessageTemplate.find_by(name: params[:name])
     render json: message_template.try(:description)
   end
+
   private
 
   def email_params
