@@ -70,6 +70,10 @@ class Student < ApplicationRecord
     registered! if status.blank?
   end
 
+  def self.eligible_for_klass
+    all.where(status: %i[wait_list active])
+  end
+
   def name
     "#{first_name.capitalize} #{last_name}"
   end

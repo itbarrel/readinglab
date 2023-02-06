@@ -37,6 +37,20 @@
         <div class="col-lg-6">
           <h6 class="mt-5 mt-lg-0">Class Settings</h6>
 
+          <%= form_for StudentClass.new, remote: true do |f| %>
+            <%= f.hidden_field :klass_id, value: klass.id %>
+
+            <div class="mb-3">
+              <%= f.label :add_student, class: 'fs-0' %>
+              <%= f.collection_select :student_id, Student.eligible_for_klass, :id, :name, {}, { class: 'form-control' } %>
+            </div>
+            <div class="d-flex justify-content-end align-items-center">
+              <%= f.submit 'Add', class: 'btn btn-primary px-4' %>
+            </div>
+          <% end %>
+
+          <hr>
+
           <%= form_for klass, remote: true do |f| %>
             <div class="mb-3">
               <%= f.label :teacher_id, class: 'fs-0' %>
@@ -45,10 +59,6 @@
             <div class="mb-3">
               <%= f.label :room_id, class: 'fs-0' %>
               <%= f.collection_select :room_id, Room.all, :id, :name, {}, { class: 'form-control' } %>
-            </div>
-            <div class="mb-3">
-              <%= f.label :class_template_id, class: 'fs-0' %>
-              <%= f.collection_select :klass_template_id, KlassTemplate.all, :id, :name, {}, { class: 'form-control' } %>
             </div>
             <div class="mb-3">
               <%= f.label :attendance_form_id, class: 'fs-0' %>
@@ -63,7 +73,7 @@
 
           <%= form_tag(extend_sessions_klass_path(klass), remote: true) do |f| %>
             <div class="mb-3">
-              <label class="fs-0">Extend Seesion:</label>
+              <label class="fs-0">Extend Seesions:</label>
               <%= text_field_tag :session_count, nil ,class: 'form-control' %>
             </div>
             <div class="d-flex justify-content-end align-items-center">

@@ -26,12 +26,14 @@ class StudentClassesController < ApplicationController
 
     respond_to do |format|
       if @student_class.save
-        format.html { redirect_to student_class_url(@student_class), notice: 'Student class was successfully created.' }
+        flash[:notice] = 'Student was successfully Added.'
+        format.html { redirect_to request.referer, notice: 'Student was successfully Added.' }
         format.json { render :show, status: :created, location: @student_class }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @student_class.errors, status: :unprocessable_entity }
       end
+      format.js { render 'shared/flash' }
     end
   end
 
@@ -68,6 +70,6 @@ class StudentClassesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def student_class_params
-    params.require(:student_class).permit(:start, :student_id, :klass_id)
+    params.require(:student_class).permit(:student_id, :klass_id)
   end
 end
