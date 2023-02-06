@@ -63,11 +63,11 @@ class Meeting < ApplicationRecord
     end
   end
 
-  def self.send_email_for(date)
+  def self.send_email_for(date, options)
     classes = all.where('date(starts_at) = ?', date).map(&:klass).uniq
     student_ids = StudentClass.where(klass_id: classes).map(&:student_id).uniq
     parents = Parent.joins(:children).where(students: { id: student_ids })
-    parents.notify_all_about_klass
+    parents.notify_all_about_klass(options)
   end
 
   def current_students

@@ -1,5 +1,5 @@
 <% content_for :search_includes do %>
-  <%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
+  <%= render partial: 'shared/search', locals: { search_key: :teacher_first_name_or_teacher_last_name_or_room_name_cont } %>
 <% end %>
 
 <div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
@@ -57,8 +57,7 @@
     <%= pagy_bootstrap_nav(@pagy).html_safe %>
   </div>
 </div>
-  
+
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
 <% end %>
-  

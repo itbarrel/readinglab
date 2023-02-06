@@ -1,79 +1,96 @@
 <div class="container-fluid">
   <h1>Communication</h1>
-</div>
-
-
-<div class="container-fluid">
-  <!-- Control the column width, and how they should appear on different devices -->
   <div class="row">
-    <div class="col-sm-5">
-      <div class="col-lg-12 col-md-12 col-sm-12 mb-30">
-        <div class="pd-40 card-box">
-          <h5 class="h4 text-blue mb-20"></h5>
-          <div class="tab">
-            <ul class="nav nav-tabs customtab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#home2" role="tab"
-                  aria-selected="true">Class-wise</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#profile2" role="tab" aria-selected="false">General</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#contact2" role="tab" aria-selected="false">Staff</a>
-              </li>
-            </ul>
-            <div class="tab-content">
-              <div class="tab-pane fade show active" id="home2" role="tabpanel">
-                <div class="pd-20">
-                  <%= form_with(url: students_path, method: :get) do |f| %>
-                  <%= f.date_field :classes_at, class: "form-control" %>
-                  <%= f.submit 'Search' %>
-                  <% end %>
+    <div class="col-sm-7">
+      <div class="card overflow-hidden">
+        <div class="card-header audience-chart-header p-0 bg-light scrollbar-overlay">
+          <ul class="nav nav-tabs border-0 chart-tab flex-nowrap" id="communication-tabs" role="tablist">
+            <li class="nav-item" role="presentation"><a class="nav-link mb-0 active" id="klasses-tab" data-bs-toggle="tab"
+                href="#klasses" role="tab" aria-controls="klasses" aria-selected="true">
+                <div class="audience-tab-item p-2 pe-4">
+                  <h6 class="text-800">Class Wise</h6>
+                  <div class="d-flex align-items-center">
+                  </div>
                 </div>
-              </div>
-              <div class="tab-pane fade" id="profile2" role="tabpanel">
-                <div class="pd-20">
+              </a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link mb-0" id="students-tab" data-bs-toggle="tab"
+                href="#students" role="tab" aria-controls="students" aria-selected="false">
+                <div class="audience-tab-item p-2 pe-4">
+                  <h6 class="text-800">General</h6>
+                  <div class="d-flex align-items-center"></div>
                 </div>
-              </div>
-              <div class="tab-pane fade" id="contact2" role="tabpanel">
-                <div class="pd-20">
+              </a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link mb-0" id="staffs-tab" data-bs-toggle="tab"
+                href="#staffs" role="tab" aria-controls="staffs" aria-selected="false">
+                <div class="audience-tab-item p-2 pe-4">
+                  <h6 class="text-800">Staff</h6>
+                  <div class="d-flex align-items-center"></div>
                 </div>
-              </div>
+              </a></li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content">
+            <div class="tab-pane active" id="klasses" role="tabpanel" aria-labelledby="klasses-tab">
+              <%= form_tag(klasses_path, id: 'showKlassesForm', method: :get, remote: true) do %>
+                <div class="p-2 mb-3">
+                  <div class="row">
+                    <div class="col-lg-8">
+                      <%= date_field_tag :classes_at, nil, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
+                    </div>
+                    <div class="col-lg-4">
+                      <%= submit_tag "Search", class: "btn btn-info" %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+
+              <div id="communication-classes"></div>
+            </div>
+            <div class="tab-pane" id="students" role="tabpanel" aria-labelledby="students-tab">
+              <div id="communication-students"></div>
+            </div>
+            <div class="tab-pane" id="staffs" role="tabpanel" aria-labelledby="staffs-tab">
+              <div id="communication-staffs"></div>
             </div>
           </div>
         </div>
       </div>
-      MASHAL ZAREEN
     </div>
-    <div class="col-sm-7">
+    <div class="col-sm-5">
       <div class="pd-10 card-box mb-20">
         <div class="clearfix">
           <h1 class="text-blue h1">Create Message</h1>
           <p class="mb-30"></p>
         </div>
         <div class="wizard-content">
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <%= form_with url: "/communication", html: {class: 'tab-wizard wizard-circle wizard' }, method: :get do |f| %>
-                <%= f.label :Title %>
-                <%= f.text_field :title, class: "form-control" %>
-
-                <%= f.label :Predefined %>
-                <%= f.select :predefined, ['option1', 'option2', 'option3'], {include_blank: "Select"}, {class: "form-control"}%>
-
-                <%= f.label :Message %>
-                <%= f.text_field :message, class: "form-control" %>
-                <%= f.submit "Submit", class: "btn btn-primary" %>
-                <% end %>
-
+          <div class="form-group">
+            <%= form_with url: "/notify", html: { id: 'communicationForm', class: 'tab-wizard wizard-circle wizard' } do |f| %>
+              <div class="card">
+                <div class="card-body">
+                  <div class="mb-3">
+                    <%= f.label :title, { class: "form-label"} %>
+                    <%= f.text_field :title, { class: "form-control", placeholder: "Title" } %>
+                  </div>
+                  <div class="mb-3">
+                    <%= f.label :predefined, { class: "form-label"} %>
+                    <%= f.select :predefined, options_for_select(MessageTemplate.all.map {|p| [p.name, p.id, {'data-icon' => p.description }]}), { include_blank: 'Please select template' }, { class: 'form-control' } %>
+                  </div>
+                  <div class="mb-3">
+                    <%= f.label :message, { class: "form-label"} %>
+                    <%= f.text_field :message, { class: "form-control", placeholder: "" } %>
+                  </div>
+                  <%= f.submit "Submit", class: "btn btn-primary" %>
+                </div>
               </div>
-            </div>
+            <% end %>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true, module: true %>
+<% end %>

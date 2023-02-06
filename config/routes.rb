@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     get :profile
   end
 
+  post :notify, controller: :emails, action: :notify
   # Defines the root path route ("/")
   root 'pages#home'
 end

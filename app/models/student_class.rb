@@ -27,4 +27,14 @@ class StudentClass < ApplicationRecord
   belongs_to :klass
 
   validates :student_id, uniqueness: { scope: %i[klass_id deleted_at] }
+  after_create :mark_student_active
+  after_destroy :mark_student_waitlisted
+
+  def mark_student_active
+    student.active!
+  end
+
+  def mark_student_waitlisted
+    student.wait_listed!
+  end
 end
