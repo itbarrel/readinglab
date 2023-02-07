@@ -26,7 +26,7 @@ class MessageTemplatesController < ApplicationController
 
     respond_to do |format|
       if @message_template.save
-        format.html { redirect_to message_templates_url, notice: 'Message template was successfully created.' }
+        format.html { redirect_to request.referer, notice: 'Message template was successfully created.' }
         format.json { render :show, status: :created, location: @message_template }
       else
         format.html { render :index, status: :unprocessable_entity }
