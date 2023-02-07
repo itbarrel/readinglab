@@ -6,11 +6,11 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   mount Sidekiq::Web => '/sidekiq'
 
-  resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs
-  resources :parents, :meetings, :forms, :receipt_types, :receipts
+  resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs, :books, :trajectory_details
   resources :message_templates
 
   resources :student_classes, only: %i[create destroy]
+  resources :parents, :meetings, :forms, :receipt_types, :receipts
 
   resources :klass_templates do
     member do
@@ -28,6 +28,11 @@ Rails.application.routes.draw do
   resources :students do
     collection do
       get :present_search
+    end
+  end
+  resources :reports, only: %i[] do
+    collection do
+      get :graph
     end
   end
   scope module: :pages do

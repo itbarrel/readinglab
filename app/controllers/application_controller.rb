@@ -30,8 +30,13 @@ class ApplicationController < ActionController::Base
           { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-calendar4-week', sub_items: [] }
 
         ] },
-        { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-calendar4-week', sub_items: [] }
 
+        { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-calendar4-week', sub_items: [] },
+
+        { text: 'Reports', class: '', icon: 'micon bi bi-receipt', sub_items: [
+          { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-receipt' }
+
+        ] }
       ],
       'Settings': [
         { url: '/klass_templates', text: 'Class tempelate ', class: '', icon: 'micon bi bi-book' },
