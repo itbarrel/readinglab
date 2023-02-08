@@ -12,7 +12,7 @@ import "./anchorJS";
 import "./is";
 import "../plugins/flatpickr/flatpickr";
 import "./dayjs";
-import "../plugins/echarts/echarts.min";
+import "./echarts";
 import "../plugins/fontawesome/all.min";
 
 import "./lodash";
