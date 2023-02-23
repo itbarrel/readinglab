@@ -43,7 +43,8 @@ class TrajectoryDetailsController < ApplicationController
     respond_to do |format|
       if @trajectory_detail.update(trajectory_detail_params)
         format.html do
-          redirect_to trajectory_detail_url(@trajectory_detail), notice: 'Trajectory detail has been successfully updated.'
+          redirect_to trajectory_detail_url(@trajectory_detail),
+                      notice: 'Trajectory detail has been successfully updated.'
         end
         format.json { render :show, status: :ok, location: @trajectory_detail }
       else

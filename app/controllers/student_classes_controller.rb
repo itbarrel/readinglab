@@ -41,7 +41,9 @@ class StudentClassesController < ApplicationController
   def update
     respond_to do |format|
       if @student_class.update(student_class_params)
-        format.html { redirect_to student_class_url(@student_class), notice: 'Student class has been successfully updated.' }
+        format.html do
+          redirect_to student_class_url(@student_class), notice: 'Student class has been successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @student_class }
       else
         format.html { render :edit, status: :unprocessable_entity }
