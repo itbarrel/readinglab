@@ -14,38 +14,38 @@ class ApplicationController < ActionController::Base
   def generate_sidebar
     @menu_list = {
       'General': [
-        { url: '/calendar', text: 'Calendar', class: '', icon: 'fas fa-calendar-alt', sub_items: [] },
-        { text: 'Registration', class: '', icon: 'fab fa-trello', sub_items: [
+        { url: '/calendar', text: 'Calendar', class: '', icon: 'bi bi-calendar-week-fill', sub_items: [] },
+        { text: 'Registration', class: '', icon: 'bi bi-person-plus-fill', sub_items: [
           { url: '/parents', text: 'Parents', class: '', icon: 'micon bi bi-people' },
           { url: '/students', text: 'Student Listing', class: '', icon: 'micon bi bi-layout-text-sidebar-reverse' },
-          { url: '/interviews', text: 'Interviews', class: '', icon: 'micon bi bi-input-cursor' }
+          { url: '/interviews', text: 'Interviews', class: '', icon: 'micon bi bi-calendar-week' }
 
         ] },
-        { text: 'Classes', class: '', icon: 'micon bi bi-basket', sub_items: [
-          { url: '/klasses', text: 'Active', class: '', icon: 'micon bi bi-book' },
-          { url: '/rooms', text: 'Obselote', class: '', icon: 'micon fa fa-bank' }
+        { text: 'Classes', class: '', icon: 'micon bi bi-building-fill', sub_items: [
+          { url: '/klasses', text: 'Active', class: '', icon: 'micon bi bi-check-circle' },
+          { url: '/rooms', text: 'Obselote', class: '', icon: 'micon bi bi-exclamation-circle' }
 
         ] },
-        { text: 'Billing', class: '', icon: 'micon bi bi-basket', sub_items: [
-          { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-calendar4-week', sub_items: [] }
+        { text: 'Billing', class: '', icon: 'micon bi bi-file-text-fill', sub_items: [
+          { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-receipt', sub_items: [] }
 
         ] },
 
-        { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-calendar4-week', sub_items: [] },
+        { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-chat-text-fill', sub_items: [] },
 
-        { text: 'Reports', class: '', icon: 'micon bi bi-receipt', sub_items: [
-          { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-receipt' }
+        { text: 'Reports', class: '', icon: 'micon bi bi-bar-chart-line-fill', sub_items: [
+          { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-graph-up-arrow' }
 
         ] }
       ],
       'Settings': [
-        { url: '/klass_templates', text: 'Class tempelate ', class: '', icon: 'micon bi bi-book' },
-        { url: '/rooms', text: 'Rooms', class: '', icon: 'micon bi bi-bank' },
-        { url: '/staffs', text: 'Staff', class: '', icon: 'micon bi bi-people' },
-        { url: '/vacations', text: 'Vacations', class: '', icon: 'micon fa fa-plane' },
-        { url: '/receipt_types', text: 'Receipt Types', class: '', icon: 'micon fa fa-plane' },
-        { url: '/message_templates', text: 'Message Templates', class: '', icon: 'far fa-envelope' },
-        { url: '/profile', text: 'Profile', class: '', icon: 'micon bi bi-person' }
+        { url: '/klass_templates', text: 'Class tempelate ', class: '', icon: 'micon bi bi-people-fill' },
+        { url: '/rooms', text: 'Rooms', class: '', icon: 'micon bi bi-building-fill' },
+        { url: '/staffs', text: 'Staff', class: '', icon: 'micon bi bi-person-vcard' },
+        { url: '/vacations', text: 'Vacations', class: '', icon: 'micon bi bi-train-front-fill' },
+        { url: '/receipt_types', text: 'Receipt Types', class: '', icon: 'micon bi bi-receipt-cutoff' },
+        { url: '/message_templates', text: 'Message Templates', class: '', icon: 'bi bi-envelope-fill' },
+        { url: '/profile', text: 'Profile', class: '', icon: 'micon bi bi-person-fill' }
       ]
     }
   end
