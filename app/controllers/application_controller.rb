@@ -58,6 +58,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  protected
+
+  def flash_message(type, text)
+    flash[type] ||= []
+    flash[type] << text
+  end
+
   private
 
   def json_request?

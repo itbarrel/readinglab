@@ -81,7 +81,7 @@
             <%= f.label :usd , class: 'form-check-label' %>
           </div>
           <div class="form-check form-check-inline">
-            <%= f.radio_button :currency, 'EUR', checked: f.object.currency == 'EUR', class: 'form-check-input' %>
+              <%= f.radio_button :currency, 'EUR', checked: f.object.currency == 'EUR', class: 'form-check-input' %>
             <%= f.label :eur , class: 'form-check-label' %>
           </div>
         </div>
@@ -132,21 +132,27 @@
           <h5 class="mb-0">Change Password</h5>
         </div>
         <div class="card-body bg-light">
-          <form>
+          <%= form_for(current_user, url: registration_path(current_user), html: { method: :put }) do |f| %>
             <div class="mb-3">
-              <label class="form-label" for="old-password">Old Password</label>
-              <input class="form-control" id="old-password" type="password" />
+              <%= f.label :current_password, class:"form-label" %><br />
+              <%= f.password_field :current_password, autocomplete: "current-password", class:"form-control"%>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="new-password">New Password</label>
-              <input class="form-control" id="new-password" type="password" />
+              <%= f.label :new_password, class:"form-label" %><br />
+              <%= f.password_field :password, autocomplete: "new-password", class:"form-control" %>
+              <% if @minimum_password_length %>
+              <br />
+              <em><%= @minimum_password_length %> characters minimum</em>
+              <% end %>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="confirm-password">Confirm Password</label>
-              <input class="form-control" id="confirm-password" type="password" />
+              <%= f.label :password_confirmation, class: "form-label" %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
             </div>
-            <button class="btn btn-primary d-block w-100" type="submit">Update Password </button>
-          </form>
+            <div class="col-12 d-flex justify-content-end">
+              <button class="btn btn-primary" type="submit">Update </button>
+            </div>
+          <% end %>
         </div>
       </div>
       <div class="card">
