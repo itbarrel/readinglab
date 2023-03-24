@@ -41,6 +41,4 @@ namespace :merge do
   end
 end
 
-
-
 # Klass.find_or_create_by!(account_id: old_klass.account_id,teacher_id: old_klass.teacher.id,room_id: old_klass.room.id)

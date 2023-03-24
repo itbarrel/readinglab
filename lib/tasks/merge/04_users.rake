@@ -11,7 +11,7 @@ namespace :merge do
         user.id = old_user.id
         user.first_name = old_user.first
         user.last_name = old_user.last
-        user.role = old_user.roles&.first.name
+        user.role = old_user.roles&.first&.name
         user.password = ENV['DEFAULT_MERGE_PASSWORD']
         user.remember_created_at = old_user.remember_created_at
         user.sign_in_count = old_user.sign_in_count

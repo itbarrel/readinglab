@@ -15,7 +15,7 @@ namespace :merge do
       FormDetail.find_or_create_by!(
         account_id: old_form_detail.account_id,
         parent_id: old_form_detail.parent_id,
-        form_id: old_form_detail.form_id,
+        form_id: old_form_detail.form_id
       ) do |form_detail|
         form_detail.id = old_form_detail.id
         form_detail.form_values = old_form_detail.form_values
