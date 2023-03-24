@@ -40,6 +40,9 @@ namespace :merge do
     end
   end
 end
-# Student.find_or_create_by!(first_name: old_student.first,last_name: old_student.last,account_id: old_student.account_id,school: old_student.school.presence || 'Readinglab',parent_id: old_student.parent_id)
+# Student.find_or_create_by!(first_name: old_student.first,
+# last_name: old_student.last,account_id: old_student.account_id,
+# school: old_student.school.presence || 'Readinglab',parent_id: old_student.parent_id)
 
-# Old::Student.where(first: 'Aleena').select(:first, :last, :parent_id, :account_id, :school).group(:first, :last, :parent_id, :account_id, :school).having('count(*) > 1')
+# Old::Student.where(first: 'Aleena').select(:first, :last, :parent_id, :account_id,
+#  :school).group(:first, :last, :parent_id, :account_id, :school).having('count(*) > 1')
