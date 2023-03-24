@@ -1,16 +1,20 @@
 <div class="toast-container position-fixed p-3 bottom-0 start-50 translate-middle-x" style="z-index: 10">
 <% if flash.any? %>
-  <% flash.each do |key, value| %>
+  <% flash.each do |key, values| %>
     <% type = key.to_s.gsub('alert', 'error').gsub('notice', 'success') %>
-    <div class="toast fade align-items-center text-white <%= bootstrap_class_for(type) %> border-0" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="d-flex">
-        <div class="toast-body">
-          <%= value %>.
+    <% values = (values.is_a?(Array))? values : [values] %>
+    <% values.each do |message| %>
+      <div class="toast fade align-items-center text-white <%= bootstrap_class_for(type) %> border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">
+            <%= message %>
+          </div>
+          <button class="btn-close btn-close-white me-2 m-auto" type="button" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <button class="btn-close btn-close-white me-2 m-auto" type="button" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
-    </div>
+    <% end %>
   <% end %>
+
   <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", () => {
       const toastElList = [].slice.call(document.querySelectorAll('.toast'))

@@ -26,7 +26,7 @@ class VacationTypesController < ApplicationController
 
     respond_to do |format|
       if @vacation_type.save
-        format.html { redirect_to vacation_type_url(@vacation_type), notice: 'Vacation type was successfully created.' }
+        format.html { redirect_to vacation_type_url(@vacation_type), notice: 'Vacation has been successfully created.' }
         format.json { render :show, status: :created, location: @vacation_type }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class VacationTypesController < ApplicationController
   def update
     respond_to do |format|
       if @vacation_type.update(vacation_type_params)
-        format.html { redirect_to vacation_type_url(@vacation_type), notice: 'Vacation type was successfully updated.' }
+        format.html { redirect_to vacation_type_url(@vacation_type), notice: 'Vacation has been successfully updated.' }
         format.json { render :show, status: :ok, location: @vacation_type }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -53,7 +53,7 @@ class VacationTypesController < ApplicationController
     @vacation_type.destroy
 
     respond_to do |format|
-      format.html { redirect_to vacation_types_url, notice: 'Vacation type was successfully destroyed.' }
+      format.html { redirect_to vacation_types_url, notice: 'Vacation has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end

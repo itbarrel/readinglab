@@ -32,7 +32,7 @@ class ParentsController < ApplicationController
 
     respond_to do |format|
       if @parent.save
-        format.html { redirect_to parents_url, notice: 'Parent was successfully created.' }
+        format.html { redirect_to parents_url, notice: 'Parents has been successfully created.' }
         format.json { render :show, status: :created, location: @parent }
       else
         format.html { redirect_to parents_url, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ class ParentsController < ApplicationController
   def update
     respond_to do |format|
       if @parent.update(parent_params)
-        format.html { redirect_to parent_url(@parent), notice: 'Parent was successfully updated.' }
+        format.html { redirect_to parent_url(@parent), notice: 'Parents has been successfully updated.' }
         format.json { render :show, status: :ok, location: @parent }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -59,7 +59,7 @@ class ParentsController < ApplicationController
     @parent.destroy
 
     respond_to do |format|
-      format.html { redirect_to parents_url, notice: 'Parent was successfully destroyed.' }
+      format.html { redirect_to parents_url, notice: 'Parents has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end

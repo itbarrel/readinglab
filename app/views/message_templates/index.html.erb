@@ -36,19 +36,12 @@
                   data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
               </div>
             </th>
-            <%# <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :name, default_order: :asc)%>
-            <%# </th>  %>
             <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Name</th>
             <th class="sort pe-1 align-middle white-space-nowrap" data-sort="max_students">Description</th>
-            <%# <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :name, description: :asc)%>
-            <%# </th> %>
-            <%# <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :room_name, default_order: :asc)%>
-            <%# </th>  %>
             <th class="sort pe-1 align-middle white-space-nowrap"></th>
           </tr>
         </thead>
         <tbody class="list" id="table-customers-body">
-          <tbody class="list" id="table-customers-body">
           <% @message_templates.each do |message_template| %>
             <%= render message_template %>
           <% end %>

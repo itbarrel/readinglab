@@ -12,6 +12,7 @@ AllCops:
     - bin/**/*
     - tmp/**/*
     - test/**/*
+    - node_modules/**/*
     - 'config/initializers/devise.rb'
 
 Rails:

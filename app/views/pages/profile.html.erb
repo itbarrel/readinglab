@@ -17,8 +17,6 @@
         </h4>
         <h5 class="fs-0 fw-normal"></h5>
         <p class="text-500"><%= current_user.role.humanize.capitalize %></p>
-        <%# <button class="btn btn-falcon-primary btn-sm px-3" type="button">Following</button>
-        <button class="btn btn-falcon-default btn-sm px-3 ms-2" type="button">Message</button> %>
         <div class="border-dashed-bottom my-4 d-lg-none"></div>
       </div>
       <div class="col ps-2 ps-lg-3">
@@ -40,34 +38,25 @@
       </div>
       <div class="card-body bg-light">
         <%= form_for(current_user, as: :staff, url: staff_path(current_user), html: { id: 'profileForm', class: 'row g-3' }) do |f| %>
-          <div class="col-lg-6">
-            <%= f.label :first_name, class: 'form-label' %>
-            <%= f.text_field :first_name, class: 'form-control' %>
-          </div>
-          <div class="col-lg-6">
-            <%= f.label :last_name, class: 'form-label' %>
-            <%= f.text_field :last_name, class: 'form-control' %>
-          </div>
-          <div class="col-lg-6">
-           <%= f.label :email, class: 'form-label' %><br/>
-           <%= f.email_field :email,class: 'form-control', autofocus: true, autocomplete: "email" %>
-          </div>
-          <div class="col-lg-6">
+        <div class="col-lg-6">
+          <%= f.label :first_name, class: 'form-label' %>
+          <%= f.text_field :first_name, class: 'form-control' %>
+        </div>
+        <div class="col-lg-6">
+          <%= f.label :last_name, class: 'form-label' %>
+          <%= f.text_field :last_name, class: 'form-control' %>
+        </div>
+        <div class="col-lg-6">
+          <%= f.label :email, class: 'form-label' %><br />
+          <%= f.email_field :email,class: 'form-control', autofocus: true, autocomplete: "email" %>
+        </div>
+        <div class="col-lg-6">
           <%= f.label :phone, class: 'form-label' %>
           <%= f.number_field :phone, class: 'form-control' %>
-          </div>
-           <div class="col-lg-6">
-            <%= f.label :role, class: 'form-label' %>
-            <%= f.select :role,  options_for_select(User.roles.map {|k, v| [k.humanize.capitalize, k]}, f.object.role), {}, { class: "form-select" } %>
-          </div>
-          <%# <div class="col-lg-12">
-            <label class="form-label" for="Description">Description</label>
-            <textarea class="form-control" id="Description" name="Description" cols="30"
-              rows="13">Dedicated, passionate, and accomplished Full Stack Developer with 9+ years of progressive experience working as an Independent Contractor for Google and developing and growing my educational social network that helps others learn programming, web design, game development, networking. I’ve acquired a wide depth of knowledge and expertise in using my technical skills in programming, computer science, software development, and mobile app development to developing solutions to help organizations increase productivity, and accelerate business performance. It’s great that we live in an age where we can share so much with technology but I’m but I’m ready for the next phase of my career, with a healthy balance between the virtual world and a workplace where I help others face-to-face. There’s always something new to learn, especially in IT-related fields. People like working with me because I can explain technology to everyone, from staff to executives who need me to tie together the details and the big picture. I can also implement the technologies that successful projects need.</textarea>
-          </div> %>
-          <div class="col-12 d-flex justify-content-end">
-            <button class="btn btn-primary" type="submit">Update </button>
-          </div>
+        </div>
+        <div class="col-12 d-flex justify-content-end">
+          <button class="btn btn-primary" type="submit">Update </button>
+        </div>
         <% end %>
       </div>
     </div>
@@ -77,55 +66,64 @@
       </div>
       <div class="card-body bg-light">
         <%= form_for(current_account, html: { id: 'profileAccountForm', class: 'row g-3' }) do |f| %>
-          <div class="col-lg-12">
-            <%= f.label :name, class: 'form-label' %>
-            <%= f.text_field :name, class: 'form-control' %>
+        <div class="col-lg-12">
+          <%= f.label :name, class: 'form-label' %>
+          <%= f.text_field :name, class: 'form-control' %>
+        </div>
+        <div class="col-lg-12">
+          <%= f.label :currency , class: 'form-label' %><br>
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :currency, 'PKR', checked: f.object.currency == 'PKR', class: 'form-check-input' %>
+            <%= f.label :PKR , class: 'form-check-label' %>
           </div>
-          <div class="col-lg-12">
-            <%= f.label :currency , class: 'ui-radio' %><br>
-            <%= f.radio_button :currency , class:'form-check form-check-inline' %> PKR
-            <%= f.radio_button :currency, class: 'form-check form-check-inline' %> USD
-            <%= f.radio_button :currency, class: 'form-check form-check-inline' %> EUR
-            </div>
-             <div class="col-lg-12">
-            <%= f.label :billing_scheme, class: 'form-label' %>
-            <%= f.select :billing_scheme, options_for_select(["Annually", "Monthly", "sessionly"]),  {}, { class: "form-select" } %> 
+          <div class="form-check form-check-inline">
+            <%= f.radio_button :currency, 'USD', checked: f.object.currency == 'USD', class: 'form-check-input' %>
+            <%= f.label :usd , class: 'form-check-label' %>
           </div>
-          <div class="col-lg-6">
-            <%= f.label :address, class: 'form-label' %>
-            <%= f.text_field :address, class: 'form-control' %>
+          <div class="form-check form-check-inline">
+              <%= f.radio_button :currency, 'EUR', checked: f.object.currency == 'EUR', class: 'form-check-input' %>
+            <%= f.label :eur , class: 'form-check-label' %>
           </div>
-          <div class="col-lg-6">
-           <%= f.label :email, class: 'form-label' %>
-           <%= f.email_field :email, class: 'form-control', autofocus: true, autocomplete: "email" %>
-          </div>
-          <div class="col-lg-6">
+        </div>
+        <div class="col-lg-12">
+          <%= f.label :billing_scheme, class: 'form-label' %>
+          <%= f.select :billing_scheme, options_for_select(["Annually", "Monthly", "sessionly"]),  {}, { class: "form-select" } %>
+        </div>
+        <div class="col-lg-6">
+          <%= f.label :address, class: 'form-label' %>
+          <%= f.text_field :address, class: 'form-control' %>
+        </div>
+        <div class="col-lg-6">
+          <%= f.label :email, class: 'form-label' %>
+          <%= f.email_field :email, class: 'form-control', autofocus: true, autocomplete: "email" %>
+        </div>
+        <div class="col-lg-6">
           <%= f.label :mobile, class: 'fs-0' %>
           <%= f.number_field :mobile, class: 'form-control' %>
-          </div>
-          <div class="col-lg-6">
+        </div>
+        <div class="col-lg-6">
           <%= f.label :province, class: 'form-label' %>
           <%= f.text_field :province, class: 'form-control' %>
-          </div>
-          <div class="col-lg-6">
+        </div>
+        <div class="col-lg-6">
           <%= f.label :postal_code , class: 'form-label' %>
           <%= f.number_field :postal_code, class: 'form-control' %>
-          </div>
-          <div class="col-lg-6">
+        </div>
+        <div class="col-lg-6">
           <%= f.label :timezone , class: 'form-label' %>
-          <%= f.time_zone_select :timezone, nil, {}, {class:'form-select'} %> 
-          </div>
-          <div class="col-lg-6">
-          <%= f.label :send_emails , class: 'form-label' %><br/>
-           <%= f.select :notify_emails, options_for_select(['Please select', ["Yes", "true"], ["No","false"]], f.object.notify_emails),  {}, { class: "form-select" } %> 
-          </div>
-          
-          <div class="col-12 d-flex justify-content-end">
-            <button class="btn btn-primary" type="submit">Update </button>
-          </div>
+          <%= f.time_zone_select :timezone, nil, {}, {class:'form-select'} %>
+        </div>
+        <div class="col-lg-6">
+          <%= f.label :send_emails , class: 'form-label' %><br />
+          <%= f.select :notify_emails, options_for_select(['Please select', ["Yes", "true"], ["No","false"]], f.object.notify_emails),  {}, { class: "form-select" } %>
+        </div>
+
+        <div class="col-12 d-flex justify-content-end">
+          <button class="btn btn-primary" type="submit">Update </button>
+        </div>
         <% end %>
       </div>
-    </div>  
+    </div>
   </div>
   <div class="col-lg-4 ps-lg-2">
     <div class="sticky-sidebar">
@@ -134,21 +132,27 @@
           <h5 class="mb-0">Change Password</h5>
         </div>
         <div class="card-body bg-light">
-          <form>
+          <%= form_for(current_user, url: registration_path(current_user), html: { method: :put }) do |f| %>
             <div class="mb-3">
-              <label class="form-label" for="old-password">Old Password</label>
-              <input class="form-control" id="old-password" type="password" />
+              <%= f.label :current_password, class:"form-label" %><br />
+              <%= f.password_field :current_password, autocomplete: "current-password", class:"form-control"%>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="new-password">New Password</label>
-              <input class="form-control" id="new-password" type="password" />
+              <%= f.label :new_password, class:"form-label" %><br />
+              <%= f.password_field :password, autocomplete: "new-password", class:"form-control" %>
+              <% if @minimum_password_length %>
+              <br />
+              <em><%= @minimum_password_length %> characters minimum</em>
+              <% end %>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="confirm-password">Confirm Password</label>
-              <input class="form-control" id="confirm-password" type="password" />
+              <%= f.label :password_confirmation, class: "form-label" %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
             </div>
-            <button class="btn btn-primary d-block w-100" type="submit">Update Password </button>
-          </form>
+            <div class="col-12 d-flex justify-content-end">
+              <button class="btn btn-primary" type="submit">Update </button>
+            </div>
+          <% end %>
         </div>
       </div>
       <div class="card">
@@ -156,13 +160,9 @@
           <h5 class="mb-0">Danger Zone</h5>
         </div>
         <div class="card-body bg-light">
-          <%# <h5 class="fs-0">Transfer Ownership</h5>
-          <p class="fs--1">Transfer this account to another user or to an organization where you have the ability to
-            create repositories.</p><a class="btn btn-falcon-warning d-block" href="#!">Transfer</a>  %>
-          <div class="border-dashed-bottom my-4" ></div>
           <h5 class="fs-0">Delete this account</h5>
-          <p class="fs--1">Once you delete a account, there is no going back. Please be certain.</p><a
-            class="btn btn-falcon-danger d-block" href="#!">Deactivate Account</a>
+          <p class="fs--1">Once you delete a account, there is no going back. Please be certain.</p>
+          <a class="btn btn-falcon-danger d-block" href="#!">Deactivate Account</a>
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@
     "@popperjs/core": "^2.11.6",
     "@rails/ujs": "^7.0.4",
     "bootstrap-icons": "^1.10.3",
+    "cocoon": "github:nathanvda/cocoon#c24ba53",
     "esbuild": "^0.15.15",
     "esbuild-rails": "^1.0.3",
     "jquery": "^3.6.1",

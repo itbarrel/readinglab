@@ -27,7 +27,7 @@ class StudentClassesController < ApplicationController
     respond_to do |format|
       if @student_class.save
         flash[:notice] = 'Student was successfully Added.'
-        format.html { redirect_to request.referer, notice: 'Student was successfully Added.' }
+        format.html { redirect_to request.referer, notice: 'Student has been successfully created.' }
         format.json { render :show, status: :created, location: @student_class }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -41,7 +41,9 @@ class StudentClassesController < ApplicationController
   def update
     respond_to do |format|
       if @student_class.update(student_class_params)
-        format.html { redirect_to student_class_url(@student_class), notice: 'Student class was successfully updated.' }
+        format.html do
+          redirect_to student_class_url(@student_class), notice: 'Student class has been successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @student_class }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,7 +57,7 @@ class StudentClassesController < ApplicationController
     flash[:notice] = 'Student has been removed from class successfully.'
 
     respond_to do |format|
-      format.html { redirect_to student_classes_url, notice: 'Student class was successfully destroyed.' }
+      format.html { redirect_to student_classes_url, notice: 'Student class has been successfully destroyed.' }
       format.json { head :no_content }
       format.js { render 'shared/flash' }
     end

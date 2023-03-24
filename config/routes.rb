@@ -2,15 +2,16 @@
 
 require 'sidekiq/web'
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { registrations: :registrations }
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   mount Sidekiq::Web => '/sidekiq'
 
-  resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs
-  resources :parents, :meetings, :forms, :receipt_types, :receipts
-  resources :message_templates
+  resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs, :books, :trajectory_details
+  resources :message_templates, :form_fields, :field_values
 
   resources :student_classes, only: %i[create destroy]
+  resources :parents, :meetings, :forms, :receipt_types, :receipts
 
   resources :klass_templates do
     member do
@@ -30,6 +31,11 @@ Rails.application.routes.draw do
       get :present_search
     end
   end
+  resources :reports, only: %i[] do
+    collection do
+      get :graph
+    end
+  end
   scope module: :pages do
     get :home
     get :calendar
@@ -38,6 +44,6 @@ Rails.application.routes.draw do
   end
 
   post :notify, controller: :emails, action: :notify
-  # Defines the root path route ("/")
+
   root 'pages#home'
 end

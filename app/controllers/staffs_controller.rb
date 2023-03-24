@@ -28,7 +28,7 @@ class StaffsController < ApplicationController
 
     respond_to do |format|
       if @staff.save
-        format.html { redirect_to staff_url, notice: 'staff was successfully created.' }
+        format.html { redirect_to staff_url, notice: 'Staff has been successfully created.' }
         format.json { render :show, status: :created, location: @staff }
       else
         format.html { render :index, status: :unprocessable_entity }
@@ -41,7 +41,7 @@ class StaffsController < ApplicationController
   def update
     respond_to do |format|
       if @staff.update(staff_params)
-        format.html { redirect_to request.referer, notice: 'staff was successfully updated.' }
+        format.html { redirect_to request.referer, notice: 'Staff has been successfully updated.' }
         format.json { render :show, status: :ok, location: @staff }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,7 +55,7 @@ class StaffsController < ApplicationController
     @staff.destroy
 
     respond_to do |format|
-      format.html { redirect_to staffs_url, notice: 'staff was successfully destroyed.' }
+      format.html { redirect_to staffs_url, notice: 'Staff has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end

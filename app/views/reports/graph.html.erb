@@ -1,0 +1,99 @@
+<% content_for :search_includes do %>
+<%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
+<% end %>
+
+<div class="card mb-3" id="customersTable"
+  data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
+  <div class="card-header">
+    <div class="row flex-between-center">
+      <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+        <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Graph Report</h5>
+      </div>
+      <div class="col-8 col-sm-auto text-end ps-2">
+        <div id="table-customers-replace-element">
+          <%= link_to(new_book_path , remote: true, class: 'btn btn-falcon-default btn-sm') do %>
+          <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+          <span class="d-none d-sm-inline-block ms-1">Add Books</span>
+          <% end %>
+          <%= link_to(new_trajectory_detail_path , remote: true, class: 'btn btn-falcon-default btn-sm') do %>
+          <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+          <span class="d-none d-sm-inline-block ms-1">Add Trajectory Points</span>
+          <% end %>
+          <button class="btn btn-falcon-default btn-sm" type="button"><span class="bi bi-graph-up-arrow"
+              data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Show Trajectory
+              Points </span></button>
+          <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-download"
+              data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Download
+              Pdf</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body bg-light">
+    <form class="row g-3">
+      <div class="col-lg-6 ">
+        <label class="form-label">Student Name</label><br>
+        <%= select_tag('student name', options_from_collection_for_select(Student.all, 'id', 'first_name'), {class: "form-control"}) %>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row g-3 mb-3">
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">
+        <div class="row flex-between-end">
+          <div class="col-auto align-self-center">
+            <h5 class="mb-0" data-anchor="data-anchor">Line marker chart</h5>
+          </div>
+        </div>
+      </div>
+      <div class="card-body bg-light">
+        <div class="tab-content">
+          <div class="tab-pane preview-tab-pane active" role="tabpanel"
+            aria-labelledby="tab-dom-48e35004-c58e-46ef-9915-c9df7ce41874"
+            id="dom-48e35004-c58e-46ef-9915-c9df7ce41874">
+            <div class="echart-line-marker-chart-example" style="min-height: 300px;" data-echart-responsive="true">
+            </div>
+          </div>
+          <div class="tab-pane code-tab-pane" role="tabpanel"
+            aria-labelledby="tab-dom-4a28e196-9c83-42f9-b4e8-b2631a324318"
+            id="dom-4a28e196-9c83-42f9-b4e8-b2631a324318">
+            <pre class="scrollbar rounded-1" style="max-height:420px"><code class="language-html"></code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-header">
+        <div class="row flex-between-end">
+          <div class="col-auto align-self-center">
+            <h5 class="mb-0" data-anchor="data-anchor">Stacked area chart</h5>
+          </div>
+        </div>
+      </div>
+      <div class="card-body bg-light">
+        <div class="tab-content">
+          <div class="tab-pane preview-tab-pane active" role="tabpanel"
+            aria-labelledby="tab-dom-ce4113cd-4f6c-40a1-91df-b85a1a51dd61"
+            id="dom-ce4113cd-4f6c-40a1-91df-b85a1a51dd61">
+            <div class="echart-stacked-area-chart-example" style="min-height: 300px;" data-echart-responsive="true">
+            </div>
+          </div>
+          <div class="tab-pane code-tab-pane" role="tabpanel"
+            aria-labelledby="tab-dom-9f60772b-1ef6-455d-932a-6381c7cf853e"
+            id="dom-9f60772b-1ef6-455d-932a-6381c7cf853e">
+            <pre class="scrollbar rounded-1" style="max-height:420px"><code class="language-html"></code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :modal_includes do %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addBookModal' } %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addTrajectoryModal', modal_size: 'modal-lg' } %>
+<% end %>

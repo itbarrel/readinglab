@@ -14,6 +14,7 @@ class FormsController < ApplicationController
   # GET /forms/new
   def new
     @form = Form.new
+    @form.form_fields.build
   end
 
   # GET /forms/1/edit
@@ -22,6 +23,7 @@ class FormsController < ApplicationController
   # POST /forms or /forms.json
   def create
     @form = Form.new(form_params)
+    attach_account_for(@form)
 
     respond_to do |format|
       if @form.save
@@ -66,6 +68,8 @@ class FormsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def form_params
-    params.require(:form).permit(:fields, :name, :purpose)
+    params.require(:form).permit(:name, :purpose,
+                                 form_fields_attributes:
+                                  %i[id name description sort_order field_type data_type necessary])
   end
 end
