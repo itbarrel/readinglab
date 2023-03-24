@@ -15,6 +15,7 @@ gem 'sidekiq', '<7'
 gem 'sprockets-rails'
 
 gem 'cancancan'
+gem 'cocoon', '~> 1.2'
 gem 'date_validator', '~> 0.12.0'
 gem 'devise'
 gem 'jbuilder'

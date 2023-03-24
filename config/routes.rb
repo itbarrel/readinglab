@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs, :books, :trajectory_details
-  resources :message_templates
+  resources :message_templates, :form_fields, :field_values
 
   resources :student_classes, only: %i[create destroy]
   resources :parents, :meetings, :forms, :receipt_types, :receipts
@@ -44,6 +44,6 @@ Rails.application.routes.draw do
   end
 
   post :notify, controller: :emails, action: :notify
-  # Defines the root path route ("/")
+
   root 'pages#home'
 end
