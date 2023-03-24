@@ -24,7 +24,8 @@ class MeetingsController < ApplicationController
       )
     end
 
-    @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room]), items: per_page)
+    @pagy, @meetings = pagy(@meetings.where("date(starts_at) = '2023-03-02'").includes(klass: %i[teacher room]),
+                            items: per_page)
   end
 
   def show; end

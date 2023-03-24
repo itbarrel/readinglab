@@ -5,4 +5,10 @@ class ApplicationRecord < ActiveRecord::Base
   include Randomizer
 
   acts_as_paranoid
+
+  connects_to database: { writing: :primary }
+
+  def self.default_seeds
+    []
+  end
 end

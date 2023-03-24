@@ -18,4 +18,8 @@ class AccountType < ApplicationRecord
   has_many :accounts, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { scope: %i[name deleted_at] }
+
+  def self.default_seeds
+    ['School', 'External Organization']
+  end
 end

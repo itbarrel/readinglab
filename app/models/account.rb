@@ -46,4 +46,8 @@ class Account < ApplicationRecord
 
   validates :email, :mobile, :postal_code, presence: true
   validates :name, presence: true, uniqueness: { scope: %i[name deleted_at] }
+
+  def self.default_seeds
+    %w[ReadingLab]
+  end
 end

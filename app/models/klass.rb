@@ -47,7 +47,7 @@ class Klass < ApplicationRecord
   belongs_to :account
   belongs_to :teacher
   belongs_to :room
-  belongs_to :klass_template
+  belongs_to :klass_template, optional: true
   belongs_to :attendance_form, optional: true, class_name: 'Form'
 
   has_many :meetings, dependent: :destroy
@@ -56,10 +56,12 @@ class Klass < ApplicationRecord
 
   enum :range_type, %i[sessional monthly]
 
+  attr_accessor :skip_validations
+
   validates :duration, :starts_at, presence: true
   validates :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, inclusion: { in: [true, false] }
 
-  after_create :create_meetings
+  after_create :create_meetings, unless: :skip_validations
 
   def days_abbr
     (monday ? 'M' : '.') + (tuesday ? 'T' : '.') + (wednesday ? 'W' : '.') + \
@@ -75,6 +77,11 @@ class Klass < ApplicationRecord
   def short_name
     rclass_time = starts_at.strftime('%H:%M')
     "Class in #{room.name} on #{days_abbr} at #{rclass_time}"
+  end
+
+  def calendar_name
+    rclass_time = starts_at.strftime('%I:%M %P')
+    "#{rclass_time} #{teacher.calendar_name} in #{room.name}"
   end
 
   def extended_meeting_dates(limit, starting_date, extend_type = :sessional, vacation_dates = Vacation.all)

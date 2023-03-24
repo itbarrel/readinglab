@@ -36,7 +36,6 @@
 # Indexes
 #
 #  index_users_on_account_id            (account_id)
-#  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  users_email                          (account_id,email,deleted_at) UNIQUE
 #
@@ -58,5 +57,9 @@ class User < ApplicationRecord
 
   def name
     "Mr/s. #{first_name} #{last_name}"
+  end
+
+  def calendar_name
+    "#{first_name} #{last_name}"
   end
 end

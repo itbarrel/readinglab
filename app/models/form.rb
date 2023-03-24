@@ -34,4 +34,8 @@ class Form < ApplicationRecord
   enum :purpose, %i[lessonable attendancable]
 
   validates :name, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
+
+  def self.default_seeds
+    ['Attendance Form']
+  end
 end

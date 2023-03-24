@@ -31,4 +31,8 @@ class Vacation < ApplicationRecord
 
   validates :name, :starting_at, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
   validates :ending_at, presence: true, date: { after_or_equal_to:  :starting_at }
+
+  def self.default_seeds
+    ['Vacation Type']
+  end
 end

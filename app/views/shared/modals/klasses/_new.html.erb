@@ -61,7 +61,7 @@
 <script>
   $('#klass_starts_at').on('change', (e) => {
     $.ajax({
-      url: "/klasses/availability", 
+      url: "/klasses/availability",
       data: { start_date: e.target.value }
     });
   })
