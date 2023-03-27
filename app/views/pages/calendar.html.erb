@@ -2,11 +2,27 @@
   <div class="card-header">
     <div class="row gx-0 align-items-center">
       <div class="col-auto d-flex justify-content-end order-md-1">
-        <button class="btn icon-item icon-item-sm shadow-none p-0 me-1 ms-md-2" type="button" data-event="prev" data-bs-toggle="tooltip" title="Previous"><span class="fas fa-arrow-left"></span></button>
-        <button class="btn icon-item icon-item-sm shadow-none p-0 me-1 me-lg-2" type="button" data-event="next" data-bs-toggle="tooltip" title="Next"><span class="fas fa-arrow-right"></span></button>
+        <button class="btn icon-item icon-item-sm shadow-none p-0 me-1 ms-md-2" type="button" data-event="prev"
+          data-bs-toggle="tooltip" title="Previous">
+          <span class="fas fa-arrow-left"></span>
+        </button>
+        <button class="btn icon-item icon-item-sm shadow-none p-0 me-1 me-lg-2" type="button" data-event="next"
+          data-bs-toggle="tooltip" title="Next">
+          <span class="fas fa-arrow-right"></span>
+        </button>
+        <div class="col-auto col-md-auto order-md-2">
+          <h4 class="mb-0 fs-0 fs-sm-1 fs-lg-2 calendar-title">l</h4>
+        </div>
       </div>
-      <div class="col-auto col-md-auto order-md-2">
-        <h4 class="mb-0 fs-0 fs-sm-1 fs-lg-2 calendar-title"></h4>
+
+      <div class="form-floating col-lg-4 col-auto d-flex justify-content-end order-md-1 mb-3">
+        <select class="form-select" id="calendar_teacher_id" aria-label="Floating label select example">
+          <option selected>Select Please</option>
+          <% Teacher.all.each do |teacher| %>
+            <option value="<%= teacher.id %>"><%= teacher.name %></option>
+          <% end %>
+        </select>
+        <label for="floatingSelectGrid">Teacher: </label>
       </div>
       <div class="col col-md-auto d-flex justify-content-end order-md-4">
         <button class="btn btn-falcon-primary btn-sm" type="button" data-event="today">Today</button>
@@ -16,23 +32,31 @@
           <i class="fas fa-circle-notch" aria-hidden="true"></i>
         </button>
       </div>
-      <div class="col-md-auto d-md-none">
-        <hr />
-      </div>
+
       <div class="col-auto d-flex order-md-0">
         <%= link_to(new_klass_path, remote: true, class: 'btn btn-primary btn-sm') do %>
-          <span class="fas fa-plus me-2"></span>Add Schedule
+        <span class="fas fa-plus me-2"></span>Add Schedule
         <% end %>
       </div>
       <div class="col col-md-auto d-flex justify-content-end order-md-3">
+
         <div class="dropdown font-sans-serif me-md-2">
-          <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none" type="button" id="email-filter" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span data-view-title="data-view-title">Month View</span><span class="fas fa-sort ms-2 fs--1"></span></button>
+          <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none" type="button"
+            id="email-filter" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true"
+            aria-expanded="false"><span data-view-title="data-view-title">Month View</span><span
+              class="fas fa-sort ms-2 fs--1"></span></button>
           <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="email-filter">
-            <a class="active dropdown-item d-flex justify-content-between" href="#!" data-fc-view="dayGridMonth">Month View<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a>
-            <a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="timeGridWeek">Week View<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a>
-            <a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="timeGridDay">Day View<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a>
-            <a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="listWeek">List View<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a>
-            <a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="listYear">Year View<span class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a>
+            <a class="active dropdown-item d-flex justify-content-between" href="#!" data-fc-view="dayGridMonth">Month
+              View<span class="icon-check"><span class="fas fa-check"
+                  data-fa-transform="down-4 shrink-4"></span></span></a>
+            <a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="timeGridWeek">Week View<span
+                class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a>
+            <a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="timeGridDay">Day View<span
+                class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a>
+            <a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="listWeek">List View<span
+                class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a>
+            <a class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="listYear">Year View<span
+                class="icon-check"><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a>
           </div>
         </div>
       </div>

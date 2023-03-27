@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  var teacher_id = null
   const events = [
     {
       url: "/interviews.json",
@@ -16,7 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // textColor: '#f2600e',
       extraParams: {
         cachebuster: new Date().valueOf(),
-        pagination: false
+        pagination: false,
+        teacher_id,
       }
     }
   ];
@@ -52,5 +54,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   }
-  calendarInit(undefined, events, true, domEvents);
+  const calendar = calendarInit(undefined, events, true, domEvents);
+
+  $('#calendar_teacher_id').change(function() {
+    teacher_id = $(this).val()
+    calendar.refetchEvents();
+  });
 });
