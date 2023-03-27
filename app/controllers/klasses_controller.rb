@@ -109,6 +109,6 @@ class KlassesController < ApplicationController
     params.require(:klass).permit(:max_students, :starts_at, :monday, :tuesday, :wednesday, :thursday, :friday,
                                   :saturday, :sunday, :session_range, :duration,
                                   :est_end_date, :min_students, :name, :description,
-                                  :teacher_id, :room_id, :klass_template_id, :attendance_form_id)
+                                  :teacher_id, :room_id, :klass_template_id, :attendance_form_id, form_ids: [])
   end
 end

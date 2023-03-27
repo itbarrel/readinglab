@@ -43,8 +43,6 @@ class KlassTemplate < ApplicationRecord
   belongs_to :account
   belongs_to :teacher
   belongs_to :room
-  has_many :klass_template_forms, dependent: :destroy
-
   validates :name, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
   validates :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, inclusion: { in: [true, false] }
 end

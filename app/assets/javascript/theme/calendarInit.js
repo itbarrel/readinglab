@@ -265,5 +265,7 @@ window.calendarInit = (selectors = {}, events = [], external = false, domEvents 
           updateTitle(calendar.currentData.viewTitle);
         });
       });
+    
+    return calendar;
   }
 };
