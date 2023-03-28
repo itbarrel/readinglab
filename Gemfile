@@ -22,6 +22,7 @@ gem 'jbuilder'
 gem 'pagy', '~> 5.10'
 gem 'paranoia'
 gem 'ransack'
+gem 'simple_form', '~> 5.2'
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'cssbundling-rails'

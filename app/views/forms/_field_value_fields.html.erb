@@ -1,29 +1,16 @@
-<div class="position-relative rounded-1 border bg-white dark__bg-1100 p-3">
-  <div class="position-absolute end-0 top-0 mt-2 me-3 z-index-1">
-    <button class="btn btn-link btn-sm p-0" type="button"><span class="fas fa-times-circle text-danger" data-fa-transform="shrink-1"></span></button>
-  </div>
+<div class="nested-fields position-relative rounded-1 border bg-white dark__bg-1100 p-3 my-2">
+  <%= link_to_remove_association f, class: 'position-absolute end-0 top-0 mt-2 me-3 z-index-1' do %>
+    <span class="fas fa-times-circle text-danger" data-fa-transform="shrink-1">
+  <% end %>
+  
   <div class="row gx-2">
-    <div class="col-sm-6 mb-3">
-      <label class="form-label" for="field-name">Name</label>
-      <input class="form-control form-control-sm" id="field-name" type="text" placeholder="Name (e.g. T-shirt)" />
+    <div class="mb-3">
+      <%= f.label :name, class: "form-label" %>
+      <%= f.text_field :name, required: true, class: "form-control", placeholder: "Name" %>
     </div>
-    <div class="col-sm-6 mb-3">
-      <label class="form-label" for="field-type">Type</label>
-      <select class="form-select form-select-sm" id="field-type">
-        <option>Select a type</option>
-        <option>Text</option>
-        <option>Checkboxes</option>
-        <option>Radio Buttons</option>
-        <option>Textarea</option>
-        <option>Date</option>
-        <option>Dropdowns</option>
-        <option>File</option>
-      </select>
-    </div>
-    <div class="col-12">
-      <label class="form-label" for="field-options">Field Options</label>
-      <textarea class="form-control form-control-sm" id="field-options" rows="3"></textarea>
-      <div class="form-text fs--1 text-warning">* Separate your options with comma</div>
+    <div class="mb-3">
+      <%= f.label :value, class: "form-label" %>
+      <%= f.text_field :usage, required: true, class: "form-control", placeholder: "Value" %>
     </div>
   </div>
 </div>
