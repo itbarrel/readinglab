@@ -23,7 +23,8 @@
 #
 class Form < ApplicationRecord
   belongs_to :account, dependent: :destroy
-  has_many :klass_tempelate_forms, dependent: :destroy
+
+  has_many :klass_forms, dependent: :destroy
   has_many :attendance_klasses,
            class_name: 'Klass',
            foreign_key: 'attendance_form_id',

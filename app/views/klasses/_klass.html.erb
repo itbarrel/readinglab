@@ -22,6 +22,7 @@
     </div>
     </td>
   </tr>  
-  
-  
-  
+
+<% content_for :modal_includes do %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'editKlassModal', modal_size: 'modal-lg' } %>
+<% end %>

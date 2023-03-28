@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_23_103300) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_16_094556) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -154,17 +154,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_103300) do
     t.index ["form_id"], name: "index_klass_forms_on_form_id"
     t.index ["klass_id", "form_id", "deleted_at"], name: "klass_forms_id", unique: true
     t.index ["klass_id"], name: "index_klass_forms_on_klass_id"
-  end
-
-  create_table "klass_template_forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "klass_template_id", null: false
-    t.uuid "form_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
-    t.index ["form_id"], name: "index_klass_template_forms_on_form_id"
-    t.index ["klass_template_id", "form_id", "deleted_at"], name: "klass_template_forms_id", unique: true
-    t.index ["klass_template_id"], name: "index_klass_template_forms_on_klass_template_id"
   end
 
   create_table "klass_templates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -422,6 +411,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_103300) do
     t.datetime "updated_at", null: false
     t.index ["account_id", "email", "deleted_at"], name: "users_email", unique: true
     t.index ["account_id"], name: "index_users_on_account_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -465,8 +455,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_103300) do
   add_foreign_key "interviews", "students"
   add_foreign_key "klass_forms", "forms"
   add_foreign_key "klass_forms", "klasses"
-  add_foreign_key "klass_template_forms", "forms"
-  add_foreign_key "klass_template_forms", "klass_templates"
   add_foreign_key "klass_templates", "accounts"
   add_foreign_key "klass_templates", "rooms"
   add_foreign_key "klass_templates", "users", column: "teacher_id"

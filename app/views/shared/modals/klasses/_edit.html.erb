@@ -1,11 +1,13 @@
 <div class="modal-content border-0">
   <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
-    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal"
+      aria-label="Close"></button>
   </div>
   <div class="modal-body p-0">
     <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
       <h4 class="mb-1" id="staticBackdropLabel"><%= klass.name %></h4>
-      <p class="fs--2 mb-0">Teaching by <%= link_to klass.teacher.name, staff_path(klass.teacher), class: "link-600 fw-semi-bold" %></p>
+      <p class="fs--2 mb-0">Teaching by
+        <%= link_to klass.teacher.name, staff_path(klass.teacher), class: "link-600 fw-semi-bold" %></p>
     </div>
     <div class="p-4">
       <div class="row">
@@ -16,20 +18,20 @@
               <i class="fa-inverse fa-stack-1x text-primary fas fa-users" data-fa-transform="shrink-2"></i>
             </span>
             <div class="flex-1">
-              
+
               <h5 class="mb-2 fs-0">Students</h5>
               <ul class="nav flex-lg-column fs--1">
                 <% klass.student_classes.each do |sc| %>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <%= sc.student.name %>
-                    <%= link_to(student_class_path(sc), class: "badge badge-soft-warning rounded-pill", method: :delete, remote: true) do %>
-                      <span class="fas fa-trash" ></span>
-                    <% end %>
-                  </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center ">
+                  <%= sc.student.name %>
+                  <%= link_to(student_class_path(sc), class: "badge badge-soft-warning rounded-pill", method: :delete, remote: true) do %>
+                  <span class="fas fa-trash"></span>
+                  <% end %>
+                </li>
                 <% end %>
                 <% unless klass.students.present? %>
-                  <p class="text-word-break fs--1">No student in class.<p>
-                <% end %>
+                <p class="text-word-break fs--1">No student in class.<p>
+                    <% end %>
               </ul>
             </div>
           </div>
@@ -38,19 +40,16 @@
           <h6 class="mt-5 mt-lg-0">Class Settings</h6>
 
           <%= form_for StudentClass.new, remote: true do |f| %>
-            <%= f.hidden_field :klass_id, value: klass.id %>
+          <%= f.hidden_field :klass_id, value: klass.id %>
 
-            <div class="mb-3">
-              <%= f.label :add_student, class: 'fs-0' %>
-              <%= f.collection_select :student_id, Student.eligible_for_klass, :id, :name, {}, { class: 'form-control' } %>
-            </div>
-            <div class="d-flex justify-content-end align-items-center">
-              <%= f.submit 'Add', class: 'btn btn-primary px-4' %>
-            </div>
+          <div class="mb-3">
+            <%= f.label :add_student, class: 'fs-0' %>
+            <%= f.collection_select :student_id, Student.eligible_for_klass, :id, :name, {}, { class: 'form-control' } %>
+          </div>
+          <div class="d-flex justify-content-end align-items-center">
+            <%= f.submit 'Add', class: 'btn btn-primary px-4' %>
+          </div>
           <% end %>
-
-          <hr>
-
           <%= form_for klass, remote: true do |f| %>
             <div class="mb-3">
               <%= f.label :teacher_id, class: 'fs-0' %>
@@ -64,21 +63,24 @@
               <%= f.label :attendance_form_id, class: 'fs-0' %>
               <%= f.collection_select :attendance_form_id, Form.attendancable.all, :id, :name, {}, { class: 'form-control' } %>
             </div>
+            <div class="mb-3">
+              <%= f.label :forms, class:' fs-0' %>
+              <%= f.collection_select :form_ids, Form.all, :id, :name, {include_blank: true, include_hidden: false }, {class: 'form-select  js-choice', multiple: "multiple-select-example" }%>
+            </div>
+
             <div class="d-flex justify-content-end align-items-center">
               <%= f.submit 'Update', class: 'btn btn-primary px-4' %>
             </div>
           <% end %>
-
-          <hr>
-
           <%= form_tag(extend_sessions_klass_path(klass), remote: true) do |f| %>
-            <div class="mb-3">
-              <label class="fs-0">Extend Seesions:</label>
-              <%= text_field_tag :session_count, nil ,class: 'form-control' %>
-            </div>
-            <div class="d-flex justify-content-end align-items-center">
-              <%= submit_tag 'Extend', class: 'btn btn-primary px-4' %>
-            </div>
+          <div class="mb-3">
+            <label class="fs-0">Extend Seesions:</label>
+            <%= text_field_tag :session_count, nil ,class: 'form-control' %>
+          </div>
+
+          <div class="d-flex justify-content-end align-items-center">
+            <%= submit_tag 'Extend', class: 'btn btn-primary px-4' %>
+          </div>
           <% end %>
         </div>
       </div>
