@@ -13,15 +13,19 @@ class MeetingsController < ApplicationController
     if params[:start].present?
       start_date = params[:start]
       @meetings = @meetings.where(
-        '(starts_at)::date >= ?', start_date.to_date
+        '(meetings.starts_at)::date >= ?', start_date.to_date
       )
     end
 
     if params[:end].present?
       end_date = params[:end]
       @meetings = @meetings.where(
-        '(ends_at)::date <= ?', end_date.to_date
+        '(meetings.ends_at)::date <= ?', end_date.to_date
       )
+    end
+
+    if params[:teacher_id].present? && validate_uuid_format(params[:teacher_id])
+      @meetings = @meetings.joins(:klass).where(klass: { teacher_id: params[:teacher_id] })
     end
 
     @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room]), items: per_page)

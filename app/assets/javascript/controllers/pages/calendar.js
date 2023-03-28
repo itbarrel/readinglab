@@ -14,11 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
       url: "/meetings.json",
       method: "GET",
       // color: '#fef0e8',
-      // textColor: '#f2600e',
-      extraParams: {
-        cachebuster: new Date().valueOf(),
-        pagination: false,
-        teacher_id,
+      // textColor: '#f2600e', 
+      extraParams: () => {
+        return {
+          cachebuster: new Date().valueOf(),
+          pagination: false,
+          teacher_id
+        }
       }
     }
   ];
