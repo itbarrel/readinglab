@@ -26,11 +26,10 @@
 #  fk_rails_...  (form_id => forms.id)
 #
 class FormField < ApplicationRecord
-  attr_accessor :field_values_attributes
-
-  has_many :field_values, dependent: :destroy
   belongs_to :form
-  accepts_nested_attributes_for :field_values, allow_destroy: true
+  has_many :field_values, dependent: :destroy
 
   enum :field_type, %i[text_field number_field text_area select_field check_box radio_button]
+
+  accepts_nested_attributes_for :field_values, allow_destroy: true, reject_if: :all_blank
 end

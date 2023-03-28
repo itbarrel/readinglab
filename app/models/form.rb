@@ -33,6 +33,7 @@ class Form < ApplicationRecord
 
   enum :purpose, %i[lessonable attendancable]
 
-  accepts_nested_attributes_for :form_fields, allow_destroy: true
   validates :name, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
+
+  accepts_nested_attributes_for :form_fields, allow_destroy: true, reject_if: :all_blank
 end
