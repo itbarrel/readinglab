@@ -1,4 +1,6 @@
-<%= form_with model: @form do |form| %>
+<%= simple_form_for(@form) do |form| %>
+  <%= form.error_notification %>
+  <%= form.error_notification message: form.object.errors[:base].to_sentence if form.object.errors[:base].present? %>
   <div class="row g-0 mt-3">
     <div class="col-lg-4 ps-lg-2">
       <div class="sticky-sidebar">
@@ -24,7 +26,11 @@
     </div>
 
     <div class="col-lg-8 pe-lg-2">
-      <div>
+      <div id = "form_fields">
+        <%= form.simple_fields_for :form_fields do |field| %>
+          <%= render 'form_field_fields', f: field %>
+        <% end %>
+
         <%= link_to_add_association form, :form_fields do %>
           <div class="d-grid gap-2">
             <button class="btn btn-falcon-default btn-sm mb-2" type="submit">
