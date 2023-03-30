@@ -12,5 +12,6 @@ namespace :merge do
         receipt_type.deleted_at = old_receipt_type.deleted_at
       end
     end
+    puts 'Successfully Merged Receipt Type.'
   end
 end

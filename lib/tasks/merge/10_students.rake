@@ -38,6 +38,7 @@ namespace :merge do
         student.deleted_at = old_student.deleted_at
       end
     end
+    puts 'Successfully Merged Students.'
   end
 end
 # Student.find_or_create_by!(first_name: old_student.first,

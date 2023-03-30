@@ -25,5 +25,6 @@ namespace :merge do
         parent.deleted_at = old_parent.deleted_at
       end
     end
+    puts 'Successfully Merged Parents.'
   end
 end

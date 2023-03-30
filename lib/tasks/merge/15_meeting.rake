@@ -24,5 +24,6 @@ namespace :merge do
         meeting.deleted_at = old_meeting.deleted_at
       end
     end
+    puts 'Successfully Merged Meetings.'
   end
 end

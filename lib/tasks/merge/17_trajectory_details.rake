@@ -18,5 +18,6 @@ namespace :merge do
         trajectory_detail.entry_date = old_trajectory_detail.entry_date
       end
     end
+    puts 'Successfully Merged Trajectory Detail.'
   end
 end

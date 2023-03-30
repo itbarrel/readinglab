@@ -22,5 +22,6 @@ namespace :merge do
     rescue StandardError
       1 + 1
     end
+    puts 'Successfully Merged Receipts.'
   end
 end

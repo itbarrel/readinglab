@@ -13,5 +13,6 @@ namespace :merge do
         book.id = old_book.id
       end
     end
+    puts 'Successfully Merged Books.'
   end
 end

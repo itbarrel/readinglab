@@ -16,5 +16,6 @@ namespace :merge do
         room.deleted_at = old_room.deleted_at
       end
     end
+    puts 'Successfully Merged Rooms.'
   end
 end

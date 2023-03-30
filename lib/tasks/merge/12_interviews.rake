@@ -20,6 +20,7 @@ namespace :merge do
     rescue StandardError
       1 + 1
     end
+    puts 'Successfully Merged Interviews.'
   end
 end
 # Interview.find_or_create_by!(account_id: old_interview.account_id,

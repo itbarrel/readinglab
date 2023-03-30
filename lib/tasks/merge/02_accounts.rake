@@ -32,5 +32,6 @@ namespace :merge do
         end
       end
     end
+    puts 'Successfully Merged Accounts.'
   end
 end

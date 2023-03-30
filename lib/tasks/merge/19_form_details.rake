@@ -3,14 +3,22 @@
 namespace :merge do
   desc 'Merges form_details to new tables'
   task form_details: :environment do
-    parents = {}
+    meetings = {}
 
-    Parent.all.each do |x|
-      parents[x.id] = true
+    Meeting.all.each do |x|
+      meetings[x.id] = true
+    end
+
+    interviews = {}
+
+    Interview.all.each do |x|
+      interviews[x.id] = true
     end
 
     Old::FormDetail.all.each do |old_form_detail|
-      next unless parents[old_form_detail.form_detail_id]
+      unless meetings[old_form_detail.parent_id] && old_form_detail.parent_type == 'Meeting' || interviews[old_form_detail.parent_id] && old_form_detail.parent_type == 'Interview'
+        next
+      end
 
       FormDetail.find_or_create_by!(
         account_id: old_form_detail.account_id,
@@ -25,5 +33,6 @@ namespace :merge do
         form_detail.deleted_at = old_form_detail.deleted_at
       end
     end
+    puts 'Successfully Merged Form Details.'
   end
 end

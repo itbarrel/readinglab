@@ -15,5 +15,6 @@ namespace :merge do
         message.deleted_at = old_library_message.deleted_at
       end
     end
+    puts 'Successfully Merged Message Template.'
   end
 end

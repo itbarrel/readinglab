@@ -29,5 +29,6 @@ namespace :merge do
         user.deleted_at = old_user.deleted_at
       end
     end
+    puts 'Successfully Merged Users.'
   end
 end

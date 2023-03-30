@@ -17,5 +17,6 @@ namespace :merge do
         vacation.deleted_at = old_vacation.deleted_at
       end
     end
+    puts 'Successfully Merged Vacations.'
   end
 end

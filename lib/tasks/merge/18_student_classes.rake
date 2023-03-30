@@ -28,5 +28,6 @@ namespace :merge do
         student_class.deleted_at = old_student_class.deleted_at
       end
     end
+    puts 'Successfully Merged Student Classes.'
   end
 end

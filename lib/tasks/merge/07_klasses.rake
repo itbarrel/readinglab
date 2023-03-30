@@ -38,6 +38,7 @@ namespace :merge do
         klass.range_type = range_types[old_klass.range_type]
       end
     end
+    puts 'Successfully Merged klasses.'
   end
 end
 
