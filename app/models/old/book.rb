@@ -5,24 +5,19 @@
 # Table name: books
 #
 #  id         :uuid             not null, primary key
+#  active     :boolean          default(TRUE)
 #  deleted_at :datetime
 #  grade      :string
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  account_id :uuid             not null
-#  klass_id   :uuid             not null
+#  account_id :uuid
+#  r_class_id :uuid
 #
 # Indexes
 #
-#  book_name                  (account_id,name,deleted_at) UNIQUE
 #  index_books_on_account_id  (account_id)
-#  index_books_on_klass_id    (klass_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (account_id => accounts.id)
-#  fk_rails_...  (klass_id => klasses.id)
+#  index_books_on_r_class_id  (r_class_id)
 #
 class Old::Book < Old::ApplicationRecord
   belongs_to :account, class_name: 'Old::Account'

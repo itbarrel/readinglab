@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :merge do
   desc 'Run all tasks'
   task run_all: :environment do

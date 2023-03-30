@@ -5,15 +5,16 @@
 # Table name: interviews
 #
 #  id         :uuid             not null, primary key
+#  active     :boolean          default(TRUE)
 #  date       :datetime
 #  deleted_at :datetime
 #  feedback   :string
-#  status     :integer
+#  status     :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  account_id :uuid             not null
-#  form_id    :uuid             not null
-#  student_id :uuid             not null
+#  account_id :uuid
+#  form_id    :uuid
+#  student_id :uuid
 #
 # Indexes
 #
@@ -23,9 +24,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (form_id => forms.id)
-#  fk_rails_...  (student_id => students.id)
 #
 class Old::Interview < Old::ApplicationRecord
   belongs_to :account, class_name: 'Old::Account'
