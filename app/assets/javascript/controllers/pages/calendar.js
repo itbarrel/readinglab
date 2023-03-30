@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     eventClick: (info) => {
       const { event } = info
       $.ajax({
-        url: `/meetings/${event.id}`,
+        url: `/events/${event.id}`,
         dataType: 'script'
       });
     },

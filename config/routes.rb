@@ -10,9 +10,10 @@ Rails.application.routes.draw do
   resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs, :books
   resources :message_templates, :form_fields, :field_values, :trajectory_details
 
-  resources :student_classes, only: %i[create destroy]
   resources :parents, :meetings, :forms, :receipt_types, :receipts
 
+  resources :events, only: %i[show]
+  resources :student_classes, only: %i[create destroy]
   resources :klass_templates do
     member do
       get :assign
