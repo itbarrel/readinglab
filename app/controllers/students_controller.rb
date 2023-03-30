@@ -29,7 +29,8 @@ class StudentsController < ApplicationController
 
   # GET /students/new
   def new
-    @student = Student.new
+    # @student = Student.new
+    @student.parent_id = params[:parent_id] if params[:parent_id].present?
   end
 
   # GET /students/1/edit
