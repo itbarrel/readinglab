@@ -23,11 +23,12 @@ class TrajectoryDetailsController < ApplicationController
   # POST /trajectory_details or /trajectory_details.json
   def create
     @trajectory_detail = TrajectoryDetail.new(trajectory_detail_params)
+    attach_account_for(@trajectory_detail)
 
     respond_to do |format|
       if @trajectory_detail.save
         format.html do
-          redirect_to trajectory_detail_url(@trajectory_detail), notice: 'Trajectory detail was successfully created.'
+          redirect_to request.referer, notice: 'Trajectory detail has been successfully created.'
         end
         format.json { render :show, status: :created, location: @trajectory_detail }
       else
@@ -42,7 +43,8 @@ class TrajectoryDetailsController < ApplicationController
     respond_to do |format|
       if @trajectory_detail.update(trajectory_detail_params)
         format.html do
-          redirect_to trajectory_detail_url(@trajectory_detail), notice: 'Trajectory detail was successfully updated.'
+          redirect_to trajectory_detail_url(@trajectory_detail),
+                      notice: 'Trajectory detail has been successfully updated.'
         end
         format.json { render :show, status: :ok, location: @trajectory_detail }
       else
@@ -57,7 +59,7 @@ class TrajectoryDetailsController < ApplicationController
     @trajectory_detail.destroy
 
     respond_to do |format|
-      format.html { redirect_to trajectory_details_url, notice: 'Trajectory detail was successfully destroyed.' }
+      format.html { redirect_to trajectory_details_url, notice: 'Trajectory detail has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -72,6 +74,6 @@ class TrajectoryDetailsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def trajectory_detail_params
     params.require(:trajectory_detail).permit(:error_count, :wpm, :grade, :season, :entry_date,
-                                              :user_id, :klass_id, :book_id)
+                                              :user_id, :klass_id, :book_id, :student_id)
   end
 end

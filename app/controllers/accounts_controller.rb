@@ -27,7 +27,7 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.save
-        format.html { redirect_to account_url(@account), notice: 'Account was successfully created.' }
+        format.html { redirect_to account_url(@account), notice: 'Account has been successfully created.' }
         format.json { render :show, status: :created, location: @account }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +40,7 @@ class AccountsController < ApplicationController
   def update
     respond_to do |format|
       if @account.update(account_params)
-        format.html { redirect_to request.referer, notice: 'Account was successfully updated.' }
+        format.html { redirect_to request.referer, notice: 'Account has been successfully updated.' }
         format.json { render :show, status: :ok, location: @account }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,7 +54,7 @@ class AccountsController < ApplicationController
     @account.destroy
 
     respond_to do |format|
-      format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
+      format.html { redirect_to accounts_url, notice: 'Account has been successfully deleted.' }
       format.json { head :no_content }
     end
   end

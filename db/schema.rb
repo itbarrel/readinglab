@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_23_103300) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_16_094556) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -78,6 +78,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_103300) do
     t.index ["account_id"], name: "index_content_libraries_on_account_id"
   end
 
+  create_table "field_values", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "usage"
+    t.uuid "form_field_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["form_field_id"], name: "index_field_values_on_form_field_id"
+  end
+
   create_table "form_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.jsonb "form_values"
     t.uuid "user_id"
@@ -94,9 +104,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_103300) do
     t.index ["user_id"], name: "index_form_details_on_user_id"
   end
 
+  create_table "form_fields", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "model_key"
+    t.integer "sort_order"
+    t.integer "field_type"
+    t.string "data_type"
+    t.boolean "necessary"
+    t.uuid "form_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["form_id"], name: "index_form_fields_on_form_id"
+  end
+
   create_table "forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
-    t.jsonb "fields", default: {}
     t.uuid "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -130,17 +154,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_103300) do
     t.index ["form_id"], name: "index_klass_forms_on_form_id"
     t.index ["klass_id", "form_id", "deleted_at"], name: "klass_forms_id", unique: true
     t.index ["klass_id"], name: "index_klass_forms_on_klass_id"
-  end
-
-  create_table "klass_template_forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "klass_template_id", null: false
-    t.uuid "form_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
-    t.index ["form_id"], name: "index_klass_template_forms_on_form_id"
-    t.index ["klass_template_id", "form_id", "deleted_at"], name: "klass_template_forms_id", unique: true
-    t.index ["klass_template_id"], name: "index_klass_template_forms_on_klass_template_id"
   end
 
   create_table "klass_templates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -430,17 +443,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_103300) do
   add_foreign_key "books", "accounts"
   add_foreign_key "books", "klasses"
   add_foreign_key "content_libraries", "accounts"
+  add_foreign_key "field_values", "form_fields"
   add_foreign_key "form_details", "accounts"
   add_foreign_key "form_details", "forms"
   add_foreign_key "form_details", "users"
+  add_foreign_key "form_fields", "forms"
   add_foreign_key "forms", "accounts"
   add_foreign_key "interviews", "accounts"
   add_foreign_key "interviews", "forms"
   add_foreign_key "interviews", "students"
   add_foreign_key "klass_forms", "forms"
   add_foreign_key "klass_forms", "klasses"
-  add_foreign_key "klass_template_forms", "forms"
-  add_foreign_key "klass_template_forms", "klass_templates"
   add_foreign_key "klass_templates", "accounts"
   add_foreign_key "klass_templates", "rooms"
   add_foreign_key "klass_templates", "users", column: "teacher_id"

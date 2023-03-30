@@ -11,6 +11,5 @@ class CreateKlassForms < ActiveRecord::Migration[7.0]
     end
 
     add_index :klass_forms, [:klass_id, :form_id, :deleted_at], unique: true, name: 'klass_forms_id'
-
   end
 end

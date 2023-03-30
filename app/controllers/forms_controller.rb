@@ -14,6 +14,7 @@ class FormsController < ApplicationController
   # GET /forms/new
   def new
     @form = Form.new
+    @form.form_fields.build
   end
 
   # GET /forms/1/edit
@@ -22,10 +23,11 @@ class FormsController < ApplicationController
   # POST /forms or /forms.json
   def create
     @form = Form.new(form_params)
+    attach_account_for(@form)
 
     respond_to do |format|
       if @form.save
-        format.html { redirect_to form_url(@form), notice: 'Form was successfully created.' }
+        format.html { redirect_to forms_url, notice: 'Form was successfully created.' }
         format.json { render :show, status: :created, location: @form }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,7 @@ class FormsController < ApplicationController
   def update
     respond_to do |format|
       if @form.update(form_params)
-        format.html { redirect_to form_url(@form), notice: 'Form was successfully updated.' }
+        format.html { redirect_to forms_url, notice: 'Form was successfully updated.' }
         format.json { render :show, status: :ok, location: @form }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -66,6 +68,11 @@ class FormsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def form_params
-    params.require(:form).permit(:fields, :name, :purpose)
+    params.require(:form).permit(:name, :purpose,
+                                 form_fields_attributes: [
+                                   :id, :name, :description, :field_type,
+                                   :sort_order, :data_type, :necessary, :_destroy,
+                                   { field_values_attributes: %i[id name usage _destroy] }
+                                 ])
   end
 end

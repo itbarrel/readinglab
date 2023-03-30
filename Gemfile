@@ -15,12 +15,14 @@ gem 'sidekiq', '<7'
 gem 'sprockets-rails'
 
 gem 'cancancan'
+gem 'cocoon', '~> 1.2'
 gem 'date_validator', '~> 0.12.0'
 gem 'devise'
 gem 'jbuilder'
 gem 'pagy', '~> 5.10'
 gem 'paranoia'
 gem 'ransack'
+gem 'simple_form', '~> 5.2'
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'cssbundling-rails'

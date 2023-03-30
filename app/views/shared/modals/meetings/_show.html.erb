@@ -38,7 +38,7 @@
             <div class="p-2 mb-3">
               <div class="row">
                 <div class="col-lg-8">
-                  <%= select_tag(:form_id, options_from_collection_for_select(Form.all.order("name ASC"), :id, :name), include_blank: 'Please select form', class: 'form-control', required: true) %>
+                  <%= select_tag(:form_id, options_from_collection_for_select(meeting.klass.forms.order("name ASC"), :id, :name), include_blank: 'Please select form', class: 'form-control', required: true) %>
                 </div>
                 <div class="col-lg-4">
                   <%= submit_tag "Open Form", class: "btn btn-info" %>
