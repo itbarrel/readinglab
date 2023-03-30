@@ -6,12 +6,13 @@
 </div>
 <div class="modal-body p-card">
   <div class="mb-3">
-    <%= f.label :date, class: 'fs-0' %>
-    <%= f.date_field :date, class: 'form-control' %>
+    <%= f.label :student, class: 'fs-0' %>
+    <% students = params[:action] == 'edit' ? Student.where(status: %i[scheduled wait_listed active]) : Student.registered %>
+    <%= f.collection_select :student_id, students.order(:first_name), :id, :name, { include_blank: true }, { class: 'form-control' } %>
   </div>
   <div class="mb-3">
-    <%= f.label :students, class: 'fs-0' %>
-    <%= f.collection_select :student_id, Student.registered.order(:first_name), :id, :name, { include_blank: true }, { class: 'form-control' } %>
+    <%= f.label :schedule_date, class: 'fs-0' %>
+    <%= f.date_field :date, class: 'form-control' %>
   </div>
   <div class="mb-3">
     <%= f.label :forms, class: 'fs-0' %>

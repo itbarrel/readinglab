@@ -38,7 +38,12 @@
 class Student < ApplicationRecord
   belongs_to :account
   belongs_to :parent
-  has_one :interview, dependent: :destroy
+  has_many :interviews, dependent: :destroy
+  has_one :latest_interview, -> { order created_at: :desc },
+          class_name: 'Interview',
+          foreign_key: 'student_id',
+          dependent: :destroy,
+          inverse_of: 'student'
   has_many :student_classes, dependent: :destroy
   enum :status, %i[registered scheduled wait_listed active]
   before_create :set_status

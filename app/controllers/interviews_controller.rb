@@ -1,29 +1,31 @@
 # frozen_string_literal: true
 
 class InterviewsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:index]
   before_action :set_interview, only: %i[]
 
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
 
+    interview_students = Student.joins(:interviews).distinct
+
     if params[:start].present?
       start_date = params[:start]
-      @interviews = @interviews.where(
-        '(date)::date > ?', start_date.to_date
+      interview_students = interview_students.where(
+        '(interviews.date)::date > ?', start_date.to_date
       )
     end
 
     if params[:end].present?
       end_date = params[:end]
-      @interviews = @interviews.where(
-        '(date)::date < ?', end_date.to_date
+      interview_students = interview_students.where(
+        '(interviews.date)::date < ?', end_date.to_date
       )
     end
 
-    @search = @interviews.ransack(params[:q])
-    @search.sorts = 'student_first_name asc' if @search.sorts.empty?
-    @pagy, @interviews = pagy(@search.result.includes(:student), items: per_page)
+    @search = interview_students.ransack(params[:q])
+    @search.sorts = 'first_name asc' if @search.sorts.empty?
+    @pagy, @interview_students = pagy(@search.result.includes(:latest_interview), items: per_page)
   end
 
   # GET /interviews/1 or /interviews/1.json
@@ -31,7 +33,7 @@ class InterviewsController < ApplicationController
 
   # GET /interviews/new
   def new
-    # @interview = Interview.new
+    @interview.student_id = params[:student_id] if params[:student_id].present?
   end
 
   # GET /interviews/1/edit

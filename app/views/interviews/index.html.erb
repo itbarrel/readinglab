@@ -1,5 +1,5 @@
 <% content_for :search_includes do %>
-<%= render partial: 'shared/search', locals: { search_key: :student_first_name_cont } %>
+<%= render partial: 'shared/search', locals: { search_key: :first_name_cont } %>
 <% end %>
 
 <div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
@@ -48,8 +48,8 @@
           </tr>
         </thead>
         <tbody class="list" id="table-customers-body">
-          <% @interviews.each do |interview| %>
-            <%= render interview%>
+          <% @interview_students.each do |interview_student| %>
+            <%= render 'interview', student: interview_student %>
           <% end %>
         </tbody>
       </table>

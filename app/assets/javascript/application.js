@@ -12,7 +12,7 @@ import "./is";
 import "../plugins/flatpickr/flatpickr";
 import "./dayjs";
 import "./echarts";
-import "./choices";
+// import "./choices";
 import "../plugins/fontawesome/all.min";
 
 import "./lodash";
