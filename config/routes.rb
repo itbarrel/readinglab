@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs, :books
   resources :message_templates, :form_fields, :field_values, :trajectory_details
 
-  resources :parents, :meetings, :forms, :receipt_types, :receipts
+  resources :parents, :forms, :receipt_types, :receipts
 
   resources :events, only: %i[show]
   resources :student_classes, only: %i[create destroy]
@@ -26,6 +26,12 @@ Rails.application.routes.draw do
     end
     member do
       post :extend_sessions
+    end
+  end
+
+  resources :meetings do
+    member do
+      get :open_attendance_form
     end
   end
 
