@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
 module FormHelper
-  def generate_html_for(field, student)
-    model_key = "form_details[#{student.id}][#{field.model_key}]"
+  def generate_html_for(field, student, submit_resource)
+    model_key = "#{submit_resource}[#{student.id}][#{field.model_key}]"
     case field.field_type
     when 'text_field'
-      text_field_tag model_key, nil, class: 'form-control'
+      text_field_tag model_key, nil, class: 'form-control', required: field.necessary
     when 'number_field'
-      number_field_tag model_key, nil, class: 'form-control'
+      number_field_tag model_key, nil, class: 'form-control', required: field.necessary
     when 'text_area'
-      text_area_tag model_key, nil, class: 'form-control'
+      text_area_tag model_key, nil, class: 'form-control', required: field.necessary
     when 'select_field'
       select_tag model_key,
                  options_from_collection_for_select(field.field_values, :usage, :name),
                  class: 'form-control',
-                 include_blank: true
+                 include_blank: true, required: field.necessary
     when 'check_box'
       html = []
       field.field_values.map do |fv|

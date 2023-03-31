@@ -32,4 +32,10 @@ class FormField < ApplicationRecord
   enum :field_type, %i[text_field number_field text_area select_field check_box radio_button]
 
   accepts_nested_attributes_for :field_values, allow_destroy: true, reject_if: :all_blank
+
+  before_save :default_type
+
+  def default_type
+    self.model_key ||= (0...8).map { rand(97..122).chr }.join
+  end
 end

@@ -31,7 +31,8 @@ Rails.application.routes.draw do
 
   resources :meetings do
     member do
-      get :open_attendance_form
+      get :attendance, action: 'open_attendance'
+      post :attendance, action: 'submit_attendance'
     end
   end
 

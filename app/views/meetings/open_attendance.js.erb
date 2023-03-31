@@ -1,0 +1,10 @@
+$('.modal').modal('hide');
+$('#showStudentsFormModal .modal-content').html("<%= j render 'shared/modals/forms/students_form',
+                                                        meeting: @meeting,
+                                                        students: @students,
+                                                        form: @form,
+                                                        form_url: "meetings/#{@meeting.id}/attendance",
+                                                        form_method: :post,
+                                                        submit_resource: 'student_meeting' 
+                                                      %>");
+$('#showStudentsFormModal').modal('show');

@@ -2,7 +2,7 @@
 
 class MeetingsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_meeting, only: %i[open_attendance_form]
+  before_action :set_meeting, only: %i[open_attendance submit_attendance]
 
   # GET /meetings or /meetings.json
   def index
@@ -38,11 +38,13 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.new
   end
 
-  def open_attendance_form
+  def open_attendance
     klass = @meeting.klass
     @form = klass.attendance_form
     @students = klass.students
   end
+
+  def submit_attendance; end
 
   # GET /meetings/1/edit
   def edit; end
