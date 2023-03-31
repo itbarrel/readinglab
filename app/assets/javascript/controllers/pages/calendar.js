@@ -7,14 +7,15 @@ document.addEventListener("DOMContentLoaded", () => {
       color: 'yellow',
       extraParams: {
         cachebuster: new Date().valueOf(),
-        pagination: false
+        pagination: false,
+        calendar: true
       }
     },
     {
       url: "/meetings.json",
       method: "GET",
       // color: '#fef0e8',
-      // textColor: '#f2600e', 
+      // textColor: '#f2600e',
       extraParams: () => {
         return {
           cachebuster: new Date().valueOf(),

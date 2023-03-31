@@ -7,7 +7,13 @@ class InterviewsController < ApplicationController
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
 
-    interview_students = Student.joins(:interviews).distinct
+    interview_students = Student.joins(:latest_interview).distinct
+
+    if params[:calendar].present?
+      interview_students = interview_students.where(
+        latest_interview: { status: :waiting }
+      )
+    end
 
     if params[:start].present?
       start_date = params[:start]
