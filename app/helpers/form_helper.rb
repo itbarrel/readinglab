@@ -18,18 +18,18 @@ module FormHelper
     when 'check_box'
       html = []
       field.field_values.map do |fv|
-        html << content_tag(:div, class: "form-check form-check-inline") do
-          (content_tag(:input, nil, type: 'checkbox', value: fv.usage, class: "form-check-input", name: model_key) +
-          content_tag(:label, fv.name, class: "form-check-label"))
+        html << content_tag(:div, class: 'form-check form-check-inline') do
+          (content_tag(:input, nil, type: 'checkbox', value: fv.usage, class: 'form-check-input', name: model_key) +
+          content_tag(:label, fv.name, class: 'form-check-label'))
         end
       end
       safe_join(html)
     when 'radio_button'
       html = []
       field.field_values.map do |fv|
-        html << content_tag(:div, class: "form-check form-check-inline") do
-          (content_tag(:input, nil, type: 'radio', value: fv.usage, class: "form-check-input", name: model_key) +
-          content_tag(:label, fv.name, class: "form-check-label"))
+        html << content_tag(:div, class: 'form-check form-check-inline') do
+          (content_tag(:input, nil, type: 'radio', value: fv.usage, class: 'form-check-input', name: model_key) +
+          content_tag(:label, fv.name, class: 'form-check-label'))
         end
       end
       safe_join(html)
