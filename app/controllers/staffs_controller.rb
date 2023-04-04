@@ -4,9 +4,7 @@ class StaffsController < ApplicationController
   load_and_authorize_resource :staff, class: User
   before_action :set_staff, only: %i[]
 
-  # GET /staffs or /staffs.json
   def index
-    # @staffs = Staff.all
     @search = @staffs.ransack(params[:q])
     @search.sorts = 'first_name asc' if @search.sorts.empty?
     @pagy, @staffs = pagy(@search.result,
@@ -25,13 +23,15 @@ class StaffsController < ApplicationController
   # POST /staffs or /staffs.json
   def create
     @staff = Staff.new(staff_params)
+    attach_account_for(@staff)
 
     respond_to do |format|
       if @staff.save
-        format.html { redirect_to staff_url, notice: 'Staff has been successfully created.' }
+        format.html { redirect_to request.referer, notice: 'Staff has been successfully created.' }
         format.json { render :show, status: :created, location: @staff }
       else
-        format.html { render :index, status: :unprocessable_entity }
+        process_errors(@staff)
+        format.html { redirect_to staffs_url }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end
@@ -42,7 +42,7 @@ class StaffsController < ApplicationController
     respond_to do |format|
       if @staff.update(staff_params)
         format.html { redirect_to request.referer, notice: 'Staff has been successfully updated.' }
-        format.json { render :show, status: :ok, location: @staff }
+        format.json { render :index, status: :ok, location: @staff }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
@@ -69,8 +69,7 @@ class StaffsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def staff_params
-    params.require(:staff).permit(:first_name, :last_name, :email, :postal_code, :phone, :emergency_name,
-                                  :emergency_contact, :date_of_hire, :date_of_inactive, :setting,
-                                  :undeletable, :external_user, :termination_date, :role)
+    params.require(:staff).permit(:first_name, :last_name, :email, :postal_code, :phone, :role,
+                                  :account_id)
   end
 end
