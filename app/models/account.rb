@@ -34,6 +34,7 @@
 #
 class Account < ApplicationRecord
   belongs_to :account_type
+  has_many :books, dependent: :destroy
   has_many :vacations, dependent: :destroy
   has_many :vacation_types, dependent: :destroy
   has_many :users, dependent: :destroy
