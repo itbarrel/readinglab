@@ -22,14 +22,13 @@
 #  fk_rails_...  (account_id => accounts.id)
 #
 class Form < ApplicationRecord
-  belongs_to :account, dependent: :destroy
-
+  belongs_to :account
   has_many :klass_forms, dependent: :destroy
   has_many :attendance_klasses,
            class_name: 'Klass',
            foreign_key: 'attendance_form_id',
-           inverse_of: 'form',
-           dependent: :destroy
+           dependent: :nullify,
+           inverse_of: 'forms'
   has_many :form_fields, dependent: :destroy
 
   enum :purpose, %i[lessonable attendancable nothing]

@@ -20,11 +20,11 @@ class ApplicationController < ActionController::Base
           { url: '/students', text: 'Student Listing', class: '', icon: 'micon bi bi-layout-text-sidebar-reverse' },
           { url: '/interviews', text: 'Interviews', class: '', icon: 'micon bi bi-calendar-week' }
         ] },
-        { text: 'Classes', class: '', icon: 'micon bi bi-building-fill', sub_items: [
+        { text: 'Classes', class: '', icon: 'micon bi bi-book-fill', sub_items: [
           { url: '/klasses', text: 'Active', class: '', icon: 'micon bi bi-check-circle' },
           { url: '/rooms', text: 'Obselote', class: '', icon: 'micon bi bi-exclamation-circle' }
         ] },
-        { text: 'Billing', class: '', icon: 'micon bi bi-file-text-fill', sub_items: [
+        { text: 'Billing', class: '', icon: 'micon bi bi-file-earmark-text-fill', sub_items: [
           { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-receipt', sub_items: [] }
         ] },
         { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-chat-text-fill', sub_items: [] },
@@ -33,7 +33,8 @@ class ApplicationController < ActionController::Base
         ] }
       ],
       'Settings': [
-        { url: '/klass_templates', text: 'Class Templates ', class: '', icon: 'micon bi bi-people-fill' },
+        { url: '/forms', text: 'Forms', class: '', icon: 'micon bi bi-clipboard-data-fill' },
+        { url: '/klass_templates', text: 'Class tempelate ', class: '', icon: 'micon bi bi-people-fill' },
         { url: '/rooms', text: 'Rooms', class: '', icon: 'micon bi bi-building-fill' },
         { url: '/staffs', text: 'Staff', class: '', icon: 'micon bi bi-person-vcard' },
         { url: '/vacations', text: 'Vacations', class: '', icon: 'micon bi bi-train-front-fill' },
