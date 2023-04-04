@@ -60,6 +60,12 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def process_errors(resource, label = :error)
+    resource.errors.full_messages.each do |msg|
+      flash_message(label, msg)
+    end
+  end
+
   def flash_message(type, text)
     flash[type] ||= []
     flash[type] << text

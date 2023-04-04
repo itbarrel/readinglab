@@ -26,10 +26,11 @@ class MessageTemplatesController < ApplicationController
 
     respond_to do |format|
       if @message_template.save
-        format.html { redirect_to request.referer, notice: 'Message has been successfully created.' }
+        format.html { redirect_to message_templates_url, notice: 'Message Template has been successfully created.' }
         format.json { render :show, status: :created, location: @message_template }
       else
-        format.html { render :index, status: :unprocessable_entity }
+        process_errors(@message_template)
+        format.html { redirect_to message_templates_url }
         format.json { render json: @message_template.errors, status: :unprocessable_entity }
       end
     end
@@ -38,7 +39,7 @@ class MessageTemplatesController < ApplicationController
   def update
     respond_to do |format|
       if @message_template.update(message_template_params)
-        format.html { redirect_to message_templates_url, notice: 'Message has been successfully updated.' }
+        format.html { redirect_to message_templates_url, notice: 'Message Template has been successfully updated.' }
         format.json { render :show, status: :ok, location: @message_template }
       else
         format.html { render :index, status: :unprocessable_entity }
@@ -51,7 +52,7 @@ class MessageTemplatesController < ApplicationController
     @message_template.destroy
 
     respond_to do |format|
-      format.html { redirect_to message_templates_url, notice: 'Message has been successfully destroyed.' }
+      format.html { redirect_to message_templates_url, notice: 'Message Template has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end

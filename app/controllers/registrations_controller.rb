@@ -18,9 +18,7 @@ class RegistrationsController < Devise::RegistrationsController
       clean_up_passwords resource
       set_minimum_password_length
       redirect_to profile_path
-      resource.errors.full_messages.each do |x|
-        flash_message(:notice, x)
-      end
+      process_errors(resource, :notice)
     end
   end
 
