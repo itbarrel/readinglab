@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-json.array! @interviews do |interview|
+json.array! @interview_students do |student|
+  interview = student.latest_interview
   json.id interview.id
   json.start interview.date
   json.end interview.date + 1.hour

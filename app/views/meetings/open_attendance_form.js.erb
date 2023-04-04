@@ -1,0 +1,7 @@
+$('#showStudentsFormModal .modal-content').html("<%= j render 'shared/modals/forms/students_form',
+                                                        meeting: @meeting,
+                                                        students: @students,
+                                                        form: @form
+                                                      %>");
+$('#showEventModal').modal('hide');
+$('#showStudentsFormModal').modal('show');

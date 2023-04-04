@@ -1,29 +1,38 @@
 
 <%= form_for(student, id: 'addStudentForm') do |f| %>
-<div class="modal-header px-card bg-light border-bottom-0">
-  <h5 class="modal-title"><%= title %></h5>
-  <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
-<div class="modal-body p-card">
-  <div class="mb-3">
-    <%= f.label :first_name, class: 'fs-0' %>
-    <%= f.text_field :first_name, class: 'form-control' %>
+  <div class="modal-header px-card bg-light border-bottom-0">
+    <h5 class="modal-title"><%= title %></h5>
+    <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
   </div>
-  <div class="mb-3">
-    <%= f.label :dob, class: 'fs-0' %>
-    <%= f.date_field :dob, class: 'form-control' %>
+  <div class="modal-body p-card">
+    <div class="mb-3">
+      <%= f.label :Parents, class: 'fs-0' %>
+      <%= f.collection_select :parent_id, Parent.all, :id, :name, {}, { class: 'form-control' } %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :first_name, class: 'fs-0' %>
+      <%= f.text_field :first_name, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :last_name, class: 'fs-0' %>
+      <%= f.text_field :last_name, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :dob, class: 'fs-0' %>
+      <%= f.date_field :dob, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :grade, class: 'fs-0' %>
+      <%= f.text_field :grade, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :gender, class: 'fs-0' %>
+      <%= f.select(:sex, ['Select Option', 'Male', 'Female'], {}, { :class => 'form-select form-select-md' }) %>
+    </div>
+
   </div>
-  <div class="mb-3">
-    <%= f.label :grade, class: 'fs-0' %>
-    <%= f.text_field :grade, class: 'form-control' %>
+  <div class="card-footer d-flex justify-content-end align-items-center bg-light">
+    <%= f.submit 'Save', class: 'btn btn-primary px-4' %>
+    <%= f.button 'Cancel', class: 'btn btn-default px-4', type: 'button', data: { 'bs-dismiss': 'modal'} %>
   </div>
-  <div class="mb-3">
-    <%= f.label :sex, class: 'fs-0' %>
-    <%= f.text_field :sex, class: 'form-control' %>
-  </div>
-</div>
-<div class="card-footer d-flex justify-content-end align-items-center bg-light">
-  <%= f.submit 'Save', class: 'btn btn-primary px-4' %>
-  <%= f.button 'Cancel', class: 'btn btn-default px-4', type: 'button', data: { 'bs-dismiss': 'modal'} %>
-</div>
 <% end %>

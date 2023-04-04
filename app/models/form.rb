@@ -23,7 +23,8 @@
 #
 class Form < ApplicationRecord
   belongs_to :account, dependent: :destroy
-  has_many :klass_tempelate_forms, dependent: :destroy
+
+  has_many :klass_forms, dependent: :destroy
   has_many :attendance_klasses,
            class_name: 'Klass',
            foreign_key: 'attendance_form_id',
@@ -31,10 +32,11 @@ class Form < ApplicationRecord
            dependent: :destroy
   has_many :form_fields, dependent: :destroy
 
-  enum :purpose, %i[lessonable attendancable]
+  enum :purpose, %i[lessonable attendancable nothing]
 
-  accepts_nested_attributes_for :form_fields, allow_destroy: true
   validates :name, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
+
+  accepts_nested_attributes_for :form_fields, allow_destroy: true, reject_if: :all_blank
 
   def self.default_seeds
     ['Attendance Form']

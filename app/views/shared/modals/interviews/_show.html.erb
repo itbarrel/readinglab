@@ -1,0 +1,45 @@
+<div class="modal-content border-0">
+  <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body p-0">
+    <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+      <h4 class="mb-1" id="staticBackdropLabel"><%= interview.student.name %></h4>
+      <p class="fs--2 mb-0">Interview Timing  <%= interview.date %></p>
+    </div>
+
+    <div class="p-4">
+      <div class="d-grid gap-2">
+        <%= link_to('Interview Assesment Form', form_path(interview.form), remote: true, class: 'btn btn-info px-4') %>
+      </div>
+      <%= form_for(interview, id: 'scheduleInterviewForm', remote: true) do |f| %>
+        <div class="mb-3 row">
+          <div class="col-lg-9">
+            <%= f.label :interview_reschedule, class: 'fs-0' %>
+            <%= f.text_field :date, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
+          </div>
+          <div class="col-lg-3">
+            <%= submit_tag "ReSchedule Form", class: "btn btn-info" %>
+          </div>
+        </div>
+      <% end %>
+      <%= form_for(interview, id: 'cancelInterviewForm', remote: true) do |f| %>
+        <div class="actions">
+          <%= f.hidden_field :status, value: :cancel %>
+          <div class="d-grid gap-2">
+            <%= f.submit "Cancel Interview", class: "btn btn-warning px-4" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="card-footer d-flex justify-content-end align-items-center bg-light">
+      <button class="btn btn-default px-4" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+    </div>
+  </div>
+
+<script>
+  document.querySelector('#interview_date').flatpickr({
+    enableTime: true,
+  });
+</script>

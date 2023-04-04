@@ -6,7 +6,6 @@ class CreateForms < ActiveRecord::Migration[7.0]
       t.string :name
       t.boolean :lessonable, default: false
       t.boolean :attendancable, default: false
-      t.jsonb :fields, default: {}
 
       t.references :account, null: false, foreign_key: true, type: :uuid
 

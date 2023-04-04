@@ -1,1 +1,3 @@
-console.log('>>>>>>>>....')
+$('#showStudentsFormModal .modal-content').html("<%= j render 'shared/modals/forms/students_form', form: @form %>");
+$('#showEventModal').modal('hide');
+$('#showStudentsFormModal').modal('show');

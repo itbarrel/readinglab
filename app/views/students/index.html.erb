@@ -41,7 +41,7 @@
                 <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox" data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
               </div>
             </th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name"><%= sort_link(@search, :first_name, default_order: :asc)%></th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name"><%= sort_link(@search, :name, default_order: :asc)%></th>
             <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Date of Birth</th>
             <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Gender</th>
             <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Grade</th>
@@ -61,7 +61,8 @@
 </div>
 
 <% content_for :modal_includes do %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addStudentModal' } %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addStudentModal', modal_size: 'modal-lg' } %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addInterviewModal' } %>
 <% end %>
 
 <% content_for :javascript_includes do %>

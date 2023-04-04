@@ -50,6 +50,9 @@ class Klass < ApplicationRecord
   belongs_to :klass_template, optional: true
   belongs_to :attendance_form, optional: true, class_name: 'Form'
 
+  has_many :klass_forms, dependent: :destroy
+  has_many :forms, through: :klass_forms
+
   has_many :meetings, dependent: :destroy
   has_many :student_classes, dependent: :destroy
   has_many :students, through: :student_classes

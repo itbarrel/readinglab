@@ -2,7 +2,7 @@
 
 class MeetingsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_meeting, only: %i[]
+  before_action :set_meeting, only: %i[open_attendance_form]
 
   # GET /meetings or /meetings.json
   def index
@@ -13,19 +13,22 @@ class MeetingsController < ApplicationController
     if params[:start].present?
       start_date = params[:start]
       @meetings = @meetings.where(
-        '(starts_at)::date >= ?', start_date.to_date
+        '(meetings.starts_at)::date >= ?', start_date.to_date
       )
     end
 
     if params[:end].present?
       end_date = params[:end]
       @meetings = @meetings.where(
-        '(ends_at)::date <= ?', end_date.to_date
+        '(meetings.ends_at)::date <= ?', end_date.to_date
       )
     end
 
-    @pagy, @meetings = pagy(@meetings.where("date(starts_at) = '2023-03-02'").includes(klass: %i[teacher room]),
-                            items: per_page)
+    if params[:teacher_id].present? && validate_uuid_format(params[:teacher_id])
+      @meetings = @meetings.joins(:klass).where(klass: { teacher_id: params[:teacher_id] })
+    end
+
+    @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room]), items: per_page)
   end
 
   def show; end
@@ -33,6 +36,12 @@ class MeetingsController < ApplicationController
   # GET /meetings/new
   def new
     @meeting = Meeting.new
+  end
+
+  def open_attendance_form
+    klass = @meeting.klass
+    @form = klass.attendance_form
+    @students = klass.students
   end
 
   # GET /meetings/1/edit

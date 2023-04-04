@@ -1,0 +1,7 @@
+
+<% if @event.is_a?(Meeting) %>
+  $('#showEventModal .modal-content').html("<%= j render 'shared/modals/meetings/show', meeting: @event %>");
+<% else %>
+  $('#showEventModal .modal-content').html("<%= j render 'shared/modals/interviews/show', interview: @event %>");
+<% end %>
+$('#showEventModal').modal('show');
