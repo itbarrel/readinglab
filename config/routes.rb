@@ -33,6 +33,8 @@ Rails.application.routes.draw do
     member do
       get :attendance, action: 'open_attendance'
       post :attendance, action: 'submit_attendance'
+      get :form, action: 'open_form'
+      post :form, action: 'submit_form'
     end
   end
 

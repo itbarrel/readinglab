@@ -2,7 +2,7 @@
 <% fields = form.form_fields %>
 
 <div class="modal-content border-0">
-  <%= form_tag(form_url, method: :form_method) do %>
+  <%= form_tag(form_url, method: form_method, remote: form_request_js) do %>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
     <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
@@ -25,6 +25,14 @@
               </tr>
             </thead>
             <tbody class="list">
+              <% if form.attendancable? %>
+                <tr>
+                  <td title="Is student Present? today.">Present?</td>
+                  <% students.each do |student| %>
+                    <td><%= generate_html_for(FormField.attendance_field, student, submit_resource) %></td>
+                  <% end %>
+                </tr>
+              <% end %>
               <% fields.each do |field| %>
                 <tr>
                   <td title="<%= field.description %>"><%= field.name %></td>

@@ -3,9 +3,9 @@ $('#showStudentsFormModal .modal-content').html("<%= j render 'shared/modals/for
                                                         meeting: @meeting,
                                                         students: @students,
                                                         form: @form,
-                                                        form_url: "meetings/#{@meeting.id}/attendance",
+                                                        form_url: "meetings/#{@meeting.id}/form",
                                                         form_method: :post,
                                                         form_request_js: true,
-                                                        submit_resource: 'meeting'
+                                                        submit_resource: 'form_details' 
                                                       %>");
 $('#showStudentsFormModal').modal('show');

@@ -8,6 +8,10 @@ module FormHelper
       text_field_tag model_key, nil, class: 'form-control', required: field.necessary
     when 'number_field'
       number_field_tag model_key, nil, class: 'form-control', required: field.necessary
+    when 'date_field'
+      date_field_tag model_key, nil, class: 'form-control', required: field.necessary
+    when 'date_time_field'
+      datetime_field_tag model_key, nil, class: 'form-control', required: field.necessary
     when 'text_area'
       text_area_tag model_key, nil, class: 'form-control', required: field.necessary
     when 'select_field'

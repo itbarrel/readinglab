@@ -2,13 +2,11 @@
 
 class MeetingsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_meeting, only: %i[open_attendance submit_attendance]
+  # before_action :set_meeting, only: %i[open_attendance submit_attendance]
 
   # GET /meetings or /meetings.json
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
-
-    @meetings = Meeting.all
 
     if params[:start].present?
       start_date = params[:start]
@@ -44,7 +42,29 @@ class MeetingsController < ApplicationController
     @students = klass.students
   end
 
-  def submit_attendance; end
+  def submit_attendance
+    return if params[:meeting].blank?
+
+    params[:meeting].each do |student_id, submission|
+      continue if submission['attendance'].blank?
+
+      StudentMeeting.find_or_create_by!(meeting_id: @meeting.id, student_id:, account: current_account)
+                    .update(attendance: submission['attendance'])
+    end
+
+    flash[:notice] = 'Attendance submitted successfully.'
+    respond_to do |format|
+      format.js { render 'shared/close_modal' }
+    end
+  end
+
+  def open_form
+    klass = @meeting.klass
+    @form = Form.find(params[:form_id])
+    @students = klass.students
+  end
+
+  def submit_form; end
 
   # GET /meetings/1/edit
   def edit; end

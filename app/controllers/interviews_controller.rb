@@ -11,7 +11,7 @@ class InterviewsController < ApplicationController
 
     if params[:calendar].present?
       interview_students = interview_students.where(
-        latest_interview: { status: :waiting }
+        interviews: { status: :waiting }
       )
     end
 
