@@ -18,7 +18,7 @@ class RoomsController < ApplicationController
 
   # GET /rooms/new
   def new
-    @room = Room.new
+    @room = current_account.rooms.new
   end
 
   # GET /rooms/1/edit
@@ -26,7 +26,7 @@ class RoomsController < ApplicationController
 
   # POST /rooms or /rooms.json
   def create
-    @room = Room.new(room_params)
+    @room = current_account.rooms.new(room_params)
     attach_account_for(@room)
 
     respond_to do |format|
@@ -68,7 +68,7 @@ class RoomsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_room
-    @room = Room.find(params[:id])
+    @room = current_account.rooms.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
