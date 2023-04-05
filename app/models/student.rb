@@ -10,6 +10,7 @@
 #  deleted_at        :string
 #  dob               :date
 #  first_name        :string
+#  gender            :integer
 #  grade             :string
 #  last_name         :string
 #  prepaid_sessions  :integer
@@ -17,7 +18,6 @@
 #  registration_date :datetime
 #  school            :string
 #  settings          :jsonb
-#  sex               :string
 #  status            :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -48,8 +48,9 @@ class Student < ApplicationRecord
   has_many :form_details, dependent: :destroy
 
   enum :status, %i[registered scheduled wait_listed active]
+  enum :gender, %i[male female others not_mentioned]
 
-  validates :first_name, :last_name, :school, presence: true
+  validates :first_name, :last_name, :school, :gender, presence: true
 
   before_create :set_status
 
@@ -75,7 +76,7 @@ class Student < ApplicationRecord
   end
 
   def set_status
-    registered! if status.blank?
+    self.status = :registered if status.blank?
   end
 
   def self.eligible_for_klass

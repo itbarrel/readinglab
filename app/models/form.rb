@@ -31,7 +31,7 @@ class Form < ApplicationRecord
            inverse_of: 'forms'
   has_many :form_fields, dependent: :destroy
 
-  enum :purpose, %i[lessonable attendancable nothing]
+  enum :purpose, %i[lessonable attendancable assessment general]
 
   validates :name, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
 

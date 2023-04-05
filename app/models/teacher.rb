@@ -62,6 +62,6 @@ class Teacher < User
       m.klass.teacher.id
     end
 
-    Teacher.where.not(id: teacher_ids)
+    all.where.not(id: teacher_ids)
   end
 end

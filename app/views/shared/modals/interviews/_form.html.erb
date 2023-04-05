@@ -7,16 +7,16 @@
 <div class="modal-body p-card">
   <div class="mb-3">
     <%= f.label :student, class: 'fs-0' %>
-    <% students = params[:action] == 'edit' ? Student.where(status: %i[scheduled wait_listed active]) : Student.registered %>
+    <% students = params[:action] == 'edit' ? current_account.students.where.not(status: :registered) : current_account.students.where.not(status: :active) %>
     <%= f.collection_select :student_id, students.order(:first_name), :id, :name, { include_blank: true }, { class: 'form-control' } %>
   </div>
   <div class="mb-3">
     <%= f.label :schedule_date, class: 'fs-0' %>
-    <%= f.date_field :date, class: 'form-control' %>
+    <%= f.datetime_field :date, class: 'form-control' %>
   </div>
   <div class="mb-3">
     <%= f.label :forms, class: 'fs-0' %>
-    <%= f.collection_select :form_id, Form.order(:name), :id, :name, { include_blank: true }, { class: 'form-control' } %>
+    <%= f.collection_select :form_id, current_account.forms.assessment.order(:name), :id, :name, { include_blank: true }, { class: 'form-control' } %>
   </div>
 </div>
 <div class="card-footer d-flex justify-content-end align-items-center bg-light">

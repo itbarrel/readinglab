@@ -49,6 +49,7 @@ class Account < ApplicationRecord
   has_many :interviews, dependent: :destroy
   has_many :content_libraries, dependent: :destroy
   has_many :klass_templates, dependent: :destroy
+  has_many :klasses, dependent: :destroy
   has_many :trajectory_details, dependent: :destroy
   has_many :message_templates, dependent: :destroy
   has_many :receipt_types, dependent: :destroy

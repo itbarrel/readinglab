@@ -8,7 +8,7 @@ class StudentsController < ApplicationController
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
 
-    params[:classes_at].present? && @students = Student.studing_at(params[:classes_at].to_datetime)
+    params[:classes_at].present? && @students = current_account.students.studing_at(params[:classes_at].to_datetime)
 
     @search = @students.ransack(params[:q])
     @search.sorts = 'first_name asc' if @search.sorts.empty?
@@ -41,11 +41,11 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
-        format.html { redirect_to student_url, notice: 'Student was successfully created.' }
+        format.html { redirect_to students_url, notice: 'Student was successfully created.' }
         format.json { render :show, status: :created, location: @student }
       else
-        format.html { render :index, status: :unprocessable_entity }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
+        format.html { redirect_to students_url }
+        format.json { render json: @student.errors }
       end
     end
   end
@@ -82,8 +82,8 @@ class StudentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def student_params
-    params.require(:student).permit(:first_name, :last_name, :dob, :grade, :school, :sex, :settings,
-                                    :dates, :programs, :status,
+    params.require(:student).permit(:first_name, :last_name, :dob, :grade, :school, :gender, :settings,
+                                    :dates, :programs, :status, :parent_id,
                                     :prepaid_sessions, :credit_session, :registration_date)
   end
 end

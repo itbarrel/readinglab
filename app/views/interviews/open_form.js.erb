@@ -1,10 +1,10 @@
 $('.modal').modal('hide');
 $('#showStudentsFormModal .modal-content').html("<%= j render 'shared/modals/forms/students_form',
-                                                        record: @meeting,
-                                                        record_type: 'Meeting',
+                                                        record: @interview,
+                                                        record_type: 'Interview',
                                                         students: @students,
                                                         form: @form,
-                                                        form_url: "meetings/#{@meeting.id}/form",
+                                                        form_url: "interviews/#{@interview.id}/form",
                                                         form_method: :post,
                                                         form_request_js: true,
                                                         submit_resource: 'form_details' 

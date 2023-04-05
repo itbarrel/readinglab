@@ -344,7 +344,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_085727) do
     t.string "last_name"
     t.date "dob"
     t.string "grade"
-    t.string "sex"
+    t.integer "gender"
     t.string "school"
     t.jsonb "settings"
     t.string "dates"

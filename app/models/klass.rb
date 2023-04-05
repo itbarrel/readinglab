@@ -47,7 +47,7 @@ class Klass < ApplicationRecord
   belongs_to :account
   belongs_to :teacher
   belongs_to :room
-  belongs_to :klass_template
+  belongs_to :klass_template, optional: true
   belongs_to :attendance_form, optional: true, class_name: 'Form'
 
   has_many :klass_forms, dependent: :destroy

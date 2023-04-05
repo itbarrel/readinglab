@@ -20,7 +20,7 @@
           </div>
           <div class="mb-3">
             <%= f.label :class_template, class: 'fs-0' %>
-            <%= f.collection_select :klass_template_id, KlassTemplate.all, :id, :name, { include_blank: true }, { class: 'form-control' } %>
+            <%= f.collection_select :klass_template_id, current_account.klass_templates, :id, :name, { include_blank: true }, { class: 'form-control' } %>
           </div>
           <div class="mb-3">
             <%= f.label :session_count, class: 'fs-0' %>

@@ -4,6 +4,7 @@ en:
     formats:
       default: "%a, %b %-d, %Y %-I:%M%P %Z"
       short: "%b %-d, %Y"
+      medium: "%b %-d, %Y %-I:%M %P"
   unauthorized:
     update:
       all: "You're not authorized to %{action} %{subject}."
