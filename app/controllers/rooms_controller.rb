@@ -6,10 +6,11 @@ class RoomsController < ApplicationController
 
   # GET /rooms or /rooms.json
   def index
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
     @search = @rooms.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
-    @pagy, @rooms = pagy(@search.result,
-                         items: params[:per_page] || '10')
+    @pagy, @rooms = pagy(@search.result, items: per_page)
   end
 
   # GET /rooms/1 or /rooms/1.json
@@ -33,7 +34,8 @@ class RoomsController < ApplicationController
         format.html { redirect_to rooms_url, notice: 'Room has been successfully created.' }
         format.json { render :show, status: :created, location: @room }
       else
-        format.html { render :index, status: :unprocessable_entity }
+        process_errors(@room)
+        format.html { redirect_to rooms_url }
         format.json { render json: @room.errors, status: :unprocessable_entity }
       end
     end

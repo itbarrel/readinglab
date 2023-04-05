@@ -1,331 +1,66 @@
-<div class="row g-0 mt-3">
-  <div class="col-lg-4 ps-lg-2">
-    <div class="sticky-sidebar">
-      <div class="card mb-lg-0">
-        <div class="card-header">
-          <h5 class="mb-0">Other Info</h5>
+<% content_for :search_includes do %>
+<%= render partial: 'shared/search', locals: { search_key: :name_cont, form_url: forms_path } %>
+<% end %>
+
+<div class="card mb-3" id="customersTable"
+  data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
+  <div class="card-header">
+    <div class="row flex-between-center">
+      <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+        <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Forms</h5>
+      </div>
+      <div class="col-8 col-sm-auto text-end ps-2">
+        <div class="d-none" id="table-customers-actions">
+          <div class="d-flex">
+            <select class="form-select form-select-sm" aria-label="Bulk actions">
+              <option selected="">Bulk actions</option>
+              <option value="Refund">Refund</option>
+              <option value="Delete">Delete</option>
+              <option value="Archive">Archive</option>
+            </select>
+            <button class="btn btn-falcon-default btn-sm ms-2" type="button">Apply</button>
+          </div>
         </div>
-        <div class="card-body bg-light">
-          <div class="mb-3">
-            <div class="d-flex flex-between-center">
-              <label class="form-label" for="organizer">Organizer</label>
-              <button class="btn btn-link btn-sm pe-0" type="button">Add New</button>
-            </div>
-            <select class="form-select js-choice" id="organizer" multiple="multiple" size="1" name="organizer" data-options='{"removeItemButton":true,"placeholder":true}'>
-              <option value="">Select organizer...</option>
-              <option>Massachusetts Institute of Technology</option>
-              <option>University of Chicago</option>
-              <option>GSAS Open Labs At Harvard</option>
-              <option>California Institute of Technology</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <div class="d-flex flex-between-center">
-              <label class="form-label" for="sponsors">Sponsors</label>
-              <button class="btn btn-link btn-sm pe-0" type="button">Add New</button>
-            </div>
-            <select class="form-select js-choice" id="sponsors" multiple="multiple" size="1" name="sponsors" data-options='{"removeItemButton":true,"placeholder":true}'>
-              <option value="">Select sponsors...</option>
-              <option>Microsoft Corporation</option>
-              <option>Technext Limited</option>
-              <option>Hewlett-Packard</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="event-type">Event Type</label>
-            <select class="form-select" id="event-type" name="event-type">
-              <option>Select event type...</option>
-              <option>Class, Training, or Workshop</option>
-              <option>Concert or Performance</option>
-              <option>Conference</option>
-              <option>Convention</option>
-              <option>Dinner or Gala</option>
-              <option>Festival or Fair</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="event-topic">Event Topic</label>
-            <select class="form-select" id="event-topic" name="even-topic">
-              <option value="" selected="selected">Select a topic</option>
-              <option>Auto, Boat &amp; Air</option>
-              <option>Business &amp; Professional</option>
-              <option>Charity &amp; Causes</option>
-              <option>Community &amp; Culture</option>
-              <option>Family &amp; Education</option>
-              <option>Fashion &amp; Beauty</option>
-              <option>Film, Media &amp; Entertainment</option>
-              <option>Food &amp; Drink</option>
-              <option>Government &amp; Politics</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <div class="d-flex justify-content-between align-items-center">
-              <label class="mb-0" for="event-tags">Tags</label>
-              <button class="btn btn-link btn-sm pe-0" type="button">Add New</button>
-            </div>
-            <select class="form-select js-choice" id="event-tags" multiple="multiple" size="1" name="tags" data-options='{"removeItemButton":true,"placeholder":true}'>
-              <option value="">Select tags...</option>
-              <option>Concert</option>
-              <option>New Year</option>
-              <option>Party</option>
-            </select>
-          </div>
-          <div class="border-dashed-bottom my-3"></div>
-          <h6>Listing Privacy</h6>
-          <div class="mb-3 form-check">
-            <input class="form-check-input" id="customRadio4" type="radio" name="listingPrivacy" checked="checked" />
-            <label class="form-label mb-0" for="customRadio4"> <strong>Public page:</strong></label>
-            <div class="form-text mt-0">Discoverable by anyone on Falcon, our distribution partners, and search engines.</div>
-          </div>
-          <div class="mb-3 form-check">
-            <input class="form-check-input" id="customRadio5" type="radio" name="listingPrivacy" />
-            <label class="form-label mb-0" for="customRadio5"> <strong>Private page:</strong></label>
-            <div class="form-text mt-0">Accessible only by people you specify. </div>
-          </div>
-          <div class="border-dashed-bottom my-3"></div>
-          <h6>Remaining Tickets</h6>
-          <div class="form-check custom-checkbox mb-0">
-            <input class="form-check-input" id="customRadio6" type="checkbox" />
-            <label class="form-label mb-0" for="customRadio6">Show the number of remaining tickets. </label>
-          </div>
+        <div id="table-customers-replace-element">
+          <%= link_to( new_form_path, class: 'btn btn-falcon-default btn-sm') do %>
+          <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+          <span class="d-none d-sm-inline-block ms-1">New</span>
+          <% end %>
+          <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter"
+              data-fa-transform="shrink-3 down-2"></span><span
+              class="d-none d-sm-inline-block ms-1">Filter</span></button>
+          <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt"
+              data-fa-transform="shrink-3 down-2"></span><span
+              class="d-none d-sm-inline-block ms-1">Export</span></button>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-lg-8 pe-lg-2">
-    <div class="card mb-3">
-      <div class="card-header">
-        <h5 class="mb-0">Event Details</h5>
-      </div>
-      <div class="card-body bg-light">
-        <form>
-          <div class="row gx-2">
-            <div class="col-12 mb-3">
-              <label class="form-label" for="event-name">Event Title</label>
-              <input class="form-control" id="event-name" type="text" placeholder="Event Title" />
-            </div>
-            <div class="col-sm-6 mb-3">
-              <label class="form-label" for="start-date">Start Date</label>
-              <input class="form-control datetimepicker" id="start-date" type="text" placeholder="d/m/y" data-options='{"dateFormat":"d/m/y","disableMobile":true}' />
-            </div>
-            <div class="col-sm-6 mb-3">
-              <label class="form-label" for="start-time">Start Time</label>
-              <input class="form-control datetimepicker" id="start-time" type="text" placeholder="H:i" data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i","disableMobile":true}' />
-            </div>
-            <div class="col-sm-6 mb-3">
-              <label class="form-label" for="end-date">End Date</label>
-              <input class="form-control datetimepicker" id="end-date" type="text" placeholder="d/m/y" data-options='{"dateFormat":"d/m/y","disableMobile":true}' />
-            </div>
-            <div class="col-sm-6 mb-3">
-              <label class="form-label" for="end-time">End Time</label>
-              <input class="form-control datetimepicker" id="end-time" type="text" placeholder="H:i" data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i","disableMobile":true}' />
-            </div>
-            <div class="col-sm-6">
-              <label class="form-label" for="registration-deadline">Registration Deadline</label>
-              <input class="form-control datetimepicker" id="registration-deadline" type="text" placeholder="d/m/y" data-options='{"dateFormat":"d/m/y","disableMobile":true}' />
-            </div>
-            <div class="col-sm-6">
-              <label class="form-label" for="time-zone">Timezone
-              </label>
-              <select class="form-select" id="time-zone">
-                <option>GMT-12:00 Etc/GMT-12</option>
-                <option>GMT-11:00 Etc/GMT-11</option>
-                <option>GMT-11:00 Pacific/Midway</option>
-                <option>GMT-10:00 America/Adak</option>
-                <option>GMT-09:00 America/Anchorage</option>
-                <option>GMT-09:00 Pacific/Gambier</option>
-                <option>GMT-08:00 America/Dawson_Creek</option>
-                <option>GMT-08:00 America/Ensenada</option>
-                <option>GMT-08:00 America/Los_Angeles</option>
-                <option>GMT-07:00 America/Chihuahua</option>
-                <option>GMT-07:00 America/Denver</option>
-                <option>GMT-06:00 America/Belize</option>
-                <option>GMT-06:00 America/Cancun</option>
-                <option>GMT-06:00 America/Chicago</option>
-                <option>GMT-06:00 Chile/EasterIsland</option>
-                <option>GMT-05:00 America/Bogota</option>
-                <option>GMT-05:00 America/Havana</option>
-                <option>GMT-05:00 America/New_York</option>
-                <option>GMT-04:30 America/Caracas</option>
-                <option>GMT-04:00 America/Campo_Grande</option>
-                <option>GMT-04:00 America/Glace_Bay</option>
-                <option>GMT-04:00 America/Goose_Bay</option>
-                <option>GMT-04:00 America/Santiago</option>
-                <option>GMT-04:00 America/La_Paz</option>
-                <option>GMT-03:00 America/Argentina/Buenos_Aires</option>
-                <option>GMT-03:00 America/Montevideo</option>
-                <option>GMT-03:00 America/Araguaina</option>
-                <option>GMT-03:00 America/Godthab</option>
-                <option>GMT-03:00 America/Miquelon</option>
-                <option>GMT-03:00 America/Sao_Paulo</option>
-                <option>GMT-03:30 America/St_Johns</option>
-                <option>GMT-02:00 America/Noronha</option>
-                <option>GMT-01:00 Atlantic/Cape_Verde</option>
-                <option>GMT Europe/Belfast</option>
-                <option>GMT Africa/Abidjan</option>
-                <option>GMT Europe/Dublin</option>
-                <option>GMT Europe/Lisbon</option>
-                <option>GMT Europe/London</option>
-                <option>UTC UTC</option>
-                <option>GMT+01:00 Africa/Algiers</option>
-                <option>GMT+01:00 Africa/Windhoek</option>
-                <option>GMT+01:00 Atlantic/Azores</option>
-                <option>GMT+01:00 Atlantic/Stanley</option>
-                <option>GMT+01:00 Europe/Amsterdam</option>
-                <option>GMT+01:00 Europe/Belgrade</option>
-                <option>GMT+01:00 Europe/Brussels</option>
-                <option>GMT+02:00 Africa/Cairo</option>
-                <option>GMT+02:00 Africa/Blantyre</option>
-                <option>GMT+02:00 Asia/Beirut</option>
-                <option>GMT+02:00 Asia/Damascus</option>
-                <option>GMT+02:00 Asia/Gaza</option>
-                <option>GMT+02:00 Asia/Jerusalem</option>
-                <option>GMT+03:00 Africa/Addis_Ababa</option>
-                <option>GMT+03:00 Asia/Riyadh89</option>
-                <option>GMT+03:00 Europe/Minsk</option>
-                <option>GMT+03:30 Asia/Tehran</option>
-                <option>GMT+04:00 Asia/Dubai</option>
-                <option>GMT+04:00 Asia/Yerevan</option>
-                <option>GMT+04:00 Europe/Moscow</option>
-                <option>GMT+04:30 Asia/Kabul</option>
-                <option>GMT+05:00 Asia/Tashkent</option>
-                <option>GMT+05:30 Asia/Kolkata</option>
-                <option>GMT+05:45 Asia/Katmandu</option>
-                <option>GMT+06:00 Asia/Dhaka</option>
-                <option>GMT+06:00 Asia/Yekaterinburg</option>
-                <option>GMT+06:30 Asia/Rangoon</option>
-                <option>GMT+07:00 Asia/Bangkok</option>
-                <option>GMT+07:00 Asia/Novosibirsk</option>
-                <option>GMT+08:00 Etc/GMT+8</option>
-                <option>GMT+08:00 Asia/Hong_Kong</option>
-                <option>GMT+08:00 Asia/Krasnoyarsk</option>
-                <option>GMT+08:00 Australia/Perth</option>
-                <option>GMT+08:45 Australia/Eucla</option>
-                <option>GMT+09:00 Asia/Irkutsk</option>
-                <option>GMT+09:00 Asia/Seoul</option>
-                <option>GMT+09:00 Asia/Tokyo</option>
-                <option>GMT+09:30 Australia/Adelaide</option>
-                <option>GMT+09:30 Australia/Darwin</option>
-                <option>GMT+09:30 Pacific/Marquesas</option>
-                <option>GMT+10:00 Etc/GMT+10</option>
-                <option>GMT+10:00 Australia/Brisbane</option>
-                <option>GMT+10:00 Australia/Hobart</option>
-                <option>GMT+10:00 Asia/Yakutsk</option>
-                <option>GMT+10:30 Australia/Lord_Howe</option>
-                <option>GMT+11:00 Asia/Vladivostok</option>
-                <option>GMT+11:30 Pacific/Norfolk</option>
-                <option>GMT+12:00 Etc/GMT+12</option>
-                <option>GMT+12:00 Asia/Anadyr</option>
-                <option>GMT+12:00 Asia/Magadan</option>
-                <option>GMT+12:00 Pacific/Auckland</option>
-                <option>GMT+12:45 Pacific/Chatham</option>
-                <option>GMT+13:00 Pacific/Tongatapu</option>
-                <option>GMT+14:00 Pacific/Kiritimati</option>
-              </select>
-            </div>
-            <div class="col-12">
-              <div class="border-dashed-bottom my-3"></div>
-            </div>
-            <div class="col-sm-6 mb-3">
-              <label class="form-label" for="event-venue">Venue</label>
-              <input class="form-control" id="event-venue" type="text" placeholder="Venue" />
-              <button class="btn btn-link btn-sm btn p-0" type="button">Online Event</button>
-            </div>
-            <div class="col-sm-6 mb-3">
-              <label class="form-label" for="event-address">Address</label>
-              <input class="form-control" id="event-address" type="text" placeholder="Address" />
-            </div>
-            <div class="col-sm-4 mb-3">
-              <label class="form-label" for="event-city">City</label>
-              <input class="form-control" id="event-city" type="text" placeholder="City" />
-            </div>
-            <div class="col-sm-4 mb-3">
-              <label class="form-label" for="event-state">State</label>
-              <input class="form-control" id="event-state" type="text" placeholder="State" />
-            </div>
-            <div class="col-sm-4 mb-3">
-              <label class="form-label" for="event-country">Country</label>
-              <input class="form-control" id="event-country" type="text" placeholder="Country" />
-            </div>
-            <div class="col-12">
-              <label class="form-label" for="event-description">Description</label>
-              <textarea class="form-control" id="event-description" rows="6"></textarea>
-            </div>
-          </div>
-        </form>
-      </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+        <thead class="bg-200 text-900">
+          <tr>
+            <th>
+              <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox"
+                  data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
+              </div>
+            </th>
+            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :name, default_order: :asc)%>
+            </th>
+            <th class="sort pe-1 align-middle white-space-nowrap">
+              <%= sort_link(@search, :purpose, default_order: :asc)%></th>
+            <th class="sort pe-1 align-middle white-space-nowrap"></th>
+          </tr>
+        </thead>
+        <tbody class="list" id="table-customers-body">
+          <% @forms.each do |form| %>
+          <%= render form %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
-    <div class="card mb-3">
-      <div class="card-header">
-        <h5 class="mb-0">Schedule</h5>
-      </div>
-      <div class="card-body bg-light">
-        <div class="border rounded-1 position-relative bg-white dark__bg-1100 p-3">
-          <div class="position-absolute end-0 top-0 mt-2 me-3 z-index-1">
-            <button class="btn btn-link btn-sm p-0" type="button"><span class="fas fa-times-circle text-danger" data-fa-transform="shrink-1"></span></button>
-          </div>
-          <div class="row gx-2">
-            <div class="col-12 mb-3">
-              <label class="form-label" for="schedule-title">Title</label>
-              <input class="form-control form-control-sm" id="schedule-title" type="text" placeholder="Title" />
-            </div>
-            <div class="col-sm-6 mb-3">
-              <label class="form-label" for="schedule-start-date">Start Date</label>
-              <input class="form-control form-control-sm datetimepicker" id="schedule-start-date" type="text" placeholder="d/m/y" data-options='{"dateFormat":"d/m/y","enableTime":false}' />
-            </div>
-            <div class="col-sm-6 mb-3">
-              <label class="form-label" for="schedule-start-time">Start Time</label>
-              <input class="form-control form-control-sm datetimepicker" id="schedule-start-time" type="text" placeholder="H:i" data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i"}' />
-            </div>
-            <div class="col-sm-6 mb-3 mb-sm-0">
-              <label class="form-label" for="schedule-end-date">End Date</label>
-              <input class="form-control form-control-sm datetimepicker" id="schedule-end-date" type="text" placeholder="d/m/y" data-options='{"dateFormat":"d/m/y","enableTime":false}' />
-            </div>
-            <div class="col-sm-6">
-              <label class="form-label" for="schedule-end-time">End Time</label>
-              <input class="form-control form-control-sm datetimepicker" id="schedule-end-time" type="text" placeholder="H:i" data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i"}' />
-            </div>
-          </div>
-        </div>
-        <button class="btn btn-falcon-default btn-sm mt-2" type="button"><span class="fas fa-plus fs--2 me-1" data-fa-transform="up-1"></span>Add Item </button>
-      </div>
-    </div>
-    <div class="card mb-3 mb-lg-0">
-      <div class="card-header">
-        <h5 class="mb-0">Custom Fields</h5>
-      </div>
-      <div class="card-body bg-light">
-        <div class="position-relative rounded-1 border bg-white dark__bg-1100 p-3">
-          <div class="position-absolute end-0 top-0 mt-2 me-3 z-index-1">
-            <button class="btn btn-link btn-sm p-0" type="button"><span class="fas fa-times-circle text-danger" data-fa-transform="shrink-1"></span></button>
-          </div>
-          <div class="row gx-2">
-            <div class="col-sm-6 mb-3">
-              <label class="form-label" for="field-name">Name</label>
-              <input class="form-control form-control-sm" id="field-name" type="text" placeholder="Name (e.g. T-shirt)" />
-            </div>
-            <div class="col-sm-6 mb-3">
-              <label class="form-label" for="field-type">Type</label>
-              <select class="form-select form-select-sm" id="field-type">
-                <option>Select a type</option>
-                <option>Text</option>
-                <option>Checkboxes</option>
-                <option>Radio Buttons</option>
-                <option>Textarea</option>
-                <option>Date</option>
-                <option>Dropdowns</option>
-                <option>File</option>
-              </select>
-            </div>
-            <div class="col-12">
-              <label class="form-label" for="field-options">Field Options</label>
-              <textarea class="form-control form-control-sm" id="field-options" rows="3"></textarea>
-              <div class="form-text fs--1 text-warning">* Separate your options with comma</div>
-            </div>
-          </div>
-        </div>
-        <button class="btn btn-falcon-default btn-sm mt-2" type="submit"><span class="fas fa-plus fs--2 me-1" data-fa-transform="up-1"></span>Add Item</button>
-      </div>
-    </div>
+    <%= pagy_bootstrap_nav(@pagy).html_safe %>
   </div>
 </div>

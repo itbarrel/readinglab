@@ -6,7 +6,10 @@ class FormsController < ApplicationController
 
   # GET /forms or /forms.json
   def index
-    @forms = Form.all
+    @search = @forms.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @forms = pagy(@search.result,
+                         items: params[:per_page] || '10')
   end
 
   def show; end
@@ -14,7 +17,7 @@ class FormsController < ApplicationController
   # GET /forms/new
   def new
     @form = Form.new
-    @form.form_fields.build
+    # @form.form_fields.build
   end
 
   # GET /forms/1/edit
@@ -27,7 +30,7 @@ class FormsController < ApplicationController
 
     respond_to do |format|
       if @form.save
-        format.html { redirect_to forms_url, notice: 'Form was successfully created.' }
+        format.html { redirect_to forms_url, notice: 'Form has been successfully created.' }
         format.json { render :show, status: :created, location: @form }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +43,7 @@ class FormsController < ApplicationController
   def update
     respond_to do |format|
       if @form.update(form_params)
-        format.html { redirect_to forms_url, notice: 'Form was successfully updated.' }
+        format.html { redirect_to forms_url, notice: 'Form has been successfully updated.' }
         format.json { render :show, status: :ok, location: @form }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,7 +57,7 @@ class FormsController < ApplicationController
     @form.destroy
 
     respond_to do |format|
-      format.html { redirect_to forms_url, notice: 'Form was successfully destroyed.' }
+      format.html { redirect_to forms_url, notice: 'Form has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end

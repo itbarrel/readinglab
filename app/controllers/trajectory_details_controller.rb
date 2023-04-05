@@ -4,9 +4,12 @@ class TrajectoryDetailsController < ApplicationController
   load_and_authorize_resource
   before_action :set_trajectory_detail, only: %i[]
 
-  # GET /trajectory_details or /trajectory_details.json
   def index
-    @trajectory_details = TrajectoryDetail.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @trajectory_details.ransack(params[:q])
+    @search.sorts = 'wpm asc' if @search.sorts.empty?
+    @pagy, @trajectory_details = pagy(@search.result, items: per_page)
   end
 
   # GET /trajectory_details/1 or /trajectory_details/1.json
@@ -14,7 +17,7 @@ class TrajectoryDetailsController < ApplicationController
 
   # GET /trajectory_details/new
   def new
-    @trajectory_detail = TrajectoryDetail.new
+    @trajectory_detail = current_account.trajectory_details.new
   end
 
   # GET /trajectory_details/1/edit
@@ -22,7 +25,7 @@ class TrajectoryDetailsController < ApplicationController
 
   # POST /trajectory_details or /trajectory_details.json
   def create
-    @trajectory_detail = TrajectoryDetail.new(trajectory_detail_params)
+    @trajectory_detail = current_account.trajectory_details.new(trajectory_detail_params)
     attach_account_for(@trajectory_detail)
 
     respond_to do |format|
@@ -68,7 +71,7 @@ class TrajectoryDetailsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_trajectory_detail
-    @trajectory_detail = TrajectoryDetail.find(params[:id])
+    @trajectory_detail = current_account.trajectory_details.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

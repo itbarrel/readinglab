@@ -4,6 +4,10 @@ en:
     formats:
       default: "%a, %b %-d, %Y %-I:%M%P %Z"
       short: "%b %-d, %Y"
+  unauthorized:
+    update:
+      all: "You're not authorized to %{action} %{subject}."
+      writer: "You're not authorized to %{action} other writer's resources."
   ransack:
     attributes:
       teacher:

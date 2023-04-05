@@ -24,7 +24,7 @@ Layout/EndOfLine:
   Enabled: false
 
 Layout/LineLength:
-  Max: 120
+  Max: 150
 
 Naming/FileName:
   Enabled: false

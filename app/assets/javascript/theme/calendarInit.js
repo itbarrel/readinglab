@@ -199,7 +199,7 @@ window.calendarInit = (selectors = {}, events = [], external = false, domEvents 
     const eventSourcesKey = external ? "eventSources" : "events";
     const calendar = renderCalendar(appCalendar, {
       headerToolbar: false,
-      dayMaxEvents: 2,
+      dayMaxEvents: 6,
       height: 800,
       stickyHeaderDates: false,
       views: {

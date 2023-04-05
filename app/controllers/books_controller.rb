@@ -6,7 +6,11 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
-    @books = Book.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @books.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @books = pagy(@search.result, items: per_page)
   end
 
   # GET /books/1 or /books/1.json
@@ -14,7 +18,7 @@ class BooksController < ApplicationController
 
   # GET /books/new
   def new
-    @book = Book.new
+    @book = current_account.books.new
   end
 
   # GET /books/1/edit
@@ -22,7 +26,7 @@ class BooksController < ApplicationController
 
   # POST /books or /books.json
   def create
-    @book = Book.new(book_params)
+    @book = current_account.books.new(book_params)
     attach_account_for(@book)
 
     respond_to do |format|
@@ -63,7 +67,7 @@ class BooksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_book
-    @book = Book.find(params[:id])
+    @book = current_account.books.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

@@ -1,16 +1,28 @@
-<%= form_for(staff, url: 'staff', id: 'addStaffForm') do |f| %>
+<%= form_for(staff, as: :staff, url: "staffs", id: 'addStaffForm') do |f| %>
   <div class="modal-header px-card bg-light border-bottom-0">
     <h5 class="modal-title"><%= title %></h5>
     <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
   </div>
   <div class="modal-body p-card">
     <div class="mb-3">
-      <%= f.label :name, class: 'fs-0' %>
-      <%= f.text_field :name, class: 'form-control' %>
+      <%= f.label :first_name, class: 'fs-0' %>
+      <%= f.text_field :first_name, class: 'form-control' %>
+    </div>
+     <div class="mb-3">
+      <%= f.label :last_name, class: 'fs-0' %>
+      <%= f.text_field :last_name, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :email, class: 'fs-0' %>
+      <%= f.email_field :email, class: 'form-control', autofocus: true, autocomplete: "email" %>
     </div>
     <div class="mb-3">
       <%= f.label :role, class: 'fs-0' %>
       <%= f.text_field :role, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :phone, class: 'fs-0' %>
+      <%= f.text_field :phone, class: 'form-control' %>
     </div>
   </div>
   <div class="card-footer d-flex justify-content-end align-items-center bg-light">

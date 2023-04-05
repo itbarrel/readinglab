@@ -116,6 +116,7 @@ GEM
       i18n (>= 1.8.11, < 2)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    hash_dot (2.5.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     io-console (0.5.11)
@@ -289,6 +290,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   faker
+  hash_dot
   jbuilder
   jsbundling-rails
   letter_opener
