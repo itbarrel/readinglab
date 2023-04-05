@@ -30,11 +30,11 @@ class Room < ApplicationRecord
 
   def self.available_at(start_date = DateTime.now, duration = 60)
     end_date = start_date + duration.minutes
-    meetings = Meeting.where('starts_at <= ? and ? <= ends_at', end_date, start_date).includes(klass: :room)
+    meetings = all.where('starts_at <= ? and ? <= ends_at', end_date, start_date).includes(klass: :room)
     room_ids = meetings.map do |m|
       m.klass.room.id
     end
 
-    Room.where.not(id: room_ids)
+    all.where.not(id: room_ids)
   end
 end

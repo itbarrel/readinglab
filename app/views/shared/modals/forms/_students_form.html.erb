@@ -4,6 +4,7 @@
 <div class="modal-content border-0">
   <%= form_tag(form_url, method: form_method, remote: form_request_js) do %>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= hidden_field_tag :form_id, form.id %>
 
     <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
       <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" type="button" data-bs-dismiss="modal" aria-label="Close"></button>

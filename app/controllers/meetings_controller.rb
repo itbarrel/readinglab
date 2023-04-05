@@ -64,7 +64,26 @@ class MeetingsController < ApplicationController
     @students = klass.students
   end
 
-  def submit_form; end
+  def submit_form
+    return if params[:form_details].blank?
+
+    params[:form_details].each do |student_id, submission|
+      FormDetail.find_or_create_by!(
+        user: current_user,
+        student_id:,
+        form_id: params[:form_id],
+        parent_type: 'Meeting',
+        parent_id: @meeting.id,
+        account: current_account
+      )
+                .update(form_values: submission)
+    end
+
+    flash[:notice] = 'Form Data submitted successfully.'
+    respond_to do |format|
+      format.js { render 'shared/close_modal' }
+    end
+  end
 
   # GET /meetings/1/edit
   def edit; end
