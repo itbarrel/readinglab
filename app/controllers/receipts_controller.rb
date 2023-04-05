@@ -6,7 +6,7 @@ class ReceiptsController < ApplicationController
 
   # GET /receipts or /receipts.json
   def index
-    @receipts = Receipt.all
+    @receipts = current_account.receipts.all
     @search = @receipts.ransack(params[:q])
     @search.sorts = 'amount asc' if @search.sorts.empty?
     @pagy, @receipts = pagy(@search.result.includes(:student, :receipt_type),
@@ -18,7 +18,7 @@ class ReceiptsController < ApplicationController
 
   # GET /receipts/new
   def new
-    @receipt = Receipt.new
+    @receipt = current_account.receipts.new
   end
 
   # GET /receipts/1/edit
@@ -26,7 +26,7 @@ class ReceiptsController < ApplicationController
 
   # POST /receipts or /receipts.json
   def create
-    @receipt = Receipt.new(receipt_params)
+    @receipt = current_account.receipts.new(receipt_params)
 
     respond_to do |format|
       if @receipt.save
@@ -66,7 +66,7 @@ class ReceiptsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_receipt
-    @receipt = Receipt.find(params[:id])
+    @receipt = current_account.receipts.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
