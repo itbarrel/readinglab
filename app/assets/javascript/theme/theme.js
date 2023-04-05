@@ -993,6 +993,8 @@ var choicesInit = function choicesInit() {
     });
   }
 };
+
+window.choicesInit = choicesInit;
 /*-----------------------------------------------
 |   Cookie notice
 -----------------------------------------------*/
