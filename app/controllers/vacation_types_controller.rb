@@ -6,7 +6,11 @@ class VacationTypesController < ApplicationController
 
   # GET /vacation_types or /vacation_types.json
   def index
-    @vacation_types = VacationType.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @vacation_types.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @vacation_types = pagy(@search.result, items: per_page)
   end
 
   # GET /vacation_types/1 or /vacation_types/1.json
@@ -14,7 +18,7 @@ class VacationTypesController < ApplicationController
 
   # GET /vacation_types/new
   def new
-    @vacation_type = VacationType.new
+    @vacation_type = current_account.vacation_types.new
   end
 
   # GET /vacation_types/1/edit
@@ -22,7 +26,7 @@ class VacationTypesController < ApplicationController
 
   # POST /vacation_types or /vacation_types.json
   def create
-    @vacation_type = VacationType.new(vacation_type_params)
+    @vacation_type = current_account.vacation_types.new(vacation_type_params)
 
     respond_to do |format|
       if @vacation_type.save
@@ -62,7 +66,7 @@ class VacationTypesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_vacation_type
-    @vacation_type = VacationType.find(params[:id])
+    @vacation_type = current_account.vacation_types.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

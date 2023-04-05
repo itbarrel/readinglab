@@ -7,6 +7,11 @@ class ContentLibrariesController < ApplicationController
   # GET /content_libraries or /content_libraries.json
   def index
     @content_libraries = current_account.content_libraries
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @content_libraries.ransack(params[:q])
+    @search.sorts = 'title asc' if @search.sorts.empty?
+    @pagy, @content_libraries = pagy(@search.result, items: per_page)
   end
 
   # GET /content_libraries/1 or /content_libraries/1.json

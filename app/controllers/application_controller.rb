@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
   end
 
   def attach_account_for(resource)
-    resource.account = current_user.account
+    resource.account ||= current_user.account
   end
 
   def current_account

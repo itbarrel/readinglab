@@ -6,17 +6,18 @@ class FormsController < ApplicationController
 
   # GET /forms or /forms.json
   def index
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
     @search = @forms.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
-    @pagy, @forms = pagy(@search.result,
-                         items: params[:per_page] || '10')
+    @pagy, @forms = pagy(@search.result, items: per_page)
   end
 
   def show; end
 
   # GET /forms/new
   def new
-    @form = Form.new
+    @form = current_account.forms.new
     # @form.form_fields.build
   end
 
@@ -25,7 +26,7 @@ class FormsController < ApplicationController
 
   # POST /forms or /forms.json
   def create
-    @form = Form.new(form_params)
+    @form = current_account.forms.new(form_params)
     attach_account_for(@form)
 
     respond_to do |format|
@@ -66,7 +67,7 @@ class FormsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_form
-    @form = Form.find(params[:id])
+    @form = current_account.forms.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

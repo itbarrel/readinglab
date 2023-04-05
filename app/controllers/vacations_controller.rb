@@ -18,7 +18,7 @@ class VacationsController < ApplicationController
 
   # GET /vacations/new
   def new
-    @vacation = Vacation.new
+    @vacation = current_account.vacations.new
   end
 
   # GET /vacations/1/edit
@@ -26,7 +26,7 @@ class VacationsController < ApplicationController
 
   # POST /vacations or /vacations.json
   def create
-    @vacation = Vacation.new(vacation_params)
+    @vacation = current_account.vacations.new(vacation_params)
     attach_account_for(@vacation)
 
     respond_to do |format|
@@ -67,7 +67,7 @@ class VacationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_vacation
-    @vacation = Vacation.find(params[:id])
+    @vacation = current_account.vacations.find(params[:id])
   end
 
   def vacation_params

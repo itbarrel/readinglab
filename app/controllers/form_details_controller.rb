@@ -6,7 +6,11 @@ class FormDetailsController < ApplicationController
 
   # GET /form_details or /form_details.json
   def index
-    @form_details = current_account.form_details
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @form_details.ransack(params[:q])
+    @search.sorts = 'form_values asc' if @search.sorts.empty?
+    @pagy, @form_details = pagy(@search.result, items: per_page)
   end
 
   # GET /form_details/1 or /form_details/1.json

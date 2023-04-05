@@ -6,23 +6,23 @@ class KlassTemplatesController < ApplicationController
 
   # GET /klass_templates or /klass_templates.json
   def index
-    # @klass_templates = KlassTemplate.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
     @search = @klass_templates.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
-    @pagy, @klass_templates = pagy(@search.result.includes(:teacher, :room),
-                                   items: params[:per_page] || '10')
+    @pagy, @klass_templates = pagy(@search.result.includes(:teacher, :room), items: per_page)
   end
 
   def show; end
 
   def new
-    @klass_template = KlassTemplate.new
+    @klass_template = current_account.klasstemplates.new
   end
 
   def edit; end
 
   def create
-    @klass_template = KlassTemplate.new(klass_template_params)
+    @klass_template = current_account.klasstemplates.new(klass_template_params)
     attach_account_for(@klass_template)
 
     respond_to do |format|
@@ -66,7 +66,7 @@ class KlassTemplatesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_klass_template
-    @klass_template = KlassTemplate.find(params[:id])
+    @klass_template = current_account.klasstemplates.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

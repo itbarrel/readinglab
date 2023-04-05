@@ -6,11 +6,11 @@ class ReceiptsController < ApplicationController
 
   # GET /receipts or /receipts.json
   def index
-    @receipts = current_account.receipts.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
     @search = @receipts.ransack(params[:q])
     @search.sorts = 'amount asc' if @search.sorts.empty?
-    @pagy, @receipts = pagy(@search.result.includes(:student, :receipt_type),
-                            items: params[:per_page] || '10')
+    @pagy, @receipts = pagy(@search.result.includes(:student, :receipt_type), items: per_page)
   end
 
   # GET /receipts/1 or /receipts/1.json

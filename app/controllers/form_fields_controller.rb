@@ -4,7 +4,11 @@ class FormFieldsController < ApplicationController
   before_action :set_form_field, only: %i[show edit update destroy]
   # GET /form_fields or /form_fields.json
   def index
-    @form_fields = FormField.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @form_fields.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @form_fields = pagy(@search.result, items: per_page)
   end
 
   # GET /form_fields/1 or /form_fields/1.json

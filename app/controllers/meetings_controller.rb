@@ -71,7 +71,7 @@ class MeetingsController < ApplicationController
 
   # POST /meetings or /meetings.json
   def create
-    @meeting = Meeting.new(meeting_params)
+    @meeting = current_account.meetings.new(meeting_params)
 
     respond_to do |format|
       if @meeting.save
@@ -112,7 +112,7 @@ class MeetingsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_meeting
-    @meeting = Meeting.find(params[:id])
+    @meeting = current_account.meetings.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

@@ -6,7 +6,11 @@ class KlassFormsController < ApplicationController
 
   # GET /klass_forms or /klass_forms.json
   def index
-    @klass_forms = KlassForm.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @klass_forms.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @klass_forms = pagy(@search.result, items: per_page)
   end
 
   # GET /klass_forms/1 or /klass_forms/1.json

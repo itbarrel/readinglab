@@ -5,10 +5,11 @@ class StaffsController < ApplicationController
   before_action :set_staff, only: %i[]
 
   def index
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
     @search = @staffs.ransack(params[:q])
     @search.sorts = 'first_name asc' if @search.sorts.empty?
-    @pagy, @staffs = pagy(@search.result,
-                          items: params[:per_page] || '10')
+    @pagy, @staffs = pagy(@search.result, items: per_page)
   end
 
   # GET /staffs/1 or /staffs/1.json
@@ -22,7 +23,7 @@ class StaffsController < ApplicationController
 
   # POST /staffs or /staffs.json
   def create
-    @staff = Staff.new(staff_params)
+    @staff = current_account.users.new(staff_params)
     attach_account_for(@staff)
 
     respond_to do |format|
@@ -64,7 +65,7 @@ class StaffsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_staff
-    @staff = Staff.find(params[:id])
+    @staff = current_account.users.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
