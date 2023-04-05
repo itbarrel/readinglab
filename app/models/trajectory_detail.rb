@@ -36,7 +36,7 @@
 class TrajectoryDetail < ApplicationRecord
   belongs_to :account
   belongs_to :student
-  belongs_to :klass
+  belongs_to :klass, optional: true
   belongs_to :book
   enum :status, %i[draft published archived]
 

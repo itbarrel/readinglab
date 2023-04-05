@@ -13,7 +13,5 @@ class CreateFormFields < ActiveRecord::Migration[7.0]
       t.timestamps
       t.datetime :deleted_at
     end
-
-    remove_column :forms, :fields
   end
 end

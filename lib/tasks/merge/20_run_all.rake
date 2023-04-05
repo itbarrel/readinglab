@@ -6,6 +6,7 @@ namespace :merge do
     Rake::Task['merge:account_types'].execute
     Rake::Task['merge:accounts'].execute
     Rake::Task['merge:message_templates'].execute
+    Rake::Task['merge:users'].execute
     Rake::Task['merge:rooms'].execute
     Rake::Task['merge:klass_templates'].execute
     Rake::Task['merge:klasses'].execute
