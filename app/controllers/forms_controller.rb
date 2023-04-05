@@ -6,7 +6,6 @@ class FormsController < ApplicationController
 
   # GET /forms or /forms.json
   def index
-    # @forms = Form.all
     @search = @forms.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
     @pagy, @forms = pagy(@search.result,

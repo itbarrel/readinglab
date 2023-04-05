@@ -12,26 +12,26 @@ class Ability
 
     return unless user.admin?
 
-    can :manage, Book, account: user.account
-    can :manage, City, account: user.account
-    can :manage, ContentLibrary, account: user.account
-    can :manage, Form, account: user.account
-    can :manage, FormField, account: user.account
-    can :manage, Interview, account: user.account
-    can :manage, KlassTemplate, account: user.account
-    can :manage, Klass, account: user.account
-    can :manage, Meeting, account: user.account
-    can :manage, MessageTemplate, account: user.account
-    can :manage, Parent, account: user.account
-    can :manage, ReceiptType, account: user.account
-    can :manage, Receipt, account: user.account
-    can :manage, Room, account: user.account
-    can :manage, Student, account: user.account
-    can :manage, User, account: user.account
-    can :manage, TrajectoryDetail, account: user.account
-    can :manage, VacationType, account: user.account
-    can :manage, Vacation, account: user.account
-    can :manage, StudentMeeting, account: user.account
+    can :manage, Book, account_id: user.account_id
+    can :manage, City, account_id: user.account_id
+    can :manage, ContentLibrary, account_id: user.account_id
+    can :manage, Form, account_id: user.account_id
+    can :manage, FormField, account_id: user.account_id
+    can :manage, Interview, account_id: user.account_id
+    can :manage, KlassTemplate, account_id: user.account_id
+    can :manage, Klass, account_id: user.account_id
+    can :manage, Meeting, account_id: user.account_id
+    can :manage, MessageTemplate, account_id: user.account_id
+    can :manage, Parent, account_id: user.account_id
+    can :manage, ReceiptType, account_id: user.account_id
+    can :manage, Receipt, account_id: user.account_id
+    can :manage, Room, account_id: user.account_id
+    can :manage, Student, account_id: user.account_id
+    can :manage, User, account_id: user.account_id
+    can :manage, TrajectoryDetail, account_id: user.account_id
+    can :manage, VacationType, account_id: user.account_id
+    can :manage, Vacation, account_id: user.account_id
+    can :manage, StudentMeeting, account_id: user.account_id
 
     can :manage, FormField, { form: { account_id: user.account_id } }
 

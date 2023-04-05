@@ -6,7 +6,7 @@ class ContentLibrariesController < ApplicationController
 
   # GET /content_libraries or /content_libraries.json
   def index
-    @content_libraries = ContentLibrary.all
+    @content_libraries = current_account.content_libraries
   end
 
   # GET /content_libraries/1 or /content_libraries/1.json
@@ -14,7 +14,7 @@ class ContentLibrariesController < ApplicationController
 
   # GET /content_libraries/new
   def new
-    @content_library = ContentLibrary.new
+    @content_library = current_account.content_libraries.new
   end
 
   # GET /content_libraries/1/edit
@@ -22,7 +22,7 @@ class ContentLibrariesController < ApplicationController
 
   # POST /content_libraries or /content_libraries.json
   def create
-    @content_library = ContentLibrary.new(content_library_params)
+    @content_library = current_account.content_libraries.new(content_library_params)
 
     respond_to do |format|
       if @content_library.save
@@ -66,7 +66,7 @@ class ContentLibrariesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_content_library
-    @content_library = ContentLibrary.find(params[:id])
+    @content_library = current_account.content_libraries.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
