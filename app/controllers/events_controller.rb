@@ -8,8 +8,8 @@ class EventsController < ApplicationController
   private
 
   def set_event
-    @event = Meeting.find_by(id: params[:id])
-    @event = Interview.find_by(id: params[:id]) if @event.blank?
+    @event = current_account.meetings.find_by(id: params[:id])
+    @event = current_account.interviews.find_by(id: params[:id]) if @event.blank?
   end
 
   def email_params
