@@ -6,11 +6,11 @@ class VacationsController < ApplicationController
 
   # GET /vacations or /vacations.json
   def index
-    # @vacations = Vacation.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
     @search = @vacations.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
-    @pagy, @vacations = pagy(@search.result.includes(:vacation_type),
-                             items: params[:per_page] || '10')
+    @pagy, @vacations = pagy(@search.result, items: per_page)
   end
 
   # GET /vacations/1 or /vacations/1.json
@@ -18,7 +18,7 @@ class VacationsController < ApplicationController
 
   # GET /vacations/new
   def new
-    @vacation = Vacation.new
+    @vacation = current_account.vacations.new
   end
 
   # GET /vacations/1/edit
@@ -26,14 +26,17 @@ class VacationsController < ApplicationController
 
   # POST /vacations or /vacations.json
   def create
-    @vacation = Vacation.new(vacation_params)
+    @vacation = current_account.vacations.new(vacation_params)
+    attach_account_for(@vacation)
+
     respond_to do |format|
       if @vacation.save
-        format.html { redirect_to vacation_url, notice: 'Vacation was successfully created.' }
+        format.html { redirect_to vacations_url, notice: 'Vacation has been successfully created.' }
         format.json { render :show, status: :created, location: @vacation }
       else
-        format.html { render :index, status: :unprocessable_entity }
-        format.json { render json: @vacation.errors, status: :unprocessable_entity }
+        process_errors(@vacation)
+        format.html { redirect_to vacations_url }
+        format.json { render json: vacation.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -42,21 +45,20 @@ class VacationsController < ApplicationController
   def update
     respond_to do |format|
       if @vacation.update(vacation_params)
-        format.html { redirect_to vacation_url(@vacation), notice: 'Vacation was successfully updated.' }
+        format.html { redirect_to vacations_url, notice: 'Message has been successfully updated.' }
         format.json { render :show, status: :ok, location: @vacation }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :index, status: :unprocessable_entity }
         format.json { render json: @vacation.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /vacations/1 or /vacations/1.json
   def destroy
     @vacation.destroy
 
     respond_to do |format|
-      format.html { redirect_to vacations_url, notice: 'Vacation was successfully destroyed.' }
+      format.html { redirect_to vacations_url, notice: 'Vacation has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -65,12 +67,10 @@ class VacationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_vacation
-    @vacation = Vacation.find(params[:id])
+    @vacation = current_account.vacations.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def vacation_params
-    params.require(:vacation).permit(:day, :name, :starting_at, :ending_at, :vacation_type,
-                                     :boolean, :references)
+    params.require(:vacation).permit(:name, :starting_at, :ending_at, :vacation_type_id)
   end
 end

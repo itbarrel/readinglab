@@ -35,7 +35,7 @@ class KlassesController < ApplicationController
 
   def new
     start_date = params[:start_date] ? params[:start_date].to_date : Time.zone.today + 8.hours
-    @klass = Klass.new(starts_at: start_date)
+    @klass = current_account.klasses.new(starts_at: start_date)
     check_availability_for(start_date)
   end
 
@@ -48,7 +48,7 @@ class KlassesController < ApplicationController
 
   # POST /klasses or /klasses.json
   def create
-    @klass = Klass.new(klass_params)
+    @klass = current_account.klasses.new(klass_params)
     attach_account_for(@klass)
 
     respond_to do |format|
@@ -95,13 +95,13 @@ class KlassesController < ApplicationController
   private
 
   def check_availability_for(start_date)
-    @filtered_teachers = Teacher.available_at(start_date)
-    @filtered_rooms = Room.available_at(start_date)
+    @filtered_teachers = current_account.teachers.available_at(start_date)
+    @filtered_rooms = current_account.rooms.available_at(start_date)
   end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_klass
-    @klass = Klass.find(params[:id])
+    @klass = current_account.klasses.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

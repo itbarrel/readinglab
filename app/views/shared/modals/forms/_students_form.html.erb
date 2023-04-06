@@ -1,15 +1,21 @@
-<% klass = meeting.klass %>
 <% fields = form.form_fields %>
 
 <div class="modal-content border-0">
-  <%= form_tag("/forms", :method => "get") do %>
+  <%= form_tag(form_url, method: form_method, remote: form_request_js) do %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= hidden_field_tag :form_id, form.id %>
+
     <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
-      <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+      <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body p-0">
       <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
         <h4 class="mb-1" id="staticBackdropLabel"><%= form.name %></h4>
-        <p class="fs--2 mb-0">Teaching by <%= link_to meeting.teacher.name, staff_path(meeting.teacher), class: "link-600 fw-semi-bold" %></p>
+        <% if record_type == 'Interview' %>
+          <p class="fs--2 mb-0">Interview of <%= link_to students.first.name, student_path(students.first), class: "link-600 fw-semi-bold" %></p>
+        <% elsif record_type == 'Meeting' %>
+          <p class="fs--2 mb-0">Teaching by <%= link_to record.teacher.name, staff_path(record.teacher), class: "link-600 fw-semi-bold" %></p>
+        <% end %>
       </div>
       <div class="p-4" data-list='{ "valueNames":["name","email","age"], "page":5, "pagination":false }'>
         <div class="table-responsive scrollbar">
@@ -23,11 +29,19 @@
               </tr>
             </thead>
             <tbody class="list">
+              <% if form.attendancable? %>
+                <tr>
+                  <td title="Is student Present? today.">Present?</td>
+                  <% students.each do |student| %>
+                    <td><%= generate_html_for(FormField.attendance_field, student, submit_resource) %></td>
+                  <% end %>
+                </tr>
+              <% end %>
               <% fields.each do |field| %>
                 <tr>
                   <td title="<%= field.description %>"><%= field.name %></td>
                   <% students.each do |student| %>
-                    <td><%= generate_html_for(field, student) %></td>
+                    <td><%= generate_html_for(field, student, submit_resource) %></td>
                   <% end %>
                 </tr>
               <% end %>
@@ -38,7 +52,7 @@
     </div>
     <div class="card-footer d-flex justify-content-end align-items-center bg-light">
       <%= submit_tag "Submit", class: "btn btn-large btn-primary" %>
-      <button class="btn btn-default px-4" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+      <button class="btn btn-default px-4" type="button" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
     </div>
   <% end %>
 </div>

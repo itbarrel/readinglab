@@ -6,6 +6,10 @@
 </div>
 <div class="modal-body p-card">
   <div class="mb-3">
+    <%= f.label :vacation_type, class: 'fs-0' %>
+    <%= f.collection_select :vacation_type_id, VacationType.all, :id, :name, { include_blank: true }, { class: 'form-control' } %>
+  </div>
+  <div class="mb-3">
     <%= f.label :name, class: 'fs-0' %>
     <%= f.text_field :name, class: 'form-control' %>
   </div>

@@ -18,6 +18,10 @@
       <%= f.text_field :last_name, class: 'form-control' %>
     </div>
     <div class="mb-3">
+      <%= f.label :gender, class: 'fs-0' %>
+      <%= f.select :gender, Student.genders.map { |key, value| [key.humanize, key] }, {include_blank: true}, {class: 'form-select form-select-md js-choice'} %>
+    </div>
+    <div class="mb-3">
       <%= f.label :dob, class: 'fs-0' %>
       <%= f.date_field :dob, class: 'form-control' %>
     </div>
@@ -26,10 +30,9 @@
       <%= f.text_field :grade, class: 'form-control' %>
     </div>
     <div class="mb-3">
-      <%= f.label :gender, class: 'fs-0' %>
-      <%= f.select(:sex, ['Select Option', 'Male', 'Female'], {}, { :class => 'form-select form-select-md' }) %>
+      <%= f.label :school, class: 'fs-0' %>
+      <%= f.text_field :school, class: 'form-control' %>
     </div>
-
   </div>
   <div class="card-footer d-flex justify-content-end align-items-center bg-light">
     <%= f.submit 'Save', class: 'btn btn-primary px-4' %>

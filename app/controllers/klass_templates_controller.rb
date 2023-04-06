@@ -6,36 +6,32 @@ class KlassTemplatesController < ApplicationController
 
   # GET /klass_templates or /klass_templates.json
   def index
-    # @klass_templates = KlassTemplate.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
     @search = @klass_templates.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
-    @pagy, @klass_templates = pagy(@search.result.includes(:teacher, :room),
-                                   items: params[:per_page] || '10')
-    # @q = KlassTemplate.ransack(params[:q])
-    # @klass_templates = @q.result(distinct: true)
-    # @pagy, @klass_templates = pagy(@klass_templates.all, items: params[:per_page] || '10')
+    @pagy, @klass_templates = pagy(@search.result.includes(:teacher, :room), items: per_page)
   end
 
   def show; end
 
   def new
-    @klass_template = KlassTemplate.new
+    @klass_template = current_account.klasstemplates.new
   end
 
   def edit; end
 
   def create
-    @klass_template = KlassTemplate.new(klass_template_params)
+    @klass_template = current_account.klasstemplates.new(klass_template_params)
     attach_account_for(@klass_template)
 
     respond_to do |format|
       if @klass_template.save
-        format.html do
-          redirect_to klass_template_url, notice: 'Klass template was successfully created.'
-        end
+        format.html { redirect_to klass_templates_url, notice: 'Class Template has been successfully created.' }
         format.json { render :show, status: :created, location: @klass_template }
       else
-        format.html { render :index, status: :unprocessable_entity }
+        process_errors(@klass_template)
+        format.html { redirect_to klass_templates_url }
         format.json { render json: @klass_template.errors, status: :unprocessable_entity }
       end
     end
@@ -44,12 +40,11 @@ class KlassTemplatesController < ApplicationController
   def update
     respond_to do |format|
       if @klass_template.update(klass_template_params)
-        format.html do
-          redirect_to klass_template_url(@klass_template), notice: 'Klass template was successfully updated.'
-        end
+        format.html { redirect_to klass_templates_url, notice: 'Class Template has been successfully updated.' }
         format.json { render :show, status: :ok, location: @klass_template }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        process_errors(@klass_template)
+        format.html { redirect_to klass_templates_url }
         format.json { render json: @klass_template.errors, status: :unprocessable_entity }
       end
     end
@@ -60,7 +55,7 @@ class KlassTemplatesController < ApplicationController
     @klass_template.destroy
 
     respond_to do |format|
-      format.html { redirect_to klass_templates_url, notice: 'Klass template was successfully destroyed.' }
+      format.html { redirect_to klass_templates_url, notice: 'Class template has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -71,14 +66,14 @@ class KlassTemplatesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_klass_template
-    @klass_template = KlassTemplate.find(params[:id])
+    @klass_template = current_account.klasstemplates.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def klass_template_params
-    params.require(:klass_template).permit(:max_students, :start, :monday, :tuesday, :wednesday, :thursday,
+    params.require(:klass_template).permit(:name, :max_students, :start, :monday, :tuesday, :wednesday, :thursday,
                                            :friday, :saturday, :sunday, :settings, :session_range,
-                                           :duration, :min_students, :name, :description,
+                                           :duration, :description,
                                            :teacher_id, :room_id)
   end
 end

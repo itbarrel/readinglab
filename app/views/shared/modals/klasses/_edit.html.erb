@@ -22,16 +22,16 @@
               <h5 class="mb-2 fs-0">Students</h5>
               <ul class="nav flex-lg-column fs--1">
                 <% klass.student_classes.each do |sc| %>
-                <li class="list-group-item d-flex justify-content-between align-items-center ">
-                  <%= sc.student.name %>
-                  <%= link_to(student_class_path(sc), class: "badge badge-soft-warning rounded-pill", method: :delete, remote: true) do %>
-                  <span class="fas fa-trash"></span>
-                  <% end %>
-                </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center ">
+                    <%= sc.student.name %>
+                    <%= link_to(student_class_path(sc), class: "badge badge-soft-warning rounded-pill", method: :delete, remote: true) do %>
+                      <span class="fas fa-trash"></span>
+                    <% end %>
+                  </li>
                 <% end %>
                 <% unless klass.students.present? %>
-                <p class="text-word-break fs--1">No student in class.<p>
-                    <% end %>
+                  <p class="text-word-break fs--1">No student in class.<p>
+                <% end %>
               </ul>
             </div>
           </div>
@@ -44,7 +44,7 @@
 
           <div class="mb-3">
             <%= f.label :add_student, class: 'fs-0' %>
-            <%= f.collection_select :student_id, Student.eligible_for_klass, :id, :name, {}, { class: 'form-control' } %>
+            <%= f.collection_select :student_id, current_account.students.eligible_for_klass, :id, :name, {}, { class: 'form-control' } %>
           </div>
           <div class="d-flex justify-content-end align-items-center">
             <%= f.submit 'Add', class: 'btn btn-primary px-4' %>
@@ -53,19 +53,19 @@
           <%= form_for klass, remote: true do |f| %>
             <div class="mb-3">
               <%= f.label :teacher_id, class: 'fs-0' %>
-              <%= f.collection_select :teacher_id, Teacher.all, :id, :name, {}, { class: 'form-control' } %>
+              <%= f.collection_select :teacher_id, current_account.teachers, :id, :name, {}, { class: 'form-control' } %>
             </div>
             <div class="mb-3">
               <%= f.label :room_id, class: 'fs-0' %>
-              <%= f.collection_select :room_id, Room.all, :id, :name, {}, { class: 'form-control' } %>
+              <%= f.collection_select :room_id, current_account.rooms, :id, :name, {}, { class: 'form-control' } %>
             </div>
             <div class="mb-3">
               <%= f.label :attendance_form_id, class: 'fs-0' %>
-              <%= f.collection_select :attendance_form_id, Form.attendancable.all, :id, :name, {}, { class: 'form-control' } %>
+              <%= f.collection_select :attendance_form_id, current_account.forms.attendancable, :id, :name, {}, { class: 'form-control' } %>
             </div>
             <div class="mb-3">
               <%= f.label :forms, class:' fs-0' %>
-              <%= f.collection_select :form_ids, Form.all, :id, :name, {include_blank: true, include_hidden: false }, {class: 'form-select  js-choice', multiple: "multiple-select-example" }%>
+              <%= f.collection_select :form_ids, current_account.forms, :id, :name, {include_blank: true, include_hidden: false }, {class: 'form-select  js-choice', multiple: "multiple-select-example" }%>
             </div>
 
             <div class="d-flex justify-content-end align-items-center">

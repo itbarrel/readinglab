@@ -4,9 +4,12 @@ class StudentMeetingsController < ApplicationController
   load_and_authorize_resource
   before_action :set_student_meetings, only: %i[]
 
-  # GET /student_meetings or /student_meetings.json
   def index
-    @student_meeting = StudentMeeting.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @student_meetings.ransack(params[:q])
+    @search.sorts = 'updated_at asc' if @search.sorts.empty?
+    @pagy, @student_meetings = pagy(@search.result, items: per_page)
   end
 
   # GET /student_meetings/1 or /student_meetings/1.json
@@ -14,7 +17,7 @@ class StudentMeetingsController < ApplicationController
 
   # GET /student_meetings/new
   def new
-    @student_meeting = StudentMeeting.new
+    @student_meeting = current_account.student_meetings.new
   end
 
   # GET /student_meetings/1/edit
@@ -22,7 +25,7 @@ class StudentMeetingsController < ApplicationController
 
   # POST /student_meetings or /student_meetings.json
   def create
-    @student_meetings = StudentMeeting.new(student_meetings_params)
+    @student_meetings = current_account.student_meetings.new(student_meetings_params)
 
     respond_to do |format|
       if @student_meetings.save
@@ -66,7 +69,7 @@ class StudentMeetingsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_student_meeting
-    @student_meeting = StudentMeeting.find(params[:id])
+    @student_meeting = current_account.student_meetings.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

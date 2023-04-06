@@ -6,7 +6,11 @@ class FormDetailsController < ApplicationController
 
   # GET /form_details or /form_details.json
   def index
-    @form_details = FormDetail.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @form_details.ransack(params[:q])
+    @search.sorts = 'form_values asc' if @search.sorts.empty?
+    @pagy, @form_details = pagy(@search.result, items: per_page)
   end
 
   # GET /form_details/1 or /form_details/1.json
@@ -14,7 +18,7 @@ class FormDetailsController < ApplicationController
 
   # GET /form_details/new
   def new
-    @form_detail = FormDetail.new
+    @form_detail = current_account.form_details.new
   end
 
   # GET /form_details/1/edit
@@ -22,7 +26,7 @@ class FormDetailsController < ApplicationController
 
   # POST /form_details or /form_details.json
   def create
-    @form_detail = FormDetail.new(form_detail_params)
+    @form_detail = current_account.form_details.new(form_detail_params)
 
     respond_to do |format|
       if @form_detail.save
@@ -62,7 +66,7 @@ class FormDetailsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_form_detail
-    @form_detail = FormDetail.find(params[:id])
+    @form_detail = current_account.form_details.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

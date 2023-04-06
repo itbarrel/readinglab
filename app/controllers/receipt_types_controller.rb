@@ -6,11 +6,11 @@ class ReceiptTypesController < ApplicationController
 
   # GET /receipt_types or /receipt_types.json
   def index
-    @receipt_types = ReceiptType.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
     @search = @receipt_types.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
-    @pagy, @receipt_types = pagy(@search.result,
-                                 items: params[:per_page] || '10')
+    @pagy, @receipt_types = pagy(@search.result, items: per_page)
   end
 
   # GET /receipt_types/1 or /receipt_types/1.json
@@ -18,7 +18,7 @@ class ReceiptTypesController < ApplicationController
 
   # GET /receipt_types/new
   def new
-    @receipt_type = ReceiptType.new
+    @receipt_type = current_account.receipt_types.new
   end
 
   # GET /receipt_types/1/edit
@@ -26,14 +26,16 @@ class ReceiptTypesController < ApplicationController
 
   # POST /receipt_types or /receipt_types.json
   def create
-    @receipt_type = ReceiptType.new(receipt_type_params)
+    @receipt_type = current_account.receipt_types.new(receipt_type_params)
+    attach_account_for(@receipt_type)
 
     respond_to do |format|
       if @receipt_type.save
-        format.html { redirect_to receipt_type_url, notice: 'Receipt type was successfully created.' }
+        format.html { redirect_to receipt_types_url, notice: 'Receipt type has been successfully created.' }
         format.json { render :show, status: :created, location: @receipt_type }
       else
-        format.html { redirect_to receipt_type_url, status: :unprocessable_entity }
+        process_errors(@receipt_type)
+        format.html { redirect_to receipt_types_url }
         format.json { render json: @receipt_type.errors, status: :unprocessable_entity }
       end
     end
@@ -43,7 +45,7 @@ class ReceiptTypesController < ApplicationController
   def update
     respond_to do |format|
       if @receipt_type.update(receipt_type_params)
-        format.html { redirect_to receipt_type_url(@receipt_type), notice: 'Receipt type was successfully updated.' }
+        format.html { redirect_to receipt_types_url, notice: 'Receipt type has been successfully updated.' }
         format.json { render :show, status: :ok, location: @receipt_type }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -57,7 +59,7 @@ class ReceiptTypesController < ApplicationController
     @receipt_type.destroy
 
     respond_to do |format|
-      format.html { redirect_to receipt_types_url, notice: 'Receipt type was successfully destroyed.' }
+      format.html { redirect_to receipt_types_url, notice: 'Receipt type has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -66,7 +68,7 @@ class ReceiptTypesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_receipt_type
-    @receipt_type = ReceiptType.find(params[:id])
+    @receipt_type = current_account.receipt_types.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

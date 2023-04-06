@@ -6,11 +6,11 @@ class RoomsController < ApplicationController
 
   # GET /rooms or /rooms.json
   def index
-    # @rooms = Room.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
     @search = @rooms.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
-    @pagy, @rooms = pagy(@search.result,
-                         items: params[:per_page] || '10')
+    @pagy, @rooms = pagy(@search.result, items: per_page)
   end
 
   # GET /rooms/1 or /rooms/1.json
@@ -18,7 +18,7 @@ class RoomsController < ApplicationController
 
   # GET /rooms/new
   def new
-    @room = Room.new
+    @room = current_account.rooms.new
   end
 
   # GET /rooms/1/edit
@@ -26,7 +26,7 @@ class RoomsController < ApplicationController
 
   # POST /rooms or /rooms.json
   def create
-    @room = Room.new(room_params)
+    @room = current_account.rooms.new(room_params)
     attach_account_for(@room)
 
     respond_to do |format|
@@ -34,7 +34,8 @@ class RoomsController < ApplicationController
         format.html { redirect_to rooms_url, notice: 'Room has been successfully created.' }
         format.json { render :show, status: :created, location: @room }
       else
-        format.html { render :index, status: :unprocessable_entity }
+        process_errors(@room)
+        format.html { redirect_to rooms_url }
         format.json { render json: @room.errors, status: :unprocessable_entity }
       end
     end
@@ -67,7 +68,7 @@ class RoomsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_room
-    @room = Room.find(params[:id])
+    @room = current_account.rooms.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

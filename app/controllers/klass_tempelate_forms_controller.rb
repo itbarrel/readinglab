@@ -6,7 +6,11 @@ class KlassTempelateFormsController < ApplicationController
 
   # GET /klass_tempelate_forms or /klass_tempelate_forms.json
   def index
-    @klass_tempelate_forms = KlassTempelateForm.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @klass_tempelate_forms.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @klass_tempelate_forms = pagy(@search.result, items: per_page)
   end
 
   # GET /klass_tempelate_forms/1 or /klass_tempelate_forms/1.json

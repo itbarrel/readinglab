@@ -17,6 +17,10 @@ module Readinglab
       g.test_framework nil # to skip test framework
     end
 
+    config.time_zone = 'UTC'
+    config.active_record.default_timezone = :utc
+    config.active_record.time_zone_aware_attributes = true
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

@@ -1,2 +1,9 @@
-$('#addVactionModal .modal-content').html("<%= j render 'shared/modals/vacations/form', vacation: @vacation, title: 'Edit vacation' %>");
+$('#addVacationModal .modal-content').html("<%= j render 'shared/modals/vacations/form', vacation: @vacation, title: 'Create vacation' %>");
+document.querySelector('#vacation_starting_at').flatpickr({
+  enableTime: true,
+});
+document.querySelector('#vacation_ending_at').flatpickr({
+  enableTime: true,
+});
+
 $('#addVacationModal').modal('show');

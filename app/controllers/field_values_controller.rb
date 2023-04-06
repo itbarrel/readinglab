@@ -4,7 +4,11 @@ class FieldValuesController < ApplicationController
   before_action :set_book, only: %i[show edit update destroy]
   # GET /field_values or /field_values.json
   def index
-    @field_values = FieldValue.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @field_values.ransack(params[:q])
+    @search.sorts = 'form_values asc' if @search.sorts.empty?
+    @pagy, @field_values = pagy(@search.result, items: per_page)
   end
 
   # GET /field_values/1 or /field_values/1.json

@@ -35,6 +35,6 @@ class Room < ApplicationRecord
       m.klass.room.id
     end
 
-    Room.where.not(id: room_ids)
+    all.where.not(id: room_ids)
   end
 end

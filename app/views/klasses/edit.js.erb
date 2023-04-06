@@ -1,3 +1,6 @@
-$('#showEventModal').modal('hide');
+$('.modal').modal('hide');
 $('#editKlassModal .modal-content').html("<%= j render 'shared/modals/klasses/edit', klass: @klass, title: 'Edit klass' %>");
+
+window.choicesInit()
+
 $('#editKlassModal').modal('show');

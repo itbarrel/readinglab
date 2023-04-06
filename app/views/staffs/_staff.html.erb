@@ -5,17 +5,19 @@
     </div>
   </td>
   <td class="name align-middle white-space-nowrap py-2"><%= staff.first_name %></td>
+  <td class="name align-middle white-space-nowrap py-2"><%= staff.last_name %></td>
   <td class="email align-middle py-2"><%= staff.role%></td>
-  <td class="phone align-middle white-space-nowrap py-2"><%= staff.date_of_hire %></td>
+  <td class="phone align-middle white-space-nowrap py-2"><%= staff.email %></td>
+  <td class="phone align-middle white-space-nowrap py-2"><%= staff.phone %></td>
   <td class="align-middle white-space-nowrap py-2 text-end">
     <div class="dropdown font-sans-serif position-static">
       <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
       <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
-      <div class="bg-white py-2">
+      <div class="bg-white py-">
         <%= link_to('Edit', edit_staff_path(staff), remote: true, class: 'dropdown-item') %>
         <%= link_to('Delete', staff_path(staff), method: :delete, class: 'dropdown-item text-danger', data: {confirm: 'Are you sure'}) %>
       </div>
       </div>
     </div>
   </td>
-</tr>  
+</tr>

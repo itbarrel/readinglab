@@ -7,11 +7,11 @@ class InterviewsController < ApplicationController
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
 
-    interview_students = Student.joins(:latest_interview).distinct
+    interview_students = current_account.students.joins(:latest_interview).distinct
 
     if params[:calendar].present?
       interview_students = interview_students.where(
-        latest_interview: { status: :waiting }
+        interviews: { status: :waiting }
       )
     end
 
@@ -45,9 +45,36 @@ class InterviewsController < ApplicationController
   # GET /interviews/1/edit
   def edit; end
 
+  def open_form
+    @form = @interview.form
+    @students = current_account.students.where(id: @interview.student_id)
+  end
+
+  def submit_form
+    return if params[:form_details].blank?
+
+    params[:form_details].each do |student_id, submission|
+      FormDetail.find_or_create_by!(
+        user: current_user,
+        student_id:,
+        form_id: params[:form_id],
+        parent_type: 'Interview',
+        parent_id: @interview.id,
+        account: current_account
+      )
+                .update(form_values: submission)
+    end
+    # marked interview closed
+
+    flash[:notice] = 'Assessment Form Data submitted successfully.'
+    respond_to do |format|
+      format.js { render 'shared/close_modal' }
+    end
+  end
+
   # POST /interviews or /interviews.json
   def create
-    @interview = Interview.new(interview_params)
+    @interview = current_account.interviews.new(interview_params)
     attach_account_for(@interview)
     respond_to do |format|
       if @interview.save

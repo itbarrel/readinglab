@@ -6,7 +6,7 @@
   <div class="card-header">
     <div class="row flex-between-center">
       <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-          <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Class Template</h5>
+          <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Class Templates</h5>
       </div>
       <div class="col-8 col-sm-auto text-end ps-2">
         <div class="d-none" id="table-customers-actions">
@@ -43,10 +43,12 @@
               </div>
             </th>
             <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :name, default_order: :asc)%></th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Duration</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="max_students">Max Student</th>
-            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :teacher_first_name, default_order: :asc)%></th>
+            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :teacher_id, default_order: :asc)%></th>
             <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :room_name, default_order: :asc)%></th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="max_students">Max Student</th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="duration">Duration</th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Session</th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date" >Start</th>
             <th class="sort pe-1 align-middle white-space-nowrap" ></th>
           </tr>
         </thead>

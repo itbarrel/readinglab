@@ -6,14 +6,18 @@ class FormsController < ApplicationController
 
   # GET /forms or /forms.json
   def index
-    @forms = Form.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @forms.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @forms = pagy(@search.result, items: per_page)
   end
 
   def show; end
 
   # GET /forms/new
   def new
-    @form = Form.new
+    @form = current_account.forms.new
     # @form.form_fields.build
   end
 
@@ -22,12 +26,12 @@ class FormsController < ApplicationController
 
   # POST /forms or /forms.json
   def create
-    @form = Form.new(form_params)
+    @form = current_account.forms.new(form_params)
     attach_account_for(@form)
 
     respond_to do |format|
       if @form.save
-        format.html { redirect_to forms_url, notice: 'Form was successfully created.' }
+        format.html { redirect_to forms_url, notice: 'Form has been successfully created.' }
         format.json { render :show, status: :created, location: @form }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,7 +44,7 @@ class FormsController < ApplicationController
   def update
     respond_to do |format|
       if @form.update(form_params)
-        format.html { redirect_to forms_url, notice: 'Form was successfully updated.' }
+        format.html { redirect_to forms_url, notice: 'Form has been successfully updated.' }
         format.json { render :show, status: :ok, location: @form }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,7 +58,7 @@ class FormsController < ApplicationController
     @form.destroy
 
     respond_to do |format|
-      format.html { redirect_to forms_url, notice: 'Form was successfully destroyed.' }
+      format.html { redirect_to forms_url, notice: 'Form has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -63,7 +67,7 @@ class FormsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_form
-    @form = Form.find(params[:id])
+    @form = current_account.forms.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

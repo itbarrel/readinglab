@@ -11,7 +11,7 @@
 
     <div class="p-4">
       <div class="d-grid gap-2">
-        <%= link_to('Interview Assesment Form', form_path(interview.form), remote: true, class: 'btn btn-info px-4') %>
+        <%= link_to('Interview Assesment Form', form_interview_path(interview), remote: true, class: 'btn btn-info px-4') %>
       </div>
       <%= form_for(interview, id: 'scheduleInterviewForm', remote: true) do |f| %>
         <div class="mb-3 row">

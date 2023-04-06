@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   mount Sidekiq::Web => '/sidekiq'
 
-  resources :accounts, :vacations, :rooms, :interviews, :teachers, :staffs, :books
+  resources :accounts, :vacations, :rooms, :teachers, :staffs, :books
   resources :message_templates, :form_fields, :field_values, :trajectory_details
 
   resources :parents, :forms, :receipt_types, :receipts
@@ -31,7 +31,17 @@ Rails.application.routes.draw do
 
   resources :meetings do
     member do
-      get :open_attendance_form
+      get :attendance, action: 'open_attendance'
+      post :attendance, action: 'submit_attendance'
+      get :form, action: 'open_form'
+      post :form, action: 'submit_form'
+    end
+  end
+
+  resources :interviews do
+    member do
+      get :form, action: 'open_form'
+      post :form, action: 'submit_form'
     end
   end
 

@@ -6,12 +6,11 @@ class ParentsController < ApplicationController
 
   # GET /parents or /parents.json
   def index
-    # @parents = Parent.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
     @search = @parents.ransack(params[:q])
     @search.sorts = 'father_first asc' if @search.sorts.empty?
-    @pagy, @parents = pagy(@search.result.includes(:account, :city),
-                           items: params[:per_page] || '10')
-    # @pagy, @parents = pagy(Parent.all, items: params[:per_page] || '10')
+    @pagy, @parents = pagy(@search.result.includes(:account, :city), items: per_page)
   end
 
   # GET /parents/1 or /parents/1.json
@@ -19,7 +18,7 @@ class ParentsController < ApplicationController
 
   # GET /parents/new
   def new
-    @parent = Parent.new
+    @parent = current_account.parents.new
   end
 
   # GET /parents/1/edit
@@ -27,7 +26,7 @@ class ParentsController < ApplicationController
 
   # POST /parents or /parents.json
   def create
-    @parent = Parent.new(parent_params)
+    @parent = current_account.parents.new(parent_params)
     attach_account_for(@parent)
 
     respond_to do |format|
@@ -68,7 +67,7 @@ class ParentsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_parent
-    @parent = Parent.find(params[:id])
+    @parent = current_account.parents.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

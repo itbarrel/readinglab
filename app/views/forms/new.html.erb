@@ -1,5 +1,1 @@
-<%= render @form %>
-
-<% content_for :javascript_includes do %>
-  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
-<% end %>
+<%= render partial: "dynamic_form", :locals => { form:  @form }%>

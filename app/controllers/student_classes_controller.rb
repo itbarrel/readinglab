@@ -6,7 +6,11 @@ class StudentClassesController < ApplicationController
 
   # GET /student_classes or /student_classes.json
   def index
-    @student_classes = StudentClass.all
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @student_classes.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @student_classes = pagy(@search.result, items: per_page)
   end
 
   # GET /student_classes/1 or /student_classes/1.json

@@ -2,13 +2,11 @@
 
 class MeetingsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_meeting, only: %i[open_attendance_form]
+  # before_action :set_meeting, only: %i[open_attendance submit_attendance]
 
   # GET /meetings or /meetings.json
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
-
-    @meetings = Meeting.all
 
     if params[:start].present?
       start_date = params[:start]
@@ -38,10 +36,53 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.new
   end
 
-  def open_attendance_form
+  def open_attendance
     klass = @meeting.klass
     @form = klass.attendance_form
     @students = klass.students
+  end
+
+  def submit_attendance
+    return if params[:meeting].blank?
+
+    params[:meeting].each do |student_id, submission|
+      continue if submission['attendance'].blank?
+
+      StudentMeeting.find_or_create_by!(meeting_id: @meeting.id, student_id:, account: current_account)
+                    .update(attendance: submission['attendance'])
+    end
+
+    flash[:notice] = 'Attendance submitted successfully.'
+    respond_to do |format|
+      format.js { render 'shared/close_modal' }
+    end
+  end
+
+  def open_form
+    klass = @meeting.klass
+    @form = Form.find(params[:form_id])
+    @students = klass.students
+  end
+
+  def submit_form
+    return if params[:form_details].blank?
+
+    params[:form_details].each do |student_id, submission|
+      FormDetail.find_or_create_by!(
+        user: current_user,
+        student_id:,
+        form_id: params[:form_id],
+        parent_type: 'Meeting',
+        parent_id: @meeting.id,
+        account: current_account
+      )
+                .update(form_values: submission)
+    end
+
+    flash[:notice] = 'Form Data submitted successfully.'
+    respond_to do |format|
+      format.js { render 'shared/close_modal' }
+    end
   end
 
   # GET /meetings/1/edit
@@ -49,7 +90,7 @@ class MeetingsController < ApplicationController
 
   # POST /meetings or /meetings.json
   def create
-    @meeting = Meeting.new(meeting_params)
+    @meeting = current_account.meetings.new(meeting_params)
 
     respond_to do |format|
       if @meeting.save
@@ -90,7 +131,7 @@ class MeetingsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_meeting
-    @meeting = Meeting.find(params[:id])
+    @meeting = current_account.meetings.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

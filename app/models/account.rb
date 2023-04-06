@@ -34,15 +34,28 @@
 #
 class Account < ApplicationRecord
   belongs_to :account_type
+  has_many :books, dependent: :destroy
   has_many :vacations, dependent: :destroy
   has_many :vacation_types, dependent: :destroy
   has_many :users, dependent: :destroy
+  has_many :teachers, -> { teacher }, dependent: :destroy, inverse_of: :account
   has_many :rooms, dependent: :destroy
   has_many :forms, dependent: :destroy
+  has_many :form_details, dependent: :destroy
+  has_many :parents, dependent: :destroy
   has_many :students, dependent: :destroy
+  has_many :meetings, dependent: :destroy
+  has_many :student_meetings, dependent: :destroy
   has_many :interviews, dependent: :destroy
+  has_many :content_libraries, dependent: :destroy
   has_many :klass_templates, dependent: :destroy
+  has_many :klasses, dependent: :destroy
+  has_many :trajectory_details, dependent: :destroy
   has_many :message_templates, dependent: :destroy
+  has_many :receipt_types, dependent: :destroy
+  has_many :receipts, dependent: :destroy
+  has_many :vaction_types, dependent: :destroy
+  has_many :vacations, dependent: :destroy
 
   validates :email, :mobile, :postal_code, presence: true
   validates :name, presence: true, uniqueness: { scope: %i[name deleted_at] }
