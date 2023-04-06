@@ -59,7 +59,7 @@ class KlassesController < ApplicationController
         format.html { render :index, status: :unprocessable_entity }
         format.json { render json: @klass.errors, status: :unprocessable_entity }
       end
-      format.js
+      format.js { render 'shared/flash' }
     end
   end
 
