@@ -87,7 +87,7 @@
         </div>
         <div class="col-lg-12">
           <%= f.label :billing_scheme, class: 'form-label' %>
-          <%= f.select :billing_scheme, options_for_select(["Annually", "Monthly", "sessionly"]),  {}, { class: "form-select" } %>
+          <%= f.select :billing_scheme, Account.billing_schemes.map { |key, value| [key.humanize, key] }, {include_blank: true}, {class: 'form-select form-select-md js-choice'} %>
         </div>
         <div class="col-lg-6">
           <%= f.label :address, class: 'form-label' %>

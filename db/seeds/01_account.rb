@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Account.find_or_create_by(name: "Vermont", currency: "PKR", settings: { "date_format": "dd/MM/yyyy" }, billing_scheme: "Sessionly")
+Account.find_or_create_by(name: "Vermont", currency: "PKR", settings: { "date_format": "dd/MM/yyyy" }, billing_scheme: "sessionly")
 
 if Rails.env.development?
   5.times do
@@ -8,7 +8,7 @@ if Rails.env.development?
       name: Faker::Name.name,
       currency: Faker::Currency.code,
       settings: { "date_format": 'dd/MM/yyyy' },
-      billing_scheme: 'Sessionly',
+      billing_scheme: 'sessionly',
       email: Faker::Internet.email,
       mobile: Faker::PhoneNumber.cell_phone,
       postal_code: Faker::Address.zip_code,
@@ -16,7 +16,5 @@ if Rails.env.development?
     )
   end
 end
-
-
 
 # password: Faker::Internet.password(min_length: 8),
