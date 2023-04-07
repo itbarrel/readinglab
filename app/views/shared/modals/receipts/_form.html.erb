@@ -10,11 +10,15 @@
     </div>
     <div class="mb-3">
       <%= f.label :receipt_type, class: 'fs-0' %>
-      <%= f.collection_select :student_id, ReceiptType.order(:name), :id, :name, { include_blank: true }, { class: 'form-control' } %>
+      <%= f.collection_select :receipt_type_id, ReceiptType.order(:name), :id, :name, { include_blank: true }, { class: 'form-control' } %>
     </div>
     <div class="mb-3">
       <%= f.label :amount, class: 'fs-0' %>
       <%= f.number_field :amount, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :leave_count, class: 'fs-0' %>
+      <%= f.number_field :leave_count, class: 'form-control' %>
     </div>
     <div class="mb-3">
       <%= f.label :session_count, class: 'fs-0' %>

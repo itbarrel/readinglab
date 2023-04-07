@@ -5,11 +5,12 @@
       </div>
     </td>
     <td class="name align-middle white-space-nowrap py-2"><%= klass.name %></td>
-    <td class="email align-middle py-2"><%= klass.teacher.name%></td>
-    <td class="phone align-middle white-space-nowrap py-2"><%= klass.room.name%></td>
-    <td class="phone align-middle white-space-nowrap py-2"><%= klass.students.count%></td>
-    <td class="phone align-middle white-space-nowrap py-2"><%= klass.range_type%></td>
-    <td class="phone align-middle white-space-nowrap py-2"><%= klass.session_range%></td>
+    <td class="email align-middle white-space-nowrap py-2"><%= klass.teacher.name %></td>
+     <td class="email align-middle white-space-nowrap py-2"><%= klass.klass_template&.name %></td>
+    <td class="phone align-middle white-space-nowrap py-2"><%= klass.room&.name %></td>
+    <td class="phone align-middle white-space-nowrap py-2"><%= klass.max_students %></td>
+    <td class="phone align-middle white-space-nowrap py-2"><%= klass.duration %></td>
+    <td class="phone align-middle white-space-nowrap py-2"><%= klass.session_range %></td>
     <td class="align-middle white-space-nowrap py-2 text-end">
       <div class="dropdown font-sans-serif position-static">
         <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
