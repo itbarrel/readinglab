@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 MessageTemplate.find_or_create_by(
-  account_id: Account.last.id,
+  account: Account.sample,
   name: 'Calling',
   description: 'Calling you back!!'
 )

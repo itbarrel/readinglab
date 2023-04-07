@@ -1,32 +1,50 @@
 # frozen_string_literal: true
 
-user = User.find_or_create_by(account_id: Account.last.id, role: :super_admin, email: 'super_admin@readinglab.co',
-                               first_name: 'Super', last_name: 'Admin') do |user|
-  user.password = '12345678'
-end
+User.find_or_create_by!(
+  first_name: 'Super',
+  last_name: 'Admin',
+  email: 'super_admin@readinglab.co',
+  role: :super_admin,
+  account: Account.sample
+)
+.update(password: '12345678')
 
-user = User.where(email: 'super_admin@readinglab.co').first_or_initialize
-user.update(account_id: Account.last.id, role: 'super_admin',first_name: 'Super',last_name: 'Admin',password: 'reading123')
+User.find_or_create_by!(
+  first_name: 'Senior',
+  last_name: 'Admin',
+  email: 'support@readinglab.co',
+  role: :admin,
+  account: Account.sample
+)
+.update(password: 'reading123')
 
-user = User.where(email: 'support@readinglab.co').first_or_initialize
-user.update(account_id: Account.last.id, role: 'admin',first_name: 'Senior',last_name: 'Admin',password: 'reading123')
+User.find_or_create_by!(
+  first_name: 'Junior',
+  last_name: 'Admin',
+  email: 'admin_junior@readinglab.co',
+  role: :admin_junior,
+  account: Account.sample
+)
+.update(password: 'reading123')
 
-user = User.where(email: 'admin_junior@readinglab.co').first_or_initialize
-user.update(account_id: Account.last.id, role: 'admin_junior',first_name: 'Junior',last_name: 'Admin',password: 'reading123')
-
-user = User.where(email: 'supervisor@readinglab.co').first_or_initialize
-user.update(account_id: Account.last.id, role: 'supervisor',first_name: 'Super',last_name: 'Visor',password: 'reading123')
+User.find_or_create_by!(
+  first_name: 'Super',
+  last_name: 'Visor',
+  email: 'supervisor@readinglab.co',
+  role: :supervisor,
+  account: Account.sample
+)
+.update(password: 'reading123')
 
 if Rails.env.development?
- 5.times do
-  User.find_or_create_by!(
-    first_name: Faker::Name.first_name ,
-    last_name: Faker::Name.last_name ,
-    email: Faker::Internet.email,
-    account: Account.sample,
-    role: User.roles.keys.sample
-  ) do |user|
-    user.password = '12345678'
-  end
+  5.times do
+    User.find_or_create_by!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      email: Faker::Internet.email,
+      account: Account.sample,
+      role: User.roles.keys.sample
+    )
+    .update(password: '12345678')
   end
 end

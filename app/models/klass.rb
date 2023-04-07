@@ -71,12 +71,12 @@ class Klass < ApplicationRecord
   end
 
   def name
-    rclass_time = starts_at.strftime('%H:%M')
+    rclass_time = starts_at.strftime('%H:%M %p')
     "#{teacher.name} in #{room.name} on #{days_abbr} at #{rclass_time}"
   end
 
   def short_name
-    rclass_time = starts_at.strftime('%H:%M')
+    rclass_time = starts_at.strftime('%H:%M %p')
     "Class in #{room.name} on #{days_abbr} at #{rclass_time}"
   end
 

@@ -106,7 +106,7 @@ class MeetingsController < ApplicationController
   def update
     respond_to do |format|
       if @meeting.update(meeting_params)
-        flash[:notice] = 'Meeting will successfully updated.'
+        flash[:notice] = 'Meeting has been successfully updated.'
         format.html { redirect_to meeting_url(@meeting), notice: 'Meeting was successfully updated.' }
         format.json { render :show, status: :ok, location: @meeting }
         format.js { render 'shared/flash' }

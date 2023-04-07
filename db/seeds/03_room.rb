@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-Room.find_or_create_by!(name: 'room 1', capacity: 22, account: Account.last)
-Room.find_or_create_by!(name: 'room 2', capacity: 24, color: 'black', account: Account.last)
-Room.find_or_create_by!(name: 'room 3', capacity: 24, color: 'black', account: Account.last)
-Room.find_or_create_by!(name: 'room 4', capacity: 24, color: 'black', account: Account.last)
-Room.find_or_create_by!(name: 'room 5', capacity: 24, color: 'black', account: Account.last)
+Room.find_or_create_by!(name: 'room 1', capacity: 22, account: Account.sample)
+Room.find_or_create_by!(name: 'room 2', capacity: 24, color: 'black', account: Account.sample)
+Room.find_or_create_by!(name: 'room 3', capacity: 24, color: 'black', account: Account.sample)
+Room.find_or_create_by!(name: 'room 4', capacity: 24, color: 'black', account: Account.sample)
+Room.find_or_create_by!(name: 'room 5', capacity: 24, color: 'black', account: Account.sample)
 
 if Rails.env.development?
   5.times do

@@ -1,0 +1,6 @@
+tmp/cache/webpacker
+node_modules
+.bundle
+*.env
+*.env.sample
+/tmp/pids/server.pid

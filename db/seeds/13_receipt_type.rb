@@ -1,5 +1,5 @@
-ReceiptType.find_or_create_by!(name: 'School', account: Account.last)
-ReceiptType.find_or_create_by!(name: 'External Organization', account: Account.last)
+ReceiptType.find_or_create_by!(name: 'Tuition Fee', account: Account.sample)
+ReceiptType.find_or_create_by!(name: 'Admission Fee', account: Account.sample)
 
 if Rails.env.development?
   5.times do

@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   # include EsbuildErrorRendering if Rails.env.development?
 
   before_action :generate_sidebar, unless: :json_request?
+  around_action :set_time_zone, if: :current_user
   before_action :authenticate_user!
 
   layout :set_layout
@@ -57,6 +58,12 @@ class ApplicationController < ActionController::Base
     else
       'welcome'
     end
+  end
+
+  private
+
+  def set_time_zone(&block)
+    Time.use_zone(current_account.timezone, &block)
   end
 
   rescue_from CanCan::AccessDenied do |exception|

@@ -5,8 +5,7 @@ if Rails.env.development?
       status: Interview.statuses.keys.sample,
       account: Account.sample,
       student: Student.sample,
-      form: Form.sample,
-
+      form: Form.sample
     )
   end
 end

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :parents, :forms, :receipt_types, :receipts
 
-  resources :events, only: %i[show]
+  resources :events, only: %i[show update]
   resources :student_classes, only: %i[create destroy]
   resources :klass_templates do
     member do
