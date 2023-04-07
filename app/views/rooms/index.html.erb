@@ -43,7 +43,7 @@
             </th>
             <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :name, default_order: :asc)%></th>
             <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :capacity, default_order: :asc)%></th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Color</th>
+            <th class="sort pe-1 align-middle white-space-nowrap">Color</th>
             <th class="sort pe-1 align-middle white-space-nowrap" ></th>
           </tr>
         </thead>
@@ -54,7 +54,7 @@
         </tbody>
       </table>
     </div>
-    <%= pagy_bootstrap_nav(@pagy).html_safe %>
+    <%= render 'shared/pagination' if @pagy.present? %>
   </div>
 </div>
 
