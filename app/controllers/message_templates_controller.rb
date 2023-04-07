@@ -15,13 +15,13 @@ class MessageTemplatesController < ApplicationController
   def show; end
 
   def new
-    @message_template = current_account.messagetemplates.new
+    @message_template = current_account.message_templates.new
   end
 
   def edit; end
 
   def create
-    @message_template = current_account.messagetemplates.new(message_template_params)
+    @message_template = current_account.message_templates.new(message_template_params)
     attach_account_for(@message_template)
 
     respond_to do |format|
@@ -62,7 +62,7 @@ class MessageTemplatesController < ApplicationController
   private
 
   def set_message_template
-    @message_template = current_account.messagetemplates.find(params[:id])
+    @message_template = current_account.message_templates.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

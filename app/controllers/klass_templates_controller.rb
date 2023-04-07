@@ -16,13 +16,13 @@ class KlassTemplatesController < ApplicationController
   def show; end
 
   def new
-    @klass_template = current_account.klasstemplates.new
+    @klass_template = current_account.klass_templates.new
   end
 
   def edit; end
 
   def create
-    @klass_template = current_account.klasstemplates.new(klass_template_params)
+    @klass_template = current_account.klass_templates.new(klass_template_params)
     attach_account_for(@klass_template)
 
     respond_to do |format|
@@ -66,7 +66,7 @@ class KlassTemplatesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_klass_template
-    @klass_template = current_account.klasstemplates.find(params[:id])
+    @klass_template = current_account.klass_templates.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
