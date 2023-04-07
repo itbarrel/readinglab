@@ -1,0 +1,35 @@
+FROM ruby:3.1.0-alpine
+
+# Setting env up
+ENV NODE_ENV='production'
+ENV RACK_ENV='production'
+ENV RAILS_ENV='production'
+ENV APP_PATH='/var/www/cashnow/'
+
+# RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apk --update add build-base nodejs tzdata libxslt-dev libxml2-dev imagemagick postgresql-dev yarn bash
+
+# Set an environment variable where the Rails app is installed to inside of Docker image
+RUN mkdir -p $APP_PATH
+# Set working directory
+WORKDIR $APP_PATH
+
+# Adding gems
+COPY Gemfile Gemfile
+COPY Gemfile.lock Gemfile.lock
+COPY package.json package.json
+COPY yarn.lock yarn.lock
+
+RUN gem install bundler:2.2.27
+RUN if [[ "$RAILS_ENV" == "production" ]]; then bundle install --jobs 20 --retry 5 --without development test; else bundle install; fi
+RUN yarn install --ignore-engines --force
+
+# Adding project files
+COPY . $APP_PATH
+
+RUN DB_ADAPTER=nulldb bundle exec rake assets:precompile
+
+EXPOSE 3000
+
+# CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "foreman", "start"]
