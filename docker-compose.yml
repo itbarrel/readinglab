@@ -1,0 +1,38 @@
+version: '3'
+# networks:
+#   database:
+#     external: true
+#   redis:
+#     external: true
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: DockerFile
+    # volumes:
+    #   - ./ftp_files:/var/www/cashnow/ftp_files
+    # external_links:
+    #   - pg_12:pg_12
+    # restart: always
+    # networks:
+    #   - database
+    #   - redis
+    ports:
+      - '${PORT:-3000}:3000'
+    environment:
+      PORT: 3000
+      RAILS_ENV: 'production'
+      NODE_ENV: 'production'
+      DEFAULT_MERGE_PASSWORD: ${DEFAULT_MERGE_PASSWORD}
+      # REDIS_URL: ${REDIS_URL}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      # SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      # WEBPACKER_DEV_SERVER_HOST: ${WEBPACKER_DEV_SERVER_HOST}
+      # WEBPACKER_DEV_SERVER_PORT: ${WEBPACKER_DEV_SERVER_PORT}
+      # SMTP_EMAIL: ${SMTP_EMAIL}
+      # SMTP_PASS: ${SMTP_PASS}
