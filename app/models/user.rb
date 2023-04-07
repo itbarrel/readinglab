@@ -36,6 +36,7 @@
 # Indexes
 #
 #  index_users_on_account_id            (account_id)
+#  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  users_email                          (account_id,email,deleted_at) UNIQUE
 #
