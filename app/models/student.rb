@@ -10,7 +10,6 @@
 #  deleted_at        :string
 #  dob               :date
 #  first_name        :string
-#  gender            :integer
 #  grade             :string
 #  last_name         :string
 #  prepaid_sessions  :integer
@@ -18,6 +17,7 @@
 #  registration_date :datetime
 #  school            :string
 #  settings          :jsonb
+#  sex               :string
 #  status            :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null

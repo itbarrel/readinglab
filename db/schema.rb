@@ -344,7 +344,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_085727) do
     t.string "last_name"
     t.date "dob"
     t.string "grade"
-    t.integer "gender"
+    t.string "sex"
     t.string "school"
     t.jsonb "settings"
     t.string "dates"
@@ -413,6 +413,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_085727) do
     t.datetime "updated_at", null: false
     t.index ["account_id", "email", "deleted_at"], name: "users_email", unique: true
     t.index ["account_id"], name: "index_users_on_account_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
