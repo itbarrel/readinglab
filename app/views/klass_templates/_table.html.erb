@@ -1,0 +1,43 @@
+<div class="table-responsive">
+  <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+    <thead class="bg-200 text-900">
+      <tr>
+        <th>
+          <div class="form-check fs-0 mb-0 d-flex align-items-center">
+            <input class="form-check-input" id="checkbox-bulk-klass_templates-select" type="checkbox" data-bulk-select='{"body":"table-klass_templates-body","actions":"table-klass_templates-actions","replacedElement":"table-klass_templates-replace-element"}' />
+          </div>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">
+          <% if @search.present? %>
+            <%= sort_link(@search, :name, default_order: :asc)%>
+          <% end %>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">
+          <% if @search.present? %>
+            <%= sort_link(@search, :teacher, default_order: :asc)%>
+          <% end %>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">
+          <% if @search.present? %>
+            <%= sort_link(@search, :room, default_order: :asc)%>
+          <% end %>
+        </th> <th class="sort pe-1 align-middle white-space-nowrap">
+          <% if @search.present? %>
+            <%= sort_link(@search, :max_students, default_order: :asc)%>
+          <% end %>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Duration</th>
+        <th class="sort pe-1 align-middle white-space-nowrap" >Start</th>
+        <th class="sort pe-1 align-middle white-space-nowrap" >Session Range</th>
+        <th class="sort pe-1 align-middle white-space-nowrap" ></th>
+
+      </tr>
+    </thead>
+    <tbody class="list" id="table-klass_templates-body">
+      <% klass_templates.each_with_index do |klass_template, index| %>
+        <%= render 'klass_template', klass_template: klass_template, index: index %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= render 'shared/pagination' if @pagy.present? %>

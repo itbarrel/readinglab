@@ -9,19 +9,18 @@
           <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Class Templates</h5>
       </div>
       <div class="col-8 col-sm-auto text-end ps-2">
-        <div class="d-none" id="table-customers-actions">
+        <div class="d-none" id="table-klass_templates-actions">
           <div class="d-flex">
             <select class="form-select form-select-sm" aria-label="Bulk actions">
-            <option selected="">Bulk actions</option>
-            <option value="Refund">Refund</option>
-            <option value="Delete">Delete</option>
-            <option value="Archive">Archive</option>
-            </select>
+              <select class="form-select form-select-sm" aria-label="Bulk actions">
+                <option selected="">Bulk actions</option>
+                <option value="Delete">Delete</option>
+                </select>
             <button class="btn btn-falcon-default btn-sm ms-2" type="button">Apply</button>
           </div>
         </div>
 
-        <div id="table-customers-replace-element">
+        <div id="table-klass_templates-replace-element">
           <%= link_to(new_klass_template_path, remote: true, class: 'btn btn-falcon-default btn-sm') do %>
           <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
           <span class="d-none d-sm-inline-block ms-1">New</span>
@@ -32,34 +31,9 @@
       </div>
     </div>
   </div>
-  <div class="card-body p-0">
-    <div class="table-responsive">
-      <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
-        <thead class="bg-200 text-900">
-          <tr>
-            <th>
-              <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox" data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
-              </div>
-            </th>
-            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :name, default_order: :asc)%></th>
-            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :teacher_id, default_order: :asc)%></th>
-            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :room_name, default_order: :asc)%></th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="max_students">Max Student</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="duration">Duration</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Session</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date" >Start</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" ></th>
-          </tr>
-        </thead>
-        <tbody class="list" id="table-customers-body">
-          <% @klass_templates.each do |klass_template| %>
-            <%= render klass_template %>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-    <%= render 'shared/pagination' if @pagy.present? %>
+
+  <div class="card-body p-0" id="klass_tempaltesTable">
+    <%= render partial: 'klass_templates/table', locals: { klass_templates: @klass_templates } %>
   </div>
 </div>
 

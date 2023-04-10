@@ -3,6 +3,7 @@
 class KlassTemplatesController < ApplicationController
   load_and_authorize_resource
   before_action :set_klass_template, only: %i[]
+  before_action :set_klass_templates, only: %i[trash]
 
   # GET /klass_templates or /klass_templates.json
   def index
@@ -60,6 +61,12 @@ class KlassTemplatesController < ApplicationController
     end
   end
 
+  def trash
+    # @rooms.destroy_all
+    flash[:notice] = 'klass_templates has been successfully Deleted.'
+    render js: "window.location = '#{klass_templates_url}'"
+  end
+
   def assign; end
 
   private
@@ -67,6 +74,10 @@ class KlassTemplatesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_klass_template
     @klass_template = current_account.klass_templates.find(params[:id])
+  end
+
+  def set_klass_templates
+    @klass_templates = current_account.klass_templates.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.
