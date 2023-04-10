@@ -66,7 +66,7 @@ class RoomsController < ApplicationController
   end
 
   def trash
-    # @rooms.destroy_all
+    @rooms.destroy_all
     flash[:notice] = 'Rooms has been successfully Deleted.'
     render js: "window.location = '#{rooms_url}'"
   end
