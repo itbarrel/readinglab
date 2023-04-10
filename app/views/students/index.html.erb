@@ -42,10 +42,10 @@
               </div>
             </th>
             <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name"><%= sort_link(@search, :name, default_order: :asc)%></th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Date of Birth</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Gender</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Grade</th>
             <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Parents</th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Gender</th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Date of Birth</th>
+            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Grade</th>
             <th class="sort pe-1 align-middle white-space-nowrap"></th>
           </tr>
         </thead>
@@ -61,7 +61,7 @@
 </div>
 
 <% content_for :modal_includes do %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addStudentModal', modal_size: 'modal-lg' } %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addStudentModal' } %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addInterviewModal' } %>
 <% end %>
 

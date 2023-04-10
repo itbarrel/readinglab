@@ -38,14 +38,16 @@ class StudentsController < ApplicationController
 
   # POST /students or /students.json
   def create
-    @student = Student.new(student_params)
+    @student = current_account.students.new(student_params)
+    attach_account_for(@student)
 
     respond_to do |format|
       if @student.save
-        format.html { redirect_to student_url, notice: 'Student was successfully created.' }
-        format.json { render :show, status: :created, location: @student }
+        format.html { redirect_to students_url, notice: 'Student has been successfully created.' }
+        format.json { render :index, status: :created, location: @student }
       else
-        format.html { render :index, status: :unprocessable_entity }
+        process_errors(@student)
+        format.html { redirect_to students_url }
         format.json { render json: @student.errors, status: :unprocessable_entity }
       end
     end
@@ -55,10 +57,10 @@ class StudentsController < ApplicationController
   def update
     respond_to do |format|
       if @student.update(student_params)
-        format.html { redirect_to student_url(@student), notice: 'Student was successfully updated.' }
+        format.html { redirect_to students_url, notice: 'Student has been successfully updated.' }
         format.json { render :show, status: :ok, location: @student }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to students_url status: :unprocessable_entity }
         format.json { render json: @student.errors, status: :unprocessable_entity }
       end
     end
@@ -69,7 +71,7 @@ class StudentsController < ApplicationController
     @student.destroy
 
     respond_to do |format|
-      format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
+      format.html { redirect_to students_url, notice: 'Student has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -78,12 +80,12 @@ class StudentsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_student
-    @student = Student.find(params[:id])
+    @student = current_account.student.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def student_params
-    params.require(:student).permit(:first_name, :last_name, :dob, :grade, :school, :sex, :settings,
+    params.require(:student).permit(:first_name, :last_name, :dob, :parent_id, :grade, :school, :sex, :settings,
                                     :dates, :programs, :status,
                                     :prepaid_sessions, :credit_session, :registration_date)
   end

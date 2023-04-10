@@ -46,9 +46,9 @@ class Student < ApplicationRecord
           inverse_of: 'student'
   has_many :student_classes, dependent: :destroy
   enum :status, %i[registered scheduled wait_listed active]
-  before_create :set_status
+  before_save :set_status
 
-  validates :first_name, :last_name, :school, presence: true
+  validates :first_name, :last_name, presence: true
 
   ransacker :status do |parent|
     parent.table[:status]
