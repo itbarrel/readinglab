@@ -13,17 +13,27 @@ class ApplicationController < ActionController::Base
   helper_method :zone_date, :bootstrap_class_for, :status_for_interview, :interview_status_icon, :current_account
 
   def generate_sidebar
+    settings = [
+      { url: '/accounts', text: 'Account', class: '', icon: 'bi bi-people-fill', sub_items: [], model: Account },
+      { url: '/forms', text: 'Forms', class: '', icon: 'micon bi bi-clipboard-data-fill', model: Form },
+      { url: '/klass_templates', text: 'Class tempelate ', class: '', icon: 'micon bi bi-people-fill', model: KlassTemplate },
+      { url: '/message_templates', text: 'Message Templates', class: '', icon: 'bi bi-envelope-fill', model: MessageTemplate },
+      { url: '/rooms', text: 'Rooms', class: '', icon: 'micon bi bi-building-fill', model: Room },
+      { url: '/receipt_types', text: 'Receipt Types', class: '', icon: 'micon bi bi-receipt-cutoff', model: ReceiptType },
+      { url: '/staffs', text: 'Staff', class: '', icon: 'micon bi bi-person-vcard', model: User },
+      { url: '/vacations', text: 'Vacations', class: '', icon: 'micon bi bi-train-front-fill', model: Vacation }
+    ]
     @menu_list = {
       'General': [
-        { url: '/calendar', text: 'Calendar', class: '', icon: 'bi bi-calendar-week-fill', sub_items: [] },
+        { url: '/calendar', text: 'Calendar', class: '', icon: 'bi bi-calendar', sub_items: [] },
         { text: 'Registration', class: '', icon: 'bi bi-person-plus-fill', sub_items: [
           { url: '/parents', text: 'Parents', class: '', icon: 'micon bi bi-people' },
           { url: '/students', text: 'Student Listing', class: '', icon: 'micon bi bi-layout-text-sidebar-reverse' },
           { url: '/interviews', text: 'Interviews', class: '', icon: 'micon bi bi-calendar-week' }
         ] },
-        { text: 'Classes', class: '', icon: 'micon bi bi-book-fill', sub_items: [
-          { url: '/klasses', text: 'Active', class: '', icon: 'micon bi bi-check-circle' },
-          { url: '/rooms', text: 'Obselote', class: '', icon: 'micon bi bi-exclamation-circle' }
+        { text: 'Classes', class: '', icon: 'micon bi bi-book-half', sub_items: [
+          { url: '/klasses', text: 'Active', class: '', icon: 'micon bi bi-check-circle' }
+          # { url: '/rooms', text: 'Obselote', class: '', icon: 'micon bi bi-exclamation-circle' }
         ] },
         { text: 'Billing', class: '', icon: 'micon bi bi-file-earmark-text-fill', sub_items: [
           { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-receipt', sub_items: [] }
@@ -33,17 +43,13 @@ class ApplicationController < ActionController::Base
           { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-graph-up-arrow' }
         ] }
       ],
-      'Settings': [
-        { url: '/forms', text: 'Forms', class: '', icon: 'micon bi bi-clipboard-data-fill' },
-        { url: '/klass_templates', text: 'Class tempelate ', class: '', icon: 'micon bi bi-people-fill' },
-        { url: '/rooms', text: 'Rooms', class: '', icon: 'micon bi bi-building-fill' },
-        { url: '/staffs', text: 'Staff', class: '', icon: 'micon bi bi-person-vcard' },
-        { url: '/vacations', text: 'Vacations', class: '', icon: 'micon bi bi-train-front-fill' },
-        { url: '/receipt_types', text: 'Receipt Types', class: '', icon: 'micon bi bi-receipt-cutoff' },
-        { url: '/message_templates', text: 'Message Templates', class: '', icon: 'bi bi-envelope-fill' },
-        { url: '/profile', text: 'Profile', class: '', icon: 'micon bi bi-person-fill' }
-      ]
+      'Settings': []
     }
+
+    settings.each do |setting|
+      @menu_list[:Settings].push(setting) if can? :read, setting[:model]
+    end
+    @menu_list[:Settings].push({ url: '/profile', text: 'Profile', class: '', icon: 'micon bi bi-person-circle' })
   end
 
   def set_layout

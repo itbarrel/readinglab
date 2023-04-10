@@ -54,14 +54,14 @@
         </tbody>
       </table>
     </div>
-    <%= render 'shared/pagination' if @pagy.present? %>
-  </div>
+
+      <%= pagy_bootstrap_nav(@pagy).html_safe %>
+
 </div>
 
 <% content_for :modal_includes do %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addParentModal', modal_size: 'modal-lg' } %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addStudentModal', modal_size: 'modal-lg' } %>
-
 <% end %>
 
 <% content_for :javascript_includes do %>
