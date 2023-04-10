@@ -3,6 +3,7 @@
 class RoomsController < ApplicationController
   load_and_authorize_resource
   before_action :set_room, only: %i[]
+  before_action :set_rooms, only: %i[trash]
 
   # GET /rooms or /rooms.json
   def index
@@ -64,11 +65,21 @@ class RoomsController < ApplicationController
     end
   end
 
+  def trash
+    # @rooms.destroy_all
+    flash[:notice] = 'Rooms has been successfully Deleted.'
+    render js: "window.location = '#{rooms_url}'"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_room
     @room = current_account.rooms.find(params[:id])
+  end
+
+  def set_rooms
+    @rooms = current_account.rooms.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

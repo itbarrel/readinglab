@@ -2,15 +2,19 @@
 
 require 'sidekiq/web'
 Rails.application.routes.draw do
+  concern :trashable do
+    collection do
+      delete :trash
+    end
+  end
+
   devise_for :users, controllers: { registrations: :registrations }
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   mount Sidekiq::Web => '/sidekiq'
 
-  resources :accounts, :vacations, :rooms, :teachers, :staffs, :books
-  resources :message_templates, :form_fields, :field_values, :trajectory_details
-
-  resources :parents, :forms, :receipt_types, :receipts
+  resources :accounts, :rooms, :teachers, :vacations, :staffs, :books, :forms, concerns: :trashable
+  resources :message_templates, :form_fields, :field_values, :trajectory_details, concerns: :trashable
+  resources :receipt_types, :receipts, concerns: :trashable
 
   resources :events, only: %i[show update]
   resources :student_classes, only: %i[create destroy]

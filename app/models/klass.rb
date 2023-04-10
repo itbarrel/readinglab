@@ -45,8 +45,8 @@
 #
 class Klass < ApplicationRecord
   belongs_to :account
-  belongs_to :teacher
-  belongs_to :room
+  belongs_to :teacher, optional: true
+  belongs_to :room, optional: true
   belongs_to :klass_template, optional: true
   belongs_to :attendance_form, optional: true, class_name: 'Form'
 
@@ -72,22 +72,27 @@ class Klass < ApplicationRecord
 
   def name
     rclass_time = starts_at.strftime('%H:%M %p')
-    "#{teacher.name} in #{room.name} on #{days_abbr} at #{rclass_time}"
+    class_name = "#{days_abbr} at #{rclass_time}"
+    class_name = "#{room.name} on #{class_name}" if room.present?
+    class_name = "#{teacher.name} in #{class_name}" if teacher.present?
+    class_name
   end
 
   def short_name
     rclass_time = starts_at.strftime('%H:%M %p')
-    "Class in #{room.name} on #{days_abbr} at #{rclass_time}"
+    class_name = "#{days_abbr} at #{rclass_time}"
+    class_name = "#{room.name} on #{class_name}" if room.present?
+    "Class in #{class_name}"
   end
 
   def extended_meeting_dates(limit, starting_date, extend_type = :sessional, vacation_dates = Vacation.all)
-    return if limit.zero?
-    return if !sunday && !monday &&
-              !tuesday && !wednesday &&
-              !thursday && !friday &&
-              !saturday
-
     virtual = []
+
+    return virtual if limit.zero?
+    return virtual if !sunday && !monday &&
+                      !tuesday && !wednesday &&
+                      !thursday && !friday &&
+                      !saturday
 
     meetings = self.meetings.order(starts_at: :desc).load
 

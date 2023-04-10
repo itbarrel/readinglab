@@ -1,0 +1,31 @@
+<div class="table-responsive">
+  <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+    <thead class="bg-200 text-900">
+      <tr>
+        <th>
+          <div class="form-check fs-0 mb-0 d-flex align-items-center">
+            <input class="form-check-input" id="checkbox-bulk-rooms-select" type="checkbox" data-bulk-select='{"body":"table-rooms-body","actions":"table-rooms-actions","replacedElement":"table-rooms-replace-element"}' />
+          </div>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">
+          <% if @search.present? %>
+            <%= sort_link(@search, :name, default_order: :asc)%>
+          <% end %>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">
+          <% if @search.present? %>
+            <%= sort_link(@search, :capacity, default_order: :asc)%>
+          <% end %>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Color</th>
+        <th class="sort pe-1 align-middle white-space-nowrap" ></th>
+      </tr>
+    </thead>
+    <tbody class="list" id="table-rooms-body">
+      <% rooms.each_with_index do |room, index| %>
+        <%= render 'room', room: room, index: index %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= render 'shared/pagination' if @pagy.present? %>
