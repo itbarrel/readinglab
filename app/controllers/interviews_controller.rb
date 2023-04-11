@@ -112,6 +112,7 @@ class InterviewsController < ApplicationController
   end
 
   def trash
+    @interviews.destroy_all
     flash[:notice] = 'interviews has been successfully Deleted.'
     render js: "window.location = '#{interviews_url}'"
   end

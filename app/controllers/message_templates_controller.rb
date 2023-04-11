@@ -59,6 +59,7 @@ class MessageTemplatesController < ApplicationController
   end
 
   def trash
+    @message_templates.destroy_all
     flash[:notice] = 'message_templates has been successfully Deleted.'
     render js: "window.location = '#{message_templates_url}'"
   end
@@ -72,7 +73,7 @@ class MessageTemplatesController < ApplicationController
   end
 
   def set_message_templates
-    @message_templates = current_account.message_templates.find(params[:ids])
+    @message_templates = current_account.message_templates.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

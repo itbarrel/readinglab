@@ -65,6 +65,7 @@ class ReceiptsController < ApplicationController
   end
 
   def trash
+    @receipts.destroy_all
     flash[:notice] = 'receipts has been successfully Deleted.'
     render js: "window.location = '#{receipts_url}'"
   end
@@ -77,7 +78,7 @@ class ReceiptsController < ApplicationController
   end
 
   def set_receipts
-    @receipts = current_account.receipts.find(params[:ids])
+    @receipts = current_account.receipts.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

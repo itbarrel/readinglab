@@ -65,6 +65,7 @@ class FormsController < ApplicationController
   end
 
   def trash
+    @forms.destroy_all
     flash[:notice] = 'forms has been successfully Deleted.'
     render js: "window.location = '#{forms_url}'"
   end
@@ -77,7 +78,7 @@ class FormsController < ApplicationController
   end
 
   def set_forms
-    @forms = current_account.forms.find(params[:ids])
+    @forms = current_account.forms.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

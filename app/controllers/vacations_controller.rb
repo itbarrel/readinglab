@@ -65,6 +65,7 @@ class VacationsController < ApplicationController
   end
 
   def trash
+    @vacations.destroy_all
     flash[:notice] = 'vacations has been successfully Deleted.'
     render js: "window.location = '#{vacations_url}'"
   end
@@ -77,7 +78,7 @@ class VacationsController < ApplicationController
   end
 
   def set_vacations
-    @vacations = current_account.vacations.find(params[:ids])
+    @vacations = current_account.vacations.where(params[:ids])
   end
 
   def vacation_params
