@@ -66,6 +66,7 @@ class ParentsController < ApplicationController
   end
 
   def trash
+    @parents.destroy_all
     flash[:notice] = 'parents has been successfully Deleted.'
     render js: "window.location = '#{parents_url}'"
   end
@@ -78,7 +79,7 @@ class ParentsController < ApplicationController
   end
 
   def set_parents
-    @parents = current_account.parents.find(params[:ids])
+    @parents = current_account.parents.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

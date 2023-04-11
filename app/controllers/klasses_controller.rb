@@ -94,6 +94,7 @@ class KlassesController < ApplicationController
   end
 
   def trash
+    @klasses.destroy_all
     flash[:notice] = 'klasses has been successfully Deleted.'
     render js: "window.location = '#{klasses_url}'"
   end
@@ -111,7 +112,7 @@ class KlassesController < ApplicationController
   end
 
   def set_klasses
-    @klasses = current_account.klasses.find(params[:ids])
+    @klasses = current_account.klasses.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

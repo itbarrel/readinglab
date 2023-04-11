@@ -76,6 +76,7 @@ class StudentsController < ApplicationController
   end
 
   def trash
+    @students.destroy_all
     flash[:notice] = 'students has been successfully Deleted.'
     render js: "window.location = '#{students_url}'"
   end
@@ -88,7 +89,7 @@ class StudentsController < ApplicationController
   end
 
   def set_students
-    @students = current_account.students.find(params[:ids])
+    @students = current_account.students.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

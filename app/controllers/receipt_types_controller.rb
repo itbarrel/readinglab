@@ -66,6 +66,7 @@ class ReceiptTypesController < ApplicationController
   end
 
   def trash
+    @receipt_types.destroy_all
     flash[:notice] = 'receipt_types has been successfully Deleted.'
     render js: "window.location = '#{receipt_types_url}'"
   end
@@ -78,7 +79,7 @@ class ReceiptTypesController < ApplicationController
   end
 
   def set_receipt_types
-    @receipt_types = current_account.receipt_types.find(params[:ids])
+    @receipt_types = current_account.receipt_types.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.
