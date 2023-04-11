@@ -1,9 +1,11 @@
 <% fields = form.form_fields %>
 
 <div class="modal-content border-0">
-  <%= form_tag(form_url, method: form_method, remote: form_request_js) do %>
+  <%= form_tag(form_url, method: form_method, remote: form_request_js, id: 'studentsForm') do %>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <%= hidden_field_tag :form_id, form.id %>
+    <%= hidden_field_tag :record_id, record.id %>
+    <%= hidden_field_tag :record_type, record_type %>
 
     <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
       <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -41,7 +43,16 @@
                 <tr>
                   <td title="<%= field.description %>"><%= field.name %></td>
                   <% students.each do |student| %>
-                    <td><%= generate_html_for(field, student, submit_resource) %></td>
+                    <% submitted_data = FormDetail.find_by(
+                        user: current_user,
+                        student_id: student.id,
+                        form_id: form.id,
+                        parent_type: record_type,
+                        parent_id: record.id,
+                        account: current_account
+                      )
+                    %>
+                    <td><%= generate_html_for(field, student, submit_resource, submitted_data) %></td>
                   <% end %>
                 </tr>
               <% end %>
@@ -51,10 +62,30 @@
       </div>
     </div>
     <div class="card-footer d-flex justify-content-end align-items-center bg-light">
+      <% if form.lessonable? %>
+        <button class="btn btn-info px-4" type="button" aria-label="Close" id="studentFormSave">Save</button>
+      <% end %>
       <%= submit_tag "Submit", class: "btn btn-large btn-primary" %>
       <button class="btn btn-default px-4" type="button" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
     </div>
   <% end %>
 </div>
 
-<script></script>
+<script>
+  $('#studentFormSave').click((event)=>{
+    var formData = {};
+    $.each($('#studentsForm').serializeArray(), function(i, field) {
+      formData[field.name] = field.value;
+    });
+
+    const resource = (formData.record_type ==  'Meeting')? 'meetings' : 'interviews'
+    if (formData.record_id){
+      $.ajax({
+        url: `/${resource}/${formData.record_id}/form`,
+        method: "PUT",
+        data: formData,
+        dataType: 'script'
+      });
+    }
+  })
+</script>

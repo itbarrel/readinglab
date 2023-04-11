@@ -42,6 +42,7 @@ Rails.application.routes.draw do
       post :attendance, action: 'submit_attendance'
       get :form, action: 'open_form'
       post :form, action: 'submit_form'
+      put :form, action: 'save_form'
     end
   end
 

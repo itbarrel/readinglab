@@ -54,6 +54,7 @@ class KlassesController < ApplicationController
 
     respond_to do |format|
       if @klass.save
+        flash[:notice] = 'Meeting has been added successfully.'
         format.html { redirect_to klasses_url, notice: 'Class has been successfully created.' }
         format.json { render :show, status: :created, location: @klass }
       else
@@ -69,12 +70,14 @@ class KlassesController < ApplicationController
   def update
     respond_to do |format|
       if @klass.update(klass_params)
+        flash[:notice] = 'Meeting has been updated successfully.'
         format.html { redirect_to klass_url(@klass), notice: 'Class has been successfully updated.' }
         format.json { render :show, status: :ok, location: @klass }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @klass.errors, status: :unprocessable_entity }
       end
+      format.js { render 'shared/flash' }
     end
   end
 

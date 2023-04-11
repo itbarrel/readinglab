@@ -79,8 +79,9 @@ class Student < ApplicationRecord
     self.status = :registered if status.blank?
   end
 
-  def self.eligible_for_klass
-    all.where(status: %i[wait_list active])
+  def self.eligible_for_klass(klass_id)
+    student_ids = StudentClass.where(klass_id:).map(&:student_id).compact
+    all.where(status: %i[wait_list active]).where.not(id: student_ids)
   end
 
   def name

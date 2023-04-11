@@ -1,19 +1,22 @@
 # frozen_string_literal: true
 
 module FormHelper
-  def generate_html_for(field, student, submit_resource)
+  def generate_html_for(field, student, submit_resource, data = {})
     model_key = "#{submit_resource}[#{student.id}][#{field.model_key}]"
+
+    value = (data.form_values[field.model_key] if data.present?)
+
     case field.field_type
     when 'text_field'
-      text_field_tag model_key, nil, class: 'form-control', required: field.necessary
+      text_field_tag model_key, value, class: 'form-control', required: field.necessary, disabled: data.submitted
     when 'number_field'
-      number_field_tag model_key, nil, class: 'form-control', required: field.necessary
+      number_field_tag model_key, value, class: 'form-control', required: field.necessary, disabled: data.submitted
     when 'date_field'
-      date_field_tag model_key, nil, class: 'form-control', required: field.necessary
+      date_field_tag model_key, value, class: 'form-control', required: field.necessary, disabled: data.submitted
     when 'date_time_field'
-      datetime_field_tag model_key, nil, class: 'form-control', required: field.necessary
+      datetime_field_tag model_key, value, class: 'form-control', required: field.necessary, disabled: data.submitted
     when 'text_area'
-      text_area_tag model_key, nil, class: 'form-control', required: field.necessary
+      text_area_tag model_key, value, class: 'form-control', required: field.necessary, disabled: data.submitted
     when 'select_field'
       select_tag model_key,
                  options_from_collection_for_select(field.field_values, :usage, :name),
@@ -38,7 +41,7 @@ module FormHelper
       end
       safe_join(html)
     else
-      text_field_tag model_key, nil, class: 'form-control'
+      text_field_tag model_key, nil, class: 'form-control', required: field.necessary
     end
   end
 end

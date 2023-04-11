@@ -64,11 +64,11 @@ class MeetingsController < ApplicationController
     @students = klass.students
   end
 
-  def submit_form
+  def save_form
     return if params[:form_details].blank?
 
     params[:form_details].each do |student_id, submission|
-      FormDetail.find_or_create_by!(
+      fd = FormDetail.find_or_create_by!(
         user: current_user,
         student_id:,
         form_id: params[:form_id],
@@ -76,7 +76,29 @@ class MeetingsController < ApplicationController
         parent_id: @meeting.id,
         account: current_account
       )
-                .update(form_values: submission)
+
+      fd.update(form_values: submission) unless fd.submitted
+    end
+
+    flash[:notice] = 'Form Data saved successfully.'
+    respond_to do |format|
+      format.js { render 'shared/close_modal' }
+    end
+  end
+
+  def submit_form
+    return if params[:form_details].blank?
+
+    params[:form_details].each do |student_id, submission|
+      fd = FormDetail.find_or_create_by!(
+        user: current_user,
+        student_id:,
+        form_id: params[:form_id],
+        parent_type: 'Meeting',
+        parent_id: @meeting.id,
+        account: current_account
+      )
+      fd.update(form_values: submission, submitted: true) unless fd.submitted
     end
 
     flash[:notice] = 'Form Data submitted successfully.'
