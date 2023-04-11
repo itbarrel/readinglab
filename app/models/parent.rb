@@ -55,4 +55,12 @@ class Parent < ApplicationRecord
   def name
     "#{father_first} #{father_last} & #{mother_first} #{mother_last}"
   end
+
+  def father_name
+    "#{father_first} #{father_last}"
+  end
+
+  def mother_name
+    "#{mother_first} #{mother_last}"
+  end
 end

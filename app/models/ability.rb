@@ -8,6 +8,8 @@ class Ability
     # user ||= User.new
 
     # Define a few sample abilities
+    return if user.blank?
+
     can :manage, :all if user.super_admin?
 
     return unless user.admin?
