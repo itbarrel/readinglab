@@ -3,6 +3,7 @@
 class StudentsController < ApplicationController
   load_and_authorize_resource
   before_action :set_student, only: %i[]
+  before_action :set_students, only: %i[trash]
 
   # GET /students or /students.json
   def index
@@ -73,11 +74,20 @@ class StudentsController < ApplicationController
     end
   end
 
+  def trash
+    flash[:notice] = 'students has been successfully Deleted.'
+    render js: "window.location = '#{students_url}'"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_student
     @student = current_account.students.find(params[:id])
+  end
+
+  def set_students
+    @students = current_account.students.find(params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

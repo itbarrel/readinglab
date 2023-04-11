@@ -3,6 +3,7 @@
 class FormsController < ApplicationController
   load_and_authorize_resource
   before_action :set_form, only: %i[]
+  before_action :set_forms, only: %i[trash]
 
   # GET /forms or /forms.json
   def index
@@ -63,11 +64,20 @@ class FormsController < ApplicationController
     end
   end
 
+  def trash
+    flash[:notice] = 'forms has been successfully Deleted.'
+    render js: "window.location = '#{forms_url}'"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_form
     @form = current_account.forms.find(params[:id])
+  end
+
+  def set_forms
+    @forms = current_account.forms.find(params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

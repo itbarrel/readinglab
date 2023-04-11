@@ -3,6 +3,7 @@
 class VacationsController < ApplicationController
   load_and_authorize_resource
   before_action :set_vacation, only: %i[]
+  before_action :set_vacations, only: %i[trash]
 
   # GET /vacations or /vacations.json
   def index
@@ -63,11 +64,20 @@ class VacationsController < ApplicationController
     end
   end
 
+  def trash
+    flash[:notice] = 'vacations has been successfully Deleted.'
+    render js: "window.location = '#{vacations_url}'"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_vacation
     @vacation = current_account.vacations.find(params[:id])
+  end
+
+  def set_vacations
+    @vacations = current_account.vacations.find(params[:ids])
   end
 
   def vacation_params

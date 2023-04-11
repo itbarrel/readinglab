@@ -3,6 +3,7 @@
 class ParentsController < ApplicationController
   load_and_authorize_resource
   before_action :set_parent, only: %i[]
+  before_action :set_parents, only: %i[trash]
 
   # GET /parents or /parents.json
   def index
@@ -63,11 +64,20 @@ class ParentsController < ApplicationController
     end
   end
 
+  def trash
+    flash[:notice] = 'parents has been successfully Deleted.'
+    render js: "window.location = '#{parents_url}'"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_parent
     @parent = current_account.parents.find(params[:id])
+  end
+
+  def set_parents
+    @parents = current_account.parents.find(params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

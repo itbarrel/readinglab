@@ -3,6 +3,7 @@
 class ReceiptsController < ApplicationController
   load_and_authorize_resource
   before_action :set_receipt, only: %i[]
+  before_action :set_receipts, only: %i[trash]
 
   # GET /receipts or /receipts.json
   def index
@@ -62,11 +63,20 @@ class ReceiptsController < ApplicationController
     end
   end
 
+  def trash
+    flash[:notice] = 'receipts has been successfully Deleted.'
+    render js: "window.location = '#{receipts_url}'"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_receipt
     @receipt = current_account.receipts.find(params[:id])
+  end
+
+  def set_receipts
+    @receipts = current_account.receipts.find(params[:ids])
   end
 
   # Only allow a list of trusted parameters through.
