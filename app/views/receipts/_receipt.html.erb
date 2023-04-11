@@ -4,7 +4,7 @@
       <input class="form-check-input" type="checkbox" id="<%= receipt.id %>" data-bulk-select-row="data-bulk-select-row" />
     </div>
   </td>
-  <td class="phone align-middle white-space-nowrap py-2"><%=receipt.student.name%></td>
+  <td class="phone align-middle white-space-nowrap py-2"><%=receipt.student&.name%></td>
   <td class="phone align-middle white-space-nowrap py-2"><%=receipt.receipt_type.name%></td>
   <td class="name align-middle white-space-nowrap py-2"><%= receipt.amount %></td>
   <td class="email align-middle py-2"><%= receipt.leave_count%></td>

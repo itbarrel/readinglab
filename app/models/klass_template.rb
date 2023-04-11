@@ -41,8 +41,10 @@
 #
 class KlassTemplate < ApplicationRecord
   belongs_to :account
-  belongs_to :teacher
-  belongs_to :room
+  belongs_to :teacher, optional: true
+  belongs_to :room, optional: true
+  has_many :klasses, dependent: :nullify, inverse_of: 'KlassTemplate'
+
   validates :name, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
   validates :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, inclusion: { in: [true, false] }
 end

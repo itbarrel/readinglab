@@ -5,21 +5,23 @@
     </div>
   </td>
   <td class="name align-middle white-space-nowrap py-2"><%= student.name %></td>
-  <td class="email align-middle py-2"><%= student.dob %></td>
-  <td class="phone align-middle white-space-nowrap py-2"><%= student.gender %></td>
+  <td class="phone align-middle white-space-nowrap py-2 "><%= student.parent.name %></td>
+  <td class="phone align-middle white-space-nowrap py-2" style="padding-right: 10.25rem "><%= student.sex %></td>
+  <td class="email align-middle white-space-nowrap py-2" style="padding-right: 10.25rem "><%= student.dob %></td>
   <td class="phone align-middle white-space-nowrap py-2"><%= student.grade %></td>
-  <td class="phone align-middle white-space-nowrap py-2"><%= student.parent.name %></td>
   <td class="align-middle white-space-nowrap py-2 text-end">
     <div class="dropdown font-sans-serif position-static">
-      <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
+      <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0"
+        data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span
+          class="fas fa-ellipsis-h fs--1"></span></button>
       <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
-      <div class="bg-white py-2">
-        <% if %i[registered scheduled wait_listed].include?(student.status.to_sym) %>
+        <div class="bg-white py-2">
+          <% if %i[registered scheduled wait_listed].include?(student.status&.to_sym) %>
           <%= link_to('Schedule Interview', new_interview_path(:student_id => student.id), remote: true, class: 'dropdown-item') %>
-        <% end %>
-        <%= link_to('Edit', edit_student_path(student), remote: true, class: 'dropdown-item') %>
-        <%= link_to('Delete', student_path(student), method: :delete, class: 'dropdown-item text-danger', data: { confirm: 'Are you sure' }) %>
-      </div>
+          <% end %>
+          <%= link_to('Edit', edit_student_path(student), remote: true, class: 'dropdown-item') %>
+          <%= link_to('Delete', student_path(student), method: :delete, class: 'dropdown-item text-danger', data: { confirm: 'Are you sure' }) %>
+        </div>
       </div>
     </div>
   </td>

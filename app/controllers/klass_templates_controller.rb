@@ -62,7 +62,7 @@ class KlassTemplatesController < ApplicationController
   end
 
   def trash
-    # @rooms.destroy_all
+    @klass_templates.destroy_all
     flash[:notice] = 'klass_templates has been successfully Deleted.'
     render js: "window.location = '#{klass_templates_url}'"
   end

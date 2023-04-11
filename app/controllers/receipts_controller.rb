@@ -31,10 +31,11 @@ class ReceiptsController < ApplicationController
 
     respond_to do |format|
       if @receipt.save
-        format.html { redirect_to receipt_url, notice: 'Receipt was successfully created.' }
+        format.html { redirect_to receipts_url, notice: 'Receipt has been successfully created.' }
         format.json { render :show, status: :created, location: @receipt }
       else
-        format.html { render :index, status: :unprocessable_entity }
+        process_errors(@receipt)
+        format.html { render :index }
         format.json { render json: @receipt.errors, status: :unprocessable_entity }
       end
     end
@@ -44,10 +45,10 @@ class ReceiptsController < ApplicationController
   def update
     respond_to do |format|
       if @receipt.update(receipt_params)
-        format.html { redirect_to receipt_url(@receipt), notice: 'Receipt was successfully updated.' }
-        format.json { render :show, status: :ok, location: @receipt }
+        format.html { redirect_to receipts_url, notice: 'Receipt has been successfully updated.' }
+        format.json { render :show, status: :created, location: @receipt }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to receipts_url }
         format.json { render json: @receipt.errors, status: :unprocessable_entity }
       end
     end
@@ -58,7 +59,7 @@ class ReceiptsController < ApplicationController
     @receipt.destroy
 
     respond_to do |format|
-      format.html { redirect_to receipts_url, notice: 'Receipt was successfully destroyed.' }
+      format.html { redirect_to receipts_url, notice: 'Receipt has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -81,7 +82,7 @@ class ReceiptsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def receipt_params
-    params.require(:receipt).permit(:amount, :leave_count, :detail, :discount,
+    params.require(:receipt).permit(:amount, :leave_count, :detail, :discount, :student_id, :account,
                                     :discount_reason, :sessions_count, :user_id, :receipt_type_id)
   end
 end
