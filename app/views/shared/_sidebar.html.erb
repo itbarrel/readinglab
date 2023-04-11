@@ -52,10 +52,9 @@
               </div>
             </div>
             
-            
             <% list.each_with_index do |second_list, sindex| %>
               <% unless second_list[:sub_items].present? %>
-                <a class="nav-link" href="<%= second_list[:url] %>" role="button" aria-expanded="false">
+                <a class="nav-link <%= (request.path_info.include?(second_list[:url])? 'active' : '')%>" href="<%= second_list[:url] %>" role="button" aria-expanded="false">
                   <div class="d-flex align-items-center">
                     <span class="nav-link-icon">
                       <span class="<%= second_list[:icon] %>"></span>

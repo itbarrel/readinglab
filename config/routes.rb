@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :accounts, :rooms, :teachers, :vacations, :staffs, :books, :forms, concerns: :trashable
   resources :message_templates, :form_fields, :field_values, :trajectory_details, concerns: :trashable
-  resources :receipt_types, :receipts, concerns: :trashable
+  resources :receipt_types, :receipts, :parents, concerns: :trashable
 
   resources :events, only: %i[show update]
   resources :student_classes, only: %i[create destroy]
