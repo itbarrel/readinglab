@@ -38,10 +38,9 @@ class Parent < ApplicationRecord
   belongs_to :city
   has_many :children, class_name: 'Student', dependent: :destroy
 
-  validates :father_first, :father_last, :mother_first, :mother_last, :father_phone, :mother_phone, :address,
-            :postal_code, presence: true
+  validates :father_first, :mother_first, :father_phone, presence: true
 
-  validates :father_email, :mother_email, presence: true
+  validates :father_email, presence: true
 
   def self.notify_all_about_klass(options)
     all.find_each(batch_size: 10) do |p|

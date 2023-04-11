@@ -45,7 +45,7 @@
 #  fk_rails_...  (account_id => accounts.id)
 #
 class Teacher < User
-  has_many :klass_templates, dependent: :nullify, foreign_key: 'user_id', inverse_of: 'Teacher'
+  has_many :klass_templates, dependent: :nullify
   has_many :klasses, dependent: :nullify
 
   default_scope { teacher }
