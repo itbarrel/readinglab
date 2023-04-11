@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     settings = [
       { url: '/accounts', text: 'Account', class: '', icon: 'bi bi-people-fill', sub_items: [], model: Account },
       { url: '/forms', text: 'Forms', class: '', icon: 'micon bi bi-clipboard-data-fill', model: Form },
-      { url: '/klass_templates', text: 'Class tempelate ', class: '', icon: 'micon bi bi-people-fill', model: KlassTemplate },
+      { url: '/klass_templates', text: 'Class Templates ', class: '', icon: 'micon bi bi-people-fill', model: KlassTemplate },
       { url: '/message_templates', text: 'Message Templates', class: '', icon: 'bi bi-envelope-fill', model: MessageTemplate },
       { url: '/rooms', text: 'Rooms', class: '', icon: 'micon bi bi-building-fill', model: Room },
       { url: '/receipt_types', text: 'Receipt Types', class: '', icon: 'micon bi bi-receipt-cutoff', model: ReceiptType },
