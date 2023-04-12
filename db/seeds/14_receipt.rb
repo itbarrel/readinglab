@@ -9,7 +9,7 @@ Receipt.find_or_create_by(
   receipt_type: ReceiptType.sample
 )
 
-if Rails.env.development?
+if Rails.env.development? && ENV['SEEDS_OFF']
   5.times do
     Receipt.find_or_create_by(
       amount: Faker::Number.number(digits: 1),

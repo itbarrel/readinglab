@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Rails.env.development?
+if Rails.env.development? && ENV['SEEDS_OFF']
   5.times do
     Vacation.find_or_create_by(
       name: Faker::Name.name,

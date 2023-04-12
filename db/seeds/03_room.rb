@@ -6,7 +6,7 @@ Room.find_or_create_by!(name: 'room 3', capacity: 24, color: 'black', account: A
 Room.find_or_create_by!(name: 'room 4', capacity: 24, color: 'black', account: Account.sample)
 Room.find_or_create_by!(name: 'room 5', capacity: 24, color: 'black', account: Account.sample)
 
-if Rails.env.development?
+if Rails.env.development? && ENV['SEEDS_OFF']
   5.times do
     Room.find_or_create_by!(
       name: Faker::Name.first_name,
