@@ -78,7 +78,7 @@ class VacationsController < ApplicationController
   end
 
   def set_vacations
-    @vacations = current_account.vacations.where(params[:ids])
+    @vacations = current_account.vacations.where(id: params[:ids])
   end
 
   def vacation_params

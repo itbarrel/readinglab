@@ -1,3 +1,3 @@
 $("document").ready(function () {
-  assignBulkActions('users')
+  assignBulkActions('staffs')
 })

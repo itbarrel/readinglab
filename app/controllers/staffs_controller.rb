@@ -3,6 +3,7 @@
 class StaffsController < ApplicationController
   load_and_authorize_resource :staff, class: User
   before_action :set_staff, only: %i[]
+  before_action :set_staffs, only: %i[trash]
 
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
@@ -61,11 +62,21 @@ class StaffsController < ApplicationController
     end
   end
 
+  def trash
+    @staffs.destroy_all
+    flash[:notice] = 'staffs has been successfully Deleted.'
+    render js: "window.location = '#{staffs_url}'"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_staff
     @staff = current_account.users.find(params[:id])
+  end
+
+  def set_staffs
+    @staffs = current_account.users.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.
