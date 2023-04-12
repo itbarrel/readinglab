@@ -2,7 +2,7 @@
   <%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
 <% end %>
 
-<div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
+<div class="card mb-3" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
   <div class="card-header">
     <div class="row flex-between-center">
       <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <div class="card-body p-0" id="klass_tempaltesTable">
+  <div class="card-body p-0" id="klass_templatesTable">
     <%= render partial: 'klass_templates/table', locals: { klass_templates: @klass_templates } %>
   </div>
 </div>

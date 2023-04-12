@@ -45,4 +45,6 @@
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addMessageTemplateModal' } %>
 <% end %>
 
-
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
+<% end %>
