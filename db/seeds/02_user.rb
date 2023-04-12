@@ -6,8 +6,9 @@ User.find_or_create_by!(
   email: 'super_admin@readinglab.co',
   role: :super_admin,
   account: Account.sample
-)
-.update(password: '12345678')
+) do |user|
+  user.password = '12345678'
+end
 
 User.find_or_create_by!(
   first_name: 'Senior',
@@ -15,8 +16,9 @@ User.find_or_create_by!(
   email: 'support@readinglab.co',
   role: :admin,
   account: Account.sample
-)
-.update(password: 'reading123')
+) do |user|
+  user.password = '12345678'
+end
 
 User.find_or_create_by!(
   first_name: 'Junior',
@@ -24,8 +26,9 @@ User.find_or_create_by!(
   email: 'admin_junior@readinglab.co',
   role: :admin_junior,
   account: Account.sample
-)
-.update(password: 'reading123')
+) do |user|
+  user.password = '12345678'
+end
 
 User.find_or_create_by!(
   first_name: 'Super',
@@ -33,10 +36,11 @@ User.find_or_create_by!(
   email: 'supervisor@readinglab.co',
   role: :supervisor,
   account: Account.sample
-)
-.update(password: 'reading123')
+) do |user|
+  user.password = '12345678'
+end
 
-if Rails.env.development?
+if Rails.env.development? && ENV['SEEDS_OFF']
   5.times do
     User.find_or_create_by!(
       first_name: Faker::Name.first_name,
@@ -44,7 +48,8 @@ if Rails.env.development?
       email: Faker::Internet.email,
       account: Account.sample,
       role: User.roles.keys.sample
-    )
-    .update(password: '12345678')
+    ) do |user|
+      user.password = '12345678'
+    end
   end
 end

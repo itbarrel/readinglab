@@ -14,7 +14,7 @@ Parent.find_or_create_by(
   account: Account.last,
   city: City.last
 )
-if Rails.env.development?
+if Rails.env.development? && ENV['SEEDS_OFF']
   5.times do
     Parent.find_or_create_by!(
       father_first: Faker::Name.first_name,

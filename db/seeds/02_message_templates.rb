@@ -6,12 +6,8 @@ MessageTemplate.find_or_create_by(
   description: 'Calling you back!!'
 )
 
-if Rails.env.development?
+if Rails.env.development? && ENV['SEEDS_OFF']
   5.times do |index|
-    MessageTemplate.find_or_create_by!(
-      name: "Calling_#{index}",
-      description: Faker::Name.name,
-      account: Account.sample
-    )
+    MessageTemplate.find_or_create_by!(name: "Calling_#{index}", description: Faker::Name.name, account: Account.sample)
   end
 end

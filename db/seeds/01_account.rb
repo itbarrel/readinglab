@@ -2,7 +2,7 @@
 
 Account.find_or_create_by(name: "Vermont", currency: "PKR", settings: { "date_format": "dd/MM/yyyy" }, billing_scheme: "sessionly")
 
-if Rails.env.development?
+if Rails.env.development? && ENV['SEEDS_OFF']
   5.times do
     Account.find_or_create_by(
       name: Faker::Name.name,
