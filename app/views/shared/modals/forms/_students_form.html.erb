@@ -72,20 +72,23 @@
 </div>
 
 <script>
-  $('#studentFormSave').click((event)=>{
-    var formData = {};
-    $.each($('#studentsForm').serializeArray(), function(i, field) {
-      formData[field.name] = field.value;
-    });
+  // $("document").ready(function () {
+  //   $('#studentFormSave').click((event)=>{
+  //     var formData = {};
+  //     $.each($('#studentsForm').serializeArray(), function(i, field) {
+  //       formData[field.name] = field.value;
+  //     });
 
-    const resource = (formData.record_type ==  'Meeting')? 'meetings' : 'interviews'
-    if (formData.record_id){
-      $.ajax({
-        url: `/${resource}/${formData.record_id}/form`,
-        method: "PUT",
-        data: formData,
-        dataType: 'script'
-      });
-    }
-  })
+  //     const resource = (formData.record_type ==  'Meeting')? 'meetings' : 'interviews'
+  //     if (formData.record_id){
+  //       $.ajax({
+  //         url: `/${resource}/${formData.record_id}/form`,
+  //         method: "PUT",
+  //         data: formData,
+  //         dataType: 'script'
+  //       });
+  //     }
+  //   })
+  // });
+
 </script>
