@@ -38,6 +38,9 @@ Rails.application.routes.draw do
   resources :meetings do
     concerns :trashable
     member do
+      get :form_details
+      get :student_details
+
       get :attendance, action: 'open_attendance'
       post :attendance, action: 'submit_attendance'
       get :form, action: 'open_form'
