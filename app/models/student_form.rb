@@ -25,4 +25,5 @@
 class StudentForm < ApplicationRecord
   belongs_to :student_class
   belongs_to :klass_form
+  belongs_to :klass
 end
