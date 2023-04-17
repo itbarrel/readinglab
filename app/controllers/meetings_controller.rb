@@ -64,6 +64,8 @@ class MeetingsController < ApplicationController
     @students = klass.students
   end
 
+  def open_student_details; end
+
   def save_form
     return if params[:form_details].blank?
 

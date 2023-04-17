@@ -30,6 +30,7 @@ class Form < ApplicationRecord
            dependent: :nullify,
            inverse_of: 'forms'
   has_many :form_fields, dependent: :destroy
+  has_many :form_details, dependent: nil
 
   enum :purpose, %i[lessonable attendancable assessment general]
 
