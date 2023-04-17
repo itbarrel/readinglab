@@ -52,10 +52,13 @@ class Klass < ApplicationRecord
 
   has_many :klass_forms, dependent: :destroy
   has_many :forms, through: :klass_forms
+  # has_many :student_forms, through: :student_classes
 
-  has_many :meetings, dependent: :destroy
   has_many :student_classes, dependent: :destroy
   has_many :students, through: :student_classes
+  # has_many :student_forms, through: :student_classes
+  has_many :student_forms, dependent: :destroy
+  has_many :meetings, dependent: :destroy
 
   enum :range_type, %i[sessional monthly]
 
