@@ -3,6 +3,8 @@
 class MeetingsController < ApplicationController
   load_and_authorize_resource
   # before_action :set_meeting, only: %i[open_attendance submit_attendance]
+  before_action :set_student, only: %i[student_details form_details]
+  before_action :set_form, only: %i[student_details form_details]
 
   # GET /meetings or /meetings.json
   def index
@@ -109,10 +111,25 @@ class MeetingsController < ApplicationController
     end
   end
 
-  # GET /meetings/1/edit
+  def student_details
+    @student = Student.find_by(id: params[:student_id])
+  end
+
+  def form_details
+    meetings = Meeting
+               .joins(:form_details)
+               .where('starts_at < ?', @meeting.starts_at)
+               .where(form_details: { student_id: @student.id, form_id: @form.id })
+               .order(starts_at: :desc).distinct.limit(3)
+    @form_details = meetings.map do |meeting|
+      meeting.form_details.filter  do |fd|
+        fd.student_id == @student.id && fd.form_id == @form.id
+      end
+    end.flatten
+  end
+
   def edit; end
 
-  # POST /meetings or /meetings.json
   def create
     @meeting = current_account.meetings.new(meeting_params)
 
@@ -155,7 +172,15 @@ class MeetingsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_meeting
-    @meeting = current_account.meetings.find(params[:id])
+    @meeting = current_account.meetings.find_by(id: params[:id])
+  end
+
+  def set_student
+    @student = current_account.students.find_by(id: params[:student_id])
+  end
+
+  def set_form
+    @form = current_account.forms.find_by(id: params[:form_id])
   end
 
   # Only allow a list of trusted parameters through.

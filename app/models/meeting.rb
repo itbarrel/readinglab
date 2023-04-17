@@ -42,6 +42,10 @@ class Meeting < ApplicationRecord
   delegate :attendance_form, to: :klass
   delegate :forms, to: :klass
 
+  has_many :student_meetings, dependent: :destroy
+  has_many :form_details, as: :parent, dependent: nil
+  has_many :attentive_students, through: :student_meetings, source: 'student'
+
   validates :starts_at, presence: true
   validates :ends_at, presence: true, date: { after_or_equal_to: :starts_at }
 

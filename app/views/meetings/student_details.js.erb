@@ -1,0 +1,7 @@
+
+$('.modal').modal('hide');
+$('#showStudentsLessonDetailModal .modal-content').html("<%= j render 'shared/modals/meetings/lesson_details',
+                                                        meeting: @meeting,
+                                                        student: @student
+                                                      %>");
+$('#showStudentsLessonDetailModal').modal('show');
