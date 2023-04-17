@@ -4,7 +4,7 @@
 
 import utils from '../utils';
 
-window.draggableInit = () => {
+window.draggableInit = (options = {}) => {
   const Selectors = {
     BODY: 'body',
     KANBAN_CONTAINER: '.kanban-container',
@@ -28,7 +28,7 @@ window.draggableInit = () => {
     Selectors.KANBAN_ITEMS_CONTAINER
   );
   const container = document.querySelector(Selectors.KANBAN_CONTAINER);
-console.log('>>>>>>>>>>>>...', container)
+
   if (!!columnContainers.length) {
     // Initialize Sortable
     const sortable = new window.Draggable.Sortable(columnContainers, {
@@ -45,20 +45,10 @@ console.log('>>>>>>>>>>>>...', container)
     });
 
     // Hide form when drag start
-    sortable.on(Events.DRAG_START, () => {
-      columns.forEach((column) => {
-        utils.hasClass(column, ClassNames.FORM_ADDED) &&
-          column.classList.remove(ClassNames.FORM_ADDED);
-      });
-    });
+    sortable.on(Events.DRAG_START, options.drag_start);
 
     // Place forms and other contents bottom of the sortable container
-    sortable.on(Events.DRAG_STOP, ({ data: { source: el } }) => {
-      const columnContainer = el.closest(Selectors.KANBAN_ITEMS_CONTAINER);
-      const form = columnContainer.querySelector(Selectors.ADD_CARD_FORM);
-
-      !el.nextElementSibling && columnContainer.appendChild(form);
-    });
+    sortable.on(Events.DRAG_STOP, options.drag_stop);
   }
 };
 

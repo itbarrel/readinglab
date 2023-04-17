@@ -18,70 +18,33 @@
               <i class="fa-inverse fa-stack-1x text-primary fas fa-users" data-fa-transform="shrink-2"></i>
             </span>
             <div class="flex-1">
-              <h5 class="mb-2 fs-0">Students</h5>
-              <ul class="nav flex-lg-column fs--1">
+              <h5 class="mb-2 fs-0">Student Managment</h5>
+              <% unless klass.students.present? %>
+                <p class="text-word-break fs--1">No student in class.<p>
+              <% end %>
+              <div class="kanban-items-container border bg-white dark__bg-1000 rounded-2 py-3 mb-3" style="max-height: none;">
+                <h5 class="mb-2 fs-0">UnAssigned Students</h5>
                 <% klass.student_classes.each do |sc| %>
-                  <li class="list-group-item d-flex justify-content-between align-items-center ">
-                    <%= sc.student.name %>
-                    <%= link_to(student_class_path(sc), class: "badge badge-soft-warning rounded-pill", method: :delete, remote: true) do %>
-                      <span class="fas fa-trash"></span>
-                    <% end %>
-                  </li>
+                  <div class="card mb-3 kanban-item shadow-sm dark__bg-1100" id="<%= sc.id %>">
+                    <div class="card-body">
+                      <p class="fs--1 fw-medium font-sans-serif mb-0">
+                        <%= sc.student.name %>
+                        <%= link_to(student_class_path(sc), class: "badge badge-soft-warning rounded-pill", method: :delete, remote: true) do %>
+                          <span class="fas fa-trash"></span>
+                        <% end %>
+                      </p>
+                    </div>
+                  </div>
                 <% end %>
-                <% unless klass.students.present? %>
-                  <p class="text-word-break fs--1">No student in class.<p>
-                <% end %>
-              </ul>
-            </div>
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="kanban-items-container border bg-white dark__bg-1000 rounded-2 py-3 mb-3" style="max-height: none;">
-                  <div class="card mb-3 kanban-item shadow-sm dark__bg-1100">
-                    <div class="card-body">
-                      <p class="fs--1 fw-medium font-sans-serif mb-0">Add a cookie notice which will be shown in the bottom of the page and have a link of &quot;Privacy Policy&quot;</p>
-                    </div>
-                  </div>
-                  <div class="card mb-3 kanban-item shadow-sm dark__bg-1100">
-                    <div class="card-body">
-                      <p class="fs--1 fw-medium font-sans-serif mb-0">Add a pdf file that describes all the symptoms of COVID-19</p>
-                    </div>
-                  </div>
-                  <div class="card mb-3 kanban-item shadow-sm dark__bg-1100">
-                    <div class="card-body">
-                      <p class="fs--1 fw-medium font-sans-serif mb-0">Make a Registration form that include Name, Email and a Password input field</p>
-                    </div>
-                  </div>
-                  <div class="card mb-3 kanban-item shadow-sm dark__bg-1100">
-                    <div class="card-body">
-                      <p class="fs--1 fw-medium font-sans-serif mb-0">Update profile page layout with cover image and user setting menu</p>
-                    </div>
-                  </div>
-                </div>
               </div>
-              <div class="col-lg-6">
-                <div class="kanban-items-container border bg-white dark__bg-1000 rounded-2 py-3 mb-3" style="max-height: none;">
-                  <div class="card mb-3 kanban-item shadow-sm dark__bg-1100">
-                    <div class="card-body">
-                      <p class="fs--1 fw-medium font-sans-serif mb-0">Update all the npm packages and also remove the outdated plugins</p>
-                    </div>
-                  </div>
-                  <div class="card mb-3 kanban-item shadow-sm dark__bg-1100">
-                    <div class="card-body">
-                      <p class="fs--1 fw-medium font-sans-serif mb-0">Add a getting started page that allows users to see the starting process</p>
-                    </div>
-                  </div>
-                  <div class="card mb-3 kanban-item shadow-sm dark__bg-1100">
-                    <div class="card-body">
-                      <p class="fs--1 fw-medium font-sans-serif mb-0">Review and test all the task and deploy to the server</p>
-                    </div>
-                  </div>
-                  <div class="card mb-3 kanban-item shadow-sm dark__bg-1100">
-                    <div class="card-body">
-                      <p class="fs--1 fw-medium font-sans-serif mb-0">Get all the data by API call and show them to the landing page by adding a new section</p>
-                    </div>
-                  </div>
+              <% unless klass.forms.present? %>
+                <p class="text-word-break fs--1">Please assign forms to link students.<p>
+              <% end %>
+              <% klass.klass_forms.each do |kf| %>
+                <div class="kanban-items-container border bg-white dark__bg-1000 rounded-2 py-3 mb-3" style="max-height: none;" id="<%= kf.id %>">
+                  <h5 class="mb-2 fs-0"><%= kf.form.name %></h5>
                 </div>
-              </div>
+              <% end %>
             </div>
           </div>
         </div>
@@ -141,5 +104,15 @@
 </div>
 
 <script>
-  draggableInit()
+  const drag_start = ()=>{
+
+  }
+  const drag_stop = ({ data })=>{
+    setTimeout(()=>{
+      const { source: el } = data
+      console.log('Form>>>', data.originalSource.parentNode.id)
+      console.log('Student>>>', data.source.id)
+    }, 0)
+  }
+  draggableInit({drag_start, drag_stop})
 </script>
