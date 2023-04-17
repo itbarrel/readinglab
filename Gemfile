@@ -28,6 +28,7 @@ gem 'simple_form', '~> 5.2'
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'cssbundling-rails'
+gem 'foreman'
 gem 'jsbundling-rails'
 
 # Use Redis adapter to run Action Cable in production
