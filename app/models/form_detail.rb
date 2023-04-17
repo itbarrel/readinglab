@@ -8,6 +8,7 @@
 #  deleted_at  :datetime
 #  form_values :jsonb
 #  parent_type :string           not null
+#  submitted   :boolean          default(FALSE)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  account_id  :uuid             not null

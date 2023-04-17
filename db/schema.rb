@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_05_085727) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_11_183917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -99,6 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_085727) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.uuid "student_id", null: false
+    t.boolean "submitted", default: false
     t.index ["account_id"], name: "index_form_details_on_account_id"
     t.index ["form_id"], name: "index_form_details_on_form_id"
     t.index ["parent_type", "parent_id"], name: "index_form_details_on_parent"
@@ -295,10 +296,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_085727) do
     t.string "name"
     t.integer "capacity"
     t.string "color"
-    t.datetime "deleted_at"
     t.uuid "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
     t.index ["account_id", "name", "deleted_at"], name: "rooms_name", unique: true
     t.index ["account_id"], name: "index_rooms_on_account_id"
   end
@@ -403,7 +404,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_085727) do
     t.boolean "undeletable"
     t.date "date_of_inactive"
     t.boolean "external_user"
-    t.datetime "deleted_at", precision: nil
     t.uuid "account_id", null: false
     t.string "first_name"
     t.string "last_name"
@@ -411,6 +411,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_085727) do
     t.string "termination_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
     t.index ["account_id", "email", "deleted_at"], name: "users_email", unique: true
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

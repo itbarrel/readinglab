@@ -1,0 +1,51 @@
+<div class="modal-content border-0">
+  <div class="position-absolute top-0 end-0 mt-3 me-3 z-index-1">
+    <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body p-0">
+    <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
+      <h4 class="mb-1" id="meeting_id" name="<%= meeting.id %>"><%= meeting.short_name %></h4>
+      <p class="fs--2 mb-0">Teaching by <%= link_to meeting.teacher.name, staff_path(meeting.teacher), class: "link-600 fw-semi-bold" %></p>
+      <p class="fs--2 mb-0">Date by <%= l meeting.starts_at %></p>
+    </div>
+    <div class="p-4">
+      <div class="mb-3 form-floating">
+        <%= select_tag :student_id, options_from_collection_for_select(meeting.students, :id, :name, @student.id), class: 'form-select', id: 'lessson_student', include_blank: true %>
+        <label for="lessson_student">Students</label> 
+      </div>
+      <div class="mb-3 form-floating">
+        <%= select_tag :form_id, options_from_collection_for_select(meeting.forms, :id, :name), class: 'form-select', id: 'lessson_form', include_blank: true %>
+        <label for="lessson_form">Forms</label> 
+      </div>
+
+      <div id="form_details_table">
+        <%= render 'shared/modals/meetings/form_details', form_details: [], form: {form_fields: []}.to_dot %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer d-flex justify-content-end align-items-center bg-light">
+    <button class="btn btn-default px-4" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+  </div>
+</div>
+
+<script>
+  $('#showStudentsLessonDetailModal').on('shown.bs.modal', function () {
+    const studentSelectBox = document.getElementById("lessson_student");
+    const formSelectBox = document.getElementById("lessson_form");
+
+    const changeEvt = (evt) => {
+      const student_id = $('#lessson_student').val();
+      const form_id = $('#lessson_form').val();
+      const meeting_id = $('#meeting_id').attr('name');
+
+      $.ajax({
+        url: `meetings/${meeting_id}/form_details`,
+        method: 'GET',
+        dataType: 'script',
+        data: { student_id, form_id }
+      }); 
+    }
+    studentSelectBox.addEventListener("change", changeEvt);
+    formSelectBox.addEventListener("change", changeEvt);
+  });
+</script>

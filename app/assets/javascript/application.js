@@ -19,3 +19,4 @@ import "./lodash";
 
 import "./theme/theme";
 import "./theme/calendarInit";
+import "./custom";

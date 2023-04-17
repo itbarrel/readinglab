@@ -8,6 +8,8 @@ class Ability
     # user ||= User.new
 
     # Define a few sample abilities
+    return if user.blank?
+
     can :manage, :all if user.super_admin?
 
     return unless user.admin?
@@ -37,7 +39,6 @@ class Ability
 
     can :manage, StudentClass, { student: { account_id: user.account_id }, klass: { account_id: user.account_id } }
     can :manage, KlassForm, { klass: { account_id: user.account_id }, form: { account_id: user.account_id } }
-    can :manage, KlassTemplateForm, { klass_template: { account_id: user.account_id }, form: { account_id: user.account_id } }
     can :manage, StudentForm, { student: { account_id: user.account_id }, form: { account_id: user.account_id } }
   end
 end

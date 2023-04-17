@@ -1,0 +1,32 @@
+<div class="table-responsive scrollbar">
+  <table class="table table-bordered overflow-hidden">
+    <colgroup>
+      <col class="bg-soft-primary" />
+      <col />
+      <col />
+    </colgroup>
+    <thead>
+      <tr class="btn-reveal-trigger">
+        <th scope="col">Field Names</th>
+        <% form_details.each do |fd| %>
+          <th scope="col"><%= l fd.parent.starts_at, format: :medium %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% unless (form.form_fields.present? rescue nil) %>
+        <tr class="btn-reveal-trigger">
+          <td rowspan="20">No Data Available</td>
+        </tr>
+      <% end %>
+      <% form.form_fields.each do |field| %>
+      <tr class="btn-reveal-trigger">
+          <td><%= field.name %></td>
+          <% form_details.each do |fd| %>
+            <td><%= fd.form_values[field.model_key] %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

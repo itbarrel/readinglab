@@ -18,7 +18,7 @@
       <div class="form-floating col-lg-4 col-auto d-flex justify-content-end order-md-1 mb-3">
         <select class="form-select" id="calendar_teacher_id" aria-label="Floating label select example">
           <option selected>Select Please</option>
-          <% Teacher.all.each do |teacher| %>
+          <% current_account.teachers.each do |teacher| %>
             <option value="<%= teacher.id %>"><%= teacher.name %></option>
           <% end %>
         </select>
@@ -72,6 +72,7 @@
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'showEventModal', modal_size: 'modal-lg' } %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'editKlassModal', modal_size: 'modal-lg' } %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'showStudentsFormModal', modal_size: 'modal-lg' } %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'showStudentsLessonDetailModal', modal_size: 'modal-lg' } %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addVacationModal' } %>
 <% end %>
 

@@ -1,4 +1,3 @@
-
 <%= form_for(student, id: 'addStudentForm') do |f| %>
   <div class="modal-header px-card bg-light border-bottom-0">
     <h5 class="modal-title"><%= title %></h5>
@@ -7,7 +6,7 @@
   <div class="modal-body p-card">
     <div class="mb-3">
       <%= f.label :Parents, class: 'fs-0' %>
-      <%= f.collection_select :parent_id, Parent.all, :id, :name, {}, { class: 'form-control' } %>
+      <%= f.collection_select :parent_id, current_account.parents, :id, :name, {}, { class: 'form-control' } %>
     </div>
     <div class="mb-3">
       <%= f.label :first_name, class: 'fs-0' %>
@@ -27,7 +26,7 @@
     </div>
     <div class="mb-3">
       <%= f.label :grade, class: 'fs-0' %>
-      <%= f.text_field :grade, class: 'form-control' %>
+      <%= f.text_field :grade, class: 'form-select' %>
     </div>
     <div class="mb-3">
       <%= f.label :school, class: 'fs-0' %>
@@ -38,4 +37,6 @@
     <%= f.submit 'Save', class: 'btn btn-primary px-4' %>
     <%= f.button 'Cancel', class: 'btn btn-default px-4', type: 'button', data: { 'bs-dismiss': 'modal'} %>
   </div>
+</div>
+
 <% end %>

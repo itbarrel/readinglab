@@ -3,6 +3,7 @@
 class ParentsController < ApplicationController
   load_and_authorize_resource
   before_action :set_parent, only: %i[]
+  before_action :set_parents, only: %i[trash]
 
   # GET /parents or /parents.json
   def index
@@ -32,8 +33,9 @@ class ParentsController < ApplicationController
     respond_to do |format|
       if @parent.save
         format.html { redirect_to parents_url, notice: 'Parents has been successfully created.' }
-        format.json { render :show, status: :created, location: @parent }
+        format.json { render :index, status: :created, location: @parent }
       else
+        process_errors(@parent)
         format.html { redirect_to parents_url, status: :unprocessable_entity }
         format.json { render json: @parent.errors, status: :unprocessable_entity }
       end
@@ -44,10 +46,10 @@ class ParentsController < ApplicationController
   def update
     respond_to do |format|
       if @parent.update(parent_params)
-        format.html { redirect_to parent_url(@parent), notice: 'Parents has been successfully updated.' }
-        format.json { render :show, status: :ok, location: @parent }
+        format.html { redirect_to parents_url, notice: 'Parents has been successfully updated.' }
+        format.json { render :index, status: :ok, location: @parent }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to parents_url, status: :unprocessable_entity }
         format.json { render json: @parent.errors, status: :unprocessable_entity }
       end
     end
@@ -63,11 +65,21 @@ class ParentsController < ApplicationController
     end
   end
 
+  def trash
+    @parents.destroy_all
+    flash[:notice] = 'parents has been successfully Deleted.'
+    render js: "window.location = '#{parents_url}'"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_parent
     @parent = current_account.parents.find(params[:id])
+  end
+
+  def set_parents
+    @parents = current_account.parents.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.
