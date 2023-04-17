@@ -57,6 +57,7 @@ class Klass < ApplicationRecord
   has_many :student_classes, dependent: :destroy
   has_many :students, through: :student_classes
   # has_many :student_forms, through: :student_classes
+
   has_many :student_forms, dependent: :destroy
   has_many :meetings, dependent: :destroy
 
@@ -64,6 +65,8 @@ class Klass < ApplicationRecord
 
   validates :duration, :starts_at, presence: true
   validates :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, inclusion: { in: [true, false] }
+
+  accepts_nested_attributes_for :student_forms, allow_destroy: true, reject_if: :all_blank
 
   after_create :create_meetings
 

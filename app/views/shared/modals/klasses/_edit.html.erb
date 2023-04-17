@@ -5,7 +5,7 @@
   </div>
   <div class="modal-body p-0">
     <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
-      <h4 class="mb-1" id="staticBackdropLabel"><%= klass.name %></h4>
+      <h4 class="mb-1" id="klass_id" name="<%= klass.id %>"><%= klass.name %></h4>
       <p class="fs--2 mb-0">Teaching by
         <%= link_to klass.teacher.name, staff_path(klass.teacher), class: "link-600 fw-semi-bold" %></p>
     </div>
@@ -110,8 +110,22 @@
   const drag_stop = ({ data })=>{
     setTimeout(()=>{
       const { source: el } = data
-      console.log('Form>>>', data.originalSource.parentNode.id)
-      console.log('Student>>>', data.source.id)
+      const klass_id = $('#klass_id').attr('name')
+      const student_class_id = data.source.id
+      const klass_form_id = data.originalSource.parentNode.id
+
+      const student_form = { student_class_id, klass_form_id }
+      if(!klass_form_id) student_form._destroy = true
+      const student_forms_attributes = [student_form]
+
+      if(klass_id && student_class_id){
+        $.ajax({
+          url: `/klasses/${klass_id}`,
+          method: 'PUT',
+          dataType: 'script',
+          data: { klass: { student_forms_attributes }}
+        });
+      }
     }, 0)
   }
   draggableInit({drag_start, drag_stop})
