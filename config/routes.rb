@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       get :form, action: 'open_form'
       post :form, action: 'submit_form'
       put :form, action: 'save_form'
+      get :student_detail, action: 'open_student_details'
     end
   end
 

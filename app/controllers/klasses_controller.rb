@@ -70,7 +70,7 @@ class KlassesController < ApplicationController
   def update
     respond_to do |format|
       if @klass.update(klass_params)
-        flash[:notice] = 'Meeting has been updated successfully.'
+        flash[:notice] = 'Class has been updated successfully.'
         format.html { redirect_to klass_url(@klass), notice: 'Class has been successfully updated.' }
         format.json { render :show, status: :ok, location: @klass }
       else
@@ -123,6 +123,8 @@ class KlassesController < ApplicationController
     params.require(:klass).permit(:account_id, :max_students, :starts_at, :monday, :tuesday, :wednesday, :thursday, :friday,
                                   :saturday, :sunday, :session_range, :duration,
                                   :est_end_date, :min_students, :name, :description,
-                                  :teacher_id, :room_id, :klass_template_id, :attendance_form_id, form_ids: [])
+                                  :teacher_id, :room_id, :klass_template_id,
+                                  :attendance_form_id,
+                                  student_forms_attributes: %i[id student_class_id klass_form_id _destroy], form_ids: [])
   end
 end

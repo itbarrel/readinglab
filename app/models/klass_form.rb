@@ -25,4 +25,6 @@
 class KlassForm < ApplicationRecord
   belongs_to :form
   belongs_to :klass
+
+  has_many :student_forms, dependent: :destroy
 end

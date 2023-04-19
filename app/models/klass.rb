@@ -52,15 +52,21 @@ class Klass < ApplicationRecord
 
   has_many :klass_forms, dependent: :destroy
   has_many :forms, through: :klass_forms
+  # has_many :student_forms, through: :student_classes
 
-  has_many :meetings, dependent: :destroy
   has_many :student_classes, dependent: :destroy
   has_many :students, through: :student_classes
+  # has_many :student_forms, through: :student_classes
+
+  has_many :student_forms, dependent: :destroy
+  has_many :meetings, dependent: :destroy
 
   enum :range_type, %i[sessional monthly]
 
   validates :duration, :starts_at, presence: true
   validates :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, inclusion: { in: [true, false] }
+
+  accepts_nested_attributes_for :student_forms, allow_destroy: true, reject_if: :all_blank
 
   after_create :create_meetings
 
@@ -83,6 +89,14 @@ class Klass < ApplicationRecord
     class_name = "#{days_abbr} at #{rclass_time}"
     class_name = "#{room.name} on #{class_name}" if room.present?
     "Class in #{class_name}"
+  end
+
+  def un_assigned_student_classes
+    student_classes.where.not(id: student_forms.pluck(:student_class_id))
+  end
+
+  def assigned_student_classes
+    student_classes.where(id: student_forms.pluck(:student_class_id))
   end
 
   def extended_meeting_dates(limit, starting_date, extend_type = :sessional, vacation_dates = Vacation.all)

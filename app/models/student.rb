@@ -45,7 +45,7 @@ class Student < ApplicationRecord
           dependent: :destroy,
           inverse_of: 'student'
   has_many :student_classes, dependent: :destroy
-  has_many :form_details, dependent: :destroy
+  has_many :form_details, dependent: nil
 
   enum :status, %i[registered scheduled wait_listed active]
   enum :gender, %i[male female others not_mentioned]

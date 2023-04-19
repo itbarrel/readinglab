@@ -41,8 +41,18 @@ class FormDetail < ApplicationRecord
   validates :form_values, presence: true, allow_blank: true
 
   before_validation :default_form_values
+  after_save :set_parent_status
 
   def default_form_values
     self.form_values ||= {}
+  end
+
+  def set_parent_status
+    return unless parent.is_a?(Interview)
+
+    parent.done!
+    return unless parent.student.scheduled?
+
+    student.wait_listed!
   end
 end

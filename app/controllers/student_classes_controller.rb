@@ -34,10 +34,11 @@ class StudentClassesController < ApplicationController
         format.html { redirect_to request.referer, notice: 'Student has been successfully created.' }
         format.json { render :show, status: :created, location: @student_class }
       else
+        flash[:notice] = 'Student Already Added.'
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @student_class.errors, status: :unprocessable_entity }
       end
-      format.js { render 'shared/flash' }
+      format.js
     end
   end
 
@@ -63,7 +64,7 @@ class StudentClassesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to student_classes_url, notice: 'Student class has been successfully destroyed.' }
       format.json { head :no_content }
-      format.js { render 'shared/flash' }
+      format.js
     end
   end
 

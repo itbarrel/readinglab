@@ -23,13 +23,16 @@
 #
 class Form < ApplicationRecord
   belongs_to :account
-  has_many :klass_forms, dependent: :destroy
+
   has_many :attendance_klasses,
            class_name: 'Klass',
            foreign_key: 'attendance_form_id',
            dependent: :nullify,
            inverse_of: 'forms'
   has_many :form_fields, dependent: :destroy
+  has_many :form_details, dependent: nil
+
+  has_many :klass_forms, dependent: :destroy
 
   enum :purpose, %i[lessonable attendancable assessment general]
 
