@@ -91,6 +91,14 @@ class Klass < ApplicationRecord
     "Class in #{class_name}"
   end
 
+  def un_assigned_student_classes
+    student_classes.where.not(id: student_forms.pluck(:student_class_id))
+  end
+
+  def assigned_student_classes
+    student_classes.where(id: student_forms.pluck(:student_class_id))
+  end
+
   def extended_meeting_dates(limit, starting_date, extend_type = :sessional, vacation_dates = Vacation.all)
     virtual = []
 
