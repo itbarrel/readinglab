@@ -29,7 +29,7 @@ class KlassesController < ApplicationController
 
     @search = @klasses.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
-    @pagy, @klasses = pagy(@search.result, items: per_page)
+    @pagy, @klasses = pagy(@search.result.includes(:room, :teacher), items: per_page)
   end
 
   def show; end

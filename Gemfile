@@ -30,7 +30,6 @@ gem 'simple_form', '~> 5.2'
 gem 'cssbundling-rails'
 gem 'foreman'
 gem 'jsbundling-rails'
-
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
@@ -57,6 +56,7 @@ end
 
 group :development do
   gem 'annotate'
+  gem 'bullet'
   gem 'byebug'
   gem 'letter_opener'
   gem 'rubocop-rails', require: false
