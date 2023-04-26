@@ -6,78 +6,47 @@
   <div class="modal-body p-0">
     <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
       <h4 class="mb-1" id="klass_id" name="<%= klass.id %>"><%= klass.name %></h4>
-      <p class="fs--2 mb-0">Teaching by
-        <%= link_to klass.teacher.name, staff_path(klass.teacher), class: "link-600 fw-semi-bold" %></p>
+      <% if klass.teacher.present? %>
+        <p class="fs--2 mb-0">Teaching by
+          <%= link_to klass.teacher&.name, staff_path(klass.teacher), class: "link-600 fw-semi-bold" %>
+        </p>
+      <% end %>
     </div>
     <div class="p-4">
       <div class="row">
-        <div class="col-lg-6">
-          <div class="d-flex">
-            <span class="fa-stack ms-n1 me-3">
-              <i class="fas fa-circle fa-stack-2x text-200"></i>
-              <i class="fa-inverse fa-stack-1x text-primary fas fa-users" data-fa-transform="shrink-2"></i>
-            </span>
-            <div class="flex-1">
-              <h5 class="mb-2 fs-0">Student Managment</h5>
-              <% unless klass.students.present? %>
-                <p class="text-word-break fs--1">No student in class.<p>
-              <% end %>
-              <div class="kanban-items-container border bg-white dark__bg-1000 rounded-2 py-3 mb-3" style="max-height: none;">
-                <h5 class="mb-2 fs-0">UnAssigned Students</h5>
-                <% klass.student_classes.each do |sc| %>
-                  <div class="card mb-3 kanban-item shadow-sm dark__bg-1100" id="<%= sc.id %>">
-                    <div class="card-body">
-                      <p class="fs--1 fw-medium font-sans-serif mb-0">
-                        <%= sc.student.name %>
-                        <%= link_to(student_class_path(sc), class: "badge badge-soft-warning rounded-pill", method: :delete, remote: true) do %>
-                          <span class="fas fa-trash"></span>
-                        <% end %>
-                      </p>
-                    </div>
-                  </div>
-                <% end %>
-              </div>
-              <% unless klass.forms.present? %>
-                <p class="text-word-break fs--1">Please assign forms to link students.<p>
-              <% end %>
-              <% klass.klass_forms.each do |kf| %>
-                <div class="kanban-items-container border bg-white dark__bg-1000 rounded-2 py-3 mb-3" style="max-height: none;" id="<%= kf.id %>">
-                  <h5 class="mb-2 fs-0"><%= kf.form.name %></h5>
-                </div>
-              <% end %>
-            </div>
-          </div>
+        <div class="col-lg-6" id="klass_students">
+          <%= render 'shared/modals/klasses/students', klass: klass %>
         </div>
         <div class="col-lg-6">
           <h6 class="mt-5 mt-lg-0">Class Settings</h6>
 
           <%= form_for StudentClass.new, remote: true do |f| %>
-          <%= f.hidden_field :klass_id, value: klass.id %>
+            <%= f.hidden_field :klass_id, value: klass.id %>
 
-          <div class="mb-3">
-            <%= f.label :add_student, class: 'fs-0' %>
-            <%= f.collection_select :student_id, current_account.students.eligible_for_klass(klass.id), :id, :name, {}, { class: 'form-control' } %>
-          </div>
-          <div class="d-flex justify-content-end align-items-center">
-            <%= f.submit 'Add', class: 'btn btn-primary px-4' %>
-          </div>
+            <div class="mb-3">
+              <%= f.label :add_student, class: 'fs-0' %>
+              <%= f.collection_select :student_id, current_account.students.eligible_for_klass(klass.id), :id, :name, { include_blank: true }, { class: 'form-control' } %>
+            </div>
+            <div class="d-flex justify-content-end align-items-center">
+              <%= f.submit 'Add', class: 'btn btn-primary px-4' %>
+            </div>
           <% end %>
           <%= form_for klass, remote: true do |f| %>
             <div class="mb-3">
               <%= f.label :teacher_id, class: 'fs-0' %>
-              <%= f.collection_select :teacher_id, current_account.teachers, :id, :name, {}, { class: 'form-control' } %>
+              <%= f.collection_select :teacher_id, current_account.teachers, :id, :name, { include_blank: true }, { class: 'form-control' } %>
             </div>
             <div class="mb-3">
               <%= f.label :room_id, class: 'fs-0' %>
-              <%= f.collection_select :room_id, current_account.rooms, :id, :name, {}, { class: 'form-control' } %>
+              <%= f.collection_select :room_id, current_account.rooms, :id, :name, { include_blank: true }, { class: 'form-control' } %>
             </div>
             <div class="mb-3">
               <%= f.label :attendance_form_id, class: 'fs-0' %>
-              <%= f.collection_select :attendance_form_id, current_account.forms.attendancable, :id, :name, {}, { class: 'form-control' } %>
+              <%= f.collection_select :attendance_form_id, current_account.forms.attendancable, :id, :name, { include_blank: true }, { class: 'form-control' } %>
             </div>
             <div class="mb-3">
               <%= f.label :forms, class:' fs-0' %>
-              <%= f.collection_select :form_ids, current_account.forms.where.not(purpose: :attendancable), :id, :name, {include_blank: true, include_hidden: false }, {class: 'form-select  js-choice', multiple: "multiple-select-example" }%>
+              <%= f.collection_select :form_ids, current_account.forms.lessonable, :id, :name, {include_blank: true, include_hidden: false }, {class: 'form-select  js-choice', multiple: "multiple-select-example" }%>
             </div>
 
             <div class="d-flex justify-content-end align-items-center">
@@ -104,19 +73,41 @@
 </div>
 
 <script>
-  const drag_start = ()=>{
-
-  }
+  const drag_start = ()=>{}
   const drag_stop = ({ data })=>{
     setTimeout(()=>{
       const { source: el } = data
       const klass_id = $('#klass_id').attr('name')
       const student_class_id = data.source.id
       const klass_form_id = data.originalSource.parentNode.id
+      const sourceContainerId = data.sourceContainer.id
+      
+      if (klass_form_id == sourceContainerId) return
 
-      const student_form = { student_class_id, klass_form_id }
-      if(!klass_form_id) student_form._destroy = true
-      const student_forms_attributes = [student_form]
+      const student_form = { klass_form_id }
+      const student_forms_attributes = []
+
+      if(klass_form_id == 'unassigned'){
+        student_forms_attributes.push({
+          id: student_class_id,
+          _destroy: true
+        })
+      } else {
+        if (sourceContainerId == 'unassigned'){
+          student_forms_attributes.push({
+            klass_form_id, student_class_id
+          })
+        } else {
+          student_forms_attributes.push({
+            id: student_class_id,
+            _destroy: true
+          })
+          student_forms_attributes.push({
+            klass_form_id,
+            student_class_id: data.originalSource.attributes['data-scid'].nodeValue
+          })
+        }
+      }
 
       if(klass_id && student_class_id){
         $.ajax({

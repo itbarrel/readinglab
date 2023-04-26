@@ -11,7 +11,7 @@ class VacationsController < ApplicationController
 
     @search = @vacations.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
-    @pagy, @vacations = pagy(@search.result, items: per_page)
+    @pagy, @vacations = pagy(@search.result.includes(:vacation_type), items: per_page)
   end
 
   # GET /vacations/1 or /vacations/1.json
