@@ -1,0 +1,20 @@
+image: ruby:2.7.0
+
+pipelines:
+  default:
+    - step:
+        name: Rubocop
+        script:
+          - gem install rubocop
+          - rubocop
+        artifacts:
+          - rubocop.xml
+          - rubocop.html
+    # - step:
+    #     name: Build and Push Docker Image
+    #     services:
+    #       - docker
+    #     script:
+    #       - docker build -t <DockerHubUsername>/<ImageName>:<Version> .
+    #       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    #       - docker push <DockerHubUsername>/<ImageName>:<Version>
