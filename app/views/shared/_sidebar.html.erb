@@ -19,8 +19,10 @@
     </div>
     <a class="navbar-brand" href="/">
       <div class="d-flex align-items-center py-3">
-        <%= image_tag('icons/spot-illustrations/falcon.png', class: 'me-2', width: 40) %>
-        <span class="font-sans-serif">falcon</span>
+      <span class="fab fa-pied-piper-hat"></span>
+      <span>ReadingLab</span>
+        <!-- <%= image_tag('icons/spot-illustrations/falcon.png', class: 'me-2', width: 40) %>
+        <span class="font-sans-serif">falcon</span> -->
       </div>
     </a>
   </div>
@@ -51,7 +53,7 @@
                 <hr class="mb-0 navbar-vertical-divider" />
               </div>
             </div>
-            
+
             <% list.each_with_index do |second_list, sindex| %>
               <% unless second_list[:sub_items].present? %>
                 <a class="nav-link <%= (request.path_info.include?(second_list[:url])? 'active' : '')%>" href="<%= second_list[:url] %>" role="button" aria-expanded="false">

@@ -4,8 +4,10 @@
     aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
   <a class="navbar-brand me-1 me-sm-3" href="index.html">
     <div class="d-flex align-items-center">
-      <%= image_tag('icons/spot-illustrations/falcon.png', class: 'me-2', width: 40) %>
-      <span class="font-sans-serif">falcon</span>
+      <span class="fab fa-pied-piper-hat"></span>
+      <!-- <%= image_tag('icons/spot-illustrations/falcon.png', class: 'me-2', width: 40) %> -->
+      <!-- <span class="font-sans-serif">falcon</span> -->
+      <span>ReadingLab</span>
     </div>
   </a>
   <ul class="navbar-nav align-items-center d-none d-lg-block">
@@ -249,9 +251,9 @@
       </a>
       <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
         <div class="bg-white dark__bg-1000 rounded-2 py-2">
-          <a class="dropdown-item fw-bold text-warning" href="#!"><span class="fas fa-crown me-1"></span><span>Go
-              Pro</span></a>
-          <div class="dropdown-divider"></div>
+          <!-- <a class="dropdown-item fw-bold text-warning" href="#!"><span class="fas fa-crown me-1"></span><span>Go
+              Pro</span></a> -->
+          <!-- <div class="dropdown-divider"></div> -->
           <a class="dropdown-item" href="/profile">Profile &amp; account</a>
           <div class="dropdown-divider"></div>
           <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
