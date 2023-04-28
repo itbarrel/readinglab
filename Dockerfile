@@ -73,5 +73,4 @@ COPY --chown=ruby:ruby . .
 
 EXPOSE 3000
 
-# Expose port 3000 and run the application
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
