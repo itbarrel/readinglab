@@ -18,7 +18,7 @@ RUN apk --no-cache add \
     libxslt-dev \
     gcompat
 
-RUN adduser -D ruby
+RUN adduser -D -u $UID -g $GID ruby
 RUN chown -R ruby /app
 USER ruby
 
@@ -46,6 +46,9 @@ FROM ruby:3.1.0-alpine
 
 WORKDIR /app
 
+ARG UID=1000
+ARG GID=1000
+
 RUN apk --no-cache add \
     nodejs \
     tzdata \
@@ -55,7 +58,7 @@ RUN apk --no-cache add \
     libxslt-dev \
     gcompat
 
-RUN adduser -D ruby
+RUN adduser -D -u $UID -g $GID ruby
 RUN chown -R ruby /app
 USER ruby
 
