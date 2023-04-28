@@ -6,7 +6,8 @@ pipelines:
         name: Rubocop
         image: ruby:3.1.0
         script:
-          - gem install rubocop
+          - gem install bundler
+          - gem install rubocop rubocop-rails
           - rubocop
     # - step:
     #     name: Build and Push Docker Image
