@@ -2,25 +2,23 @@
   <%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
 <% end %>
 
-<div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
+<div class="card mb-3"  data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
   <div class="card-header">
     <div class="row flex-between-center">
       <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
           <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Vacations</h5>
       </div>
       <div class="col-8 col-sm-auto text-end ps-2">
-        <div class="d-none" id="table-customers-actions">
+        <div class="d-none" id="table-vacations-actions">
           <div class="d-flex">
             <select class="form-select form-select-sm" aria-label="Bulk actions">
             <option selected="">Bulk actions</option>
-            <option value="Refund">Refund</option>
             <option value="Delete">Delete</option>
-            <option value="Archive">Archive</option>
             </select>
             <button class="btn btn-falcon-default btn-sm ms-2" type="button">Apply</button>
           </div>
         </div>
-        <div id="table-customers-replace-element">
+        <div id="table-vacations-replace-element">
           <%= link_to(new_vacation_path, remote: true, class: 'btn btn-falcon-default btn-sm') do %>
             <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
             <span class="d-none d-sm-inline-block ms-1">New</span>
@@ -31,32 +29,12 @@
       </div>
     </div>
   </div>
-  <div class="card-body p-0">
-    <div class="table-responsive">
-      <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
-        <thead class="bg-200 text-900">
-          <tr>
-            <th>
-              <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox" data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
-              </div>
-            </th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name"><%= sort_link(@search, :name, default_order: :asc)%></th>
-            <th class="sort pe-1 align-middle white-space-nowrap ps-5" data-sort="address" style="min-width: 50px;">Vacation Type</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Starting Date</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Endig Date</th>
-            <th class="sort pe-1 align-middle white-space-nowrap"></th>
-          </tr>
-        </thead>
-        <tbody class="list" id="table-customers-body">
-          <% @vacations.each do |vacation| %>
-            <%= render vacation %>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-    <%= pagy_bootstrap_nav(@pagy).html_safe %>
+
+  <div class="card-body p-0" id="vacationsTable">
+    <%= render partial: 'vacations/table', locals: { vacations: @vacations } %>
   </div>
+
+
 </div>
 
 <% content_for :modal_includes do %>

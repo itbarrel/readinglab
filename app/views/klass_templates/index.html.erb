@@ -2,29 +2,27 @@
   <%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
 <% end %>
 
-<div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
+<div class="card mb-3" data-list='{"valueNames":["name","strating date","ending date","action"],"page":15}'>
   <div class="card-header">
     <div class="row flex-between-center">
       <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
           <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Class Templates</h5>
       </div>
       <div class="col-8 col-sm-auto text-end ps-2">
-        <div class="d-none" id="table-customers-actions">
+        <div class="d-none" id="table-klass_templates-actions">
           <div class="d-flex">
-            <select class="form-select form-select-sm" aria-label="Bulk actions">
-            <option selected="">Bulk actions</option>
-            <option value="Refund">Refund</option>
-            <option value="Delete">Delete</option>
-            <option value="Archive">Archive</option>
-            </select>
-            <button class="btn btn-falcon-default btn-sm ms-2" type="button">Apply</button>
-          </div>
+              <select class="form-select form-select-sm" aria-label="Bulk actions">
+                  <option selected="">Bulk actions</option>
+                  <option value="Delete">Delete</option>
+                </select>
+                <button class="btn btn-falcon-default btn-sm ms-2" id="listing-bulk-action" type="button">Apply</button>
+              </div>
         </div>
 
-        <div id="table-customers-replace-element">
+        <div id="table-klass_templates-replace-element">
           <%= link_to(new_klass_template_path, remote: true, class: 'btn btn-falcon-default btn-sm') do %>
-          <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
-          <span class="d-none d-sm-inline-block ms-1">New</span>
+            <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+            <span class="d-none d-sm-inline-block ms-1">New</span>
           <% end %>
           <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Filter</span></button>
           <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Export</span></button>
@@ -32,34 +30,9 @@
       </div>
     </div>
   </div>
-  <div class="card-body p-0">
-    <div class="table-responsive">
-      <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
-        <thead class="bg-200 text-900">
-          <tr>
-            <th>
-              <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox" data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
-              </div>
-            </th>
-            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :name, default_order: :asc)%></th>
-            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :teacher_id, default_order: :asc)%></th>
-            <th class="sort pe-1 align-middle white-space-nowrap"><%= sort_link(@search, :room_name, default_order: :asc)%></th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="max_students">Max Student</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="duration">Duration</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date">Session</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="starting date" >Start</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" ></th>
-          </tr>
-        </thead>
-        <tbody class="list" id="table-customers-body">
-          <% @klass_templates.each do |klass_template| %>
-            <%= render klass_template %>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-    <%= pagy_bootstrap_nav(@pagy).html_safe %>
+
+  <div class="card-body p-0" id="klass_templatesTable">
+    <%= render partial: 'klass_templates/table', locals: { klass_templates: @klass_templates } %>
   </div>
 </div>
 

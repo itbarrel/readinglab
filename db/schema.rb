@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_05_085727) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_13_103443) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -99,6 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_085727) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.uuid "student_id", null: false
+    t.boolean "submitted", default: false
     t.index ["account_id"], name: "index_form_details_on_account_id"
     t.index ["form_id"], name: "index_form_details_on_form_id"
     t.index ["parent_type", "parent_id"], name: "index_form_details_on_parent"
@@ -320,7 +321,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_05_085727) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.uuid "klass_id", null: false
     t.index ["klass_form_id"], name: "index_student_forms_on_klass_form_id"
+    t.index ["klass_id"], name: "index_student_forms_on_klass_id"
     t.index ["student_class_id", "klass_form_id", "deleted_at"], name: "student_forms_id", unique: true
     t.index ["student_class_id"], name: "index_student_forms_on_student_class_id"
   end

@@ -25,4 +25,10 @@
 class StudentForm < ApplicationRecord
   belongs_to :student_class
   belongs_to :klass_form
+  belongs_to :klass
+
+  delegate :student, to: :student_class
+  delegate :form, to: :klass_form
+
+  validates :student_class_id, uniqueness: { scope: %i[klass_form_id deleted_at] }
 end

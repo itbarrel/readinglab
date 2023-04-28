@@ -7,6 +7,25 @@ $('#showStudentsFormModal .modal-content').html("<%= j render 'shared/modals/for
                                                         form_url: "meetings/#{@meeting.id}/form",
                                                         form_method: :post,
                                                         form_request_js: true,
-                                                        submit_resource: 'form_details' 
+                                                        submit_resource: 'form_details'
                                                       %>");
 $('#showStudentsFormModal').modal('show');
+
+$("document").ready(function () {
+  $('#studentFormSave').click((event)=>{
+    var formData = {};
+    $.each($('#studentsForm').serializeArray(), function(i, field) {
+      formData[field.name] = field.value;
+    });
+
+    const resource = (formData.record_type ==  'Meeting')? 'meetings' : 'interviews'
+    if (formData.record_id){
+      $.ajax({
+        url: `/${resource}/${formData.record_id}/form`,
+        method: "PUT",
+        data: formData,
+        dataType: 'script'
+      });
+    }
+  })
+});

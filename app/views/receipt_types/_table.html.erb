@@ -1,0 +1,26 @@
+<div class="table-responsive">
+  <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+    <thead class="bg-200 text-900">
+      <tr>
+        <th>
+          <div class="form-check fs-0 mb-0 d-flex align-items-center">
+            <input class="form-check-input" id="checkbox-bulk-receipt-types-select" type="checkbox" data-bulk-select='{"body":"table-receipt-types-body","actions":"table-receipt-types-actions","replacedElement":"table-receipt-types-replace-element"}' />
+          </div>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">
+          <% if @search.present? %>
+            <%= sort_link(@search, :name, default_order: :asc)%>
+          <% end %>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap" ></th>
+
+      </tr>
+    </thead>
+    <tbody class="list" id="table-receipt-types-body">
+      <% receipt_types.each_with_index do |receipt_type, index| %>
+        <%= render 'receipt_type', receipt_type: receipt_type, index: index %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= render 'shared/pagination' if @pagy.present? %>

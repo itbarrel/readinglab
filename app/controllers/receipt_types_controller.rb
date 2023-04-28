@@ -3,6 +3,7 @@
 class ReceiptTypesController < ApplicationController
   load_and_authorize_resource
   before_action :set_receipt_type, only: %i[]
+  before_action :set_receipt_types, only: %i[trash]
 
   # GET /receipt_types or /receipt_types.json
   def index
@@ -64,11 +65,21 @@ class ReceiptTypesController < ApplicationController
     end
   end
 
+  def trash
+    @receipt_types.destroy_all
+    flash[:notice] = 'receipt_types has been successfully Deleted.'
+    render js: "window.location = '#{receipt_types_url}'"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_receipt_type
     @receipt_type = current_account.receipt_types.find(params[:id])
+  end
+
+  def set_receipt_types
+    @receipt_types = current_account.receipt_types.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

@@ -9,13 +9,17 @@ import "@nathanvda/cocoon";
 
 import "./anchorJS";
 import "./is";
+import "./draggable";
+
 import "../plugins/flatpickr/flatpickr";
 import "./dayjs";
 import "./echarts";
-// import "./choices";
 import "../plugins/fontawesome/all.min";
 
 import "./lodash";
 
+import "./utils";
 import "./theme/theme";
 import "./theme/calendarInit";
+import "./theme/draggable";
+import "./custom";
