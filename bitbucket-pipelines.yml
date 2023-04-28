@@ -9,11 +9,11 @@ pipelines:
           - gem install bundler
           - gem install rubocop rubocop-rails
           - rubocop
-    # - step:
-    #     name: Build and Push Docker Image
-    #     services:
-    #       - docker
-    #     script:
-    #       - docker build -t <DockerHubUsername>/<ImageName>:<Version> .
-    #       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    #       - docker push <DockerHubUsername>/<ImageName>:<Version>
+    - step:
+        name: Build and Push Docker Image
+        services:
+          - docker
+        script:
+          - docker build -t naveediftikhar/readinglab:latest .
+          - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+          - docker push naveediftikhar/readinglab:latest
