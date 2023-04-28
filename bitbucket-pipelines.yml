@@ -1,15 +1,13 @@
-image: ruby:2.7.0
+image: docker:20.10.9
 
 pipelines:
   default:
     - step:
         name: Rubocop
+        image: ruby:3.1.0
         script:
           - gem install rubocop
           - rubocop
-        artifacts:
-          - rubocop.xml
-          - rubocop.html
     # - step:
     #     name: Build and Push Docker Image
     #     services:
