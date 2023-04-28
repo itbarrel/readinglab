@@ -77,6 +77,7 @@ Rails.application.routes.draw do
     get :calendar
     get :communication
     get :profile
+    get :health
   end
 
   post :notify, controller: :emails, action: :notify

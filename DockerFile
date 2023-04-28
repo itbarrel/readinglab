@@ -1,36 +1,77 @@
+FROM ruby:3.1.0-alpine AS assets
+LABEL maintainer="Saad Mahmood <saaadii7@gmail.com>"
+
+WORKDIR /app
+
+ARG UID=1000
+ARG GID=1000
+
+RUN apk --no-cache add \
+    build-base \
+    nodejs \
+    yarn \
+    tzdata \
+    imagemagick \
+    git \
+    postgresql-dev \
+    libxml2-dev \
+    libxslt-dev \
+    gcompat
+
+RUN adduser -D ruby
+RUN chown -R ruby /app
+USER ruby
+
+COPY --chown=ruby:ruby Gemfile* ./
+RUN bundle config set --local without test development \
+    # && bundle lock --add-platform x86_64-linux \
+    && bundle install --jobs $(nproc) --retry 3 \
+    && bundle clean --force
+
+COPY --chown=ruby:ruby package.json *yarn* ./
+RUN yarn install --frozen-lockfile --silent --no-progress && yarn cache clean
+
+ARG RAILS_ENV="production"
+ARG NODE_ENV="production"
+ENV RAILS_ENV="${RAILS_ENV}" \
+    NODE_ENV="${NODE_ENV}" \
+    USER="ruby"
+
+COPY --chown=ruby:ruby . .
+RUN SECRET_KEY_BASE=$(rails secret) RAILS_ENV=production bundle exec rake assets:precompile
+
+############################################################################################
+
 FROM ruby:3.1.0-alpine
 
-# Setting env up
-ENV NODE_ENV='production'
-ENV RACK_ENV='production'
-ENV RAILS_ENV='production'
-ENV APP_PATH='/var/www/cashnow/'
+WORKDIR /app
 
-# RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apk --update add build-base nodejs tzdata libxslt-dev libxml2-dev imagemagick postgresql-dev yarn bash
+RUN apk --no-cache add \
+    nodejs \
+    tzdata \
+    imagemagick \
+    postgresql-dev \
+    libxml2-dev \
+    libxslt-dev \
+    gcompat
 
-# Set an environment variable where the Rails app is installed to inside of Docker image
-RUN mkdir -p $APP_PATH
-# Set working directory
-WORKDIR $APP_PATH
+RUN adduser -D ruby
+RUN chown -R ruby /app
+USER ruby
 
-# Adding gems
-COPY Gemfile Gemfile
-COPY Gemfile.lock Gemfile.lock
-COPY package.json package.json
-COPY yarn.lock yarn.lock
+COPY --chown=ruby:ruby bin/ ./bin
+RUN chmod 0755 bin/*
 
-RUN gem install bundler:2.3.3
-# RUN bundle config set --local without 'development test'
-RUN if [[ "$RAILS_ENV" == "production" ]]; then bundle install --jobs 20 --retry 5 --without development test; else bundle install; fi
-RUN yarn install --ignore-engines --force
+ARG RAILS_ENV="production"
+ENV RAILS_ENV="${RAILS_ENV}" \
+    PATH="${PATH}:/home/ruby/.local/bin" \
+    USER="ruby"
 
-# Adding project files
-COPY . $APP_PATH
-
-RUN DB_ADAPTER=nulldb bundle exec rake assets:precompile
+COPY --chown=ruby:ruby --from=assets /usr/local/bundle/ /usr/local/bundle/
+COPY --chown=ruby:ruby --from=assets /app/public /app/public
+COPY --chown=ruby:ruby . .
 
 EXPOSE 3000
 
-# CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
-CMD ["bundle", "exec", "foreman", "start"]
+# Expose port 3000 and run the application
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

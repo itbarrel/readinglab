@@ -1,38 +1,73 @@
-version: '3'
+# version: '3'
 # networks:
 #   database:
 #     external: true
 #   redis:
 #     external: true
 
+x-app: &default-app
+  build:
+    context: .
+    dockerfile: DockerFile
+    args:
+      - "UID=${UID:-1000}"
+      - "GID=${GID:-1000}"
+      - "RAILS_ENV=${RAILS_ENV:-production}"
+      - "NODE_ENV=${NODE_ENV:-production}"
+  # depends_on:
+  #   - "postgres"
+  #   - "redis"
+  env_file:
+    - ".env"
+  restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+  stop_grace_period: "3s"
+  tty: true
+  volumes:
+    - "${DOCKER_WEB_VOLUME:-./public:/app/public}"
+
 services:
-  backend:
-    build:
-      context: .
-      dockerfile: DockerFile
-    # volumes:
-    #   - ./ftp_files:/var/www/cashnow/ftp_files
-    # external_links:
-    #   - pg_12:pg_12
-    # restart: always
-    # networks:
-    #   - database
-    #   - redis
+  worker:
+    <<: *default-app
+    command: "bundle exec sidekiq -C config/sidekiq.yml"
+    entrypoint: []
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_WORKER_CPUS:-0}"
+          memory: "${DOCKER_WORKER_MEMORY:-0}"
+
+  web:
+    <<: *default-app
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_WEB_CPUS:-0}"
+          memory: "${DOCKER_WEB_MEMORY:-0}"
+    healthcheck:
+      test: "${DOCKER_WEB_HEALTHCHECK_TEST:-curl localhost:3000/health}"
+      interval: "60s"
+      timeout: "3s"
+      start_period: "5s"
+      retries: 3
     ports:
-      - '${PORT:-3000}:3000'
-    environment:
-      PORT: 3000
-      RAILS_ENV: 'production'
-      NODE_ENV: 'production'
-      DEFAULT_MERGE_PASSWORD: ${DEFAULT_MERGE_PASSWORD}
-      # REDIS_URL: ${REDIS_URL}
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASS: ${DB_PASS}
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
-      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
-      # WEBPACKER_DEV_SERVER_HOST: ${WEBPACKER_DEV_SERVER_HOST}
-      # WEBPACKER_DEV_SERVER_PORT: ${WEBPACKER_DEV_SERVER_PORT}
-      # SMTP_EMAIL: ${SMTP_EMAIL}
-      # SMTP_PASS: ${SMTP_PASS}
+      - '${DOCKER_WEB_PORT_FORWARD:-3000}:${PORT:-3000}'
+    depends_on:
+      - "worker"
+    # environment:
+    #   PORT: ${PORT}
+    #   RAILS_ENV: ${RAILS_ENV}
+    #   NODE_ENV: ${NODE_ENV}
+    #   DEFAULT_MERGE_PASSWORD: ${DEFAULT_MERGE_PASSWORD}
+    #   REDIS_URL: ${REDIS_URL}
+    #   DB_NAME: ${DB_NAME}
+    #   DB_USER: ${DB_USER}
+    #   DB_PASS: ${DB_PASS}
+    #   DB_HOST: ${DB_HOST}
+    #   DB_PORT: ${DB_PORT}
+    #   SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+    #   WEB_CONCURRENCY: ${WEB_CONCURRENCY}
+    #   RAILS_SERVE_STATIC_FILES: ${RAILS_SERVE_STATIC_FILES}
+    #   DOCKER_WEB_VOLUME: ${DOCKER_WEB_VOLUME}
+      # DOCKER_RESTART_POLICY: ${DOCKER_RESTART_POLICY}
+      # RAILS_SERVE_STATIC_FILES: ${RAILS_SERVE_STATIC_FILES}
+      # RAILS_SERVE_STATIC_FILES: ${RAILS_SERVE_STATIC_FILES}
