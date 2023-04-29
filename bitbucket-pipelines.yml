@@ -14,7 +14,6 @@ pipelines:
         services:
           - docker
         script:
-          - chmod -R 755 ./*
           - docker build -t naveediftikhar/readinglab:latest .
           - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
           - docker push naveediftikhar/readinglab:latest
