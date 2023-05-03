@@ -10,7 +10,25 @@ default: &default
   statement_limit: 200
 
 development:
-  <<: *default
+  primary:
+    adapter: postgresql
+    encoding: utf8
+    database: <%= ENV['DB_NAME'] %>
+    username: <%= ENV['DB_USER'] %>
+    password: <%= ENV['DB_PASS'] %>
+    host: <%= ENV['DB_HOST'] %>
+    port: <%= ENV['DB_PORT'] %>
+    statement_limit: 200
+
+  old_readinglab:
+    adapter: postgresql
+    encoding: utf8
+    database: <%= ENV['OLD_DB_NAME'] %>
+    username: <%= ENV['OLD_DB_USER'] %>
+    password: <%= ENV['OLD_DB_PASS'] %>
+    host: <%= ENV['OLD_DB_HOST'] %>
+    port: <%= ENV['OLD_DB_PORT'] %>
+    statement_limit: 200
 
 test:
   <<: *default
