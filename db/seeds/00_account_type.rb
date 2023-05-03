@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+AccountType.find_or_create_by!(name: 'School')
+
 if ENV.fetch("SEED_DATABASE").present? && true?(ENV.fetch("SEED_DATABASE"))
-  AccountType.find_or_create_by!(name: 'School')
   AccountType.find_or_create_by!(name: 'External Organization')
 
   if Rails.env.development?
