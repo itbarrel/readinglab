@@ -3,6 +3,7 @@
 class StudentsController < ApplicationController
   load_and_authorize_resource
   before_action :set_student, only: %i[]
+  before_action :set_students, only: %i[trash]
 
   # GET /students or /students.json
   def index
@@ -44,6 +45,7 @@ class StudentsController < ApplicationController
         format.html { redirect_to students_url, notice: 'Student was successfully created.' }
         format.json { render :show, status: :created, location: @student }
       else
+        process_errors(@student)
         format.html { redirect_to students_url }
         format.json { render json: @student.errors }
       end
@@ -54,10 +56,10 @@ class StudentsController < ApplicationController
   def update
     respond_to do |format|
       if @student.update(student_params)
-        format.html { redirect_to student_url(@student), notice: 'Student was successfully updated.' }
+        format.html { redirect_to students_url, notice: 'Student has been successfully updated.' }
         format.json { render :show, status: :ok, location: @student }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to students_url status: :unprocessable_entity }
         format.json { render json: @student.errors, status: :unprocessable_entity }
       end
     end
@@ -68,9 +70,15 @@ class StudentsController < ApplicationController
     @student.destroy
 
     respond_to do |format|
-      format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
+      format.html { redirect_to students_url, notice: 'Student has been successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def trash
+    @students.destroy_all
+    flash[:notice] = 'students has been successfully Deleted.'
+    render js: "window.location = '#{students_url}'"
   end
 
   private
@@ -78,6 +86,10 @@ class StudentsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_student
     @student = current_account.students.find(params[:id])
+  end
+
+  def set_students
+    @students = current_account.students.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

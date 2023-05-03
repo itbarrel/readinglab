@@ -29,7 +29,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.boolean :undeletable
       t.date :date_of_inactive
       t.boolean :external_user
-      t.timestamp :deleted_at
       t.references :account, null: false, foreign_key: true, type: :uuid
       t.string :first_name
       t.string :last_name
@@ -48,6 +47,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       # t.datetime :locked_at
 
       t.timestamps null: false
+      t.timestamp :deleted_at
     end
 
     add_index :users, [:account_id, :email, :deleted_at], unique: true, name: 'users_email'

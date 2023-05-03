@@ -1,0 +1,27 @@
+<div class="table-responsive">
+  <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+    <thead class="bg-200 text-900">
+      <tr>
+        <th>
+          <div class="form-check fs-0 mb-0 d-flex align-items-center">
+            <input class="form-check-input" id="checkbox-bulk-message_templates-select" type="checkbox" data-bulk-select='{"body":"table-message_templates-body","actions":"table-message_templates-actions","replacedElement":"table-message_templates-replace-element"}' />
+          </div>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">
+          <% if @search.present? %>
+            <%= sort_link(@search, :name, default_order: :asc)%>
+          <% end %>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Description</th>
+        <th class="sort pe-1 align-middle white-space-nowrap" ></th>
+
+      </tr>
+    </thead>
+    <tbody class="list" id="table-message_templates-body">
+      <% message_templates.each_with_index do |message_template, index| %>
+        <%= render 'message_template', message_template: message_template, index: index %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= render 'shared/pagination' if @pagy.present? %>

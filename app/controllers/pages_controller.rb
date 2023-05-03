@@ -11,4 +11,8 @@ class PagesController < ApplicationController
   end
 
   def profile; end
+
+  def health
+    head :ok
+  end
 end

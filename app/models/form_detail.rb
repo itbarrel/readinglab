@@ -8,6 +8,7 @@
 #  deleted_at  :datetime
 #  form_values :jsonb
 #  parent_type :string           not null
+#  submitted   :boolean          default(FALSE)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  account_id  :uuid             not null
@@ -40,8 +41,18 @@ class FormDetail < ApplicationRecord
   validates :form_values, presence: true, allow_blank: true
 
   before_validation :default_form_values
+  after_save :set_parent_status
 
   def default_form_values
     self.form_values ||= {}
+  end
+
+  def set_parent_status
+    return unless parent.is_a?(Interview)
+
+    parent.done!
+    return unless parent.student.scheduled?
+
+    student.wait_listed!
   end
 end

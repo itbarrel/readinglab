@@ -1,0 +1,48 @@
+<div class="d-flex">
+  <span class="fa-stack ms-n1 me-3">
+    <i class="fas fa-circle fa-stack-2x text-200"></i>
+    <i class="fa-inverse fa-stack-1x text-primary fas fa-users" data-fa-transform="shrink-2"></i>
+  </span>
+  <div class="flex-1">
+    <h5 class="mb-2 fs-0">Student Managment</h5>
+    
+    <div class="kanban-items-container border bg-white dark__bg-1000 rounded-2 py-3 mb-3" style="max-height: none;" id="unassigned">
+      <h5 class="mb-2 fs-0">UnAssigned Students</h5>
+      <% unless klass.un_assigned_student_classes.present? %>
+        <p class="text-word-break fs--1">All assigned.<p>
+      <% end %>
+      <% klass.un_assigned_student_classes.each do |sc| %>
+        <div class="card mb-3 kanban-item shadow-sm dark__bg-1100" id="<%= sc.id %>">
+          <div class="card-body">
+            <p class="fs--1 fw-medium font-sans-serif mb-0">
+              <%= sc.student.name %>
+              <%= link_to(student_class_path(sc), class: "badge badge-soft-warning rounded-pill", method: :delete, remote: true) do %>
+                <span class="fas fa-trash"></span>
+              <% end %>
+            </p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <% unless klass.forms.present? %>
+      <p class="text-word-break fs--1">Please assign forms to link students.<p>
+    <% end %>
+    <% klass.klass_forms.each do |kf| %>
+      <div class="kanban-items-container border bg-white dark__bg-1000 rounded-2 py-3 mb-3" style="max-height: none;" id="<%= kf.id %>">
+        <h5 class="mb-2 fs-0"><%= kf.form.name %></h5>
+        <% klass.student_forms.where(klass_form_id: kf.id).each do |sf| %>
+          <div class="card mb-3 kanban-item shadow-sm dark__bg-1100" id="<%= sf.id %>" data-scid="<%= sf.student_class_id %>">
+            <div class="card-body">
+              <p class="fs--1 fw-medium font-sans-serif mb-0">
+                <%= sf.student.name %>
+                <%= link_to(student_class_path(sf.student_class), class: "badge badge-soft-warning rounded-pill", method: :delete, remote: true) do %>
+                  <span class="fas fa-trash"></span>
+                <% end %>
+              </p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

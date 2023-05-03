@@ -3,6 +3,8 @@
 class MeetingsController < ApplicationController
   load_and_authorize_resource
   # before_action :set_meeting, only: %i[open_attendance submit_attendance]
+  before_action :set_student, only: %i[student_details form_details]
+  before_action :set_form, only: %i[student_details form_details]
 
   # GET /meetings or /meetings.json
   def index
@@ -61,14 +63,21 @@ class MeetingsController < ApplicationController
   def open_form
     klass = @meeting.klass
     @form = Form.find(params[:form_id])
-    @students = klass.students
+
+    students_class_ids = klass.student_forms
+                              .where(klass_form_id: @form.klass_forms.ids)
+                              .pluck(:student_class_id)
+
+    @students = StudentClass.where(id: students_class_ids).map(&:student)
   end
 
-  def submit_form
+  def open_student_details; end
+
+  def save_form
     return if params[:form_details].blank?
 
     params[:form_details].each do |student_id, submission|
-      FormDetail.find_or_create_by!(
+      fd = FormDetail.find_or_create_by!(
         user: current_user,
         student_id:,
         form_id: params[:form_id],
@@ -76,7 +85,29 @@ class MeetingsController < ApplicationController
         parent_id: @meeting.id,
         account: current_account
       )
-                .update(form_values: submission)
+
+      fd.update(form_values: submission) unless fd.submitted
+    end
+
+    flash[:notice] = 'Form Data saved successfully.'
+    respond_to do |format|
+      format.js { render 'shared/close_modal' }
+    end
+  end
+
+  def submit_form
+    return if params[:form_details].blank?
+
+    params[:form_details].each do |student_id, submission|
+      fd = FormDetail.find_or_create_by!(
+        user: current_user,
+        student_id:,
+        form_id: params[:form_id],
+        parent_type: 'Meeting',
+        parent_id: @meeting.id,
+        account: current_account
+      )
+      fd.update(form_values: submission, submitted: true) unless fd.submitted
     end
 
     flash[:notice] = 'Form Data submitted successfully.'
@@ -85,10 +116,25 @@ class MeetingsController < ApplicationController
     end
   end
 
-  # GET /meetings/1/edit
+  def student_details
+    @student = Student.find_by(id: params[:student_id])
+  end
+
+  def form_details
+    meetings = Meeting
+               .joins(:form_details)
+               .where('starts_at < ?', @meeting.starts_at)
+               .where(form_details: { student_id: @student.id, form_id: @form.id })
+               .order(starts_at: :desc).distinct.limit(3)
+    @form_details = meetings.map do |meeting|
+      meeting.form_details.filter  do |fd|
+        fd.student_id == @student.id && fd.form_id == @form.id
+      end
+    end.flatten
+  end
+
   def edit; end
 
-  # POST /meetings or /meetings.json
   def create
     @meeting = current_account.meetings.new(meeting_params)
 
@@ -106,7 +152,7 @@ class MeetingsController < ApplicationController
   def update
     respond_to do |format|
       if @meeting.update(meeting_params)
-        flash[:notice] = 'Meeting will successfully updated.'
+        flash[:notice] = 'Meeting has been successfully updated.'
         format.html { redirect_to meeting_url(@meeting), notice: 'Meeting was successfully updated.' }
         format.json { render :show, status: :ok, location: @meeting }
         format.js { render 'shared/flash' }
@@ -131,7 +177,15 @@ class MeetingsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_meeting
-    @meeting = current_account.meetings.find(params[:id])
+    @meeting = current_account.meetings.find_by(id: params[:id])
+  end
+
+  def set_student
+    @student = current_account.students.find_by(id: params[:student_id])
+  end
+
+  def set_form
+    @form = current_account.forms.find_by(id: params[:form_id])
   end
 
   # Only allow a list of trusted parameters through.

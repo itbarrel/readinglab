@@ -14,21 +14,21 @@ Parent.find_or_create_by(
   account: Account.last,
   city: City.last
 )
-if Rails.env.development?
-5.times do
-  Parent.find_or_create_by!(
-    father_first: Faker::Name.first_name ,
-    father_last: Faker::Name.last_name ,
-    mother_first: Faker::Name.first_name ,
-    mother_last: Faker::Name.last_name ,
-    father_email: Faker::Internet.email,
-    mother_email: Faker::Internet.email,
-    father_phone: Faker::PhoneNumber.cell_phone,
-    mother_phone: Faker::PhoneNumber.cell_phone,
-    postal_code: Faker::Address.zip_code,
-    address: Faker::Address.full_address,
-    account: Account.sample,
-    city: City.sample  ) 
-
-end
+if Rails.env.development? && ENV['SEEDS_OFF']
+  5.times do
+    Parent.find_or_create_by!(
+      father_first: Faker::Name.first_name,
+      father_last: Faker::Name.last_name,
+      mother_first: Faker::Name.first_name,
+      mother_last: Faker::Name.last_name,
+      father_email: Faker::Internet.email,
+      mother_email: Faker::Internet.email,
+      father_phone: Faker::PhoneNumber.cell_phone,
+      mother_phone: Faker::PhoneNumber.cell_phone,
+      postal_code: Faker::Address.zip_code,
+      address: Faker::Address.full_address,
+      account: Account.sample,
+      city: City.sample
+    ) 
+  end
 end

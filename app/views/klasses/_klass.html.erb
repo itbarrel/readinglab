@@ -1,14 +1,14 @@
   <tr class="btn-reveal-trigger">
     <td class="align-middle py-2" style="width: 28px;">
       <div class="form-check fs-0 mb-0 d-flex align-items-center">
-          <input class="form-check-input" type="checkbox" id="customer-0" data-bulk-select-row="data-bulk-select-row" />
+          <input class="form-check-input" type="checkbox" id="<%= klass.id %>" data-bulk-select-row="data-bulk-select-row" />
       </div>
     </td>
     <td class="name align-middle white-space-nowrap py-2"><%= klass.name %></td>
-    <td class="email align-middle py-2"><%= klass.teacher.name %></td>
-    <td class="phone align-middle white-space-nowrap py-2"><%= klass.room.name %></td>
-    <td class="phone align-middle white-space-nowrap py-2"><%= klass.students.count %></td>
-    <td class="phone align-middle white-space-nowrap py-2"><%= klass.range_type %></td>
+    <td class="email align-middle white-space-nowrap py-2"><%= klass.teacher&.name %></td>
+    <td class="phone align-middle white-space-nowrap py-2"><%= klass.room&.name %></td>
+    <td class="phone align-middle white-space-nowrap py-2"><%= klass.max_students %></td>
+    <td class="phone align-middle white-space-nowrap py-2"><%= klass.duration %></td>
     <td class="phone align-middle white-space-nowrap py-2"><%= klass.session_range %></td>
     <td class="align-middle white-space-nowrap py-2 text-end">
       <div class="dropdown font-sans-serif position-static">
@@ -21,7 +21,7 @@
         </div>
     </div>
     </td>
-  </tr>  
+  </tr>
 
 <% content_for :modal_includes do %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'editKlassModal', modal_size: 'modal-lg' } %>

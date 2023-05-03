@@ -2,25 +2,31 @@
 
 require 'sidekiq/web'
 Rails.application.routes.draw do
+  concern :trashable do
+    collection do
+      delete :trash
+    end
+  end
+
   devise_for :users, controllers: { registrations: :registrations }
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   mount Sidekiq::Web => '/sidekiq'
 
-  resources :accounts, :vacations, :rooms, :teachers, :staffs, :books
-  resources :message_templates, :form_fields, :field_values, :trajectory_details
+  resources :accounts, :rooms, :teachers, :vacations, :parents, :staffs, :books, :forms, concerns: :trashable
+  resources :message_templates, :form_fields, :field_values, :trajectory_details, concerns: :trashable
+  resources :receipt_types, :receipts, :parents, concerns: :trashable
 
-  resources :parents, :forms, :receipt_types, :receipts
-
-  resources :events, only: %i[show]
+  resources :events, only: %i[show update]
   resources :student_classes, only: %i[create destroy]
   resources :klass_templates do
+    concerns :trashable
     member do
       get :assign
     end
   end
 
   resources :klasses do
+    concerns :trashable
     collection do
       get :availability
     end
@@ -30,15 +36,22 @@ Rails.application.routes.draw do
   end
 
   resources :meetings do
+    concerns :trashable
     member do
+      get :form_details
+      get :student_details
+
       get :attendance, action: 'open_attendance'
       post :attendance, action: 'submit_attendance'
       get :form, action: 'open_form'
       post :form, action: 'submit_form'
+      put :form, action: 'save_form'
+      get :student_detail, action: 'open_student_details'
     end
   end
 
   resources :interviews do
+    concerns :trashable
     member do
       get :form, action: 'open_form'
       post :form, action: 'submit_form'
@@ -46,12 +59,14 @@ Rails.application.routes.draw do
   end
 
   resources :students do
+    concerns :trashable
     collection do
       get :present_search
     end
   end
 
   resources :reports, only: %i[] do
+    concerns :trashable
     collection do
       get :graph
     end
@@ -62,6 +77,7 @@ Rails.application.routes.draw do
     get :calendar
     get :communication
     get :profile
+    get :health
   end
 
   post :notify, controller: :emails, action: :notify

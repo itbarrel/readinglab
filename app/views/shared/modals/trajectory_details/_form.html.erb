@@ -8,11 +8,11 @@
     <div class="col-lg-6">
       <div class="mb-3">
         <%= f.label :book_id, class: 'fs-0' %>
-        <%= f.collection_select :book_id, Book.all, :id, :name, { include_blank: true }, { class: 'form-control' } %>
+        <%= f.collection_select :book_id, current_account.books, :id, :name, { include_blank: true }, { class: 'form-control' } %>
       </div>
       <div class="mb-3">
         <%= f.label :student_id, class: 'fs-0' %>
-        <%= f.collection_select :student_id, Student.all, :id, :name, { include_blank: true }, { class: 'form-control' } %>
+        <%= f.collection_select :student_id, current_account.students, :id, :name, { include_blank: true }, { class: 'form-control' } %>
       </div>
       <div class="mb-3">
         <%= f.label :error_count, class: 'fs-0' %>
@@ -26,7 +26,7 @@
     <div class="col-lg-6">
       <div class="mb-3">
         <%= f.label :klass_id, "Class",class: 'fs-0' %>
-        <%= f.collection_select :klass_id, Klass.all, :id, :name, { include_blank: true }, { class: 'form-control' } %>
+        <%= f.collection_select :klass_id, current_account.klasses, :id, :name, { include_blank: true }, { class: 'form-control' } %>
       </div>
       <div class="mb-3">
         <%= f.label :wpm,"Words per minutes (Wpm)", class: 'fs-0' %>

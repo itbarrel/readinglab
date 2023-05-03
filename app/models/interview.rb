@@ -31,7 +31,8 @@ class Interview < ApplicationRecord
   belongs_to :account
   belongs_to :form
   belongs_to :student
-  has_many :form_details, as: :parent, dependent: :destroy
+  has_many :form_details, as: :parent, dependent: nil
+
   enum :status, %i[done waiting cancel]
 
   validates :date, :status, presence: true

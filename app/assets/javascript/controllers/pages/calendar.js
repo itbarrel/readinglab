@@ -43,10 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
       date.getSeconds(prevDate.getSeconds())
 
       $.ajax({
-        url: `/meetings/${event.id}`,
+        url: `/events/${event.id}`,
         method: 'PUT',
         dataType: 'script',
-        data: { meeting: { starts_at: date.toISOString() }}
+        data: { event: { datetime: date.toISOString() }}
       });
     },
     dateClick: (info) => {

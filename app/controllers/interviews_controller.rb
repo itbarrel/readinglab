@@ -3,6 +3,7 @@
 class InterviewsController < ApplicationController
   load_and_authorize_resource except: [:index]
   before_action :set_interview, only: %i[]
+  before_action :set_interviews, only: %i[trash]
 
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
@@ -110,11 +111,21 @@ class InterviewsController < ApplicationController
     end
   end
 
+  def trash
+    @interviews.destroy_all
+    flash[:notice] = 'interviews has been successfully Deleted.'
+    render js: "window.location = '#{interviews_url}'"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_interview
     # @interview = Interview.find(params[:id])
+  end
+
+  def set_interviews
+    @interviews = current_account.interviews.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

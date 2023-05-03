@@ -41,11 +41,11 @@
       <div class="col-lg-5">
         <div class="mb-3">
           <%= f.label :available_teacher, class: 'fs-0' %>
-          <%= f.collection_select :teacher_id, Teacher.all, :id, :name, {}, { class: 'form-control' } %>
+          <%= f.collection_select :teacher_id, current_account.teachers, :id, :name, {}, { class: 'form-control' } %>
         </div>
           <div class="mb-3">
             <%= f.label :available_room, class: 'fs-0' %>
-            <%= f.collection_select :room_id, Room.all, :id, :name, {}, { class: 'form-control' } %>
+            <%= f.collection_select :room_id, current_account.rooms, :id, :name, {}, { class: 'form-control' } %>
           </div>
         </div>
       </div>

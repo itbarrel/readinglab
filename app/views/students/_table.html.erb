@@ -1,0 +1,31 @@
+<div class="table-responsive">
+  <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+    <thead class="bg-200 text-900">
+      <tr>
+        <th>
+          <div class="form-check fs-0 mb-0 d-flex align-items-center">
+            <input class="form-check-input" id="checkbox-bulk-students-select" type="checkbox" data-bulk-select='{"body":"table-students-body","actions":"table-students-actions","replacedElement":"table-students-replace-element"}' />
+          </div>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">
+          <% if @search.present? %>
+            <%= sort_link(@search, :name, default_order: :asc)%>
+          <% end %>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Parents</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Gender</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Date of Birth</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Grade</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Status</th>
+        <th class="sort pe-1 align-middle white-space-nowrap" ></th>
+
+      </tr>
+    </thead>
+    <tbody class="list" id="table-students-body">
+      <% students.each_with_index do |student, index| %>
+        <%= render 'student', student: student, index: index %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= render 'shared/pagination' if @pagy.present? %>

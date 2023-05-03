@@ -29,15 +29,21 @@ class Meeting < ApplicationRecord
   belongs_to :account
   belongs_to :klass
 
-  ##### Klass associations #####
+  has_many :student_meetings, dependent: nil
+  has_many :form_details, as: :parentable, dependent: nil
+  has_many :attentive_students, through: :student_meetings, source: 'student'
+
+  ###### Klass associations #####
   delegate :students, to: :klass
   delegate :teacher, to: :klass
   delegate :room, to: :klass
   delegate :meetings, to: :klass
   delegate :student_classes, to: :klass
   delegate :attendance_form, to: :klass
+  delegate :forms, to: :klass
 
   has_many :student_meetings, dependent: :destroy
+  has_many :form_details, as: :parent, dependent: nil
   has_many :attentive_students, through: :student_meetings, source: 'student'
 
   validates :starts_at, presence: true

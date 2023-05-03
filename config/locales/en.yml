@@ -13,6 +13,9 @@ en:
     attributes:
       teacher:
         first_name: 'Teacher Name'
+      parent:
+        father_first: 'Father Name'
+        mother_first: 'Mother Name'
       room:
         name: 'Room Name'
 
