@@ -1,26 +1,29 @@
 # frozen_string_literal: true
 
-User.find_or_create_by!(
-  first_name: 'Super',
-  last_name: 'Admin',
-  email: 'super_admin@readinglab.co',
-  role: :super_admin,
-  account: Account.sample
-) do |user|
-  user.password = '12345678'
-end
-
-User.find_or_create_by!(
-  first_name: 'Senior',
-  last_name: 'Admin',
-  email: 'support@readinglab.co',
-  role: :admin,
-  account: Account.sample
-) do |user|
-  user.password = '12345678'
+account = Account.sample
+if account.present?
+  User.find_or_create_by!(
+    first_name: 'Super',
+    last_name: 'Admin',
+    email: 'super_admin@readinglab.co',
+    role: :super_admin,
+    account: account
+  ) do |user|
+    user.password = '12345678'
+  end
 end
 
 if ENV.fetch("SEED_DATABASE").present? && true?(ENV.fetch("SEED_DATABASE"))
+  User.find_or_create_by!(
+    first_name: 'Senior',
+    last_name: 'Admin',
+    email: 'support@readinglab.co',
+    role: :admin,
+    account: Account.sample
+  ) do |user|
+    user.password = '12345678'
+  end
+
   User.find_or_create_by!(
     first_name: 'Junior',
     last_name: 'Admin',
