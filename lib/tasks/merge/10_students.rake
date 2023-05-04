@@ -15,6 +15,12 @@ namespace :merge do
       x.update(first: "#{x.first}.")
     end
 
+    gender_mapping = {
+      'M': 'male',
+      'F': 'female',
+      'O': 'others'
+    }
+
     Old::Student.where.not(parent_id: deleted_parents).each do |old_student|
       Student.find_or_create_by!(
         first_name: old_student.first,
@@ -31,7 +37,7 @@ namespace :merge do
         student.prepaid_sessions = old_student.prepaid_sessions
         student.registration_date = old_student.registration_date
         student.dates = old_student.dates
-        student.sex = old_student.sex
+        student.gender = gender_mapping[old_student.sex.to_sym]
         student.credit_session = old_student.credit_session
         student.created_at = old_student.created_at
         student.updated_at = old_student.updated_at

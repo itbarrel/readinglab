@@ -25,7 +25,7 @@ namespace :merge do
         account_id: old_form.account_id
       ) do |form|
         form.id = old_form.id
-        form.purpose = 'nothing'
+        form.purpose = 'general'
         form.purpose = 'lessonable' if old_form.for_lesson == true
         form.purpose = 'attendancable' if old_form.attendance_form == true
 
