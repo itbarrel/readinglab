@@ -7,7 +7,7 @@ class CreateBooks < ActiveRecord::Migration[7.0]
       t.string :grade
       t.datetime :deleted_at
       t.references :account, null: false, foreign_key: true, type: :uuid
-      t.references :klass, null: false, foreign_key: true, type: :uuid
+      t.references :klass, null: true, foreign_key: true, type: :uuid
 
       t.timestamps
     end
