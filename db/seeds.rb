@@ -9,6 +9,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 require 'faker'
+include ApplicationHelper
 
 Dir[Rails.root.join('./db/seeds/*.rb')].sort.each do |file|
   puts "= Processing #{file.split('/').last}"
