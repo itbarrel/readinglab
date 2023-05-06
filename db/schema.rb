@@ -90,7 +90,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_103443) do
 
   create_table "form_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.jsonb "form_values"
-    t.uuid "user_id", null: false
+    t.uuid "user_id"
     t.uuid "form_id", null: false
     t.uuid "account_id", null: false
     t.string "parent_type", null: false
