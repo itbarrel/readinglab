@@ -12,8 +12,8 @@ class CreateTrajectoryDetails < ActiveRecord::Migration[7.0]
 
       t.references :account, null: false, foreign_key: true, type: :uuid
       t.references :student, null: false, foreign_key: true, type: :uuid
-      t.references :klass, null: false, foreign_key: true, type: :uuid
-      t.references :book, null: false, foreign_key: true, type: :uuid
+      t.references :klass, null: true, foreign_key: true, type: :uuid
+      t.references :book, null: true, foreign_key: true, type: :uuid
       
       t.timestamps
       t.datetime :deleted_at

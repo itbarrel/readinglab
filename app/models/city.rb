@@ -16,4 +16,8 @@
 #
 class City < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: %i[name deleted_at] }
+
+  def self.default_seeds
+    %w[Lahore]
+  end
 end

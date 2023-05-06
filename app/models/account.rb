@@ -61,4 +61,8 @@ class Account < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: %i[name deleted_at] }
 
   enum :billing_scheme, %i[sessionly monthly annual]
+
+  def self.default_seeds
+    %w[ReadingLab]
+  end
 end

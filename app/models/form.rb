@@ -39,4 +39,8 @@ class Form < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
 
   accepts_nested_attributes_for :form_fields, allow_destroy: true, reject_if: :all_blank
+
+  def self.default_seeds
+    ['Attendance Form']
+  end
 end

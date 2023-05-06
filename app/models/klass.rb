@@ -63,12 +63,14 @@ class Klass < ApplicationRecord
 
   enum :range_type, %i[sessional monthly]
 
+  attr_accessor :skip_validations
+
   validates :duration, :starts_at, presence: true
   validates :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, inclusion: { in: [true, false] }
 
   accepts_nested_attributes_for :student_forms, allow_destroy: true, reject_if: :all_blank
 
-  after_create :create_meetings
+  after_create :create_meetings, unless: :skip_validations
 
   def days_abbr
     (monday ? 'M' : '.') + (tuesday ? 'T' : '.') + (wednesday ? 'W' : '.') + \
