@@ -27,6 +27,5 @@
 class Payment < ApplicationRecord
   belongs_to :student
   belongs_to :receipt, optional: true
-
-  has_many :meetings, through: :payment_meetings
+  belongs_to :meeting
 end
