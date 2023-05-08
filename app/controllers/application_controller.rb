@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   def generate_sidebar
     settings = [
       { url: '/accounts', text: 'Account', class: '', icon: 'bi bi-people-fill', sub_items: [], model: Account },
+      { url: '/payments', text: 'Payments', class: '', icon: 'micon bi bi-credit-card', model: Form },
       { url: '/forms', text: 'Forms', class: '', icon: 'micon bi bi-clipboard-data-fill', model: Form },
       { url: '/klass_templates', text: 'Class Templates ', class: '', icon: 'micon bi bi-people-fill', model: KlassTemplate },
       { url: '/message_templates', text: 'Message Templates', class: '', icon: 'bi bi-envelope-fill', model: MessageTemplate },
