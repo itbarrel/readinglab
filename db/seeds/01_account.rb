@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 if ENV.fetch("SEED_DATABASE").present? && true?(ENV.fetch("SEED_DATABASE"))
   Account.find_or_create_by(
     name: "Vermont",
