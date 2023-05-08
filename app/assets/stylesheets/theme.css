@@ -24108,7 +24108,7 @@ h5, .h5 {
 .navbar-vertical .toggle-icon-wrapper {
   margin-left: -0.75rem;
   padding-left: 0.125rem;
-  margin-right: 1.25rem;
+  margin-right: 0.125rem;
 }
 .navbar-vertical .navbar-collapse {
   overflow: hidden;
@@ -24591,7 +24591,7 @@ h5, .h5 {
   }
   .navbar-vertical.navbar-expand-xl.navbar-card .toggle-icon-wrapper, .navbar-vertical.navbar-expand-xl.navbar-vibrant .toggle-icon-wrapper, .navbar-vertical.navbar-expand-xl.navbar-inverted .toggle-icon-wrapper {
     margin-left: 0.25rem;
-    margin-right: 1.5rem;
+    margin-right: 0.25rem;
   }
   .navbar-vertical.navbar-expand-xl.navbar-card .navbar-collapse,
 .navbar-vertical.navbar-expand-xl.navbar-card .navbar-vertical-content, .navbar-vertical.navbar-expand-xl.navbar-vibrant .navbar-collapse,
