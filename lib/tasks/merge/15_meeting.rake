@@ -9,7 +9,7 @@ namespace :merge do
       klasses[x.id] = true
     end
 
-    Old::Meeting.all.each do |old_meeting|
+    Old::Meeting.find_each(batch_size: 100) do |old_meeting|
       next unless klasses[old_meeting.r_class_id]
 
       Meeting.find_or_create_by!(

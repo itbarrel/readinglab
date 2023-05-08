@@ -21,7 +21,7 @@ namespace :merge do
       students[x.id] = true
     end
 
-    Old::FormDetail.all.each do |old_form_detail|
+    Old::FormDetail.find_each(batch_size: 100) do |old_form_detail|
       unless meetings[old_form_detail.parent_id] &&
              old_form_detail.parent_type == 'Meeting' ||
              interviews[old_form_detail.parent_id] &&

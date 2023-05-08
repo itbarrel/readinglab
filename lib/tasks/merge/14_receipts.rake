@@ -3,7 +3,7 @@
 namespace :merge do
   desc 'Merges receipts to new tables'
   task receipts: :environment do
-    Old::Receipt.all.each do |old_receipt|
+    Old::Receipt.find_each(batch_size: 100) do |old_receipt|
       Receipt.create!(
         account_id: old_receipt.account_id,
         student_id: old_receipt.student_id,

@@ -21,7 +21,7 @@ namespace :merge do
       'O': 'others'
     }
 
-    Old::Student.where.not(parent_id: deleted_parents).each do |old_student|
+    Old::Student.where.not(parent_id: deleted_parents).find_each(batch_size: 100) do |old_student|
       Student.find_or_create_by!(
         first_name: old_student.first,
         last_name: old_student.last,
