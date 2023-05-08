@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: :registrations }
 
   mount Sidekiq::Web => '/sidekiq'
-
+  resources :payments
   resources :accounts, :rooms, :teachers, :vacations, :parents, :staffs, :books, :forms, concerns: :trashable
   resources :message_templates, :form_fields, :field_values, :trajectory_details, concerns: :trashable
   resources :receipt_types, :receipts, :parents, concerns: :trashable
