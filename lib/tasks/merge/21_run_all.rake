@@ -21,7 +21,7 @@ namespace :merge do
     Rake::Task['merge:books'].execute
     Rake::Task['merge:trajectory_details'].execute
     Rake::Task['merge:student_classes'].execute
-    Rake::Task['merge:form_detials'].execute
+    Rake::Task['merge:form_details'].execute
     puts 'Successfully Merged All Task.'
   end
 end
