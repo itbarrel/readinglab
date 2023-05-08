@@ -15,7 +15,7 @@
 #  form_id     :uuid             not null
 #  parent_id   :uuid             not null
 #  student_id  :uuid             not null
-#  user_id     :uuid             not null
+#  user_id     :uuid
 #
 # Indexes
 #
@@ -33,7 +33,7 @@
 #
 class FormDetail < ApplicationRecord
   belongs_to :account
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :form
   belongs_to :student
   belongs_to :parent, polymorphic: true

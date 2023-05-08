@@ -11,7 +11,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  account_id :uuid             not null
-#  klass_id   :uuid             not null
+#  klass_id   :uuid
 #
 # Indexes
 #
@@ -26,6 +26,6 @@
 #
 class Book < ApplicationRecord
   belongs_to :account
-  belongs_to :klass
+  belongs_to :klass, optional: true
   validates :name, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
 end

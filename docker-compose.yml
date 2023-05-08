@@ -70,7 +70,7 @@ services:
   #     - ./certbot/www:/var/www/certbot:rw
   #   depends_on:
   #     - nginx
-  #   # command: certonly --webroot -w /var/www/certbot/ --force-renewal --email saad@gmail.com -d saaad.local.com --agree-tos
+  #   # command: certonly --webroot -w /var/www/certbot/ --force-renewal --email saad@gmail.com -d dev.readinglab.co --agree-tos
   #   entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
   # certbot:
@@ -78,7 +78,7 @@ services:
   #   volumes:
   #     - ./certbot:/var/www/certbot
   #     - /etc/letsencrypt:/etc/letsencrypt
-  #   command: certonly --webroot --webroot-path=${CERTBOT_PATH:-/var/www/certbot} --email saad@gmail.com --agree-tos -d saaad.local.com --staging
+  #   command: certonly --webroot --webroot-path=${CERTBOT_PATH:-/var/www/certbot} --email saad@gmail.com --agree-tos -d dev.readinglab.co --staging
 
 
     # environment:
@@ -97,5 +97,3 @@ services:
     #   RAILS_SERVE_STATIC_FILES: ${RAILS_SERVE_STATIC_FILES}
     #   DOCKER_WEB_VOLUME: ${DOCKER_WEB_VOLUME}
       # DOCKER_RESTART_POLICY: ${DOCKER_RESTART_POLICY}
-      # RAILS_SERVE_STATIC_FILES: ${RAILS_SERVE_STATIC_FILES}
-      # RAILS_SERVE_STATIC_FILES: ${RAILS_SERVE_STATIC_FILES}
