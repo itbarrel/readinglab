@@ -3,18 +3,22 @@ image: docker:20.10.9
 pipelines:
   default:
     - step:
-        name: Rubocop
-        image: ruby:3.1.0
-        script:
-          - gem install bundler
-          - gem install rubocop rubocop-rails
-          - rubocop
+      name: Rubocop
+      image: ruby:3.1.0
+      script:
+        - gem install bundler
+        - gem install rubocop rubocop-rails
+        - rubocop
+      only:
+        - main
     - step:
-        name: Build and Push Docker Image
-        services:
-          - docker
-        script:
-          - export DOCKER_BUILDKIT=1
-          - docker build -t naveediftikhar/readinglab:latest .
-          - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-          - docker push naveediftikhar/readinglab:latest
+      name: Build and Push Docker Image
+      services:
+        - docker
+      script:
+        - export DOCKER_BUILDKIT=1
+        - docker build -t naveediftikhar/readinglab:latest .
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push naveediftikhar/readinglab:latest
+      only:
+        - main
