@@ -1,0 +1,40 @@
+<% @meetings.in_groups_of((meetings.length/3.to_f).ceil).each do |m_group| %>
+  <div class="col-lg-4 pe-lg-2">
+    <div class="card">
+      <div class="card-header ">
+        <h6 class="mb-0">Select/Unselect to adjust payments</h6>
+      </div>
+      <div class="card-body p-0 scrollbar to-do-list-body-height">
+        <% m_group.each do |meeting| %>
+          <% if meeting.present? %>
+            <div class="d-flex justify-content-between border-top hover-actions-trigger btn-reveal-trigger px-card border-200 todo-list-item">
+              <div class="form-check mb-0 d-flex align-items-center">
+                <input class="form-check-input rounded-circle form-check-line-through p-2 form-check-input-primary payment_meeting"
+                  type="checkbox" id="<%= meeting.id %>" <%= 'checked' if payment_meeting_ids.include?(meeting.id) %> />
+                <label class="form-check-label mb-0 p-3" for="<%= meeting.id %>">
+                  Meeting Time: <%= l meeting.starts_at %><br>
+                  <%= meeting.short_name %>
+                </label>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  $('.payment_meeting').change(function() {
+    checked = $(this).is(':checked')
+    meeting_id = $(this).attr('id')
+    student_id = $('#payment_student').val()
+
+    $.ajax({
+      url: `/payments`,
+      method: 'POST',
+      dataType: 'script',
+      data: { student_id, meeting_id, checked }
+    });
+  });
+</script>
