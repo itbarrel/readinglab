@@ -9,11 +9,13 @@
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  klass_form_id    :uuid             not null
+#  klass_id         :uuid             not null
 #  student_class_id :uuid             not null
 #
 # Indexes
 #
 #  index_student_forms_on_klass_form_id     (klass_form_id)
+#  index_student_forms_on_klass_id          (klass_id)
 #  index_student_forms_on_student_class_id  (student_class_id)
 #  student_forms_id                         (student_class_id,klass_form_id,deleted_at) UNIQUE
 #

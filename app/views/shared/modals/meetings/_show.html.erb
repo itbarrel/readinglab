@@ -22,14 +22,14 @@
               <h5 class="mb-2 fs-0">Students</h5>
               <ul class="nav flex-lg-column fs--1">
                 <% meeting.students.each do |student| %>
-                  <li class="nav-item me-2 me-lg-0">
-                    <a class="nav-link nav-link-card-details">
+                  <li class="nav-item me-2 me-lg-0 ">
+                    <span class="nav-link nav-link-card-details">
                       <span class="fas fa-user me-2"></span>
                       <%= student.name %>
                       <%= link_to(student_details_meeting_path(meeting, student_id: student.id), class: "badge badge-soft-warning rounded-pill", remote: true) do %>
                         <span class="fas fa-trash"></span>
                       <% end %>
-                    </a>
+                    </span>
                   </li>
                 <% end %>
                 <% unless meeting.students.present? %>
@@ -42,16 +42,8 @@
         <div class="col-lg-6">
           <h6 class="mt-5 mt-lg-0">Daily Workables</h6>
           <%= form_tag(form_meeting_path(meeting), id: 'showAssessmentForm', method: :get, remote: true) do |f| %>
-            <div class="p-2 mb-3">
-              <div class="row">
-                <div class="col-lg-8">
-                  <%= select_tag(:form_id, options_from_collection_for_select(meeting.klass.forms.order("name ASC"), :id, :name), include_blank: 'Please select form', class: 'form-control', required: true) %>
-                </div>
-                <div class="col-lg-4">
-                  <%= submit_tag "Open Form", class: "btn btn-info" %>
-                </div>
-              </div>
-            </div>
+            <%= select_tag(:form_id, options_from_collection_for_select(meeting.klass.forms.order("name ASC"), :id, :name), include_blank: 'Please select form', class: 'form-control', required: true) %>
+            <%= submit_tag "Open Form", class: "far fa-paper-plane" %>
           <% end %>
           <% if meeting.attendance_form.present? %>
             <div class="d-grid gap-2">

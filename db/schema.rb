@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_13_103443) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_05_131940) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -262,6 +262,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_103443) do
     t.index ["city_id"], name: "index_parents_on_city_id"
   end
 
+  create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "student_id", null: false
+    t.uuid "meeting_id", null: false
+    t.uuid "receipt_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["meeting_id"], name: "index_payments_on_meeting_id"
+    t.index ["receipt_id"], name: "index_payments_on_receipt_id"
+    t.index ["student_id"], name: "index_payments_on_student_id"
+  end
+
   create_table "receipt_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "status"
@@ -472,6 +484,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_103443) do
   add_foreign_key "message_templates", "accounts"
   add_foreign_key "parents", "accounts"
   add_foreign_key "parents", "cities"
+  add_foreign_key "payments", "meetings"
+  add_foreign_key "payments", "receipts"
+  add_foreign_key "payments", "students"
   add_foreign_key "receipt_types", "accounts"
   add_foreign_key "receipts", "accounts"
   add_foreign_key "receipts", "receipt_types"

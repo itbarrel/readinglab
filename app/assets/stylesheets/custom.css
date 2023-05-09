@@ -8,3 +8,50 @@
 .pagination{
   padding: 10px;
 }
+
+.logo_name{
+  font-size: 24px;  
+}
+
+.nav-link-card-details{
+  display: flex;
+  align-items: center;
+}
+
+.nav-link-card-details a{
+  margin-left: auto;
+}
+
+#showAssessmentForm{
+  position: relative;
+}
+
+#showAssessmentForm svg{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #2d7be5;
+}
+
+.unassigned-students{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#calendar-teacher-selection{
+  margin-left: 20px;
+}
+
+#calendar-teacher-selection select{
+  padding: 20px 0px 5px 8px;
+  height: auto;
+}
+
+#calendar-teacher-selection label{
+  padding: 0px;
+  bottom: 0;
+  top: auto;
+  padding-left: 8px;
+  transform: translateY(5px);
+}

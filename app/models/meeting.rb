@@ -28,7 +28,7 @@
 class Meeting < ApplicationRecord
   belongs_to :account
   belongs_to :klass
-
+  has_many :payments, dependent: nil
   has_many :student_meetings, dependent: nil
   has_many :form_details, as: :parentable, dependent: nil
   has_many :attentive_students, through: :student_meetings, source: 'student'
