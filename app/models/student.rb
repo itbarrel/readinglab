@@ -35,6 +35,7 @@
 #  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (parent_id => parents.id)
 #
+# ff0eedf6-77d9-49c8-b30f-5d5f8b89a814
 class Student < ApplicationRecord
   belongs_to :account
   belongs_to :parent
@@ -45,7 +46,10 @@ class Student < ApplicationRecord
           dependent: :destroy,
           inverse_of: 'student'
   has_many :student_classes, dependent: :destroy
+  has_many :klasses, through: :student_classes
+  has_many :meetings, through: :klasses
   has_many :form_details, dependent: nil
+  has_many :payments, dependent: nil
 
   enum :status, %i[registered scheduled wait_listed active]
   enum :gender, %i[male female others not_mentioned]

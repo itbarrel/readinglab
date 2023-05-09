@@ -1,0 +1,5 @@
+$('#payment_details').html("<%= j render 'payments/details', meetings: @meetings, student: @student, payment_meeting_ids: @payment_meeting_ids %>");
+
+$("#flash_messages").html("<%= j render 'shared/flash' %>");
+var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+toastElList.map((toastEl) => new window.bootstrap.Toast(toastEl).show())

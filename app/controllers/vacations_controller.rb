@@ -66,7 +66,7 @@ class VacationsController < ApplicationController
 
   def trash
     @vacations.destroy_all
-    flash[:notice] = 'vacations has been successfully Deleted.'
+    flash[:notice] = 'Vacations has been successfully Deleted.'
     render js: "window.location = '#{vacations_url}'"
   end
 
