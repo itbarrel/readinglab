@@ -13,7 +13,7 @@ namespace :merge do
       templates[x.id] = true
     end
 
-    Old::RClass.find_each(batch_size: 100) do |old_klass|
+    Old::RClass.find_each(batch_size: 200) do |old_klass|
       Klass.find_or_create_by!(
         starts_at: old_klass.start,
         session_range: old_klass.session_range,

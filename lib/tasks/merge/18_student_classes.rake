@@ -15,7 +15,7 @@ namespace :merge do
       students[x.id] = true
     end
 
-    Old::StudentClass.find_each(batch_size: 100) do |old_student_class|
+    Old::StudentClass.find_each(batch_size: 200) do |old_student_class|
       next unless klasses[old_student_class.r_class_id] && students[old_student_class.student_id]
 
       StudentClass.find_or_create_by!(

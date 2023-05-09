@@ -3,7 +3,7 @@
 namespace :merge do
   desc 'Merges parents to new tables'
   task parents: :environment do
-    Old::Parent.find_each(batch_size: 100) do |old_parent|
+    Old::Parent.find_each(batch_size: 200) do |old_parent|
       Parent.find_or_create_by!(
         father_first: old_parent.father_first,
         father_last: old_parent.father_last.presence || 'Father',
