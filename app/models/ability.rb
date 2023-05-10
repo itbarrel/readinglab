@@ -40,5 +40,7 @@ class Ability
     can :manage, StudentClass, { student: { account_id: user.account_id }, klass: { account_id: user.account_id } }
     can :manage, KlassForm, { klass: { account_id: user.account_id }, form: { account_id: user.account_id } }
     can :manage, StudentForm, { student: { account_id: user.account_id }, form: { account_id: user.account_id } }
+    can :manage, Payment,
+        { student: { account_id: user.account_id }, meeting: { account_id: user.account_id }, receipt: { account_id: user.account_id } }
   end
 end

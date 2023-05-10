@@ -1,8 +1,11 @@
 <nav class="mt-3">
   <ul class="pagination pagination-sm justify-content-center">
+    <% query[:q] = params[:q].presence&.to_unsafe_h %>
+
     <% if @pagy.prev %>
+      <% query[:page] = @pagy.prev.to_s %>
       <li class="page-item">
-        <%= link_to 'Previous', url_for(page: @pagy.prev.to_s), class: 'page-link', rel: 'prev' %>
+        <%= link_to 'Previous', url_for(query), class: 'page-link', rel: 'prev', remote: js_request %>
       </li>
     <% else %>
       <li class="page-item disabled">
@@ -12,8 +15,9 @@
 
     <% @pagy.series.each do |item| %>
       <% if item.is_a? Integer %>
+        <% query[:page] = item %>
         <li class="page-item">
-          <%= link_to item, url_for(page: item), class: 'page-link' %>
+          <%= link_to item, url_for(query), class: 'page-link', remote: js_request %>
         </li>
       <% else %>
         <li class="page-item active">
@@ -23,8 +27,9 @@
     <% end %>
 
     <% if @pagy.next %>
+      <% query[:page] = @pagy.next.to_s %>
       <li class="page-item">
-        <%= link_to 'Next', url_for(page: @pagy.next.to_s), class: 'page-link', rel: 'next' %>
+        <%= link_to 'Next', url_for(query), class: 'page-link', rel: 'next', remote: js_request %>
       </li>
     <% else %>
       <li class="page-item disabled">

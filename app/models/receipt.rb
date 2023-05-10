@@ -35,6 +35,7 @@ class Receipt < ApplicationRecord
   belongs_to :account
   belongs_to :student
   belongs_to :receipt_type
+  has_many :payments, dependent: nil
 
   validates :amount, :sessions_count, presence: true
 end

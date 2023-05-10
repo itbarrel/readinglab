@@ -1,40 +1,23 @@
-<% content_for :search_includes do %>
-  <%= render partial: 'shared/search', locals: { search_key: :amount_cont } %>
-<% end %>
+<div class="card-header">
+  <h5 class="mb-0">Payments</h5>
+</div>
 
-<div class="card mb-3" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
-  <div class="card-header">
-    <div class="row flex-between-center">
-      <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-          <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">payments</h5>
-      </div>
-      <div class="col-8 col-sm-auto text-end ps-2">
-        <div class="d-none" id="table-receipts-actions">
-          <div class="d-flex">
-            <select class="form-select form-select-sm" aria-label="Bulk actions">
-            <option selected="">Bulk actions</option>
-            <option value="Delete">Delete</option>
-            </select>
-            <button class="btn btn-falcon-default btn-sm ms-2" id="listing-bulk-action" type="button">Apply</button>
-          </div>
-        </div>
-        <div id="table-receipts-replace-element">
-          <%= link_to(new_payment_path, remote: true, class: 'btn btn-falcon-default btn-sm') do %>
-            <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
-            <span class="d-none d-sm-inline-block ms-1">New</span>
-          <% end %>
-          <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Filter</span></button>
-          <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Export</span></button>
-        </div>
-      </div>
+<div class="row g-0">
+  <div class="col-lg-4 pe-lg-2">
+    <div class="form-floating col-auto d-flex justify-content-end order-md-1 mb-2" id="payments-student-selection">
+      <select class="form-select" id="payment_student" aria-label="Floating label select example">
+        <option selected>Select Please</option>
+        <% current_account.students.active.each do |student| %>
+          <option value="<%= student.id %>"><%= student.name %></option>
+        <% end %>
+      </select>
+      <label for="floatingSelectGrid">Student: </label>
     </div>
-  </div>
-
-  <div class="card-body p-0" id="receiptsTable">
-    <%= render partial: 'payments/table', locals: { payments: @payments } %>
   </div>
 </div>
 
-<% content_for :modal_includes do %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addPaymentModal' } %>
+<div class="row g-0" id="payment_details"></div>
+
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true, module: true %>
 <% end %>

@@ -6,11 +6,21 @@ class PaymentsController < ApplicationController
 
   # GET /payments or /payments.json
   def index
-    #  per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 30)
 
-    #  @search = @payments.ransack(params[:q])
-    #  @search.sorts = 'father_first asc' if @search.sorts.empty?
-    #  @pagy, @paymentss = pagy(@search.result.includes(), items: per_page)
+    @meetings = Meeting.none
+
+    if params[:student_id].present?
+      @student =  current_account.students.find_by(id: params[:student_id])
+      meeting_ids = @student.meetings.ids
+      @payment_meeting_ids = @student.payments.map(&:meeting_id)
+
+      @meetings = current_account.meetings.unscoped.where(id: meeting_ids + @payment_meeting_ids)
+    end
+
+    @search = @meetings.ransack(params[:q])
+    @search.sorts = 'starts_at asc' if @search.sorts.empty?
+    @pagy, @meetings = pagy(@search.result.includes([:klass]), items: per_page)
   end
 
   # GET /payments/1 or /payments/1.json
@@ -26,18 +36,19 @@ class PaymentsController < ApplicationController
 
   # POST /payments or /payments.json
   def create
-    @payment = current_account.payments.new(payment_params)
-    attach_account_for(@payment)
+    checked = params[:checked]
+    meeting_id = params[:meeting_id]
+    student_id = params[:student_id]
 
+    if true?(checked)
+      Payment.find_or_create_by(student_id:, meeting_id:)
+      flash[:notice] = 'Payment added.'
+    else
+      Payment.where(student_id:, meeting_id:).delete_all
+      flash[:notice] = 'Payment deleted.'
+    end
     respond_to do |format|
-      if @payment.save
-        format.html { redirect_to request.referer, notice: 'payment has been successfully created.' }
-        format.json { render :show, status: :created, location: @payment }
-      else
-        process_errors(@payment)
-        format.html { redirect_to request.referer }
-        format.json { render json: @payment.errors, status: :unprocessable_entity }
-      end
+      format.js { render 'shared/flash' }
     end
   end
 
