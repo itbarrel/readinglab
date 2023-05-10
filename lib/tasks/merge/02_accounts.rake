@@ -29,6 +29,9 @@ namespace :merge do
           account.billing_scheme = old_account.billing_scheme
           account.notify_emails = old_account.send_emails
           account.parent_id = old_account.parent_id
+          account.created_at = old_account.created_at
+          account.updated_at = old_account.updated_at
+          account.deleted_at = old_account.deleted_at
         end
       end
     end

@@ -24,6 +24,9 @@ namespace :merge do
         klass.duration = old_class_template.duration
         klass.max_students = old_class_template.max_students
         klass.session_range = old_class_template.session_range
+        klass.created_at = old_class_template.created_at
+        klass.updated_at = old_class_template.updated_at
+        klass.deleted_at = old_class_template.deleted_at
       end
     rescue StandardError
       1 + 1

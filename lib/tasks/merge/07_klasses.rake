@@ -36,10 +36,11 @@ namespace :merge do
         klass.min_students = old_klass.min_students
         klass.max_students = old_klass.max_students
         klass.range_type = range_types[old_klass.range_type]
+        klass.created_at = old_klass.created_at
+        klass.updated_at = old_klass.updated_at
+        klass.deleted_at = old_klass.deleted_at
       end
     end
     puts 'Successfully Merged klasses.'
   end
 end
-
-# Klass.find_or_create_by!(account_id: old_klass.account_id,teacher_id: old_klass.teacher.id,room_id: old_klass.room.id)

@@ -31,6 +31,7 @@ namespace :merge do
 
         form.created_at = old_form.created_at
         form.updated_at = old_form.updated_at
+        form.deleted_at = old_form.deleted_at
         form.save
 
         next if old_form.fields['fields'].nil?
@@ -46,6 +47,9 @@ namespace :merge do
             field.field_type = field_types[old_field['type'].to_sym]
             field.data_type = data_types[old_field['type'].to_sym]
             field.description = old_field['title']
+            field.created_at = old_form.created_at
+            field.updated_at = old_form.updated_at
+            field.deleted_at = old_form.deleted_at
             field.save
             next if old_field['values'].nil?
 
@@ -55,6 +59,9 @@ namespace :merge do
                 form_field_id: field.id
               ) do |field_value|
                 field_value.usage = old_field_value['value']
+                field_value.created_at = old_form.created_at
+                field_value.updated_at = old_form.updated_at
+                field_value.deleted_at = old_form.deleted_at
               end
             end
           end

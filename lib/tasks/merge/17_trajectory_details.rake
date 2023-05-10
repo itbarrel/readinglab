@@ -16,6 +16,9 @@ namespace :merge do
         trajectory_detail.wpm = old_trajectory_detail.wpm
         trajectory_detail.season = old_trajectory_detail.season
         trajectory_detail.entry_date = old_trajectory_detail.entry_date
+        trajectory_detail.created_at = old_trajectory_detail.created_at
+        trajectory_detail.updated_at = old_trajectory_detail.updated_at
+        trajectory_detail.deleted_at = old_trajectory_detail.deleted_at
       end
     end
     puts 'Successfully Merged Trajectory Detail.'

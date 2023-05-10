@@ -10,6 +10,9 @@ namespace :merge do
         name: old_account_type.name
       ) do |account_type|
         account_type.id = old_account_type.id
+        account_type.created_at = old_account_type.created_at
+        account_type.updated_at = old_account_type.updated_at
+        account_type.deleted_at = old_account_type.deleted_at
       end
     end
 

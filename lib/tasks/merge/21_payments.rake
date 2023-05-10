@@ -27,7 +27,10 @@ namespace :merge do
       Payment.create!(
         student_id: old_payment.student_id,
         receipt_id: old_payment.receipt_id,
-        meeting_id: old_payment.meeting_id
+        meeting_id: old_payment.meeting_id,
+        created_at: old_payment.created_at,
+        updated_at: old_payment.updated_at,
+        deleted_at: old_payment.deleted_at
       )
     end
     puts 'Successfully Merged Payments.'

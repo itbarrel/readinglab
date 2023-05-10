@@ -23,5 +23,3 @@ namespace :merge do
     puts 'Successfully Merged Interviews.'
   end
 end
-# Interview.find_or_create_by!(account_id: old_interview.account_id,
-# student_id: old_interview.student_id,form_id: old_interview.form_id)
