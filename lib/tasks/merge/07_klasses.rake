@@ -38,7 +38,7 @@ namespace :merge do
         klass.range_type = range_types[old_klass.range_type]
         klass.created_at = old_klass.created_at
         klass.updated_at = old_klass.updated_at
-        klass.deleted_at = old_klass.deleted_at
+        klass.deleted_at = (old_klass.active)? old_klass.deleted_at : old_klass.updated_at
       end
     end
     puts 'Successfully Merged klasses.'

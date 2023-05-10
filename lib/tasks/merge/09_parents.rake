@@ -22,7 +22,7 @@ namespace :merge do
         parent.state = old_parent.state
         parent.created_at = old_parent.created_at
         parent.updated_at = old_parent.updated_at
-        parent.deleted_at = old_parent.deleted_at
+        parent.deleted_at = (old_parent.active)? old_parent.deleted_at : old_parent.updated_at
       end
     end
     puts 'Successfully Merged Parents.'

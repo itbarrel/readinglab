@@ -14,7 +14,7 @@ namespace :merge do
         vacation.ending_at = old_vacation.day.end_of_day
         vacation.created_at = old_vacation.created_at
         vacation.updated_at = old_vacation.updated_at
-        vacation.deleted_at = old_vacation.deleted_at
+        vacation.deleted_at = (old_vacation.active)? old_vacation.deleted_at : old_vacation.updated_at
       end
     end
     puts 'Successfully Merged Vacations.'

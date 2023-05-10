@@ -21,7 +21,7 @@ namespace :merge do
         meeting.cancel = old_meeting.cancel
         meeting.created_at = old_meeting.created_at
         meeting.updated_at = old_meeting.updated_at
-        meeting.deleted_at = old_meeting.deleted_at
+        meeting.deleted_at = (old_meeting.active)? old_meeting.deleted_at : old_meeting.updated_at
       end
     end
     puts 'Successfully Merged Meetings.'

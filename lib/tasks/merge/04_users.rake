@@ -26,7 +26,7 @@ namespace :merge do
         user.external_user = old_user.external_user
         user.created_at = old_user.created_at
         user.updated_at = old_user.updated_at
-        user.deleted_at = old_user.deleted_at
+        user.deleted_at = (old_user.active)? old_user.deleted_at : old_user.updated_at
       end
     end
     puts 'Successfully Merged Users.'

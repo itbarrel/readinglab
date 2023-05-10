@@ -26,7 +26,7 @@ namespace :merge do
         klass.session_range = old_class_template.session_range
         klass.created_at = old_class_template.created_at
         klass.updated_at = old_class_template.updated_at
-        klass.deleted_at = old_class_template.deleted_at
+        klass.deleted_at = (old_class_template.active)? old_class_template.deleted_at : old_class_template.updated_at
       end
     rescue StandardError
       1 + 1

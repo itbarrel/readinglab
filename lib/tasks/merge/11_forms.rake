@@ -61,7 +61,7 @@ namespace :merge do
                 field_value.usage = old_field_value['value']
                 field_value.created_at = old_form.created_at
                 field_value.updated_at = old_form.updated_at
-                field_value.deleted_at = old_form.deleted_at
+                field_value.deleted_at = (old_form.active)? old_form.deleted_at : old_form.updated_at
               end
             end
           end
