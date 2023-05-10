@@ -54,7 +54,7 @@
         </tbody>
       </table>
     </div>
-    <%= render 'shared/pagination' if @pagy.present? %>
+    <%= render 'shared/pagination', query: {}, js_request: false if @pagy.present? %>
   </div>
 </div>
 

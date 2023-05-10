@@ -6,7 +6,7 @@ class PaymentsController < ApplicationController
 
   # GET /payments or /payments.json
   def index
-    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 45)
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 30)
 
     @meetings = Meeting.none
 
@@ -19,8 +19,8 @@ class PaymentsController < ApplicationController
     end
 
     @search = @meetings.ransack(params[:q])
-    @search.sorts = 'created_at asc' if @search.sorts.empty?
-    @pagy, @meetings = pagy(@search.result, items: per_page)
+    @search.sorts = 'starts_at asc' if @search.sorts.empty?
+    @pagy, @meetings = pagy(@search.result.includes([:klass]), items: per_page)
   end
 
   # GET /payments/1 or /payments/1.json
