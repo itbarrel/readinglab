@@ -21,7 +21,7 @@ namespace :merge do
       receipts[x.id] = true
     end
 
-    Old::PaidStudentSession.find_each(batch_size: 200).each do |old_payment|
+    Old::PaidStudentSession.find_each(batch_size: 200) do |old_payment|
       next unless students[old_payment.student_id] && meetings[old_payment.meeting_id]  && receipts[old_payment.receipt_id]
 
       Payment.create!(
@@ -29,8 +29,7 @@ namespace :merge do
         receipt_id: old_payment.receipt_id,
         meeting_id: old_payment.meeting_id,
         created_at: old_payment.created_at,
-        updated_at: old_payment.updated_at,
-        deleted_at: old_payment.deleted_at
+        updated_at: old_payment.updated_at
       )
     end
     puts 'Successfully Merged Payments.'

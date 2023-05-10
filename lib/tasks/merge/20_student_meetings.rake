@@ -21,7 +21,7 @@ namespace :merge do
       'Leave': 'leave'
     }
 
-    Old::StudentMeeting.all.each do |old_student_meeting|
+    Old::StudentMeeting.find_each(batch_size: 200) do |old_student_meeting|
       next unless students[old_student_meeting.student_id] && meetings[old_student_meeting.meeting_id]
 
       attendance = :nothing
