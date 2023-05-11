@@ -8,24 +8,31 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :exportable do
+    collection do
+      get :export
+    end
+  end
+
   devise_for :users, controllers: { registrations: :registrations }
 
   mount Sidekiq::Web => '/sidekiq'
-  resources :accounts, :rooms, :teachers, :vacations, :parents, :staffs, :books, :forms, concerns: :trashable
-  resources :message_templates, :form_fields, :field_values, :trajectory_details, concerns: :trashable
-  resources :receipt_types, :receipts, :parents, :payments, concerns: :trashable
+
+  resources :accounts, :rooms, :teachers, :vacations, :parents, :staffs, :books, :forms, concerns: %i[trashable exportable]
+  resources :message_templates, :form_fields, :field_values, :trajectory_details, concerns: %i[trashable exportable]
+  resources :receipt_types, :receipts, :parents, :payments, concerns: %i[trashable exportable]
 
   resources :events, only: %i[show update]
   resources :student_classes, only: %i[create destroy]
   resources :klass_templates do
-    concerns :trashable
+    concerns %i[trashable exportable]
     member do
       get :assign
     end
   end
 
   resources :klasses do
-    concerns :trashable
+    concerns %i[trashable exportable]
     collection do
       get :availability
     end
@@ -35,7 +42,7 @@ Rails.application.routes.draw do
   end
 
   resources :meetings do
-    concerns :trashable
+    concerns %i[trashable exportable]
     member do
       get :form_details
       get :student_details
@@ -50,7 +57,7 @@ Rails.application.routes.draw do
   end
 
   resources :interviews do
-    concerns :trashable
+    concerns %i[trashable exportable]
     member do
       get :form, action: 'open_form'
       post :form, action: 'submit_form'
@@ -58,14 +65,14 @@ Rails.application.routes.draw do
   end
 
   resources :students do
-    concerns :trashable
+    concerns %i[trashable exportable]
     collection do
       get :present_search
     end
   end
 
   resources :reports, only: %i[] do
-    concerns :trashable
+    concerns %i[trashable exportable]
     collection do
       get :graph
     end
