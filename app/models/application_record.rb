@@ -7,19 +7,15 @@ class ApplicationRecord < ActiveRecord::Base
 
   acts_as_paranoid
 
-  # @@exportable_attributes = {}
+  @exportable_attributes = {}
 
   def self.to_csv
-    @@exportable_attributes.each do |key, _value|
-      disply_attributes = @@exportable_attributes.values
-      CSV.generate(headers: true) do |csv|
-        csv << disply_attributes
+    CSV.generate(headers: true) do |csv|
+      csv << @exportable_attributes.values
 
-        all.find_each do |record|
-          row_data = [
-            record[key]
-          ]
-          csv << row_data
+      all.find_each do |record|
+        csv << @exportable_attributes.keys.map do |key|
+          record[key]
         end
       end
     end

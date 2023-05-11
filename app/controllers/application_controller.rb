@@ -62,10 +62,10 @@ class ApplicationController < ActionController::Base
   end
 
   def export
-    model_name = params[:controller].singularize.classify
-    model = model_name.constantize
+    records = current_account.send(params[:controller])
+
     respond_to do |format|
-      format.csv { send_data model.to_csv, filename: "#{Time.zone.today.to_s.title}.csv" }
+      format.csv { send_data records.to_csv, filename: "#{Time.zone.today}.csv" }
     end
   end
 
