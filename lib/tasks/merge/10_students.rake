@@ -41,7 +41,7 @@ namespace :merge do
         student.credit_session = old_student.credit_session
         student.created_at = old_student.created_at
         student.updated_at = old_student.updated_at
-        student.deleted_at = (old_student.active)? old_student.deleted_at : old_student.updated_at
+        student.deleted_at = old_student.active ? old_student.deleted_at : old_student.updated_at
       end
     end
     puts 'Successfully Merged Students.'

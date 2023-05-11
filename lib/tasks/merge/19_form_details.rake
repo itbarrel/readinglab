@@ -44,7 +44,7 @@ namespace :merge do
           form_detail.parent_type = old_form_detail.parent_type
           form_detail.created_at = old_form_detail.created_at
           form_detail.updated_at = old_form_detail.updated_at
-          form_detail.deleted_at = (old_form_detail.active)? old_form_detail.deleted_at : old_form_detail.updated_at
+          form_detail.deleted_at = old_form_detail.active ? old_form_detail.deleted_at : old_form_detail.updated_at
         end
       end
     end

@@ -35,7 +35,7 @@ namespace :merge do
         student_meeting.attendance = attendance
         student_meeting.created_at = old_student_meeting.created_at
         student_meeting.updated_at = old_student_meeting.updated_at
-        student_meeting.deleted_at = (old_student_meeting.active)? old_student_meeting.deleted_at : old_student_meeting.updated_at
+        student_meeting.deleted_at = old_student_meeting.active ? old_student_meeting.deleted_at : old_student_meeting.updated_at
       end
     end
     puts 'Successfully Merged Student Meeting.'

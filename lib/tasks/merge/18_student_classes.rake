@@ -25,7 +25,7 @@ namespace :merge do
         student_class.id = old_student_class.id
         student_class.created_at = old_student_class.created_at
         student_class.updated_at = old_student_class.updated_at
-        student_class.deleted_at = (old_student_class.active)? old_student_class.deleted_at : old_student_class.updated_at
+        student_class.deleted_at = old_student_class.active ? old_student_class.deleted_at : old_student_class.updated_at
       end
     end
     puts 'Successfully Merged Student Classes.'

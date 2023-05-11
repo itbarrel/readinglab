@@ -15,7 +15,7 @@ namespace :merge do
         interview.feedback = old_interview.feedback
         interview.created_at = old_interview.created_at
         interview.updated_at = old_interview.updated_at
-        interview.deleted_at = (old_interview.active)? old_interview.deleted_at : old_interview.updated_at
+        interview.deleted_at = old_interview.active ? old_interview.deleted_at : old_interview.updated_at
       end
     rescue StandardError
       1 + 1

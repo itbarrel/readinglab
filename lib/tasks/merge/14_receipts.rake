@@ -16,7 +16,7 @@ namespace :merge do
         leave_count: old_receipt.leave_count,
         created_at: old_receipt.created_at,
         updated_at: old_receipt.updated_at,
-        deleted_at: (old_receipt.active)? old_receipt.deleted_at : old_receipt.updated_at
+        deleted_at: old_receipt.active ? old_receipt.deleted_at : old_receipt.updated_at
       )
     rescue StandardError
       1 + 1

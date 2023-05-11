@@ -13,7 +13,7 @@ namespace :merge do
         room.color = old_room.color
         room.created_at = old_room.created_at
         room.updated_at = old_room.updated_at
-        room.deleted_at = (old_room.active)? old_room.deleted_at : old_room.updated_at
+        room.deleted_at = old_room.active ? old_room.deleted_at : old_room.updated_at
       end
     end
     puts 'Successfully Merged Rooms.'

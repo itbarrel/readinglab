@@ -31,7 +31,7 @@ namespace :merge do
           account.parent_id = old_account.parent_id
           account.created_at = old_account.created_at
           account.updated_at = old_account.updated_at
-          account.deleted_at = (old_account.active)? old_account.deleted_at : old_account.updated_at
+          account.deleted_at = old_account.active ? old_account.deleted_at : old_account.updated_at
         end
       end
     end

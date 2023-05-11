@@ -1,13 +1,29 @@
 # frozen_string_literal: true
 
 namespace :merge do
-  desc 'TODO'
-  task my_task: :environment do
-    Old::Account.all.each do |a|
-      Account.find_or_create_by!(name: a.name, currency: a.currency, settings: a.settings, email: a.email,
-                                 address: a.address, mobile: a.mobile, timezone: a.timezone, province: a.province,
-                                 postal_code: a.postal_code, country_code: a.country_code,
-                                 billing_scheme: a.billing_scheme, notify_emails: a.send_emails, parent_id: a.parent_id)
-    end
+  desc 'Run all resources'
+  task resources: :environment do
+    Rake::Task['merge:account_types'].execute
+    Rake::Task['merge:accounts'].execute
+    Rake::Task['merge:message_templates'].execute
+    Rake::Task['merge:users'].execute
+    Rake::Task['merge:rooms'].execute
+    Rake::Task['merge:klass_templates'].execute
+    Rake::Task['merge:klasses'].execute
+    Rake::Task['merge:vacations'].execute
+    Rake::Task['merge:parents'].execute
+    Rake::Task['merge:students'].execute
+    Rake::Task['merge:forms'].execute
+    Rake::Task['merge:interviews'].execute
+    Rake::Task['merge:receipt_types'].execute
+    Rake::Task['merge:receipts'].execute
+    Rake::Task['merge:meetings'].execute
+    Rake::Task['merge:books'].execute
+    Rake::Task['merge:trajectory_details'].execute
+    Rake::Task['merge:student_classes'].execute
+    Rake::Task['merge:form_details'].execute
+    Rake::Task['merge:student_meetings'].execute
+    Rake::Task['merge:payments'].execute
+    puts 'Successfully Merged All Task.'
   end
 end

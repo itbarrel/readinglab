@@ -11,7 +11,7 @@ namespace :merge do
         receipt_type.id = old_receipt_type.id
         receipt_type.created_at = old_receipt_type.created_at
         receipt_type.updated_at = old_receipt_type.updated_at
-        receipt_type.deleted_at = (old_receipt_type.active)? old_receipt_type.deleted_at : old_receipt_type.updated_at
+        receipt_type.deleted_at = old_receipt_type.active ? old_receipt_type.deleted_at : old_receipt_type.updated_at
       end
     end
     puts 'Successfully Merged Receipt Type.'

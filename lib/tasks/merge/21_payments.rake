@@ -22,7 +22,7 @@ namespace :merge do
     end
 
     Old::PaidStudentSession.find_each(batch_size: 200) do |old_payment|
-      next unless students[old_payment.student_id] && meetings[old_payment.meeting_id]  && receipts[old_payment.receipt_id]
+      next unless students[old_payment.student_id] && meetings[old_payment.meeting_id] && receipts[old_payment.receipt_id]
 
       Payment.create!(
         student_id: old_payment.student_id,

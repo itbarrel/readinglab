@@ -13,7 +13,7 @@ namespace :merge do
         book.grade = old_book.grade
         book.created_at = old_book.created_at
         book.updated_at = old_book.updated_at
-        book.deleted_at = (old_book.active)? old_book.deleted_at : old_book.updated_at
+        book.deleted_at = old_book.active ? old_book.deleted_at : old_book.updated_at
       end
     end
     puts 'Successfully Merged Books.'
