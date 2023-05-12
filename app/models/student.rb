@@ -56,11 +56,6 @@ class Student < ApplicationRecord
 
   validates :first_name, :last_name, :gender, presence: true
 
-  @exportable_attributes = {
-    first_name: 'First Name',
-    last_name: 'Last Name'
-  }
-
   before_create :set_status
 
   ransacker :status do |parent|

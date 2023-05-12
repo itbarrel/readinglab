@@ -7,14 +7,18 @@ class ApplicationRecord < ActiveRecord::Base
 
   acts_as_paranoid
 
-  @exportable_attributes = {}
+  REJECTED_ATTRIBUTES = %i[id deleted_at].freeze
+  CHANGED_ATTRIBUTES = {}.freeze
 
   def self.to_csv
+    attributes = Hash[all.model.column_names.map { |key, _value| [key, human_attribute_name(key)] }].symbolize_keys
+    attributes.except!(*REJECTED_ATTRIBUTES).merge!(CHANGED_ATTRIBUTES)
+
     CSV.generate(headers: true) do |csv|
-      csv << @exportable_attributes.values
+      csv << attributes.values
 
       all.find_each do |record|
-        csv << @exportable_attributes.keys.map do |key|
+        csv << attributes.keys.map do |key|
           record[key]
         end
       end

@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
     records = current_account.send(params[:controller])
 
     respond_to do |format|
-      format.csv { send_data records.to_csv, filename: "#{Time.zone.today}.csv" }
+      format.csv { send_data records.to_csv, filename: "#{records.model.name}-#{Time.zone.today}.csv" }
     end
   end
 
