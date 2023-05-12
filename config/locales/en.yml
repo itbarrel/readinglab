@@ -18,4 +18,5 @@ en:
         mother_first: 'Mother Name'
       room:
         name: 'Room Name'
-
+      receipt:
+        student_name: 'Student Name'

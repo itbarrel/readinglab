@@ -91,4 +91,17 @@ class Student < ApplicationRecord
   def name
     "#{first_name.capitalize} #{last_name}"
   end
+
+  # wrong
+  def latest_payment
+    payments.joins(:meeting).order('meetings.starts_at desc').first
+  end
+
+  def payable_meetings
+    meetings.where('meetings.starts_at > ?', latest_payment.meeting.starts_at).order(starts_at: :asc)
+  end
+
+  def next_billing_date
+    payable_meetings&.first&.starts_at
+  end
 end
