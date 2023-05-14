@@ -1,9 +1,8 @@
 <% content_for :search_includes do %>
-<%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
+  <%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
 <% end %>
 
-<div class="card mb-3" id="customersTable"
-  data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
+<div class="card mb-3">
   <div class="card-header">
     <div class="row flex-between-center">
       <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
@@ -33,7 +32,7 @@
     <form class="row g-3">
       <div class="col-lg-6 ">
         <label class="form-label">Student Name</label><br>
-        <%= select_tag('student name', options_from_collection_for_select(Student.all, 'id', 'first_name'), {class: "form-control"}) %>
+        <%= select_tag('student name', options_from_collection_for_select(Student.active, 'id', 'name'), { id: 'reports_student', class: "form-select js-choice" }) %>
       </div>
     </form>
   </div>
@@ -96,4 +95,8 @@
 <% content_for :modal_includes do %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addBookModal' } %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addTrajectoryModal', modal_size: 'modal-lg' } %>
+<% end %>
+
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
 <% end %>
