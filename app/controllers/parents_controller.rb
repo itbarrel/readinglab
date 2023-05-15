@@ -11,7 +11,7 @@ class ParentsController < ApplicationController
 
     @search = @parents.ransack(params[:q])
     @search.sorts = 'father_first asc' if @search.sorts.empty?
-    @pagy, @parents = pagy(@search.result.includes(:city), items: per_page)
+    @pagy, @parents = pagy(@search.result.includes(:city, :children), items: per_page)
   end
 
   # GET /parents/1 or /parents/1.json

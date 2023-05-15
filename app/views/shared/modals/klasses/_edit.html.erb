@@ -25,12 +25,13 @@
 
             <div class="mb-3">
               <%= f.label :add_student, class: 'fs-0' %>
-              <%= f.collection_select :student_id, current_account.students.eligible_for_klass(klass.id), :id, :name, { include_blank: true }, { class: 'form-control' } %>
+              <%= f.collection_select :student_id, current_account.students.eligible_for_klass(klass.id), :id, :name, { include_blank: true }, { class: 'form-select js-choice', data:{ options: { searchEnabled: true }} } %>
             </div>
             <div class="d-flex justify-content-end align-items-center">
               <%= f.submit 'Add', class: 'btn btn-primary px-4' %>
             </div>
           <% end %>
+
           <%= form_for klass, remote: true do |f| %>
             <div class="mb-3">
               <%= f.label :teacher_id, class: 'fs-0' %>
@@ -46,22 +47,23 @@
             </div>
             <div class="mb-3">
               <%= f.label :forms, class:' fs-0' %>
-              <%= f.collection_select :form_ids, current_account.forms.lessonable, :id, :name, {include_blank: true, include_hidden: false }, {class: 'form-select  js-choice', multiple: "multiple-select-example" }%>
+              <%= f.collection_select :form_ids, current_account.forms.lessonable, :id, :name, {include_blank: true, include_hidden: false }, { class: 'form-select js-choice', multiple: "multiple-select-example" }%>
             </div>
 
             <div class="d-flex justify-content-end align-items-center">
               <%= f.submit 'Update', class: 'btn btn-primary px-4' %>
             </div>
           <% end %>
-          <%= form_tag(extend_sessions_klass_path(klass), remote: true) do |f| %>
-          <div class="mb-3">
-            <label class="fs-0">Extend Seesions:</label>
-            <%= text_field_tag :session_count, nil ,class: 'form-control' %>
-          </div>
 
-          <div class="d-flex justify-content-end align-items-center">
-            <%= submit_tag 'Extend', class: 'btn btn-primary px-4' %>
-          </div>
+          <%= form_tag(extend_sessions_klass_path(klass), remote: true) do |f| %>
+            <div class="mb-3">
+              <label class="fs-0">Extend Seesions:</label>
+              <%= text_field_tag :session_count, nil ,class: 'form-control' %>
+            </div>
+
+            <div class="d-flex justify-content-end align-items-center">
+              <%= submit_tag 'Extend', class: 'btn btn-primary px-4' %>
+            </div>
           <% end %>
         </div>
       </div>

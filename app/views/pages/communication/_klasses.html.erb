@@ -4,19 +4,6 @@
       <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
           <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Classes</h5>
       </div>
-      <div class="col-8 col-sm-auto text-end ps-2">
-        <div class="d-none" id="table-customers-actions">
-          <div class="d-flex">
-            <select class="form-select form-select-sm" aria-label="Bulk actions">
-            <option selected="">Bulk actions</option>
-            <option value="Refund">Refund</option>
-            <option value="Delete">Delete</option>
-            <option value="Archive">Archive</option>
-            </select>
-            <button class="btn btn-falcon-default btn-sm ms-2" type="button">Apply</button>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
   <div class="card-body p-0">
@@ -30,7 +17,6 @@
               </div>
             </th>
             <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">Name</th>
-            <th class="sort pe-1 align-middle white-space-nowrap"></th>
           </tr>
         </thead>
         <% klasses.each do |klass| %>
@@ -42,8 +28,6 @@
             </td>
             <td class="name align-middle white-space-nowrap py-2">
               <%= klass.name %>
-            </td>
-            <td class="name align-middle white-space-nowrap py-2">
             </td>
           </tr>
         <% end %>

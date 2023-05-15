@@ -2,4 +2,5 @@ $('#addInterviewModal .modal-content').html("<%= j render 'shared/modals/intervi
 document.querySelector('#interview_date').flatpickr({
   enableTime: true,
 });
+window.choicesInit();
 $('#addInterviewModal').modal('show');

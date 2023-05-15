@@ -6,7 +6,7 @@
   <div class="modal-body p-card">
     <div class="mb-3">
       <%= f.label :Parents, class: 'fs-0' %>
-      <%= f.collection_select :parent_id, current_account.parents, :id, :name, {}, { class: 'form-control' } %>
+      <%= f.collection_select :parent_id, current_account.parents, :id, :name, {}, { class: 'form-select js-choice', data:{ options: { searchEnabled: true }} } %>
     </div>
     <div class="mb-3">
       <%= f.label :first_name, class: 'fs-0' %>
@@ -18,7 +18,7 @@
     </div>
     <div class="mb-3">
       <%= f.label :gender, class: 'fs-0' %>
-      <%= f.select :gender, Student.genders.map { |key, value| [key.humanize, key] }, {include_blank: true}, {class: 'form-select form-select-md js-choice'} %>
+      <%= f.select :gender, Student.genders.map { |key, value| [key.humanize, key] }, {include_blank: true}, {class: 'form-select form-select-md'} %>
     </div>
     <div class="mb-3">
       <%= f.label :dob, class: 'fs-0' %>

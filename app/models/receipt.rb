@@ -37,5 +37,15 @@ class Receipt < ApplicationRecord
   belongs_to :receipt_type
   has_many :payments, dependent: nil
 
+  attr_accessor :skip_callbacks
+
   validates :amount, :sessions_count, presence: true
+
+  after_create :create_payments, unless: :skip_callbacks
+
+  def create_payments
+    student.payable_meetings.take(sessions_count).each do |meeting|
+      payments.create(student:, meeting:)
+    end
+  end
 end

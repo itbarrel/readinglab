@@ -61,6 +61,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def export
+    records = current_account.send(params[:controller])
+
+    respond_to do |format|
+      format.csv { send_data records.to_csv, filename: "#{records.model.name}-#{Time.zone.today}.csv" }
+    end
+  end
+
   private
 
   def set_time_zone(&block)

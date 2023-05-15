@@ -1,3 +1,6 @@
 $('#addInterviewModal .modal-content').html("<%= j render 'shared/modals/interviews/form', interview: @interview, title: 'Edit interview' %>");
-
+document.querySelector('#interview_date').flatpickr({
+  enableTime: true,
+});
+window.choicesInit();
 $('#addInterviewModal').modal('show');

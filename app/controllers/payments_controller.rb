@@ -20,7 +20,7 @@ class PaymentsController < ApplicationController
 
     @search = @meetings.ransack(params[:q])
     @search.sorts = 'starts_at asc' if @search.sorts.empty?
-    @pagy, @meetings = pagy(@search.result.includes([:klass]), items: per_page)
+    @pagy, @meetings = pagy(@search.result.includes([klass: %i[room teacher]]), items: per_page)
   end
 
   # GET /payments/1 or /payments/1.json

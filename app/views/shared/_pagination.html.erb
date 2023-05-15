@@ -19,6 +19,10 @@
         <li class="page-item">
           <%= link_to item, url_for(query), class: 'page-link', remote: js_request %>
         </li>
+      <% elsif item == :gap %>
+        <li class="page-item">
+          <span class="page-link">...</span>
+        </li>
       <% else %>
         <li class="page-item active">
           <span class="page-link"><%= item.to_s %></span>

@@ -18,13 +18,9 @@
           <%= f.label :sort_order, class: "form-label" %>
           <%= f.number_field :sort_order, required: true, class: "form-control" %>
         </div>
-        <div class="col-sm-6 mb-3">
+        <div class="col-sm-12 mb-3">
           <%= f.label :field_type, class: "form-label" %>
           <%= f.select :field_type, FormField.field_types.map { |key, value| [key.humanize, key] }, { include_blank: true }, { class: 'form-select form-field-type' } %>
-        </div>
-        <div class="col-sm-6 mb-3">
-          <%= f.label :data_type, class: "form-label" %>
-          <%= f.text_field :data_type, class: "form-control" %>
         </div>
         <div class="col-sm-6 mb-3 form-check custom-checkbox mb-0">
           <%= f.check_box :necessary, class: "form-check-input" %>

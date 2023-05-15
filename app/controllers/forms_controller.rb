@@ -83,11 +83,17 @@ class FormsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def form_params
-    params.require(:form).permit(:name, :purpose,
-                                 form_fields_attributes: [
-                                   :id, :name, :description, :field_type,
-                                   :sort_order, :data_type, :necessary, :_destroy,
-                                   { field_values_attributes: %i[id name usage _destroy] }
-                                 ])
+    data_type_mapping = {
+      number_field: 'integer'
+    }
+    pars = params.require(:form).permit(:name, :purpose,
+                                        form_fields_attributes: [
+                                          :id, :name, :description, :sort_order, :field_type, :necessary, :_destroy,
+                                          { field_values_attributes: %i[id name usage _destroy] }
+                                        ])
+    pars[:form_fields_attributes].each do |_key, value|
+      value['data_type'] = data_type_mapping[value['field_type'].to_sym]
+    end
+    pars
   end
 end

@@ -13,7 +13,7 @@ class StudentsController < ApplicationController
 
     @search = @students.ransack(params[:q])
     @search.sorts = 'first_name asc' if @search.sorts.empty?
-    @pagy, @students = pagy(@search.result, items: per_page)
+    @pagy, @students = pagy(@search.result.includes(:parent), items: per_page)
   end
 
   def present_search
