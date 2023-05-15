@@ -146,7 +146,7 @@ const echartSetOption = function echartSetOption(
 
   chart.setOption(window._.merge(getDefaultOptions(), userOptions));
   themeController.addEventListener("clickControl", function (_ref15) {
-    var control = _ref15.detail.control;
+    const control = _ref15.detail.control;
 
     if (control === "theme") {
       chart.setOption(window._.merge(getDefaultOptions(), userOptions));
@@ -155,14 +155,14 @@ const echartSetOption = function echartSetOption(
 };
 
 window.graphInit = (divClass, options = {}) => {
-  var ECHART_BAR_WEEKLY_SALES = `.${divClass}`;
-  var $echartBarWeeklySales = document.querySelector(ECHART_BAR_WEEKLY_SALES);
+  const ECHART_BAR_WEEKLY_SALES = `.${divClass}`;
+  const $echartBarWeeklySales = document.querySelector(ECHART_BAR_WEEKLY_SALES);
 
   if ($echartBarWeeklySales) {
-    var userOptions = window.getData($echartBarWeeklySales, "options");
+    const userOptions = window.getData($echartBarWeeklySales, "options");
 
-    var yMax = Math.max.apply(Math, options.data);
-    var dataBackground = options.data.map(function () {
+    const yMax = Math.max.apply(Math, options.data);
+    const dataBackground = options.data.map(function () {
       return yMax;
     });
     const chart = window.echarts.init($echartBarWeeklySales);
@@ -170,7 +170,6 @@ window.graphInit = (divClass, options = {}) => {
     const getDefaultOptions = function getDefaultOptions() {
       return composeOptions(divClass, options);
     };
-    console.log('>>>>%>', composeOptions(divClass, options);)
 
     echartSetOption(chart, userOptions, getDefaultOptions);
   }
