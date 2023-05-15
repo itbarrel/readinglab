@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BillingsController < ApplicationController
   load_and_authorize_resource :students, class: 'Student', parent: false
 
