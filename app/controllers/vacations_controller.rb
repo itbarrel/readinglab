@@ -28,7 +28,6 @@ class VacationsController < ApplicationController
   # POST /vacations or /vacations.json
   def create
     @vacation = current_account.vacations.new(vacation_params)
-    attach_account_for(@vacation)
 
     respond_to do |format|
       if @vacation.save
@@ -37,7 +36,7 @@ class VacationsController < ApplicationController
       else
         process_errors(@vacation)
         format.html { redirect_to vacations_url }
-        format.json { render json: vacation.errors, status: :unprocessable_entity }
+        format.json { render json: vacation.errors }
       end
     end
   end
@@ -49,8 +48,8 @@ class VacationsController < ApplicationController
         format.html { redirect_to vacations_url, notice: 'Message has been successfully updated.' }
         format.json { render :show, status: :ok, location: @vacation }
       else
-        format.html { render :index, status: :unprocessable_entity }
-        format.json { render json: @vacation.errors, status: :unprocessable_entity }
+        format.html { redirect_to vacations_url }
+        format.json { render json: @vacation.errors }
       end
     end
   end

@@ -76,14 +76,15 @@ class InterviewsController < ApplicationController
   # POST /interviews or /interviews.json
   def create
     @interview = current_account.interviews.new(interview_params)
-    attach_account_for(@interview)
+
     respond_to do |format|
       if @interview.save
         format.html { redirect_to interviews_url, notice: 'Interview has been successfully created.' }
         format.json { render :show, status: :created, location: @interview }
       else
-        format.html { redirect_to interviews_url, status: :unprocessable_entity }
-        format.json { render json: @interview.errors, status: :unprocessable_entity }
+        process_errors(@interview)
+        format.html { redirect_to interviews_url }
+        format.json { render json: @interview.errors }
       end
     end
   end
@@ -95,8 +96,9 @@ class InterviewsController < ApplicationController
         format.html { redirect_to interviews_url, notice: 'Interview has been successfully updated.' }
         format.json { render :show, status: :ok, location: @interview }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @interview.errors, status: :unprocessable_entity }
+        process_errors(@interview)
+        format.html { redirect_to interviews_url }
+        format.json { render json: @interview.errors }
       end
     end
   end

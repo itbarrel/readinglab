@@ -37,6 +37,7 @@ class ApplicationController < ActionController::Base
           # { url: '/rooms', text: 'Obselote', class: '', icon: 'micon bi bi-exclamation-circle' }
         ] },
         { text: 'Billing', class: '', icon: 'micon bi bi-file-earmark-text-fill', sub_items: [
+          { url: '/billings/students', text: 'Students', class: '', icon: 'micon bi bi-receipt', sub_items: [] },
           { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-receipt', sub_items: [] }
         ] },
         { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-chat-text-fill', sub_items: [] },

@@ -27,11 +27,11 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.save
-        format.html { redirect_to account_url(@account), notice: 'Account has been successfully created.' }
+        format.html { redirect_to accounts_url, notice: 'Account has been successfully created.' }
         format.json { render :show, status: :created, location: @account }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
+        format.html { redirect_to accounts_url }
+        format.json { render json: @account.errors }
       end
     end
   end
@@ -43,8 +43,8 @@ class AccountsController < ApplicationController
         format.html { redirect_to request.referer, notice: 'Account has been successfully updated.' }
         format.json { render :show, status: :ok, location: @account }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
+        format.html { redirect_to request.referer }
+        format.json { render json: @account.errors }
       end
     end
   end

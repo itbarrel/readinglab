@@ -23,8 +23,6 @@ class MessageTemplatesController < ApplicationController
 
   def create
     @message_template = current_account.message_templates.new(message_template_params)
-    attach_account_for(@message_template)
-
     respond_to do |format|
       if @message_template.save
         format.html { redirect_to message_templates_url, notice: 'Message Template has been successfully created.' }
@@ -32,7 +30,7 @@ class MessageTemplatesController < ApplicationController
       else
         process_errors(@message_template)
         format.html { redirect_to message_templates_url }
-        format.json { render json: @message_template.errors, status: :unprocessable_entity }
+        format.json { render json: @message_template.errors }
       end
     end
   end
@@ -43,8 +41,8 @@ class MessageTemplatesController < ApplicationController
         format.html { redirect_to message_templates_url, notice: 'Message Template has been successfully updated.' }
         format.json { render :show, status: :ok, location: @message_template }
       else
-        format.html { render :index, status: :unprocessable_entity }
-        format.json { render json: @message_template.errors, status: :unprocessable_entity }
+        format.html { redirect_to message_templates_url }
+        format.json { render json: @message_template.errors }
       end
     end
   end

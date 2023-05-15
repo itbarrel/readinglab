@@ -24,7 +24,6 @@ class KlassTemplatesController < ApplicationController
 
   def create
     @klass_template = current_account.klass_templates.new(klass_template_params)
-    attach_account_for(@klass_template)
 
     respond_to do |format|
       if @klass_template.save
@@ -33,7 +32,7 @@ class KlassTemplatesController < ApplicationController
       else
         process_errors(@klass_template)
         format.html { redirect_to klass_templates_url }
-        format.json { render json: @klass_template.errors, status: :unprocessable_entity }
+        format.json { render json: @klass_template.errors }
       end
     end
   end
@@ -46,7 +45,7 @@ class KlassTemplatesController < ApplicationController
       else
         process_errors(@klass_template)
         format.html { redirect_to klass_templates_url }
-        format.json { render json: @klass_template.errors, status: :unprocessable_entity }
+        format.json { render json: @klass_template.errors }
       end
     end
   end

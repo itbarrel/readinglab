@@ -25,7 +25,6 @@ class StaffsController < ApplicationController
   # POST /staffs or /staffs.json
   def create
     @staff = current_account.users.new(staff_params)
-    attach_account_for(@staff)
 
     respond_to do |format|
       if @staff.save
@@ -34,7 +33,7 @@ class StaffsController < ApplicationController
       else
         process_errors(@staff)
         format.html { redirect_to staffs_url }
-        format.json { render json: @staff.errors, status: :unprocessable_entity }
+        format.json { render json: @staff.errors }
       end
     end
   end
@@ -46,8 +45,8 @@ class StaffsController < ApplicationController
         format.html { redirect_to request.referer, notice: 'Staff has been successfully updated.' }
         format.json { render :index, status: :ok, location: @staff }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @staff.errors, status: :unprocessable_entity }
+        format.html { redirect_to staffs_url }
+        format.json { render json: @staff.errors }
       end
     end
   end
