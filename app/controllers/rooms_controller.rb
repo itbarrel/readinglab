@@ -28,7 +28,6 @@ class RoomsController < ApplicationController
   # POST /rooms or /rooms.json
   def create
     @room = current_account.rooms.new(room_params)
-    attach_account_for(@room)
 
     respond_to do |format|
       if @room.save
@@ -37,7 +36,7 @@ class RoomsController < ApplicationController
       else
         process_errors(@room)
         format.html { redirect_to rooms_url }
-        format.json { render json: @room.errors, status: :unprocessable_entity }
+        format.json { render json: @room.errors }
       end
     end
   end
@@ -49,8 +48,8 @@ class RoomsController < ApplicationController
         format.html { redirect_to rooms_url, notice: 'Room has been successfully updated.' }
         format.json { render :show, status: :ok, location: @room }
       else
-        format.html { render :index, status: :unprocessable_entity }
-        format.json { render json: @room.errors, status: :unprocessable_entity }
+        format.html { redirect_to rooms_url }
+        format.json { render json: @room.errors }
       end
     end
   end

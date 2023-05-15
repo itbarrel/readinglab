@@ -50,7 +50,6 @@ class KlassesController < ApplicationController
   # POST /klasses or /klasses.json
   def create
     @klass = current_account.klasses.new(klass_params)
-    attach_account_for(@klass)
 
     respond_to do |format|
       if @klass.save

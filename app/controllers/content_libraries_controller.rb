@@ -32,12 +32,12 @@ class ContentLibrariesController < ApplicationController
     respond_to do |format|
       if @content_library.save
         format.html do
-          redirect_to content_library_url(@content_library), notice: 'Content library was successfully created.'
+          redirect_to content_libraries_url, notice: 'Content library was successfully created.'
         end
         format.json { render :show, status: :created, location: @content_library }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @content_library.errors, status: :unprocessable_entity }
+        format.html { redirect_to content_libraries_url }
+        format.json { render json: @content_library.errors }
       end
     end
   end
@@ -47,12 +47,12 @@ class ContentLibrariesController < ApplicationController
     respond_to do |format|
       if @content_library.update(content_library_params)
         format.html do
-          redirect_to content_library_url(@content_library), notice: 'Content library was successfully updated.'
+          redirect_to content_libraries_url, notice: 'Content library was successfully updated.'
         end
         format.json { render :show, status: :ok, location: @content_library }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @content_library.errors, status: :unprocessable_entity }
+        format.html { redirect_to content_libraries_url }
+        format.json { render json: @content_library.errors }
       end
     end
   end

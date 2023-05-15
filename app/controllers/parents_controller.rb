@@ -28,7 +28,6 @@ class ParentsController < ApplicationController
   # POST /parents or /parents.json
   def create
     @parent = current_account.parents.new(parent_params)
-    attach_account_for(@parent)
 
     respond_to do |format|
       if @parent.save
@@ -36,8 +35,8 @@ class ParentsController < ApplicationController
         format.json { render :index, status: :created, location: @parent }
       else
         process_errors(@parent)
-        format.html { redirect_to parents_url, status: :unprocessable_entity }
-        format.json { render json: @parent.errors, status: :unprocessable_entity }
+        format.html { redirect_to parents_url }
+        format.json { render json: @parent.errors }
       end
     end
   end
@@ -49,8 +48,8 @@ class ParentsController < ApplicationController
         format.html { redirect_to parents_url, notice: 'Parents has been successfully updated.' }
         format.json { render :index, status: :ok, location: @parent }
       else
-        format.html { redirect_to parents_url, status: :unprocessable_entity }
-        format.json { render json: @parent.errors, status: :unprocessable_entity }
+        format.html { redirect_to parents_url }
+        format.json { render json: @parent.errors }
       end
     end
   end

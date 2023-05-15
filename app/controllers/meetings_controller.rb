@@ -140,11 +140,11 @@ class MeetingsController < ApplicationController
 
     respond_to do |format|
       if @meeting.save
-        format.html { redirect_to meeting_url(@meeting), notice: 'Meeting was successfully created.' }
+        format.html { redirect_to meetings_url, notice: 'Meeting was successfully created.' }
         format.json { render :show, status: :created, location: @meeting }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @meeting.errors, status: :unprocessable_entity }
+        format.html { redirect_to meetings_url }
+        format.json { render json: @meeting.errors }
       end
     end
   end
@@ -157,8 +157,8 @@ class MeetingsController < ApplicationController
         format.json { render :show, status: :ok, location: @meeting }
         format.js { render 'shared/flash' }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @meeting.errors, status: :unprocessable_entity }
+        format.html { redirect_to meetings_url }
+        format.json { render json: @meeting.errors }
       end
     end
   end

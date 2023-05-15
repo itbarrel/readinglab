@@ -59,8 +59,8 @@ class StudentsController < ApplicationController
         format.html { redirect_to students_url, notice: 'Student has been successfully updated.' }
         format.json { render :show, status: :ok, location: @student }
       else
-        format.html { redirect_to students_url status: :unprocessable_entity }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
+        format.html { redirect_to students_url }
+        format.json { render json: @student.errors }
       end
     end
   end

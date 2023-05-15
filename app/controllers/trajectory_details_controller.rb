@@ -26,7 +26,6 @@ class TrajectoryDetailsController < ApplicationController
   # POST /trajectory_details or /trajectory_details.json
   def create
     @trajectory_detail = current_account.trajectory_details.new(trajectory_detail_params)
-    attach_account_for(@trajectory_detail)
 
     respond_to do |format|
       if @trajectory_detail.save
@@ -35,8 +34,8 @@ class TrajectoryDetailsController < ApplicationController
         end
         format.json { render :show, status: :created, location: @trajectory_detail }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @trajectory_detail.errors, status: :unprocessable_entity }
+        format.html { redirect_to request.referer }
+        format.json { render json: @trajectory_detail.errors }
       end
     end
   end
@@ -46,13 +45,13 @@ class TrajectoryDetailsController < ApplicationController
     respond_to do |format|
       if @trajectory_detail.update(trajectory_detail_params)
         format.html do
-          redirect_to trajectory_detail_url(@trajectory_detail),
+          redirect_to trajectory_details_url,
                       notice: 'Trajectory detail has been successfully updated.'
         end
         format.json { render :show, status: :ok, location: @trajectory_detail }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @trajectory_detail.errors, status: :unprocessable_entity }
+        format.html { redirect_to trajectory_details_url }
+        format.json { render json: @trajectory_detail.errors }
       end
     end
   end

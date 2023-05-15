@@ -11,7 +11,7 @@ class EventsController < ApplicationController
         flash[:notice] = 'Event has been successfully updated.'
         format.js { render 'shared/flash' }
       else
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+        format.json { render json: @event.errors }
       end
     end
   end

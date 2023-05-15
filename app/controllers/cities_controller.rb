@@ -26,11 +26,11 @@ class CitiesController < ApplicationController
 
     respond_to do |format|
       if @city.save
-        format.html { redirect_to city_url(@city), notice: 'City was successfully created.' }
+        format.html { redirect_to cities_url, notice: 'City was successfully created.' }
         format.json { render :show, status: :created, location: @city }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @city.errors, status: :unprocessable_entity }
+        format.html { redirect_to cities_url }
+        format.json { render json: @city.errors }
       end
     end
   end
@@ -39,11 +39,11 @@ class CitiesController < ApplicationController
   def update
     respond_to do |format|
       if @city.update(city_params)
-        format.html { redirect_to city_url(@city), notice: 'City was successfully updated.' }
+        format.html { redirect_to cities_url, notice: 'City was successfully updated.' }
         format.json { render :show, status: :ok, location: @city }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @city.errors, status: :unprocessable_entity }
+        format.html { redirect_to cities_url }
+        format.json { render json: @city.errors }
       end
     end
   end

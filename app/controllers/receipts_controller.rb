@@ -36,7 +36,7 @@ class ReceiptsController < ApplicationController
       else
         process_errors(@receipt)
         format.html { render :index }
-        format.json { render json: @receipt.errors, status: :unprocessable_entity }
+        format.json { render json: @receipt.errors }
       end
     end
   end
@@ -49,7 +49,7 @@ class ReceiptsController < ApplicationController
         format.json { render :show, status: :created, location: @receipt }
       else
         format.html { redirect_to receipts_url }
-        format.json { render json: @receipt.errors, status: :unprocessable_entity }
+        format.json { render json: @receipt.errors }
       end
     end
   end

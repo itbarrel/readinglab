@@ -30,12 +30,12 @@ class StudentMeetingsController < ApplicationController
     respond_to do |format|
       if @student_meetings.save
         format.html do
-          redirect_to student_meeting_url(@student_meeting), notice: 'Student meeting was successfully created.'
+          redirect_to student_meetings_url, notice: 'Student meeting was successfully created.'
         end
         format.json { render :show, status: :created, location: @student_meeting }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @student_meeting.errors, status: :unprocessable_entity }
+        format.html { redirect_to student_meetings_url }
+        format.json { render json: @student_meeting.errors }
       end
     end
   end
@@ -45,12 +45,12 @@ class StudentMeetingsController < ApplicationController
     respond_to do |format|
       if @student_meeting.update(student_meeting_params)
         format.html do
-          redirect_to student_meeting_url(@student_meeting), notice: 'Student meeting was successfully updated.'
+          redirect_to student_meetings_url, notice: 'Student meeting was successfully updated.'
         end
         format.json { render :show, status: :ok, location: @student_meeting }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @student_meeting.errors, status: :unprocessable_entity }
+        format.html { redirect_to student_meetings_url }
+        format.json { render json: @student_meeting.errors }
       end
     end
   end
