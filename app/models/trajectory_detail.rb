@@ -8,15 +8,15 @@
 #  deleted_at  :datetime
 #  entry_date  :datetime
 #  error_count :integer
-#  grade       :string
-#  season      :string
+#  grade       :integer
+#  season      :integer
 #  status      :integer
 #  wpm         :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  account_id  :uuid             not null
-#  book_id     :uuid
-#  klass_id    :uuid
+#  book_id     :uuid             not null
+#  klass_id    :uuid             not null
 #  student_id  :uuid             not null
 #
 # Indexes
@@ -39,6 +39,8 @@ class TrajectoryDetail < ApplicationRecord
   belongs_to :klass, optional: true
   belongs_to :book, optional: true
   enum :status, %i[draft published archived]
+  enum :grade, %i[0 1 2 3 4]
+  enum :season, %i[fall winter spring]
 
   validates :wpm, presence: true
 end
