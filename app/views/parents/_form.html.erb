@@ -1,0 +1,92 @@
+<%= simple_form_for(@parent) do |form| %>
+  <%= render 'shared/flash_errors', form: form %>
+  <div class="row g-0 mt-3">
+    <div class="col-lg-6 ps-lg-2">
+      <div class="sticky-sidebar">
+        <div class="card mb-lg-0">
+          <div class="card-header">
+            <h5 class="mb-0">Parents Details</h5>
+          </div>
+          <div class="card-body bg-light">
+            <div class="row">
+              <div class="col-lg-6 ">
+                <div class="mb-3">
+                  <%= form.label :father_first_name, class: 'fs-0' %>
+                  <%= form.text_field :father_first, class: 'form-control' %>
+                </div>
+                <div class="mb-3">
+                  <%= form.label :father_last_name, class: 'fs-0' %>
+                  <%= form.text_field :father_last, class: 'form-control' %>
+                </div>
+                <div class="mb-3">
+                  <%= form.label :father_phone, class: 'fs-0' %>
+                  <%= form.number_field :father_phone, class: 'form-control', placeholder: 'Enter your phone number'  %>
+                </div>
+                <div class="mb-3">
+                  <%= form.label :father_email, class: 'fs-0' %>
+                  <%= form.email_field :father_email, class: 'form-control' %>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <%= form.label :mother_first_name, class: 'fs-0' %>
+                  <%= form.text_field :mother_first, class: 'form-control' %>
+                </div>
+                <div class="mb-3">
+                  <%= form.label :mother_last_name, class: 'fs-0' %>
+                  <%= form.text_field :mother_last, class: 'form-control' %>
+                </div>
+                <div class="mb-3">
+                  <%= form.label :mother_phone, class: 'fs-0' %>
+                  <%= form.number_field :mother_phone, class: 'form-control', placeholder: 'Enter your phone number'  %>
+                </div>
+                <div class="mb-3">
+                  <%= form.label :mother_email, class: 'fs-0' %>
+                  <%= form.email_field :mother_email, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4 mb-3">
+                  <%= form.label :postal_code, class: 'orms-0' %>
+                  <%= form.number_field :postal_code, class: 'form-control' %>
+                </div>
+                <div class="col-lg-4 mb-3">
+                  <%= form.label :city_id, class: 'fs-0' %>
+                  <%= form.collection_select :city_id, City.all, :id, :name, { include_blank: true }, { class: 'form-control' } %>
+                </div>
+                <div class="col-lg-4 mb-3">
+                  <%= form.label :state, class: 'fs-0' %>
+                  <%= form.text_field :state, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="mb-3">
+                <%= form.label :address, class: 'fs-0' %>
+                <%= form.text_area :address, class: 'form-control' %>
+              </div>
+            </div>
+
+            <div class="mb-3 d-grid gap-2">
+              <%= form.submit class:"btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 pe-lg-2">
+      <div id="form_fields">
+        <%= form.simple_fields_for :children do |field| %>
+        <%= render 'child_fields', f: field %>
+        <% end %>
+        <%= link_to_add_association form, :children do %>
+        <div class="d-grid gap-2">
+          <button class="btn btn-falcon-default btn-sm mb-2" type="submit">
+            <span class="fas fa-plus fs--2 me-1" data-fa-transform="up-1"></span>
+            Add Item
+          </button>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
