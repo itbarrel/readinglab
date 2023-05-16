@@ -4,7 +4,8 @@
   <td class="email align-middle white-space-nowrap py-2" style="padding-right: 10.25rem "><%= student.sessions_count %></td>
   <td class="phone align-middle white-space-nowrap py-2" style="padding-right: 10.25rem "><%= student.leave_count %></td>
   <td class="phone align-middle white-space-nowrap py-2"><%= student.meeting_purchased %></td>
-  <td class="phone align-middle white-space-nowrap py-2"><%= student.next_billing_date %></td>
+  <td class="phone align-middle white-space-nowrap py-2"><%= l student.next_billing_date, format: :short if student.next_billing_date.present?%></td>
+
   <td class="align-middle white-space-nowrap py-2 text-end">
     <div class="dropdown font-sans-serif position-static">
       <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0"
