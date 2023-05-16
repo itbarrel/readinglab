@@ -39,8 +39,9 @@ class Parent < ApplicationRecord
   has_many :children, class_name: 'Student', dependent: :destroy
 
   validates :father_first, :mother_first, :father_phone, presence: true
-
   validates :father_email, presence: true
+
+  accepts_nested_attributes_for :children, allow_destroy: true, reject_if: :all_blank
 
   def self.notify_all_about_klass(options)
     all.find_each(batch_size: 10) do |p|
