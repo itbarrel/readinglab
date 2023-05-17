@@ -60,4 +60,8 @@ class User < ApplicationRecord
   def name
     "Mr/s. #{first_name} #{last_name}"
   end
+
+  def calendar_name
+    "#{first_name} #{last_name}"
+  end
 end
