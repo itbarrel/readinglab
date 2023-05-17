@@ -46,24 +46,24 @@
                   <%= form.email_field :mother_email, class: 'form-control' %>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-lg-4 mb-3">
-                  <%= form.label :postal_code, class: 'orms-0' %>
-                  <%= form.number_field :postal_code, class: 'form-control' %>
-                </div>
-                <div class="col-lg-4 mb-3">
-                  <%= form.label :city_id, class: 'fs-0' %>
-                  <%= form.collection_select :city_id, City.all, :id, :name, { include_blank: true }, { class: 'form-control' } %>
-                </div>
-                <div class="col-lg-4 mb-3">
-                  <%= form.label :state, class: 'fs-0' %>
-                  <%= form.text_field :state, class: 'form-control' %>
-                </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-4 mb-3">
+                <%= form.label :postal_code, class: 'orms-0' %>
+                <%= form.number_field :postal_code, class: 'form-control' %>
               </div>
-              <div class="mb-3">
-                <%= form.label :address, class: 'fs-0' %>
-                <%= form.text_area :address, class: 'form-control' %>
+              <div class="col-lg-4 mb-3">
+                <%= form.label :city_id, class: 'fs-0' %>
+                <%= form.collection_select :city_id, City.all, :id, :name, { include_blank: true }, { class: 'form-control' } %>
               </div>
+              <div class="col-lg-4 mb-3">
+                <%= form.label :state, class: 'fs-0' %>
+                <%= form.text_field :state, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="mb-3">
+              <%= form.label :address, class: 'fs-0' %>
+              <%= form.text_area :address, class: 'form-control' %>
             </div>
 
             <div class="mb-3 d-grid gap-2">
@@ -82,7 +82,7 @@
         <div class="d-grid gap-2">
           <button class="btn btn-falcon-default btn-sm mb-2" type="submit">
             <span class="fas fa-plus fs--2 me-1" data-fa-transform="up-1"></span>
-            Add Item
+            Add Student
           </button>
         </div>
       <% end %>

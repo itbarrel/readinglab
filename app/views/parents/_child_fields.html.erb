@@ -3,7 +3,6 @@
     <div class="card-header">
       <div class="d-flex flex-between-center">
         <h5 class="mb-0">Student Details</h5>
-
       </div>
     </div>
     <div class="card-body bg-light">
@@ -24,7 +23,7 @@
           <%= f.label :grade, class: "form-label" %>
           <%= f.text_field :grade, required: true, class: "form-control" %>
         </div>
-        <div class="col-sm-12 mb-3">
+        <div class="col-sm-6 mb-3">
           <%= f.label :gender, class: "form-label" %>
           <%= f.select :gender, Student.genders.map { |key, value| [key.humanize, key] }, { include_blank: true }, { class: 'form-select form-field-type' } %>
         </div>
