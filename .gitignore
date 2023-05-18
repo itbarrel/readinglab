@@ -38,5 +38,4 @@
 .byebug_history
 *.env
 /esbuild_error_*
-certbot/*
 dump.sql
