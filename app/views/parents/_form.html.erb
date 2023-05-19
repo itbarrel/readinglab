@@ -76,16 +76,16 @@
     <div class="col-lg-6 pe-lg-2">
       <div id="form_fields">
         <%= form.simple_fields_for :children do |field| %>
-        <%= render 'child_fields', f: field %>
+          <%= render 'child_fields', f: field %>
         <% end %>
         <%= link_to_add_association form, :children do %>
-        <div class="d-grid gap-2">
-          <button class="btn btn-falcon-default btn-sm mb-2" type="submit">
-            <span class="fas fa-plus fs--2 me-1" data-fa-transform="up-1"></span>
-            Add Student
-          </button>
-        </div>
-      <% end %>
+          <div class="d-grid gap-2">
+            <button class="btn btn-falcon-default btn-sm mb-2" type="submit">
+              <span class="fas fa-plus fs--2 me-1" data-fa-transform="up-1"></span>
+              Add Student
+            </button>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

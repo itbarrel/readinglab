@@ -3,6 +3,9 @@
     <div class="card-header">
       <div class="d-flex flex-between-center">
         <h5 class="mb-0">Student Details</h5>
+        <%= link_to_remove_association f, class: 'position-absolute end-0 top-0 mt-2 me-3 z-index-1' do %>
+          <span class="fas fa-times-circle text-danger" data-fa-transform="shrink-1">
+        <% end %>
       </div>
     </div>
     <div class="card-body bg-light">
