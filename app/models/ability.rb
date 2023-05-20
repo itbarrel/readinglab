@@ -70,7 +70,7 @@ class Ability
 
     can :manage, :all if user.super_admin?
 
-    set_admin_with user if user.admin?
+    admin_permissions_for user if user.admin?
 
     supervisor_permissions_for user if user.supervisor?
 
