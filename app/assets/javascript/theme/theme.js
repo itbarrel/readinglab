@@ -301,6 +301,8 @@ var getColor = function getColor(name) {
     .trim();
 };
 
+window.getColor = getColor;
+
 var getColors = function getColors(dom) {
   return {
     primary: getColor("primary", dom),

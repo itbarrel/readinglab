@@ -44,6 +44,8 @@ const hexToRgb = hexValue => {
 
 const rgbaColor = (color = '#fff', alpha = 0.5) => `rgba(${hexToRgb(color)}, ${alpha})`;
 
+window.rgbaColor = rgbaColor;
+
 /* --------------------------------- Colors --------------------------------- */
 
 const getColor = (name, dom = document.documentElement) =>

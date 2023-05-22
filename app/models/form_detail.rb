@@ -15,7 +15,7 @@
 #  form_id     :uuid             not null
 #  parent_id   :uuid             not null
 #  student_id  :uuid             not null
-#  user_id     :uuid
+#  user_id     :uuid             not null
 #
 # Indexes
 #
