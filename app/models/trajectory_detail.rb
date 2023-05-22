@@ -39,7 +39,7 @@ class TrajectoryDetail < ApplicationRecord
   belongs_to :klass, optional: true
   belongs_to :book, optional: true
   enum :status, %i[draft published archived]
-  enum :grade, %i[0 1 2 3 4]
+  enum :grade, %i[0 1 2 3 4 5]
   enum :season, %i[fall winter spring]
 
   validates :wpm, presence: true

@@ -7,6 +7,8 @@ class TrajectoryDetailsController < ApplicationController
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
 
+    @trajectory_details = @trajectory_details.where(student_id: params[:student_id]) if params[:student_id].present?
+
     @search = @trajectory_details.ransack(params[:q])
     @search.sorts = 'wpm asc' if @search.sorts.empty?
     @pagy, @trajectory_details = pagy(@search.result, items: per_page)
@@ -75,7 +77,6 @@ class TrajectoryDetailsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def trajectory_detail_params
-    params.require(:trajectory_detail).permit(:error_count, :wpm, :grade, :season, :entry_date,
-                                              :user_id, :klass_id, :book_id, :student_id)
+    params.require(:trajectory_detail).permit(:error_count, :wpm, :grade, :season, :entry_date, :klass_id, :book_id, :student_id)
   end
 end
