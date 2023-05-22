@@ -52,7 +52,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  enum role: { admin: 0, staff: 1, teacher: 2, super_admin: 3, admin_junior: 4, supervisor: 5 }
+  enum role: { admin: 0, supervisor: 1, teacher: 2, super_admin: 3 }
 
   validates :first_name, :last_name, :email, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }

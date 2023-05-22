@@ -25,16 +25,6 @@ if ENV.fetch("SEED_DATABASE").present? && true?(ENV.fetch("SEED_DATABASE"))
   end
 
   User.find_or_create_by!(
-    first_name: 'Junior',
-    last_name: 'Admin',
-    email: 'admin_junior@readinglab.co',
-    role: :admin_junior,
-    account: Account.sample
-  ) do |user|
-    user.password = '12345678'
-  end
-  
-  User.find_or_create_by!(
     first_name: 'Super',
     last_name: 'Visor',
     email: 'supervisor@readinglab.co',
@@ -43,7 +33,7 @@ if ENV.fetch("SEED_DATABASE").present? && true?(ENV.fetch("SEED_DATABASE"))
   ) do |user|
     user.password = '12345678'
   end
-  
+
   if Rails.env.development?
     5.times do
       User.find_or_create_by!(
