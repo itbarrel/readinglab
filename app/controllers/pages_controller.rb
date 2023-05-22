@@ -6,6 +6,7 @@ class PagesController < ApplicationController
   def calendar; end
 
   def communication
+    authorize! :read, :communication
     @students = []
     @users = []
   end

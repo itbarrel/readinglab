@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_05_131940) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_22_140447) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -44,6 +44,34 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_131940) do
     t.datetime "deleted_at"
     t.index ["account_type_id"], name: "index_accounts_on_account_type_id"
     t.index ["name", "deleted_at"], name: "accounts_name", unique: true
+  end
+
+  create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.uuid "record_id", null: false
+    t.uuid "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -426,6 +454,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_131940) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at", precision: nil
+    t.string "profile"
     t.index ["account_id", "email", "deleted_at"], name: "users_email", unique: true
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -457,6 +486,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_131940) do
   end
 
   add_foreign_key "accounts", "account_types"
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "books", "accounts"
   add_foreign_key "books", "klasses"
   add_foreign_key "content_libraries", "accounts"

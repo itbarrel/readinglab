@@ -24,29 +24,50 @@ class ApplicationController < ActionController::Base
       { url: '/staffs', text: 'Staff', class: '', icon: 'micon bi bi-person-vcard', model: User },
       { url: '/vacations', text: 'Vacations', class: '', icon: 'micon bi bi-train-front-fill', model: Vacation }
     ]
+    general_items = [
+      { url: '/calendar', text: 'Calendar', class: '', icon: 'bi bi-calendar', models: [Klass, Interview], sub_items: [] },
+      { text: 'Registration', class: '', icon: 'bi bi-person-plus-fill', sub_items: [
+        { url: '/parents', text: 'Parents', class: '', icon: 'micon bi bi-people', models: [Parent] },
+        { url: '/students', text: 'Student Listing', class: '', icon: 'micon bi bi-layout-text-sidebar-reverse', models: [Student] },
+        { url: '/interviews', text: 'Interviews', class: '', icon: 'micon bi bi-calendar-week', models: [Interview] }
+      ] },
+      { text: 'Classes', class: '', icon: 'micon bi bi-book-half', sub_items: [
+        { url: '/klasses', text: 'Active', class: '', icon: 'micon bi bi-check-circle', models: [Klass] }
+        # { url: '/rooms', text: 'Obselote', class: '', icon: 'micon bi bi-exclamation-circle' }
+      ] },
+      { text: 'Billing', class: '', icon: 'micon bi bi-file-earmark-text-fill', sub_items: [
+        { url: '/billings/students', text: 'Students', class: '', icon: 'micon bi bi-receipt', sub_items: [] },
+        { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-receipt', sub_items: [] }
+      ] },
+      { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-chat-text-fill', models: [:communication], sub_items: [] },
+      { text: 'Reports', class: '', icon: 'micon bi bi-bar-chart-line-fill', sub_items: [
+        { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-graph-up-arrow' }
+      ] }
+    ]
     @menu_list = {
-      'General': [
-        { url: '/calendar', text: 'Calendar', class: '', icon: 'bi bi-calendar', sub_items: [] },
-        { text: 'Registration', class: '', icon: 'bi bi-person-plus-fill', sub_items: [
-          { url: '/parents', text: 'Parents', class: '', icon: 'micon bi bi-people' },
-          { url: '/students', text: 'Student Listing', class: '', icon: 'micon bi bi-layout-text-sidebar-reverse' },
-          { url: '/interviews', text: 'Interviews', class: '', icon: 'micon bi bi-calendar-week' }
-        ] },
-        { text: 'Classes', class: '', icon: 'micon bi bi-book-half', sub_items: [
-          { url: '/klasses', text: 'Active', class: '', icon: 'micon bi bi-check-circle' }
-          # { url: '/rooms', text: 'Obselote', class: '', icon: 'micon bi bi-exclamation-circle' }
-        ] },
-        { text: 'Billing', class: '', icon: 'micon bi bi-file-earmark-text-fill', sub_items: [
-          { url: '/billings/students', text: 'Students', class: '', icon: 'micon bi bi-receipt', sub_items: [] },
-          { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-receipt', sub_items: [] }
-        ] },
-        { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-chat-text-fill', sub_items: [] },
-        { text: 'Reports', class: '', icon: 'micon bi bi-bar-chart-line-fill', sub_items: [
-          { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-graph-up-arrow' }
-        ] }
-      ],
-      'Settings': []
+      General: [],
+      Settings: []
     }
+
+    general_items.each do |item|
+      if item[:sub_items].present?
+        item[:items] ||= []
+        item[:sub_items].each do |sitem|
+          next if sitem[:models].blank?
+
+          filtered = sitem[:models].filter do |mdl|
+            sitem if can? :read, mdl
+          end
+          item[:items].push(sitem) if filtered.any?
+        end
+        @menu_list[:General].push(item) if item[:items].any?
+      else
+        filtered = item[:models].filter do |mdl|
+          item if can? :read, mdl
+        end
+        @menu_list[:General].push(item) if filtered.any?
+      end
+    end
 
     settings.each do |setting|
       @menu_list[:Settings].push(setting) if can? :read, setting[:model]

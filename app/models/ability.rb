@@ -4,6 +4,7 @@ class Ability
   include CanCan::Ability
 
   def admin_permissions_for(user)
+    can :read, :communication
     can :manage, Book, account_id: user.account_id
     can :manage, City, account_id: user.account_id
     can :manage, ContentLibrary, account_id: user.account_id
@@ -35,6 +36,7 @@ class Ability
   end
 
   def supervisor_permissions_for(user)
+    can :read, :communication
     can :manage, Book, account_id: user.account_id
     can :manage, City, account_id: user.account_id
     can :manage, ContentLibrary, account_id: user.account_id
@@ -76,7 +78,8 @@ class Ability
 
     return unless user.teacher?
 
-    can :manage, Klass, { teacher_id: user.id, klass: { account_id: user.account_id } }
+    can :read, Klass, { teacher_id: user.id, account_id: user.account_id }
+    can :edit, Klass, { teacher_id: user.id, account_id: user.account_id }
     can :manage, Meeting, { klass: { teacher_id: user.id, account_id: user.account_id } }
   end
 end

@@ -21,6 +21,7 @@
 #  last_sign_in_ip        :string
 #  phone                  :string
 #  postal_code            :string
+#  profile                :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -51,6 +52,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_one_attached :profile
 
   enum role: { admin: 0, supervisor: 1, teacher: 2, super_admin: 3 }
 
