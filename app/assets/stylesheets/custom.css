@@ -26,11 +26,14 @@
   position: relative;
 }
 
-#showAssessmentForm svg{
+#showAssessmentForm button{
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 6px;
   color: #2d7be5;
+  background: none;
+  border: none;
+  line-height: normal;
 }
 
 .unassigned-students{
@@ -65,4 +68,24 @@
   border-top: 20px solid transparent;
   border-left: 20px solid transparent;
   clip-path: polygon(100% 0, 100% 100%, 0 0);
+}
+
+.interview_grid{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 30px;
+}
+
+.interview_schedule_form{
+  flex: auto;
+}
+
+.schedule_input{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  width: 100%;
+  align-items: flex-end;
+  padding-right: 20px;
+  column-gap: 20px;
 }

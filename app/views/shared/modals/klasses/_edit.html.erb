@@ -34,6 +34,10 @@
 
           <%= form_for klass, remote: true do |f| %>
             <div class="mb-3">
+              <%= f.label :start_date, class: 'fs-0' %>
+              <%= f.text_field :starts_at, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
+            </div>
+            <div class="mb-3">
               <%= f.label :teacher_id, class: 'fs-0' %>
               <%= f.collection_select :teacher_id, current_account.teachers, :id, :name, { include_blank: true }, { class: 'form-control' } %>
             </div>

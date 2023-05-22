@@ -1,6 +1,8 @@
 $('.modal').modal('hide');
 $('#editKlassModal .modal-content').html("<%= j render 'shared/modals/klasses/edit', klass: @klass, title: 'Edit klass' %>");
-
+document.querySelector('#klass_starts_at').flatpickr({
+  enableTime: true,
+});
 window.choicesInit()
 
 $('#editKlassModal').modal('show');

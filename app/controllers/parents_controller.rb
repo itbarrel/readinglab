@@ -83,8 +83,17 @@ class ParentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def parent_params
-    params.require(:parent).permit(:father_first, :father_last, :father_email, :father_phone, :mother_first,
-                                   :mother_last, :mother_email, :mother_phone, :address,
-                                   :state, :postal_code, :city_id)
+    pars = params.require(:parent).permit(:father_first, :father_last, :father_email, :father_phone, :mother_first,
+                                          :mother_last, :mother_email, :mother_phone, :address,
+                                          :state, :postal_code, :city_id, children_attributes: %i[
+                                            id first_name last_name dob gender school grade
+                                          ])
+
+    if pars[:children_attributes].present?
+      pars[:children_attributes].each do |_key, value|
+        value[:account_id] = current_account.id
+      end
+    end
+    pars
   end
 end

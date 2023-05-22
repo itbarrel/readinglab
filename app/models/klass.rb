@@ -93,6 +93,13 @@ class Klass < ApplicationRecord
     "Class in #{class_name}"
   end
 
+  def calendar_name
+    class_name = starts_at.strftime('%I%p').gsub('M', '')
+    class_name = "#{class_name}-#{teacher.calendar_name}" if teacher.present?
+    class_name = "#{class_name} in #{room.name}" if room.present?
+    "#{class_name} on #{days_abbr}"
+  end
+
   def un_assigned_student_classes
     student_classes.where.not(id: student_forms.pluck(:student_class_id))
   end

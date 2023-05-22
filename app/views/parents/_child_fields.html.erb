@@ -1,0 +1,40 @@
+<div class="nested-fields">
+  <div class="card mb-3">
+    <div class="card-header">
+      <div class="d-flex flex-between-center">
+        <h5 class="mb-0">Student Details</h5>
+        <%= link_to_remove_association f, class: 'position-absolute end-0 top-0 mt-2 me-3 z-index-1' do %>
+          <span class="fas fa-times-circle text-danger" data-fa-transform="shrink-1">
+        <% end %>
+      </div>
+    </div>
+    <div class="card-body bg-light">
+      <div class="row gx-2">
+        <div class="col-sm-6 mb-3">
+          <%= f.label :first_name, class: "form-label" %>
+          <%= f.text_field :first_name, required: true, class: "form-control" %>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <%= f.label :last_name, class: "form-label" %>
+          <%= f.text_field :last_name, required: true, class: "form-control" %>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <%= f.label :dob, class: "form-label" %>
+          <%= f.date_field :dob, required: true, class: "form-control" %>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <%= f.label :grade, class: "form-label" %>
+          <%= f.text_field :grade, required: true, class: "form-control" %>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <%= f.label :gender, class: "form-label" %>
+          <%= f.select :gender, Student.genders.map { |key, value| [key.humanize, key] }, { include_blank: true }, { class: 'form-select form-field-type' } %>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <%= f.label :school, class: "form-label" %>
+          <%= f.text_field :school, required: true, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,45 +1,44 @@
 <%= simple_form_for(@form) do |form| %>
-<%= render 'shared/flash_errors', form: form %>
-
-<div class="row g-0 mt-3">
-  <div class="col-lg-4 ps-lg-2">
-    <div class="sticky-sidebar">
-      <div class="card mb-lg-0">
-        <div class="card-header">
-          <h5 class="mb-0">Form Details</h5>
-        </div>
-        <div class="card-body bg-light">
-          <div class="mb-3">
-            <%= form.label :name, class: "form-label" %>
-            <%= form.text_field :name, required: true, class: "form-control form-control-user", placeholder: "Name" %>
+  <%= render 'shared/flash_errors', form: form %>
+  <div class="row g-0 mt-3">
+    <div class="col-lg-4 ps-lg-2">
+      <div class="sticky-sidebar">
+        <div class="card mb-lg-0">
+          <div class="card-header">
+            <h5 class="mb-0">Form Details</h5>
           </div>
-          <div class="mb-3">
-            <%= form.label :purpose, class: "form-label" %>
-            <%= form.select :purpose, Form.purposes.map { |key, value| [key.humanize, key] }, {include_blank: true}, {class: 'form-select form-select-md js-choice'} %>
-          </div>
-          <div class="mb-3 d-grid gap-2">
-            <%= form.submit class:"btn btn-primary" %>
+          <div class="card-body bg-light">
+            <div class="mb-3">
+              <%= form.label :name, class: "form-label" %>
+              <%= form.text_field :name, required: true, class: "form-control form-control-user", placeholder: "Name" %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :purpose, class: "form-label" %>
+              <%= form.select :purpose, Form.purposes.map { |key, value| [key.humanize, key] }, {include_blank: true}, {class: 'form-select form-select-md js-choice'} %>
+            </div>
+            <div class="mb-3 d-grid gap-2">
+              <%= form.submit class:"btn btn-primary" %>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="col-lg-8 pe-lg-2">
-    <div id="form_fields">
-      <%= form.simple_fields_for :form_fields do |field| %>
-      <%= render 'form_field_fields', f: field %>
-      <% end %>
+    <div class="col-lg-8 pe-lg-2">
+      <div id="form_fields">
+        <%= form.simple_fields_for :form_fields do |field| %>
+        <%= render 'form_field_fields', f: field %>
+        <% end %>
 
-      <%= link_to_add_association form, :form_fields do %>
-      <div class="d-grid gap-2">
-        <button class="btn btn-falcon-default btn-sm mb-2" type="submit">
-          <span class="fas fa-plus fs--2 me-1" data-fa-transform="up-1"></span>
-          Add Item
-        </button>
+        <%= link_to_add_association form, :form_fields do %>
+          <div class="d-grid gap-2">
+            <button class="btn btn-falcon-default btn-sm mb-2" type="submit">
+              <span class="fas fa-plus fs--2 me-1" data-fa-transform="up-1"></span>
+              Add Item
+            </button>
+          </div>
+        <% end %>
       </div>
-      <% end %>
     </div>
   </div>
-</div>
 <% end %>
