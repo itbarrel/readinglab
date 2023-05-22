@@ -3,13 +3,19 @@
     <div class="bg-holder rounded-3 rounded-bottom-0 profile-background">
     </div>
     <div class="avatar avatar-5xl avatar-profile profile-picture-container">
-      <% link_to staff_path(current_user), class: 'edit-picture-button' do %>
-        <% if current_user.profile.attached? %>
-          <%= image_tag(current_user.profile, class: 'rounded-circle img-thumbnail shadow-sm', width: 200) %>
-        <% else %>
+      <%= form_for(current_user, as: :staff, url: staff_path(current_user), html: { id: 'profilePicForm' }) do |f| %>
+        <%= f.label :profile, class: 'profile-label' do %>
+          <% if current_user.profile.attached? %>
+            <%= image_tag(current_user.profile, class: 'rounded-circle img-thumbnail shadow-sm', width: 200) %>
+          <% else %>
+            <%= image_tag('team/2.jpg', class: 'rounded-circle img-thumbnail shadow-sm', width: 200) %>
+          <% end %>
+          <%= f.file_field :profile, class: 'form-control' %>
+          <div>
+            <i class="fas fa-pencil-alt"></i>
+          </div>
         <% end %>
-        <% end %>
-        <%= image_tag('team/2.jpg', class: 'rounded-circle img-thumbnail shadow-sm', width: 200) %>
+      <% end %>
     </div>
   </div>
   <div class="card-body">
@@ -44,25 +50,25 @@
       </div>
       <div class="card-body bg-light">
         <%= form_for(current_user, as: :staff, url: staff_path(current_user), html: { id: 'profileForm', class: 'row g-3' }) do |f| %>
-        <div class="col-lg-6">
-          <%= f.label :first_name, class: 'form-label' %>
-          <%= f.text_field :first_name, class: 'form-control' %>
-        </div>
-        <div class="col-lg-6">
-          <%= f.label :last_name, class: 'form-label' %>
-          <%= f.text_field :last_name, class: 'form-control' %>
-        </div>
-        <div class="col-lg-6">
-          <%= f.label :email, class: 'form-label' %><br />
-          <%= f.email_field :email,class: 'form-control', autofocus: true, autocomplete: "email" %>
-        </div>
-        <div class="col-lg-6">
-          <%= f.label :phone, class: 'form-label' %>
-          <%= f.number_field :phone, class: 'form-control' %>
-        </div>
-        <div class="col-12 d-flex justify-content-end">
-          <button class="btn btn-primary" type="submit">Update </button>
-        </div>
+          <div class="col-lg-6">
+            <%= f.label :first_name, class: 'form-label' %>
+            <%= f.text_field :first_name, class: 'form-control' %>
+          </div>
+          <div class="col-lg-6">
+            <%= f.label :last_name, class: 'form-label' %>
+            <%= f.text_field :last_name, class: 'form-control' %>
+          </div>
+          <div class="col-lg-6">
+            <%= f.label :email, class: 'form-label' %><br />
+            <%= f.email_field :email,class: 'form-control', autofocus: true, autocomplete: "email" %>
+          </div>
+          <div class="col-lg-6">
+            <%= f.label :phone, class: 'form-label' %>
+            <%= f.number_field :phone, class: 'form-control' %>
+          </div>
+          <div class="col-12 d-flex justify-content-end">
+            <button class="btn btn-primary" type="submit">Update </button>
+          </div>
         <% end %>
       </div>
     </div>
@@ -177,3 +183,10 @@
     </div>
   </div>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    $('#staff_profile').change(function() {
+      $('#profilePicForm').submit()
+    })
+  })
+</script>
