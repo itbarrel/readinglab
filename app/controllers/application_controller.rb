@@ -36,12 +36,12 @@ class ApplicationController < ActionController::Base
         # { url: '/rooms', text: 'Obselote', class: '', icon: 'micon bi bi-exclamation-circle' }
       ] },
       { text: 'Billing', class: '', icon: 'micon bi bi-file-earmark-text-fill', sub_items: [
-        { url: '/billings/students', text: 'Students', class: '', icon: 'micon bi bi-receipt', sub_items: [] },
-        { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-receipt', sub_items: [] }
+        { url: '/billings/students', text: 'Students', class: '', icon: 'micon bi bi-receipt', models: [:billing] },
+        { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-receipt', models: [Receipt, :billing] }
       ] },
       { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-chat-text-fill', models: [:communication], sub_items: [] },
       { text: 'Reports', class: '', icon: 'micon bi bi-bar-chart-line-fill', sub_items: [
-        { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-graph-up-arrow' }
+        { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] }
       ] }
     ]
     @menu_list = {

@@ -5,6 +5,8 @@ class Ability
 
   def admin_permissions_for(user)
     can :read, :communication
+    can :read, :reports
+    can :read, :billing
     can :manage, Book, account_id: user.account_id
     can :manage, City, account_id: user.account_id
     can :manage, ContentLibrary, account_id: user.account_id
@@ -37,6 +39,8 @@ class Ability
 
   def supervisor_permissions_for(user)
     can :read, :communication
+    can :read, :reports
+    can :read, :billing
     can :manage, Book, account_id: user.account_id
     can :manage, City, account_id: user.account_id
     can :manage, ContentLibrary, account_id: user.account_id
