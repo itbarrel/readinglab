@@ -244,7 +244,11 @@
     <li class="nav-item dropdown"><a class="nav-link pe-0" id="navbarDropdownUser" href="#" role="button"
         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="avatar avatar-xl">
-          <%= image_tag('team/3-thumb.png', class: 'rounded-circle') %>
+          <% if current_user.profile.attached? %>
+            <%= image_tag(current_user.profile, class: 'rounded-circle', width: 200) %>
+          <% else %>
+            <%= image_tag('team/2.jpg', class: 'rounded-circle', width: 200) %>
+          <% end %>
         </div>
       </a>
       <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
