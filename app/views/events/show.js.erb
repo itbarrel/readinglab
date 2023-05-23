@@ -3,5 +3,8 @@
   $('#showEventModal .modal-content').html("<%= j render 'shared/modals/meetings/show', meeting: @event %>");
 <% else %>
   $('#showEventModal .modal-content').html("<%= j render 'shared/modals/interviews/show', interview: @event %>");
+  document.querySelector('#interview_date').flatpickr({
+    enableTime: true,
+  });
 <% end %>
 $('#showEventModal').modal('show');

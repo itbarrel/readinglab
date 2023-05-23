@@ -34,6 +34,7 @@
 #
 class Account < ApplicationRecord
   belongs_to :account_type
+  has_one :admin, -> { admin }, class_name: 'User', dependent: :destroy, inverse_of: :account
   has_many :books, dependent: :destroy
   has_many :vacations, dependent: :destroy
   has_many :vacation_types, dependent: :destroy
@@ -59,6 +60,8 @@ class Account < ApplicationRecord
 
   validates :email, :mobile, :postal_code, presence: true
   validates :name, presence: true, uniqueness: { scope: %i[name deleted_at] }
+
+  accepts_nested_attributes_for :admin
 
   enum :billing_scheme, %i[sessionly monthly annual]
 

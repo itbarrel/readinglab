@@ -48,10 +48,13 @@
             <% end %>
           <% end %>
           <% if meeting.attendance_form.present? %>
-            <div class="d-grid gap-2">
+            <div class="mt-2 d-grid gap-2">
               <%= link_to('Attendance', attendance_meeting_path, remote: true, class: 'btn btn-primary') %>
             </div>
           <% end %>
+          <div class="mt-2 d-grid gap-2">
+            <%= link_to('Attendance', attendance_meeting_path, remote: true, class: 'btn btn-primary') %>
+          </div>
         </div>
       </div>
     </div>
