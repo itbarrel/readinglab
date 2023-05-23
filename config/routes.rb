@@ -18,12 +18,20 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web => '/sidekiq'
 
-  resources :accounts, :rooms, :teachers, :vacations, :parents, :staffs, :books, :forms, concerns: %i[trashable exportable]
+  resources :rooms, :teachers, :vacations, :staffs, :books, :forms, concerns: %i[trashable exportable]
   resources :message_templates, :trajectory_details, concerns: %i[trashable exportable]
   resources :receipt_types, :receipts, :parents, :payments, concerns: %i[trashable exportable]
 
   resources :events, only: %i[show update]
   resources :student_classes, only: %i[create destroy]
+
+  resources :accounts do
+    concerns %i[trashable exportable]
+    member do
+      get :stats
+    end
+  end
+
   resources :klass_templates do
     concerns %i[trashable exportable]
     member do

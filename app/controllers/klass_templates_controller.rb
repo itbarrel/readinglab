@@ -11,7 +11,7 @@ class KlassTemplatesController < ApplicationController
 
     @search = @klass_templates.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
-    @pagy, @klass_templates = pagy(@search.result.includes(:teacher, :room), items: per_page)
+    @pagy, @klass_templates = pagy(@search.result.includes(:teacher, :room, :account), items: per_page)
   end
 
   def show; end

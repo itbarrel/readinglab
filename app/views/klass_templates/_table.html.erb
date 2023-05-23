@@ -29,6 +29,9 @@
         <th class="sort pe-1 align-middle white-space-nowrap">Duration</th>
         <th class="sort pe-1 align-middle white-space-nowrap" >Start</th>
         <th class="sort pe-1 align-middle white-space-nowrap" >Session Range</th>
+        <% if current_user.super_admin? %>
+         <th class="sort pe-1 align-middle white-space-nowrap" >Account</th>
+        <% end %>
         <th class="sort pe-1 align-middle white-space-nowrap" ></th>
 
       </tr>

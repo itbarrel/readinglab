@@ -13,6 +13,10 @@
           <% end %>
         </th>
         <th class="sort pe-1 align-middle white-space-nowrap">Description</th>
+        <% if current_user.super_admin? %>
+         <th class="sort pe-1 align-middle white-space-nowrap">Account</th>
+        <% end %>
+
         <th class="sort pe-1 align-middle white-space-nowrap" ></th>
 
       </tr>
