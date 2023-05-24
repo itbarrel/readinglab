@@ -77,6 +77,10 @@ Rails.application.routes.draw do
     collection do
       get :present_search
     end
+
+    member do
+      get :interviews
+    end
   end
 
   resources :reports, only: %i[] do

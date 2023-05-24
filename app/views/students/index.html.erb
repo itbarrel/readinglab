@@ -41,6 +41,8 @@
 <% content_for :modal_includes do %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addStudentModal' } %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addInterviewModal' } %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'showInterviewsModal' } %>
+
 <% end %>
 
 <% content_for :javascript_includes do %>

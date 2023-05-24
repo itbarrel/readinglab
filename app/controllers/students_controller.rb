@@ -81,6 +81,8 @@ class StudentsController < ApplicationController
     render js: "window.location = '#{students_url}'"
   end
 
+  def interviews; end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

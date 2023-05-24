@@ -1,0 +1,34 @@
+<div class="modal-header px-card bg-light border-bottom-0">
+  <h5 class="modal-title"><%= title %></h5>
+  <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body p-card">
+  <div class="card">
+    <div class="card-header d-flex flex-between-center py-2 border-bottom">
+      <h6 class="mb-0">Interview Details</h6>
+    </div>
+    <div class="card-body d-flex flex-column justify-content-between">
+      <div class="table-responsive scrollbar">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Scheduled</th>
+              <th class="text-end" scope="col">Submitted At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% student.interviews.each do |x| %>
+              <tr>
+                <td><%= l x.date, format: :medium %></td>
+                <td>
+                  <% if x.recent_submission.present? %>
+                    <%= l x.recent_submission.created_at, format: :medium %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>

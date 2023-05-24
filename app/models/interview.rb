@@ -32,6 +32,10 @@ class Interview < ApplicationRecord
   belongs_to :form
   belongs_to :student
   has_many :form_details, as: :parent, dependent: nil
+  has_one :recent_submission, -> { order created_at: :desc },
+          class_name: 'FormDetail',
+          as: :parent, dependent: nil,
+          inverse_of: 'parent'
 
   enum :status, %i[done waiting cancel]
 
