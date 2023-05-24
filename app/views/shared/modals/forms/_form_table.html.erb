@@ -1,0 +1,38 @@
+<div class="table-responsive scrollbar">
+  <table class="table table-bordered table-striped fs--1 mb-0">
+    <thead class="bg-200 text-900">
+      <tr>
+        <th class="sort"></th>
+        <% students.each do |student| %>
+          <th class="sort"><%= student.name %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody class="list">
+      <% if form.attendancable? %>
+        <tr>
+          <td title="Is student Present? today.">Present?</td>
+          <% students.each do |student| %>
+            <td><%= generate_html_for(FormField.attendance_field, student, submit_resource) %></td>
+          <% end %>
+        </tr>
+      <% end %>
+      <% fields.each do |field| %>
+        <tr>
+          <td title="<%= field.description %>"><%= field.name %></td>
+          <% students.each do |student| %>
+            <% submitted_data = FormDetail.find_by(
+                student_id: student.id,
+                form_id: form.id,
+                parent_type: record_type,
+                parent_id: record.id,
+                account: current_account
+              )
+            %>
+            <td><%= generate_html_for(field, student, submit_resource, submitted_data) %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

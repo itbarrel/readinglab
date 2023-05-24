@@ -60,6 +60,19 @@ class MeetingsController < ApplicationController
     end
   end
 
+  def forms
+    # klass = @meeting.klass
+    @forms = @meeting.forms
+
+    # @form = Form.find(params[:form_id])
+
+    # students_class_ids = klass.student_forms
+    #                           .where(klass_form_id: @form.klass_forms.ids)
+    #                           .pluck(:student_class_id)
+
+    # @students = StudentClass.where(id: students_class_ids).map(&:student)
+  end
+
   def open_form
     klass = @meeting.klass
     @form = Form.find(params[:form_id])

@@ -1,0 +1,31 @@
+$('.modal').modal('hide');
+
+$('#showStudentsFormsModal .modal-content').html("<%= j render 'shared/modals/forms/students_forms',
+                                                        record: @meeting,
+                                                        record_type: 'Meeting',
+                                                        students: @students,
+                                                        form: @form,
+                                                        form_url: "meetings/#{@meeting.id}/form",
+                                                        form_method: :post,
+                                                        form_request_js: true,
+                                                        submit_resource: 'form_details'
+                                                      %>");
+$('#showStudentsFormsModal').modal('show');
+
+$("document").ready(function () {
+  $('.studentFormSave').click((event)=>{
+    var formData = {};
+    $.each($(`#studentsForm-${event.target.id}`).serializeArray(), function(i, field) {
+      formData[field.name] = field.value;
+    });
+
+    if (formData.record_id){
+      $.ajax({
+        url: `/meetings/${formData.record_id}/form`,
+        method: "PUT",
+        data: formData,
+        dataType: 'script'
+      });
+    }
+  })
+});

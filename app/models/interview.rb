@@ -41,12 +41,13 @@ class Interview < ApplicationRecord
 
   validates :date, :status, presence: true
 
-  after_create :set_student_status
+  after_save :set_student_status
   after_destroy :set_student_default_status
   before_validation :set_status
 
   def set_student_status
-    student.scheduled! if student.registered?
+    student.scheduled! if student.registered? && waiting?
+    student.registered! if student.scheduled? && cancel?
   end
 
   def set_status

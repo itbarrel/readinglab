@@ -68,13 +68,18 @@ class KlassesController < ApplicationController
   # PATCH/PUT /klasses/1 or /klasses/1.json
   def update
     respond_to do |format|
-      if @klass.update(klass_params)
-        flash[:notice] = 'Class has been updated successfully.'
-        format.html { redirect_to klass_url(@klass), notice: 'Class has been successfully updated.' }
-        format.json { render :show, status: :ok, location: @klass }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @klass.errors, status: :unprocessable_entity }
+      begin
+        if @klass.update(klass_params)
+          flash[:notice] = 'Class has been updated successfully.'
+          format.html { redirect_to klass_url(@klass), notice: 'Class has been successfully updated.' }
+          format.json { render :show, status: :ok, location: @klass }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @klass.errors, status: :unprocessable_entity }
+        end
+      rescue StandardError
+        @klass.errors.add(:base, 'Unsccessful, Please remove data associated first.')
+        process_errors(@klass)
       end
       format.js { render 'shared/flash' }
     end

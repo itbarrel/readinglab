@@ -69,7 +69,7 @@ class InterviewsController < ApplicationController
 
     flash[:notice] = 'Assessment Form Data submitted successfully.'
     respond_to do |format|
-      format.js { render 'shared/close_modal' }
+      format.js
     end
   end
 
@@ -93,6 +93,7 @@ class InterviewsController < ApplicationController
   def update
     respond_to do |format|
       if @interview.update(interview_params)
+        flash[:notice] = 'Assessment Cancelled successfully.' if @interview.cancel?
         format.html { redirect_to interviews_url, notice: 'Interview has been successfully updated.' }
         format.json { render :show, status: :ok, location: @interview }
       else
@@ -100,6 +101,7 @@ class InterviewsController < ApplicationController
         format.html { redirect_to interviews_url }
         format.json { render json: @interview.errors }
       end
+      format.js
     end
   end
 
