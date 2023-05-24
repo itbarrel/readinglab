@@ -44,7 +44,6 @@
                   <td title="<%= field.description %>"><%= field.name %></td>
                   <% students.each do |student| %>
                     <% submitted_data = FormDetail.find_by(
-                        user: current_user,
                         student_id: student.id,
                         form_id: form.id,
                         parent_type: record_type,
