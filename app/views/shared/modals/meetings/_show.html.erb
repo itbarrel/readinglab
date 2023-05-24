@@ -47,14 +47,15 @@
               <i class="far fa-paper-plane"></i>
             <% end %>
           <% end %>
+          <div class="mt-2 d-grid gap-2">
+            <%= link_to('Bulk Form Submission', forms_meeting_path, remote: true, class: 'btn btn-primary') %>
+          </div>
           <% if meeting.attendance_form.present? %>
             <div class="mt-2 d-grid gap-2">
               <%= link_to('Attendance', attendance_meeting_path, remote: true, class: 'btn btn-primary') %>
             </div>
           <% end %>
-          <div class="mt-2 d-grid gap-2">
-            <%= link_to('Attendance', attendance_meeting_path, remote: true, class: 'btn btn-primary') %>
-          </div>
+
         </div>
       </div>
     </div>

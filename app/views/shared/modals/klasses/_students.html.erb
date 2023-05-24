@@ -33,7 +33,7 @@
         <% klass.student_forms.where(klass_form_id: kf.id).each do |sf| %>
           <div class="card mb-3 kanban-item shadow-sm dark__bg-1100" id="<%= sf.id %>" data-scid="<%= sf.student_class_id %>">
             <div class="card-body">
-              <p class="fs--1 fw-medium font-sans-serif mb-0">
+              <p class="fs--1 fw-medium font-sans-serif mb-0 unassigned-students ">
                 <%= sf.student.name %>
                 <%= link_to(student_class_path(sf.student_class), class: "badge badge-soft-warning rounded-pill", method: :delete, remote: true) do %>
                   <span class="fas fa-trash"></span>
