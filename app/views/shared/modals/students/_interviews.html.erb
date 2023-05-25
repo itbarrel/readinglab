@@ -3,32 +3,43 @@
   <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body p-card">
-  <div class="card">
-    <div class="card-header d-flex flex-between-center py-2 border-bottom">
-      <h6 class="mb-0">Interview Details</h6>
-    </div>
-    <div class="card-body d-flex flex-column justify-content-between">
-      <div class="table-responsive scrollbar">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Scheduled</th>
-              <th class="text-end" scope="col">Submitted At</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% student.interviews.each do |x| %>
-              <tr>
-                <td><%= l x.date, format: :medium %></td>
-                <td>
-                  <% if x.recent_submission.present? %>
-                    <%= l x.recent_submission.created_at, format: :medium %>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+  <div class="row g-3 mb-3">
+    <div class="col-xxl-5 col-xl-12">
+      <div class="row g-3">
+        <div class="col-12">
+          <div class="card bg-transparent-50 overflow-hidden">
+            <div class="card-body p-0">
+              <ul class="mb-0 list-unstyled">
+                <% student.interviews.each do |iv| %>
+                  <li class="alert mb-0 rounded-0 py-3 px-card alert-<%= (iv.id == student.latest_interview.id)? 'primary' : 'info' %> border-top border-x-0 border-top-0">
+                    <div class="row flex-between-center">
+                      <div class="col">
+                        <div class="d-flex">
+                          <div class="fas fa-circle mt-1 fs--2"></div>
+                          <p class="fs--1 ps-2 mb-0"><strong><%= l iv.date, format: :medium %></strong></p>
+                        </div>
+                      </div>
+                      <div class="col-auto d-flex align-items-center">
+                        <%= iv.status.capitalize %>
+                        <% if iv.recent_submission.present? %>
+                          <%= link_to form_details_interview_path(iv), remote: true, class: 'alert-link fs--1 fw-medium' do %>
+                            <i class="fas fa-chevron-right ms-1 fs--2"></i>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="col-xxl-7 col-xl-12">
+      <div id="form_details_table">
+
+      </div>
+    </div>
   </div>
 </div>

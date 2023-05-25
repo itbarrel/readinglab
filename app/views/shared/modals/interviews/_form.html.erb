@@ -7,8 +7,7 @@
 <div class="modal-body p-card">
   <div class="mb-3">
     <%= f.label :student, class: 'fs-0' %>
-    <% students = params[:action] == 'edit' ? current_account.students.where.not(status: :registered) : current_account.students.where.not(status: :active) %>
-    <%= f.collection_select :student_id, students.order(:first_name), :id, :name, { include_blank: true }, { class: 'form-select js-choice', data:{ options: { searchEnabled: true }} } %>
+    <%= f.collection_select :student_id, current_account.students.where.not(status: :registered).order(:first_name), :id, :name, { include_blank: true }, { class: 'form-select js-choice', data:{ options: { searchEnabled: true }} } %>
   </div>
   <div class="mb-3">
     <%= f.label :schedule_date, class: 'fs-0' %>

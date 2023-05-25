@@ -61,16 +61,7 @@ class MeetingsController < ApplicationController
   end
 
   def forms
-    # klass = @meeting.klass
     @forms = @meeting.forms
-
-    # @form = Form.find(params[:form_id])
-
-    # students_class_ids = klass.student_forms
-    #                           .where(klass_form_id: @form.klass_forms.ids)
-    #                           .pluck(:student_class_id)
-
-    # @students = StudentClass.where(id: students_class_ids).map(&:student)
   end
 
   def open_form
@@ -188,7 +179,6 @@ class MeetingsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_meeting
     @meeting = current_account.meetings.find_by(id: params[:id])
   end
@@ -201,7 +191,6 @@ class MeetingsController < ApplicationController
     @form = current_account.forms.find_by(id: params[:form_id])
   end
 
-  # Only allow a list of trusted parameters through.
   def meeting_params
     params.require(:meeting).permit(:starts_at, :cancel, :klass_id, :form_id)
   end

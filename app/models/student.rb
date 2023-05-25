@@ -64,6 +64,10 @@ class Student < ApplicationRecord
     parent.table[:status]
   end
 
+  ransacker :name_cont do
+    Arel.sql("CONCAT_WS(first_name, ' ', last_name)")
+  end
+
   def self.ids_studing_at(start_date = DateTime.now, duration = 60)
     end_date = start_date + duration.minutes
     meetings = Meeting.where('starts_at <= ? and ? <= ends_at', end_date, start_date).includes(klass: :students)

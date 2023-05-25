@@ -70,6 +70,7 @@ Rails.application.routes.draw do
     member do
       get :form, action: 'open_form'
       post :form, action: 'submit_form'
+      get :form_details
     end
   end
 

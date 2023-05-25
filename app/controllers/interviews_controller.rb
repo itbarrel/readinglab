@@ -32,18 +32,20 @@ class InterviewsController < ApplicationController
 
     @search = interview_students.ransack(params[:q])
     @search.sorts = 'first_name asc' if @search.sorts.empty?
-    @pagy, @interview_students = pagy(@search.result.includes(:latest_interview), items: per_page)
+    @pagy, @interview_students = pagy(@search.result, items: per_page)
   end
 
-  # GET /interviews/1 or /interviews/1.json
   def show; end
 
-  # GET /interviews/new
+  def form_details
+    @form_details = @interview.form_details
+    @form = @interview.form
+  end
+
   def new
     @interview.student_id = params[:student_id] if params[:student_id].present?
   end
 
-  # GET /interviews/1/edit
   def edit; end
 
   def open_form
