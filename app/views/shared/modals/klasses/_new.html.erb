@@ -27,7 +27,7 @@
           </div>
           <div class="mb-3">
             <%= f.label :max_students, class: 'fs-0' %>
-            <%= f.range_field :max_students, class: 'form-range', :in => 0..100, :step => 1 %>
+            <%= f.number_field :max_students, class: 'form-control' %>
           </div>
           <div class="mb-3">
             <% [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday].each do |day| %>
@@ -60,7 +60,7 @@
 <script>
   $('#klass_starts_at').on('change', (e) => {
     $.ajax({
-      url: "/klasses/availability", 
+      url: "/klasses/availability",
       data: { start_date: e.target.value }
     });
   })
