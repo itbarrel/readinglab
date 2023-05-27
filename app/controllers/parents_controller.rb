@@ -14,18 +14,14 @@ class ParentsController < ApplicationController
     @pagy, @parents = pagy(@search.result.includes(:city, :children), items: per_page)
   end
 
-  # GET /parents/1 or /parents/1.json
   def show; end
 
-  # GET /parents/new
   def new
     @parent = current_account.parents.new
   end
 
-  # GET /parents/1/edit
   def edit; end
 
-  # POST /parents or /parents.json
   def create
     @parent = current_account.parents.new(parent_params)
 
@@ -34,8 +30,7 @@ class ParentsController < ApplicationController
         format.html { redirect_to parents_url, notice: 'Parents has been successfully created.' }
         format.json { render :index, status: :created, location: @parent }
       else
-        process_errors(@parent)
-        format.html { redirect_to parents_url }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @parent.errors }
       end
     end
@@ -48,7 +43,7 @@ class ParentsController < ApplicationController
         format.html { redirect_to parents_url, notice: 'Parents has been successfully updated.' }
         format.json { render :index, status: :ok, location: @parent }
       else
-        format.html { redirect_to parents_url }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @parent.errors }
       end
     end
@@ -86,7 +81,7 @@ class ParentsController < ApplicationController
     pars = params.require(:parent).permit(:father_first, :father_last, :father_email, :father_phone, :mother_first,
                                           :mother_last, :mother_email, :mother_phone, :address,
                                           :state, :postal_code, :city_id, children_attributes: %i[
-                                            id first_name last_name dob gender school grade
+                                            id first_name last_name dob gender school grade _destroy
                                           ])
 
     if pars[:children_attributes].present?

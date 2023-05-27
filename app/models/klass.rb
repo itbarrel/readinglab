@@ -87,7 +87,7 @@ class Klass < ApplicationRecord
   end
 
   def short_name
-    rclass_time = starts_at.strftime('%H:%M %p')
+    rclass_time = starts_at.strftime('%-I%p')
     class_name = "#{days_abbr} at #{rclass_time}"
     class_name = "#{room.name} on #{class_name}" if room.present?
     "Class in #{class_name}"
