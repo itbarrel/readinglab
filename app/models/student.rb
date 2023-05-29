@@ -64,8 +64,12 @@ class Student < ApplicationRecord
     parent.table[:status]
   end
 
-  ransacker :name_cont do
-    Arel.sql("CONCAT_WS(first_name, ' ', last_name)")
+  ransacker :full_name, formatter: proc { |value| value.downcase } do |parent|
+    Arel::Nodes::NamedFunction.new('CONCAT_WS', [
+                                     Arel::Nodes.build_quoted(' '),
+                                     parent.table[:first_name],
+                                     parent.table[:last_name]
+                                   ])
   end
 
   def self.ids_studing_at(start_date = DateTime.now, duration = 60)

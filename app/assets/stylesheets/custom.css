@@ -118,3 +118,67 @@
   opacity: 0;
   visibility: hidden;
 }
+
+.calender-tiles{
+  position: relative;
+}
+
+.calender-tiles-20::after{
+  position: absolute;
+  background: linear-gradient(90deg, rgb(202 218 243) 0%, rgb(202 218 243) 100%);
+  top: -4px;
+  left: -7px;
+  height: calc(100% + 8px);
+  border-radius: 5px;
+  content: '';
+  width: 29%;
+  z-index: -1
+}
+
+.calender-tiles-40::after{
+  position: absolute;
+  background: linear-gradient(90deg, rgb(202 218 243) 0%, rgb(202 218 243) 100%);
+  top: -4px;
+  left: -7px;
+  height: calc(100% + 8px);
+  border-radius: 5px;
+  content: '';
+  width: 49%;
+  z-index: -1
+}
+
+.calender-tiles-60::after{
+  position: absolute;
+  background: linear-gradient(90deg, rgb(202 218 243) 0%, rgb(202 218 243) 100%);
+  top: -4px;
+  left: -7px;
+  height: calc(100% + 8px);
+  border-radius: 5px;
+  content: '';
+  width: 69%;
+  z-index: -1
+}
+
+.calender-tiles-80::after{
+  position: absolute;
+  background: linear-gradient(90deg, rgb(202 218 243) 0%, rgb(202 218 243) 100%);
+  top: -4px;
+  left: -7px;
+  height: calc(100% + 8px);
+  border-radius: 5px;
+  content: '';
+  width: 89%;
+  z-index: -1
+}
+
+.calender-tiles-100::after{
+  position: absolute;
+  background: linear-gradient(90deg, rgb(202 218 243) 0%, rgb(202 218 243) 100%);
+  top: -4px;
+  left: -7px;
+  height: calc(100% + 8px);
+  border-radius: 5px;
+  content: '';
+  width: 109%;
+  z-index: -1
+}

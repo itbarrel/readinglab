@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       url: "/interviews.json",
       method: "GET",
-      color: 'yellow',
+      className: 'bg-soft-primary',
       extraParams: {
         cachebuster: new Date().valueOf(),
         pagination: false,
@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       url: "/meetings.json",
       method: "GET",
+      className: 'bg-soft-primary',
       // color: '#fef0e8',
       // textColor: '#f2600e',
       extraParams: () => {
@@ -21,6 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
           cachebuster: new Date().valueOf(),
           pagination: false,
           teacher_id
+        }
+      }
+    },
+    {
+      url: "/vacations.json",
+      className: 'bg-soft-info',
+      method: "GET",
+      extraParams: () => {
+        return {
+          cachebuster: new Date().valueOf(),
+          pagination: false
         }
       }
     }
@@ -32,6 +44,19 @@ document.addEventListener("DOMContentLoaded", () => {
         url: `/events/${event.id}`,
         dataType: 'script'
       });
+    },
+    eventContent: (info) => {
+      const { event } = info
+      if (event.extendedProps && !('percentage' in event.extendedProps)) return
+
+      let html = `<div class="fc-event-main-frame calender-tiles calender-tiles-${Math.ceil(event.extendedProps.percentage / 20) * 20}">`
+      html += '<div class="fc-event-title-container">'
+      html += '<div class="fc-event-title fc-sticky">'
+      html += event.title
+      html += '</div>'
+      html += '</div>'
+      html += '</div>'
+      return { html };
     },
     eventDrop: (info) => {
       const { event, oldEvent } = info

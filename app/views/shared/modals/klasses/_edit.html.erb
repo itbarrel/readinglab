@@ -38,6 +38,10 @@
               <%= f.text_field :starts_at, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
             </div>
             <div class="mb-3">
+              <%= f.label :max_students, class: 'fs-0' %>
+              <%= f.number_field :max_students, class: 'form-control' %>
+            </div>
+            <div class="mb-3">
               <%= f.label :teacher_id, class: 'fs-0' %>
               <%= f.collection_select :teacher_id, current_account.teachers, :id, :name, { include_blank: true }, { class: 'form-control' } %>
             </div>

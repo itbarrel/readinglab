@@ -5,7 +5,6 @@ class VacationsController < ApplicationController
   before_action :set_vacation, only: %i[]
   before_action :set_vacations, only: %i[trash]
 
-  # GET /vacations or /vacations.json
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
 
@@ -14,10 +13,8 @@ class VacationsController < ApplicationController
     @pagy, @vacations = pagy(@search.result.includes(:vacation_type), items: per_page)
   end
 
-  # GET /vacations/1 or /vacations/1.json
   def show; end
 
-  # GET /vacations/new
   def new
     @vacation = current_account.vacations.new
   end
