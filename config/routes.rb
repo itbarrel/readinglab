@@ -88,6 +88,7 @@ Rails.application.routes.draw do
   resources :reports, only: %i[] do
     collection do
       get :graph
+      get :daily
     end
   end
 
