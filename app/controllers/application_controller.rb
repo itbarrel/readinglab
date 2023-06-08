@@ -18,7 +18,6 @@ class ApplicationController < ActionController::Base
       { url: '/klass_templates', text: 'Class Templates ', class: '', icon: 'micon bi bi-people-fill', model: KlassTemplate },
       { url: '/forms', text: 'Forms', class: '', icon: 'micon bi bi-clipboard-data-fill', model: Form },
       { url: '/message_templates', text: 'Message Templates', class: '', icon: 'bi bi-envelope-fill', model: MessageTemplate },
-      { url: '/payments', text: 'Payments', class: '', icon: 'micon bi bi-credit-card', model: Payment },
       { url: '/rooms', text: 'Rooms', class: '', icon: 'micon bi bi-building-fill', model: Room },
       { url: '/receipt_types', text: 'Receipt Types', class: '', icon: 'micon bi bi-receipt-cutoff', model: ReceiptType },
       { url: '/staffs', text: 'Staff', class: '', icon: 'micon bi bi-person-vcard', model: User },
@@ -37,11 +36,14 @@ class ApplicationController < ActionController::Base
       ] },
       { text: 'Billing', class: '', icon: 'micon bi bi-file-earmark-text-fill', sub_items: [
         { url: '/billings/students', text: 'Students', class: '', icon: 'micon bi bi-receipt', models: [:billing] },
+        { url: '/payments', text: 'Payments', class: '', icon: 'micon bi bi-credit-card', models: [Receipt, :payment] },
         { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-receipt', models: [Receipt, :billing] }
+
       ] },
       { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-chat-text-fill', models: [:communication], sub_items: [] },
       { text: 'Reports', class: '', icon: 'micon bi bi-bar-chart-line-fill', sub_items: [
-        { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] }
+        { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] },
+        { url: '/reports/daily', text: 'Daily Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] }
       ] }
     ]
     @menu_list = {
