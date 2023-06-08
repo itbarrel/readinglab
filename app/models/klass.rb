@@ -188,7 +188,7 @@ class Klass < ApplicationRecord
   end
 
   def self.at(date)
-    klass_ids = Meeting.where(starts_at: date).map(&:klass_id)
+    klass_ids = Meeting.where('date(starts_at) = ?', date).map(&:klass_id)
     all.where(id: klass_ids)
   end
 end
