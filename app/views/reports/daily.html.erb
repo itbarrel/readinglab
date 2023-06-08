@@ -1,38 +1,45 @@
-<div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
-  <div class="card-header">
-    <div class="row flex-between-center">
-      <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-          <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Classes</h5>
+<div class="row g-0">
+  <div class="col-lg-6 pe-lg-2">
+    <div class="card-header">
+      <h5 class="mb-0">Communication</h5>
+    </div>
+    <div class="card overflow-hidden">
+      <div class="card-header audience-chart-header p-0 bg-light scrollbar-overlay">
+        <ul class="nav nav-tabs border-0 chart-tab flex-nowrap" id="communication-tabs" role="tablist">
+          <li class="nav-item" role="presentation"><a class="nav-link mb-0 active" id="klasses-tab" data-bs-toggle="tab"
+              href="#klasses" role="tab" aria-controls="klasses" aria-selected="true">
+              <div class="audience-tab-item p-2 pe-4">
+                <h6 class="text-800">Class Wise</h6>
+                <div class="d-flex align-items-center">
+                </div>
+              </div>
+            </a></li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <div class="tab-content">
+          <div class="tab-pane active" id="klasses" role="tabpanel" aria-labelledby="klasses-tab">
+            <%= form_tag(klasses_path, id: 'showKlassesForm', method: :get, remote: true) do %>
+            <div class="p-2 mb-3">
+              <div class="row">
+                <div class="col-lg-8">
+                  <%= date_field_tag :classes_at, nil, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
+                </div>
+                <div class="col-lg-4">
+                  <%= submit_tag "Search", class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+            <% end %>
+
+            <div id="communication-classes"></div>
+          </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="card-body p-0">
-    <div class="table-responsive">
-      <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
-        <thead class="bg-200 text-900">
-          <tr>
-            <th>
-              <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox" data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
-              </div>
-            </th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">Name</th>
-          </tr>
-        </thead>
-        <% klasses.each do |klass| %>
-        <tr class="btn-reveal-trigger">
-          <td class="align-middle py-2" style="width: 28px;">
-            <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                <input class="form-check-input communications-klasses" type="checkbox" id="<%= klass.id %>" data-bulk-select-row="data-bulk-select-row" />
-              </div>
-            </td>
-            <td class="name align-middle white-space-nowrap py-2">
-              <%= klass.name %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
-    </div>
-  </div>
 </div>
+<% content_for :javascript_includes do %>
+<%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true, module: true %>
+<% end %>
