@@ -19,7 +19,7 @@ class PaymentsController < ApplicationController
     end
 
     @search = @meetings.ransack(params[:q])
-    @search.sorts = 'starts_at asc' if @search.sorts.empty?
+    @search.sorts = 'starts_at desc' if @search.sorts.empty?
     @pagy, @meetings = pagy(@search.result.includes([klass: %i[room teacher]]), items: per_page)
   end
 
