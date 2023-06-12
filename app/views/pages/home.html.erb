@@ -77,18 +77,17 @@
         <div class="row g-0 h-100 align-items-center">
           <div class="col">
             <div class="d-flex align-items-center">
-              <%= image_tag('icons/weather-icon.png', class: 'me-3', height: 60) %>
+              <%= image_tag('icons/weather-icon.png', class: 'me-3', height: 60, id: "weather-image") %>
               <div>
-                <h6 class="mb-2">New York City</h6>
-                <div class="fs--2 fw-semi-bold">
-                  <div class="text-warning">Sunny</div>Precipitation: 50%
+                <h6 id="weather-city" class="mb-2">New York City</h6>
+                <div id="weather-humidity" class="fs--2 fw-semi-bold">
+                  <div id="weather-cond" class="text-warning">Sunny</div>Precipitation: 50%
                 </div>
               </div>
             </div>
           </div>
           <div class="col-auto text-center ps-2">
-            <div class="fs-4 fw-normal font-sans-serif text-primary mb-1 lh-1">31&deg;</div>
-            <div class="fs--1 text-800">32&deg; / 25&deg;</div>
+            <div id="weather-temp" class="fs-4 fw-normal font-sans-serif text-primary mb-1 lh-1">31&deg;</div>
           </div>
         </div>
       </div>
