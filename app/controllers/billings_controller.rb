@@ -8,6 +8,6 @@ class BillingsController < ApplicationController
 
     @search = @students.ransack(params[:q])
     @search.sorts = 'first_name asc' if @search.sorts.empty?
-    @pagy, @students = pagy(@search.result.includes(:parent), items: per_page)
+    @pagy, @students = pagy(@search.result.includes(:student_meetings, :receipts), items: per_page)
   end
 end
