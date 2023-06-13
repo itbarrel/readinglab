@@ -3,7 +3,9 @@
 class ReportsController < ApplicationController
   def graph; end
 
+  def index; end
+
   def daily
-    @klass = Klass.all
+    @reports = Klass.all
   end
 end
