@@ -32,6 +32,7 @@ class StudentClass < ApplicationRecord
 
   after_create :mark_student_active
   after_destroy :mark_student_waitlisted
+  before_validation :validate_max_students, on: :create
 
   def mark_student_active
     student.active!
@@ -39,5 +40,12 @@ class StudentClass < ApplicationRecord
 
   def mark_student_waitlisted
     student.wait_listed!
+  end
+
+  def validate_max_students
+    return true unless klass.students.length >= klass.max_students
+
+    errors.add(:base, 'Max Student Limit Reached.')
+    false
   end
 end

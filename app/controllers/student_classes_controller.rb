@@ -34,7 +34,7 @@ class StudentClassesController < ApplicationController
         format.html { redirect_to request.referer, notice: 'Student has been successfully created.' }
         format.json { render :show, status: :created, location: @student_class }
       else
-        flash[:notice] = 'Student Already Added.'
+        process_errors(@student_class)
         format.html { redirect_to request.referer }
         format.json { render json: @student_class.errors }
       end
