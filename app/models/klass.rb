@@ -71,6 +71,11 @@ class Klass < ApplicationRecord
   accepts_nested_attributes_for :student_forms, allow_destroy: true, reject_if: :all_blank
 
   after_create :create_meetings, unless: :skip_validations
+  before_validation :set_default_max_student
+
+  def set_default_max_student
+    self.max_students ||= 5 if max_students.nil?
+  end
 
   def days_abbr
     (monday ? 'M' : '.') + (tuesday ? 'T' : '.') + (wednesday ? 'W' : '.') + \
@@ -122,7 +127,7 @@ class Klass < ApplicationRecord
     est_last_date = if meetings.empty?
                       starting_date
                     else
-                      [meetings.try(:first).try(:starts_at).presence, starting_date].max
+                      [meetings.try(:first).starts_at + 1.day, starting_date].max
                     end
 
     end_day = est_last_date.to_date + limit.weeks if extend_type == :monthly
@@ -133,8 +138,6 @@ class Klass < ApplicationRecord
       break if extend_type == :sessional && day_limit <= 0
       break if extend_type == :monthly && day >= end_day
 
-      day += 1.day
-
       dow = day.days_to_week_start
 
       if (dow.zero? && !monday) ||
@@ -144,6 +147,7 @@ class Klass < ApplicationRecord
          ((dow == 4) && !friday) ||
          ((dow == 5) && !saturday) ||
          ((dow == 6) && !sunday)
+        day += 1.day
         next
       end
 
@@ -159,10 +163,14 @@ class Klass < ApplicationRecord
         starting_date.zone
       )
 
-      next if vacation_dates.select { |x| x.starting_at < day_to_check && day_to_check < x.ending_at }.any?
+      if vacation_dates.select { |x| x.starting_at < day_to_check && day_to_check < x.ending_at }.any?
+        day += 1.day
+        next
+      end
 
       virtual << day_to_check
       day_limit -= 1
+      day += 1.day
     end
 
     virtual
