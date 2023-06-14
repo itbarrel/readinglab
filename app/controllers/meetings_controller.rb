@@ -50,8 +50,12 @@ class MeetingsController < ApplicationController
     params[:meeting].each do |student_id, submission|
       continue if submission['attendance'].blank?
 
-      StudentMeeting.find_or_create_by!(meeting_id: @meeting.id, student_id:, account: current_account)
-                    .update(attendance: submission['attendance'])
+      sm = StudentMeeting.where(meeting_id: @meeting.id, student_id:, account: current_account)
+      if sm.present?
+        sm.update(attendance: submission['attendance'])
+      else
+        StudentMeeting.where(meeting_id: @meeting.id, student_id:, account: current_account, attendance: submission['attendance'])
+      end
     end
 
     flash[:notice] = 'Attendance submitted successfully.'
