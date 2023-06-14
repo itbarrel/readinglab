@@ -15,6 +15,16 @@
         </div>
       </div>
 
+      <div class="form-floating col-lg-2 col-auto d-flex justify-content-end order-md-1" id="calendar-event-selection">
+        <label for="floatingSelectGrid">Events: </label>
+        <select class="form-select" id="event-selector" aria-label="Floating label select example">
+          <option value="all">All</option>
+          <option value="meetings">Meetings </option>
+          <option value="interviews">Interviews</option>
+          <option value="vacations">Vacations</option>
+        </select>
+      </div>
+
       <div class="form-floating col-lg-2 col-auto d-flex justify-content-end order-md-1" id="calendar-teacher-selection">
         <label for="floatingSelectGrid">Teacher: </label>
         <select class="form-select" id="calendar_teacher_id" aria-label="Floating label select example">
@@ -22,15 +32,6 @@
           <% current_account.teachers.each do |teacher| %>
             <option value="<%= teacher.id %>"><%= teacher.name %></option>
           <% end %>
-        </select>
-      </div>
-
-      <div class="form-floating col-lg-2 col-auto d-flex justify-content-end order-md-1" id="calendar-teacher-selection">
-        <label for="floatingSelectGrid">Interview: </label>
-        <select class="form-select" id="calendar_teacher_id" aria-label="Floating label select example">
-          <option selected>Select All</option>
-          <option selected>Select Interview</option>
-          <option selected>Select Vacation </option>
         </select>
       </div>
 
