@@ -28,7 +28,7 @@ class MeetingsController < ApplicationController
       @meetings = @meetings.joins(:klass).where(klass: { teacher_id: params[:teacher_id] })
     end
 
-    @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room]), items: per_page)
+    @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room students]), items: per_page)
   end
 
   def show; end
@@ -50,8 +50,12 @@ class MeetingsController < ApplicationController
     params[:meeting].each do |student_id, submission|
       continue if submission['attendance'].blank?
 
-      StudentMeeting.find_or_create_by!(meeting_id: @meeting.id, student_id:, account: current_account)
-                    .update(attendance: submission['attendance'])
+      sm = StudentMeeting.where(meeting_id: @meeting.id, student_id:, account: current_account)
+      if sm.present?
+        sm.update(attendance: submission['attendance'])
+      else
+        StudentMeeting.where(meeting_id: @meeting.id, student_id:, account: current_account, attendance: submission['attendance'])
+      end
     end
 
     flash[:notice] = 'Attendance submitted successfully.'

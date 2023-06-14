@@ -65,7 +65,7 @@ class Klass < ApplicationRecord
 
   attr_accessor :skip_validations
 
-  validates :duration, :starts_at, presence: true
+  validates :duration, :starts_at, :max_students, presence: true
   validates :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, inclusion: { in: [true, false] }
 
   accepts_nested_attributes_for :student_forms, allow_destroy: true, reject_if: :all_blank
