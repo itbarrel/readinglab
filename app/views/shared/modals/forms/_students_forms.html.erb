@@ -15,7 +15,10 @@
         <% students_class_ids = @meeting.klass.student_forms
                                   .where(klass_form_id: form.klass_forms.ids)
                                   .pluck(:student_class_id) %>
-        <% students = StudentClass.where(id: students_class_ids).map(&:student) %>
+        <% students_ids = StudentClass.where(id: students_class_ids).map(&:student_id) %>
+        <% student_attendance_ids = StudentMeeting.where(meeting_id: @meeting.id, student_id: students_ids).not_present.map(&:student_id) %>
+        <% students = Student.where(id: students_ids - student_attendance_ids) %>
+
         <% fields = form.form_fields %>
 
         <%= form_tag(form_url, method: form_method, remote: form_request_js, id: "studentsForm-#{form.id}") do %>

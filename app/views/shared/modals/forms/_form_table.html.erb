@@ -4,7 +4,12 @@
       <tr>
         <th class="sort"></th>
         <% students.each do |student| %>
-          <th class="sort"><%= student.name %></th>
+          <th class="sort cross_<%= student.id %>">
+            <%= student.name %>
+            <% unless form.attendancable? %>
+              <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base form-student-cross" type="button" id="delete_<%= student.id %>" aria-label="Close"></button>
+            <% end %>
+          </th>
         <% end %>
       </tr>
     </thead>
@@ -29,10 +34,18 @@
                 account: current_account
               )
             %>
-            <td><%= generate_html_for(field, student, submit_resource, submitted_data) %></td>
+            <td class="cross_<%= student.id %>"><%= generate_html_for(field, student, submit_resource, submitted_data) %></td>
           <% end %>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
+
+<script>
+  setTimeout(()=>{
+    $('.form-student-cross').click((event)=>{
+      $( `.cross_${event.target.id.replace('delete_', '')}`).remove();
+    })
+  }, 50);
+</script>

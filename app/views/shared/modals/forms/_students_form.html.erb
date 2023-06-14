@@ -1,4 +1,4 @@
-<% fields = form.form_fields %>
+<% fields = form.form_fields.includes(:field_values) %>
 
 <div class="modal-content border-0">
   <%= form_tag(form_url, method: form_method, remote: form_request_js, id: 'studentsForm') do %>
@@ -32,25 +32,3 @@
     </div>
   <% end %>
 </div>
-
-<script>
-  // $("document").ready(function () {
-  //   $('#studentFormSave').click((event)=>{
-  //     var formData = {};
-  //     $.each($('#studentsForm').serializeArray(), function(i, field) {
-  //       formData[field.name] = field.value;
-  //     });
-
-  //     const resource = (formData.record_type ==  'Meeting')? 'meetings' : 'interviews'
-  //     if (formData.record_id){
-  //       $.ajax({
-  //         url: `/${resource}/${formData.record_id}/form`,
-  //         method: "PUT",
-  //         data: formData,
-  //         dataType: 'script'
-  //       });
-  //     }
-  //   })
-  // });
-
-</script>

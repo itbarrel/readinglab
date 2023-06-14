@@ -33,7 +33,6 @@ class MeetingsController < ApplicationController
 
   def show; end
 
-  # GET /meetings/new
   def new
     @meeting = Meeting.new
   end
@@ -76,7 +75,10 @@ class MeetingsController < ApplicationController
                               .where(klass_form_id: @form.klass_forms.ids)
                               .pluck(:student_class_id)
 
-    @students = StudentClass.where(id: students_class_ids).map(&:student)
+    # @students = StudentClass.where(id: students_class_ids).includes(:student).map(&:student)
+    students_ids = StudentClass.where(id: students_class_ids).map(&:student_id)
+    student_attendance_ids = StudentMeeting.where(meeting_id: @meeting.id, student_id: students_ids).not_present.map(&:student_id)
+    @students = Student.where(id: students_ids - student_attendance_ids)
   end
 
   def open_student_details; end

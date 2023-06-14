@@ -88,4 +88,5 @@ document.addEventListener("DOMContentLoaded", () => {
     teacher_id = $(this).val()
     calendar.refetchEvents();
   });
+  
 });
