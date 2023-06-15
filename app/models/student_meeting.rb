@@ -33,8 +33,4 @@ class StudentMeeting < ApplicationRecord
   enum :attendance, %i[absent present leave hold nothing]
 
   validates :attendance, presence: true
-
-  def student_attendance(date)
-    # meeting=[]
-  end
 end
