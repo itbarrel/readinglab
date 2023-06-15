@@ -59,6 +59,23 @@
   transform: translateY(5px);
 }
 
+#calendar-event-selection {
+  margin-left: 20px;
+}
+
+#calendar-event-selection select {
+  padding: 20px 0px 5px 8px;
+  height: auto;
+}
+
+#calendar-event-selection label {
+  padding: 0px;
+  bottom: 0;
+  top: auto;
+  padding-left: 8px;
+  transform: translateY(5px);
+}
+
 .triangle {
   position: absolute;
   top: 0;
