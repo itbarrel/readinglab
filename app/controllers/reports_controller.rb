@@ -31,7 +31,7 @@ class ReportsController < ApplicationController
                    (max.to_f / min) * 100
                  end
 
-    percentage = percentage == Float::INFINITY ? '∞%' : percentage
+    percentage = percentage == Float::INFINITY ? '∞' : percentage
     render json: {
       percentage:,
       total: this_week_meetings.length,

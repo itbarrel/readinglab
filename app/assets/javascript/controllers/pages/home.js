@@ -16,7 +16,7 @@ const computeWeeklyAttendanceReport = () => {
       response = JSON.parse(response)
       console.log('>>>>', response)
       $('#weeking_attendance_count').html(response.total)
-      $('#weeking_attendance_precentage').html(`${response.percentage_sign}${response.percentage}`)
+      $('#weeking_attendance_precentage').html(`${response.percentage_sign}${response.percentage}%`)
       window.graphInit("echart-bar-weekly-sales", {
         data: Object.values(response.data),
         xAxisData: Object.keys(response.data)
