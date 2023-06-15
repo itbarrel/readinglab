@@ -47,7 +47,7 @@ class Parent < ApplicationRecord
     parent.table[:status]
   end
 
-  ransacker :identifers, formatter: proc { |value| value.downcase } do |parent|
+  ransacker :identifer, formatter: proc { |value| value.downcase } do |parent|
     Arel::Nodes::NamedFunction.new('CONCAT_WS', [
                                      Arel::Nodes.build_quoted(' '),
                                      parent.table[:father_first],
