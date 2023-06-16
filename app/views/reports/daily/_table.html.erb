@@ -1,16 +1,16 @@
-<div class="table-responsive">
-  <%= form_tag(klasses_path, id: 'showKlassesForm', method: :get, remote: true) do %>
-  <div class="p-2 mb-3">
-    <div class="row">
-      <div class="col-lg-8">
-        <%= date_field_tag :classes_at, nil, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
-      </div>
-      <div class="col-lg-4">
-        <%= submit_tag "Search", class: "btn btn-primary" %>
-      </div>
-    </div>
-  </div>
+<table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+  <thead class="bg-200 text-900">
+    <tr>
+      <th>
+        <div class="form-check fs-0 mb-0 d-flex align-items-center">
+          <input class="form-check-input" id="checkbox-bulk-reports-select" type="checkbox"
+            data-bulk-select='{"body":"table-reports-body","actions":"table-reports-actions","replacedElement":"table-reports-replace-element"}' />
+        </div>
+      </th>
+      <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">Name</th>
+    </tr>
+  </thead>
+  <% klasses.each do |klass| %>
+    <%= render 'reports/daily/meeting', klass: klass %>
   <% end %>
-  <div id="communication-classes"></div>
-</div>
-<%= render 'shared/pagination', query: {}, js_request: false if @pagy.present? %>
+</table>
