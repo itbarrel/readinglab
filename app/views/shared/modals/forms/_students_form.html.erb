@@ -15,10 +15,11 @@
         <h4 class="mb-1" id="staticBackdropLabel"><%= form.name %></h4>
         <% if record_type == 'Interview' %>
           <p class="fs--2 mb-0">Interview of <%= link_to students.first.name, student_path(students.first), class: "link-600 fw-semi-bold" %></p>
+          <p class="fs--2 mb-0">Date by <%= l record.date %></p>
         <% elsif record_type == 'Meeting' %>
           <p class="fs--2 mb-0">Teaching by <%= link_to record.teacher.name, staff_path(record.teacher), class: "link-600 fw-semi-bold" %></p>
+          <p class="fs--2 mb-0">Date by <%= l record.starts_at %></p>
         <% end %>
-        <p class="fs--2 mb-0">Date by <%= l @meeting.starts_at %></p>
       </div>
       <div class="p-4">
         <%= render 'shared/modals/forms/form_table', students: students, form: form, fields: fields, record_type: record_type, record: record, submit_resource: submit_resource %>

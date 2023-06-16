@@ -6,7 +6,7 @@
         <% students.each do |student| %>
           <th class="sort cross_<%= student.id %>">
             <%= student.name %>
-            <% unless form.attendancable? %>
+            <% if form.lessonable? %>
               <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base form-student-cross" type="button" id="delete_<%= student.id %>" aria-label="Close"></button>
             <% end %>
           </th>
@@ -44,8 +44,8 @@
 
 <script>
   setTimeout(()=>{
-    $('.form-student-cross').click((event)=>{
-      $( `.cross_${event.target.id.replace('delete_', '')}`).remove();
-    })
-  }, 50);
+    // $('.form-student-cross').click((event)=>{
+    //   $( `.cross_${event.target.id.replace('delete_', '')}`).remove();
+    // })
+  }, 500);
 </script>
