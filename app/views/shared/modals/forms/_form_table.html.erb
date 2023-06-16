@@ -22,7 +22,7 @@
           <% end %>
         </tr>
       <% end %>
-      <% fields.each do |field| %>
+      <% fields.order(:sort_order).each do |field| %>
         <tr>
           <td title="<%= field.description %>"><%= field.name %></td>
           <% students.each do |student| %>
