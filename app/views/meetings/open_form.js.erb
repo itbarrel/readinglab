@@ -12,6 +12,9 @@ $('#showStudentsFormModal .modal-content').html("<%= j render 'shared/modals/for
 $('#showStudentsFormModal').modal('show');
 
 $("document").ready(function () {
+  $('.form-student-cross').click((event)=>{
+    $( `.cross_${event.target.id.replace('delete_', '')}`).remove();
+  })
   $('#studentFormSave').click((event)=>{
     var formData = {};
     $.each($('#studentsForm').serializeArray(), function(i, field) {
