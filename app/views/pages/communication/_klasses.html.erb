@@ -1,4 +1,4 @@
-<div class="card mb-3" id="customersTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
+<div class="card mb-3" id="KlassesTable" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
   <div class="card-header">
     <div class="row flex-between-center">
       <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
@@ -13,25 +13,28 @@
           <tr>
             <th>
               <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                <input class="form-check-input" id="checkbox-bulk-customers-select" type="checkbox" data-bulk-select='{"body":"table-customers-body","actions":"table-customers-actions","replacedElement":"table-customers-replace-element"}' />
+                <input class="form-check-input" id="checkbox-bulk-klasses-select" type="checkbox" data-bulk-select='{"body":"table-klasses-body","actions":"table-klasses-actions","replacedElement":"table-klasses-replace-element"}' />
               </div>
             </th>
             <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">Name</th>
           </tr>
         </thead>
-        <% klasses.each do |klass| %>
-        <tr class="btn-reveal-trigger">
-          <td class="align-middle py-2" style="width: 28px;">
-            <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                <input class="form-check-input communications-klasses" type="checkbox" id="<%= klass.id %>" data-bulk-select-row="data-bulk-select-row" />
-              </div>
-            </td>
-            <td class="name align-middle white-space-nowrap py-2">
-              <%= klass.name %>
-            </td>
-          </tr>
-        <% end %>
+        <tbody class="list" id="table-klasses-body">
+          <% klasses.each do |klass| %>
+            <tr class="btn-reveal-trigger">
+              <td class="align-middle py-2" style="width: 28px;">
+                <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                  <input class="form-check-input communications-klasses" type="checkbox" id="<%= klass.id %>" data-bulk-select-row="data-bulk-select-row" />
+                </div>
+              </td>
+              <td class="name align-middle white-space-nowrap py-2">
+                <%= klass.name %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
       </table>
     </div>
   </div>
 </div>
+<%= render 'shared/pagination', query: {}, js_request: true if @pagy.present? %>

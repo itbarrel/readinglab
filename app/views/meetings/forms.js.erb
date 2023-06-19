@@ -13,6 +13,9 @@ $('#showStudentsFormsModal .modal-content').html("<%= j render 'shared/modals/fo
 $('#showStudentsFormsModal').modal('show');
 
 $("document").ready(function () {
+  $('.form-student-cross').click((event)=>{
+    $( `.cross_${event.target.id.replace('delete_', '')}`).remove();
+  })
   $('.studentFormSave').click((event)=>{
     var formData = {};
     $.each($(`#studentsForm-${event.target.id}`).serializeArray(), function(i, field) {

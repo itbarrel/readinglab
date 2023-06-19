@@ -849,6 +849,8 @@ function bulkSelectInit() {
     });
   }
 }
+
+window.bulkSelectInit = bulkSelectInit;
 /*-----------------------------------------------
 |   Chat
 -----------------------------------------------*/
