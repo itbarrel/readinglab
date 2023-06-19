@@ -43,4 +43,14 @@ class Form < ApplicationRecord
   def self.default_seeds
     ['Attendance Form']
   end
+
+  def form_duplicate_with_uniqueness_validation
+    new_form = dup
+    new_form.name = "#{name} (Copy)" # Customize how you want to modify the name here
+    unless new_form.valid?
+      # Add an error message to the name attribute if it's not unique
+      new_form.errors.add(:name, 'must be unique')
+    end
+    new_form
+  end
 end
