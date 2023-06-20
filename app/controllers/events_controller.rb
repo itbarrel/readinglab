@@ -21,6 +21,7 @@ class EventsController < ApplicationController
   def set_event
     @event = current_account.meetings.find_by(id: params[:id])
     @event = current_account.interviews.find_by(id: params[:id]) if @event.blank?
+    @event = current_account.vacations.find_by(id: params[:id]) if @event.blank?
   end
 
   def event_params

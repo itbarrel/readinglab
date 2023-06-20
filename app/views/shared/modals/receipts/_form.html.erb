@@ -6,7 +6,7 @@
   <div class="modal-body p-card">
     <div class="mb-3">
       <%= f.label :students, class: 'fs-0' %>
-      <%= f.collection_select :student_id, Student.order(:first_name), :id, :name, { include_blank: true }, { class: 'form-control' } %>
+      <%= f.collection_select :student_id, Student.order(:first_name), :id, :name, { include_blank: true }, { class: 'form-select js-choice' } %>
     </div>
     <div class="mb-3">
       <%= f.label :receipt_type, class: 'fs-0' %>

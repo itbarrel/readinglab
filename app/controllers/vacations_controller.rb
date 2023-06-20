@@ -2,7 +2,7 @@
 
 class VacationsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_vacation, only: %i[]
+  before_action :set_vacation, only: %i[show]
   before_action :set_vacations, only: %i[trash]
 
   def index
