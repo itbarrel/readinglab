@@ -42,6 +42,8 @@ class StudentClass < ApplicationRecord
     student.wait_listed!
   end
 
+  private
+
   def validate_max_students
     return true unless klass.students.length >= klass.max_students
 

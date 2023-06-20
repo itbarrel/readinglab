@@ -1,0 +1,16 @@
+<div class="modal-content border-0">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="mb-0">Vacation</h4>
+    </div>
+    <div class="card-body bg-light">
+      <h5 class="fs-0 text-center">Type: <%=vacation.vacation_type.name%></h5>
+      <h5 class="fs-0 text-center">Name: <%=vacation.name%></h5>
+      <h5 class="fs-0 text-center">Starting At: <%=l vacation.starting_at, format: :medium %></h5>
+      <h5 class="fs-0 text-center">Ending At: <%=l vacation.ending_at, format: :medium %></h5>
+    </div>
+    <div class="card-footer d-flex justify-content-end align-items-center bg-light">
+      <button class="btn btn-default px-4" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+    </div>
+  </div>
+</div>
