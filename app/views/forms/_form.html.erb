@@ -17,6 +17,7 @@
           class="fas fa-ellipsis-h fs--1"></span></button>
       <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
         <div class="bg-white py-2">
+          <%= link_to('Duplicate', form_duplicate_form_path(form), method: :post, class: 'dropdown-item') %>
           <%= link_to('Edit', edit_form_path(form), class: 'dropdown-item') %>
           <%= link_to('Delete', form_path(form), method: :delete, class: 'dropdown-item text-danger') %>
         </div>

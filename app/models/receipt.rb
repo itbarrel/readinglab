@@ -40,6 +40,7 @@ class Receipt < ApplicationRecord
   attr_accessor :skip_callbacks
 
   validates :amount, :sessions_count, presence: true
+  before_validation :validate_payable_meetings, on: :create
 
   after_create :create_payments, unless: :skip_callbacks
 
@@ -47,5 +48,14 @@ class Receipt < ApplicationRecord
     student.payable_meetings.take(sessions_count).each do |meeting|
       payments.create(student:, meeting:)
     end
+  end
+
+  private
+
+  def validate_payable_meetings
+    return true unless student.payable_meetings.any?
+
+    errors.add(:base, 'Student has no sessions to pay for.')
+    false
   end
 end
