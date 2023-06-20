@@ -3,3 +3,8 @@
 :queues:
   - default
   - mailers
+:scheduler:
+  :schedule:
+    archive_klasses:
+      cron: '0 0 * * *'   # Runs once per minute
+      class: ArchiveKlassesJob

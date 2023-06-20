@@ -12,6 +12,7 @@ gem 'rails', '~> 7.0.4'
 gem 'pg', '~> 1.4'
 gem 'puma', '~> 5.0'
 gem 'sidekiq', '<7'
+gem 'sidekiq-scheduler'
 gem 'sprockets-rails'
 
 gem 'cancancan'
