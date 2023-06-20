@@ -10,7 +10,9 @@
       <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">Name</th>
     </tr>
   </thead>
-  <% klasses.each do |klass| %>
-    <%= render 'reports/daily/meeting', klass: klass %>
-  <% end %>
+  <tbody class="list" id="table-reports-body">
+    <% meetings.each do |meeting| %>
+      <%= render 'reports/daily/meeting', meeting: meeting %>
+    <% end %>
+  </tbody>
 </table>

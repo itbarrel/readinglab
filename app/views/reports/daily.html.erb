@@ -10,30 +10,27 @@
         <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Daily Report</h5>
       </div>
       <div class="col-8 col-sm-auto text-end ps-2">
-        <div class="d-none" id="table-receipts-actions">
+        <div class="d-none" id="table-reports-actions">
           <div class="d-flex">
             <select class="form-select form-select-sm" aria-label="Bulk actions">
               <option selected="">Bulk actions</option>
-              <option value="Delete">Delete</option>
+              <option value="Export">Export</option>
             </select>
             <button class="btn btn-falcon-default btn-sm ms-2" id="listing-bulk-action" type="button">Apply</button>
           </div>
         </div>
-        <div id="table-receipts-replace-element">
-          <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter"
-              data-fa-transform="shrink-3 down-2"></span><span
-              class="d-none d-sm-inline-block ms-1">Filter</span></button>
-          <%= link_to(export_klasses_path(format: :csv), class: 'btn btn-falcon-default btn-sm') do %>
-          <span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span>
-          <span class="d-none d-sm-inline-block ms-1">Export</span>
-          <% end %>
+        <div id="table-reports-replace-element">
+          <button class="btn btn-falcon-default btn-sm mx-2" type="button">
+            <span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span>
+            <span class="d-none d-sm-inline-block ms-1">Filter</span>
+          </button>
         </div>
       </div>
     </div>
   </div>
-  <div class="card-body p-0" id="receiptsTable">
+  <div class="card-body p-0" id="dailyReportsTable">
     <div class="table-responsive">
-      <%= form_tag(klasses_path, id: 'showKlassesForm', method: :get, remote: true) do %>
+      <%= form_tag( meetings_path, id: 'showMeetingForm', method: :get, remote: true) do %>
         <div class="p-2 mb-3">
           <div class="col-lg-8">
             <%= date_field_tag :classes_at, nil, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>

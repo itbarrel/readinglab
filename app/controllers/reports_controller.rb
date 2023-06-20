@@ -40,7 +40,5 @@ class ReportsController < ApplicationController
     }
   end
 
-  def daily
-    @reports = Klass.all
-  end
+  def daily; end
 end

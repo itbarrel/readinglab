@@ -10,6 +10,11 @@ class MeetingsController < ApplicationController
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
 
+    if params[:classes_at].present?
+      @meetings_for_date = true
+      @meetings = @meetings.at(params[:classes_at])
+    end
+
     if params[:start].present?
       start_date = params[:start]
       @meetings = @meetings.where(
@@ -28,7 +33,7 @@ class MeetingsController < ApplicationController
       @meetings = @meetings.joins(:klass).where(klass: { teacher_id: params[:teacher_id] })
     end
 
-    @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room students]), items: per_page)
+    @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room]), items: per_page)
   end
 
   def show; end
@@ -180,6 +185,19 @@ class MeetingsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to meetings_url, notice: 'Meeting was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def export
+    options = { date: params[:date] }
+    records = current_account.meetings
+                             .includes(
+                               form_details: %i[student form],
+                               klass: %i[teacher room]
+                             )
+                             .where(id: params[:ids])
+    respond_to do |format|
+      format.csv { send_data records.to_csv(options), filename: "#{records.model.name}-#{Time.zone.today}.csv" }
     end
   end
 
