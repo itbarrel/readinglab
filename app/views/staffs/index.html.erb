@@ -38,7 +38,8 @@
 </div>
 
 <% content_for :modal_includes do %>
-<%= render partial: 'shared/modals/basic', locals: { modal_id: 'addStaffModal' , modal_size: 'modal-lg' } %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addStaffModal' , modal_size: 'modal-lg' } %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'updatePasswordsModal' } %>
 <% end %>
 
 <% content_for :javascript_includes do %>

@@ -1,4 +1,4 @@
-<%= form_for(staff, as: :staff, url: "staffs", id: 'addStaffForm') do |f| %>
+<%= form_for(staff, as: :staff, url: "staff", method: :put, id: 'addStaffForm') do |f| %>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <div class="modal-header px-card bg-light border-bottom-0">
     <h5 class="modal-title"><%= title %></h5>
@@ -16,10 +16,6 @@
     <div class="mb-3">
       <%= f.label :email, class: 'fs-0' %>
       <%= f.email_field :email, class: 'form-control', autofocus: true, autocomplete: "email" %>
-    </div>
-    <div class="mb-3">
-      <%= f.label :password, class: 'fs-0' %>
-      <%= f.password_field :password, class: 'form-control', autofocus: true %>
     </div>
     <div class="mb-3">
       <%= f.label :role, class: 'fs-0' %>

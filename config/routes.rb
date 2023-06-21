@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   resources :staffs do
     concerns %i[trashable exportable]
     member do
-      put :password
+      put :passwords
     end
   end
 
@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     concerns %i[trashable exportable]
     collection do
       get :availability
+      get  :obselete
     end
     member do
       post :extend_sessions

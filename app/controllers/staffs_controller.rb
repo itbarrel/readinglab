@@ -2,7 +2,7 @@
 
 class StaffsController < ApplicationController
   load_and_authorize_resource :staff, class: User
-  before_action :set_staff, only: %i[]
+  before_action :set_staff, only: %i[show update password]
   before_action :set_staffs, only: %i[trash]
 
   def index
@@ -18,6 +18,20 @@ class StaffsController < ApplicationController
 
   # GET /staffs/new
   def new; end
+
+  def password
+    @staffs = User.find(params[:id])
+
+    if @staffs.update(password: params[:user][:password])
+      respond_to do |format|
+        format.js { render js: "alert('Password updated successfully!');" }
+      end
+    else
+      respond_to do |format|
+        format.js { render 'password_errors' }
+      end
+    end
+  end
 
   # GET /staffs/1/edit
   def edit; end
