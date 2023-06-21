@@ -107,6 +107,8 @@ class KlassesController < ApplicationController
     render js: "window.location = '#{klasses_url}'"
   end
 
+  def obselete; end
+
   private
 
   def check_availability_for(start_date)

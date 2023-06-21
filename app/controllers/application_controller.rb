@@ -31,8 +31,8 @@ class ApplicationController < ActionController::Base
         { url: '/interviews', text: 'Interviews', class: '', icon: 'micon bi bi-calendar-week', models: [Interview] }
       ] },
       { text: 'Classes', class: '', icon: 'micon bi bi-book-half', sub_items: [
-        { url: '/klasses', text: 'Active', class: '', icon: 'micon bi bi-check-circle', models: [Klass] }
-        # { url: '/rooms', text: 'Obselote', class: '', icon: 'micon bi bi-exclamation-circle' }
+        { url: '/klasses', text: 'Active', class: '', icon: 'micon bi bi-check-circle', models: [Klass] },
+        { url: '/klasses/obselete', text: 'Obselote', class: '', icon: 'micon bi bi-exclamation-circle', models: [Klass] }
       ] },
       { text: 'Billing', class: '', icon: 'micon bi bi-file-earmark-text-fill', sub_items: [
         { url: '/billings/students', text: 'Students', class: '', icon: 'micon bi bi-receipt', models: [:billing] },
