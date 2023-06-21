@@ -42,6 +42,14 @@ class Meeting < ApplicationRecord
   delegate :student_classes, to: :klass
   delegate :attendance_form, to: :klass
   delegate :forms, to: :klass
+  delegate :name, to: :klass
+  delegate :short_name, to: :klass
+
+  has_many :student_meetings, dependent: :destroy
+  has_many :form_details, as: :parent, dependent: nil
+  has_many :attentive_students, through: :student_meetings, source: 'student'
+
+  scope :at, ->(date) { where('date(starts_at) = ?', date) }
 
   scope :obselete, -> { where obselete: true }
   scope :working, -> { where obselete: false }
@@ -50,9 +58,6 @@ class Meeting < ApplicationRecord
   validates :ends_at, presence: true, date: { after_or_equal_to: :starts_at }
 
   before_validation :set_end_time
-
-  delegate :name, to: :klass
-  delegate :short_name, to: :klass
 
   def set_end_time
     self.ends_at = starts_at + klass.duration.minutes
@@ -85,5 +90,25 @@ class Meeting < ApplicationRecord
           .where('created_at <= ? and deleted_at >= ?', starts_at, starts_at)
 
     scs.map(&:student)
+  end
+
+  def self.to_csv(options = {})
+    CSV.generate(headers: true) do |csv|
+      csv << ['Date:', options[:date]]
+      csv << []
+
+      all.find_each do |record|
+        csv << [record.klass.name, '', record.starts_at]
+        csv << []
+
+        record.form_details.group_by(&:form).each do |form, values|
+          csv << ['Form Name', 'Student name', *form.form_fields.order(:id).map(&:name)]
+          values.each do |fd|
+            csv << [form.name, fd.student.name, *form.form_fields.order(:id).map { |x| fd.form_values[x.model_key] }]
+          end
+        end
+        csv << []
+      end
+    end
   end
 end

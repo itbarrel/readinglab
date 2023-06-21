@@ -10,7 +10,7 @@ class ApplicationRecord < ActiveRecord::Base
   REJECTED_ATTRIBUTES = %i[id deleted_at].freeze
   CHANGED_ATTRIBUTES = {}.freeze
 
-  def self.to_csv
+  def self.to_csv(_options = {})
     attributes = Hash[all.model.column_names.map { |key, _value| [key, human_attribute_name(key)] }].symbolize_keys
     attributes.except!(*REJECTED_ATTRIBUTES).merge!(CHANGED_ATTRIBUTES)
 
