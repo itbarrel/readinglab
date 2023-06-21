@@ -1,4 +1,4 @@
-<%= form_for(staff, as: :staff, url: "staff", method: :put, id: 'addStaffForm') do |f| %>
+<%= form_for(staff, as: :staff, url: staff_path, id: 'addStaffForm') do |f| %>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <div class="modal-header px-card bg-light border-bottom-0">
     <h5 class="modal-title"><%= title %></h5>

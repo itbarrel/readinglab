@@ -19,19 +19,7 @@ class StaffsController < ApplicationController
   # GET /staffs/new
   def new; end
 
-  def password
-    @staffs = User.find(params[:id])
-
-    if @staffs.update(password: params[:user][:password])
-      respond_to do |format|
-        format.js { render js: "alert('Password updated successfully!');" }
-      end
-    else
-      respond_to do |format|
-        format.js { render 'password_errors' }
-      end
-    end
-  end
+  def password; end
 
   # GET /staffs/1/edit
   def edit; end

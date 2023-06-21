@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   resources :staffs do
     concerns %i[trashable exportable]
     member do
-      put :passwords
+      get :password
     end
   end
 
