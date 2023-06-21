@@ -2,6 +2,7 @@
 
 class KlassesController < ApplicationController
   load_and_authorize_resource
+  before_action :set_working_klasses
   before_action :set_klass, only: %i[extend_sessions]
   before_action :set_klasses, only: %i[trash]
 
@@ -116,6 +117,10 @@ class KlassesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_klass
     @klass = current_account.klasses.find(params[:id])
+  end
+
+  def set_working_klasses
+    @klasses = @klasses.working if @klasses.present?
   end
 
   def set_klasses

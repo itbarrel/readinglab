@@ -12,6 +12,7 @@
 #  min_students       :integer          default(0)
 #  monday             :boolean          default(FALSE)
 #  obselete           :boolean          default(FALSE)
+#  obseleted_at       :datetime
 #  range_type         :integer
 #  saturday           :boolean          default(FALSE)
 #  session_range      :integer          default(8)
@@ -61,6 +62,7 @@ class Klass < ApplicationRecord
 
   has_many :student_forms, dependent: :destroy
   has_many :meetings, dependent: :destroy
+  has_many :student_meetings, through: :meetings, dependent: :destroy
 
   enum :range_type, %i[sessional monthly]
 
@@ -74,8 +76,9 @@ class Klass < ApplicationRecord
 
   accepts_nested_attributes_for :student_forms, allow_destroy: true, reject_if: :all_blank
 
-  after_create :create_meetings, unless: :skip_validations
   before_validation :set_default_max_student
+  after_create :create_meetings, unless: :skip_validations
+  after_save :handle_obselete, if: :saved_change_to_obselete?
 
   def set_default_max_student
     self.max_students ||= 5 if max_students.nil?
@@ -186,10 +189,6 @@ class Klass < ApplicationRecord
     end
   end
 
-  def create_meetings
-    extend_meetings(session_range, starts_at)
-  end
-
   def est_end_date
     meetings.maximum(:starts_at)
   end
@@ -202,5 +201,23 @@ class Klass < ApplicationRecord
   def self.at(date)
     klass_ids = Meeting.where('date(starts_at) = ?', date).map(&:klass_id)
     all.where(id: klass_ids)
+  end
+
+  private
+
+  def create_meetings
+    return if obselete?
+
+    extend_meetings(session_range, starts_at)
+  end
+
+  def handle_obselete
+    obselete_time = obselete? ? Time.zone.now : nil
+    meetings_to_handle = obselete? ? meetings.working : meetings.obselete
+
+    update(obseleted_at: obselete_time)
+    meetings_to_handle.each do |x|
+      x.update(obselete: obselete?)
+    end
   end
 end

@@ -4,17 +4,18 @@
 #
 # Table name: meetings
 #
-#  id         :uuid             not null, primary key
-#  cancel     :boolean
-#  deleted_at :datetime
-#  ends_at    :datetime
-#  hold       :boolean
-#  obselete   :boolean          default(FALSE)
-#  starts_at  :datetime
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  account_id :uuid             not null
-#  klass_id   :uuid             not null
+#  id           :uuid             not null, primary key
+#  cancel       :boolean
+#  deleted_at   :datetime
+#  ends_at      :datetime
+#  hold         :boolean
+#  obselete     :boolean          default(FALSE)
+#  obseleted_at :datetime
+#  starts_at    :datetime
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  account_id   :uuid             not null
+#  klass_id     :uuid             not null
 #
 # Indexes
 #
@@ -58,6 +59,7 @@ class Meeting < ApplicationRecord
   validates :ends_at, presence: true, date: { after_or_equal_to: :starts_at }
 
   before_validation :set_end_time
+  after_save :handle_obselete, if: :saved_change_to_obselete?
 
   def set_end_time
     self.ends_at = starts_at + klass.duration.minutes
@@ -109,6 +111,22 @@ class Meeting < ApplicationRecord
         end
         csv << []
       end
+    end
+  end
+
+  private
+
+  def handle_obselete
+    obselete_time = obselete? ? Time.zone.now : nil
+    student_meetings_to_handle = obselete? ? student_meetings.working : student_meetings.obselete
+    form_details_to_handle = obselete? ? form_details.working : form_details.obselete
+
+    update(obseleted_at: obselete_time)
+    student_meetings_to_handle.each do |x|
+      x.update(obselete: obselete?)
+    end
+    form_details_to_handle.each do |x|
+      x.update(obselete: obselete?)
     end
   end
 end

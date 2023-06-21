@@ -129,6 +129,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_112455) do
     t.uuid "student_id", null: false
     t.boolean "submitted", default: false
     t.boolean "obselete", default: false
+    t.datetime "obseleted_at"
     t.index ["account_id"], name: "index_form_details_on_account_id"
     t.index ["form_id"], name: "index_form_details_on_form_id"
     t.index ["parent_type", "parent_id"], name: "index_form_details_on_parent"
@@ -238,6 +239,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_112455) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "obselete", default: false
+    t.datetime "obseleted_at"
     t.index ["account_id"], name: "index_klasses_on_account_id"
     t.index ["attendance_form_id"], name: "index_klasses_on_attendance_form_id"
     t.index ["klass_template_id"], name: "index_klasses_on_klass_template_id"
@@ -256,6 +258,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_112455) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.boolean "obselete", default: false
+    t.datetime "obseleted_at"
     t.index ["account_id"], name: "index_meetings_on_account_id"
     t.index ["klass_id"], name: "index_meetings_on_klass_id"
   end
@@ -380,6 +383,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_112455) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.boolean "obselete", default: false
+    t.datetime "obseleted_at"
     t.index ["account_id", "meeting_id", "student_id", "deleted_at"], name: "student_meeting_id", unique: true
     t.index ["account_id"], name: "index_student_meetings_on_account_id"
     t.index ["meeting_id"], name: "index_student_meetings_on_meeting_id"

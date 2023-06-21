@@ -4,19 +4,20 @@
 #
 # Table name: form_details
 #
-#  id          :uuid             not null, primary key
-#  deleted_at  :datetime
-#  form_values :jsonb
-#  obselete    :boolean          default(FALSE)
-#  parent_type :string           not null
-#  submitted   :boolean          default(FALSE)
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  account_id  :uuid             not null
-#  form_id     :uuid             not null
-#  parent_id   :uuid             not null
-#  student_id  :uuid             not null
-#  user_id     :uuid
+#  id           :uuid             not null, primary key
+#  deleted_at   :datetime
+#  form_values  :jsonb
+#  obselete     :boolean          default(FALSE)
+#  obseleted_at :datetime
+#  parent_type  :string           not null
+#  submitted    :boolean          default(FALSE)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  account_id   :uuid             not null
+#  form_id      :uuid             not null
+#  parent_id    :uuid             not null
+#  student_id   :uuid             not null
+#  user_id      :uuid
 #
 # Indexes
 #
@@ -46,10 +47,13 @@ class FormDetail < ApplicationRecord
 
   before_validation :default_form_values
   after_save :set_parent_status
+  after_save :handle_obselete, if: :saved_change_to_obselete?
 
   def default_form_values
     self.form_values ||= {}
   end
+
+  private
 
   def set_parent_status
     return unless parent.is_a?(Interview)
@@ -58,5 +62,11 @@ class FormDetail < ApplicationRecord
     return unless parent.student.scheduled?
 
     student.wait_listed!
+  end
+
+  def handle_obselete
+    obselete_time = obselete? ? Time.zone.now : nil
+
+    update(obseleted_at: obselete_time)
   end
 end

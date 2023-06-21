@@ -2,7 +2,7 @@
 
 class MeetingsController < ApplicationController
   load_and_authorize_resource
-  # before_action :set_meeting, only: %i[open_attendance submit_attendance]
+  before_action :set_working_meetings
   before_action :set_student, only: %i[student_details form_details]
   before_action :set_form, only: %i[student_details form_details]
 
@@ -202,6 +202,10 @@ class MeetingsController < ApplicationController
   end
 
   private
+
+  def set_working_meetings
+    @meetings = @meetings.working if @meetings.present?
+  end
 
   def set_meeting
     @meeting = current_account.meetings.find_by(id: params[:id])

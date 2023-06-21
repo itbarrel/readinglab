@@ -4,15 +4,16 @@
 #
 # Table name: student_meetings
 #
-#  id         :uuid             not null, primary key
-#  attendance :integer
-#  deleted_at :datetime
-#  obselete   :boolean          default(FALSE)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  account_id :uuid             not null
-#  meeting_id :uuid             not null
-#  student_id :uuid             not null
+#  id           :uuid             not null, primary key
+#  attendance   :integer
+#  deleted_at   :datetime
+#  obselete     :boolean          default(FALSE)
+#  obseleted_at :datetime
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  account_id   :uuid             not null
+#  meeting_id   :uuid             not null
+#  student_id   :uuid             not null
 #
 # Indexes
 #
@@ -37,4 +38,14 @@ class StudentMeeting < ApplicationRecord
   scope :working, -> { where obselete: false }
 
   validates :attendance, presence: true
+
+  after_save :handle_obselete, if: :saved_change_to_obselete?
+
+  private
+
+  def handle_obselete
+    obselete_time = obselete? ? Time.zone.now : nil
+
+    update(obseleted_at: obselete_time)
+  end
 end
