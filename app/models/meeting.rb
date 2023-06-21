@@ -9,6 +9,7 @@
 #  deleted_at :datetime
 #  ends_at    :datetime
 #  hold       :boolean
+#  obselete   :boolean          default(FALSE)
 #  starts_at  :datetime
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -41,6 +42,9 @@ class Meeting < ApplicationRecord
   delegate :student_classes, to: :klass
   delegate :attendance_form, to: :klass
   delegate :forms, to: :klass
+
+  scope :obselete, -> { where obselete: true }
+  scope :working, -> { where obselete: false }
 
   validates :starts_at, presence: true
   validates :ends_at, presence: true, date: { after_or_equal_to: :starts_at }

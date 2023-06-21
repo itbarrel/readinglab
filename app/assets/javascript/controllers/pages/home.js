@@ -43,7 +43,7 @@ const showPosition = (position) => {
   .then(response => response.json())
   .then(data => {
     const city = data.address.city; // Extract the city name from the response
-    const weatherUrl = "http://api.weatherapi.com/v1/current.json?key=1234f7328aee47159f793247231206&q=" + encodeURIComponent(city) + "&aqi=yes";
+    const weatherUrl = "https://api.weatherapi.com/v1/current.json?key=1234f7328aee47159f793247231206&q=" + encodeURIComponent(city) + "&aqi=yes";
 
     fetch(weatherUrl)
     .then(response => response.json())

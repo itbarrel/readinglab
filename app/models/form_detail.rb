@@ -7,6 +7,7 @@
 #  id          :uuid             not null, primary key
 #  deleted_at  :datetime
 #  form_values :jsonb
+#  obselete    :boolean          default(FALSE)
 #  parent_type :string           not null
 #  submitted   :boolean          default(FALSE)
 #  created_at  :datetime         not null
@@ -37,6 +38,9 @@ class FormDetail < ApplicationRecord
   belongs_to :form
   belongs_to :student
   belongs_to :parent, polymorphic: true
+
+  scope :obselete, -> { where obselete: true }
+  scope :working, -> { where obselete: false }
 
   validates :form_values, presence: true, allow_blank: true
 

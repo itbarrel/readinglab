@@ -7,6 +7,7 @@
 #  id         :uuid             not null, primary key
 #  attendance :integer
 #  deleted_at :datetime
+#  obselete   :boolean          default(FALSE)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  account_id :uuid             not null
@@ -31,6 +32,9 @@ class StudentMeeting < ApplicationRecord
   belongs_to :meeting
   belongs_to :student
   enum :attendance, %i[absent present leave hold nothing]
+
+  scope :obselete, -> { where obselete: true }
+  scope :working, -> { where obselete: false }
 
   validates :attendance, presence: true
 end

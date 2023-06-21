@@ -11,6 +11,7 @@
 #  max_students       :integer
 #  min_students       :integer          default(0)
 #  monday             :boolean          default(FALSE)
+#  obselete           :boolean          default(FALSE)
 #  range_type         :integer
 #  saturday           :boolean          default(FALSE)
 #  session_range      :integer          default(8)
@@ -62,6 +63,9 @@ class Klass < ApplicationRecord
   has_many :meetings, dependent: :destroy
 
   enum :range_type, %i[sessional monthly]
+
+  scope :obselete, -> { where obselete: true }
+  scope :working, -> { where obselete: false }
 
   attr_accessor :skip_validations
 
