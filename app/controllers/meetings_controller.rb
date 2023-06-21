@@ -69,7 +69,7 @@ class MeetingsController < ApplicationController
   end
 
   def forms
-    @forms = @meeting.forms
+    @forms = @meeting.forms.includes(form_fields: :field_values)
   end
 
   def open_form

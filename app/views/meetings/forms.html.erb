@@ -1,0 +1,46 @@
+<div class="row g-0">
+  <div class="col-lg-12 pe-lg-2">
+    <div class="card overflow-hidden">
+      <div class="card-header">
+        <h5 class="mb-0">Bulk Form Submission form <%= @meeting.short_name %></h5>
+        <% if @meeting.teacher.present? %>
+          <p class="fs--2 mb-0">Teaching by <%= link_to @meeting.teacher.name, staff_path(@meeting.teacher), class: "link-600 fw-semi-bold" %></p>
+        <% end %>
+        <p class="fs--2 mb-0">Date by <%= l @meeting.starts_at %></p>
+      </div>
+      <div class="card-body">
+        <div class="tab-content">
+          <% @forms.each do |form| %>
+            <% students_class_ids = @meeting.klass.student_forms
+                                      .where(klass_form_id: form.klass_forms.ids)
+                                      .pluck(:student_class_id) %>
+            <% students_ids = StudentClass.where(id: students_class_ids).map(&:student_id) %>
+            <% student_attendance_ids = StudentMeeting.where(meeting_id: @meeting.id, student_id: students_ids).not_present.map(&:student_id) %>
+            <% students = Student.where(id: students_ids - student_attendance_ids) %>
+    
+            <% fields = form.form_fields %>
+    
+            <%= form_tag("meetings/#{@meeting.id}/form", method: :post, remote: true, id: "studentsForm-#{form.id}") do %>
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+              <%= hidden_field_tag :form_id, form.id %>
+              <%= hidden_field_tag :record_id, @meeting.id %>
+              <%= hidden_field_tag :record_type, 'Meeting' %>
+    
+              <%= render 'shared/modals/forms/form_table', students: students, form: form, fields: fields, record_type: 'Meeting', record: @meeting, submit_resource: 'form_details' %>
+    
+              <div class="m-2 bg-light d-flex justify-content-end">
+                <% if form.lessonable? %>
+                  <button class="btn btn-info px-4 studentFormSave" type="button" aria-label="Close" id="<%= form.id %>">Save</button>
+                <% end %>
+                <%= submit_tag "Submit", class: "btn btn-large btn-primary" %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true, module: true %>
+<% end %>
