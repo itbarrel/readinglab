@@ -4,7 +4,6 @@ $('#showStudentsFormsModal .modal-content').html("<%= j render 'shared/modals/fo
                                                         record: @meeting,
                                                         record_type: 'Meeting',
                                                         students: @students,
-                                                        form: @form,
                                                         form_url: "meetings/#{@meeting.id}/form",
                                                         form_method: :post,
                                                         form_request_js: true,
