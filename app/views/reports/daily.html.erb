@@ -28,15 +28,17 @@
       </div>
     </div>
   </div>
-  <div class="card-body p-0" id="dailyReportsTable">
-    <div class="table-responsive">
+  <div class="card-body" id="dailyReportsTable">
+    <div class="table">
       <%= form_tag( meetings_path, id: 'showMeetingForm', method: :get, remote: true) do %>
         <div class="p-2 mb-3">
-          <div class="col-lg-8">
-            <%= date_field_tag :classes_at, nil, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
-          </div>
-          <div class="col-lg-4">
-            <%= submit_tag "Search", class: "btn btn-primary" %>
+          <div class="row">
+            <div class="col-lg-8">
+              <%= date_field_tag :classes_at, nil, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
+            </div>
+            <div class="col-lg-4">
+              <%= submit_tag "Search", class: "btn btn-primary" %>
+            </div>
           </div>
         </div>
       <% end %>
