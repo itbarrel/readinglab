@@ -11,8 +11,8 @@
 #  max_students       :integer
 #  min_students       :integer          default(0)
 #  monday             :boolean          default(FALSE)
-#  obselete           :boolean          default(FALSE)
-#  obseleted_at       :datetime
+#  obsolete           :boolean          default(FALSE)
+#  obsoleted_at       :datetime
 #  range_type         :integer
 #  saturday           :boolean          default(FALSE)
 #  session_range      :integer          default(8)
@@ -66,8 +66,8 @@ class Klass < ApplicationRecord
 
   enum :range_type, %i[sessional monthly]
 
-  scope :obselete, -> { where obselete: true }
-  scope :working, -> { where obselete: false }
+  scope :obsolete, -> { where obsolete: true }
+  scope :working, -> { where obsolete: false }
 
   attr_accessor :skip_validations
 
@@ -78,7 +78,7 @@ class Klass < ApplicationRecord
 
   before_validation :set_default_max_student
   after_create :create_meetings, unless: :skip_validations
-  after_save :handle_obselete, if: :saved_change_to_obselete?
+  after_save :handle_obsolete, if: :saved_change_to_obsolete?
 
   def set_default_max_student
     self.max_students ||= 5 if max_students.nil?
@@ -211,13 +211,13 @@ class Klass < ApplicationRecord
     extend_meetings(session_range, starts_at)
   end
 
-  def handle_obselete
-    obselete_time = obselete? ? Time.zone.now : nil
-    meetings_to_handle = obselete? ? meetings.working : meetings.obselete
+  def handle_obsolete
+    obsolete_time = obsolete? ? Time.zone.now : nil
+    meetings_to_handle = obsolete? ? meetings.working : meetings.obsolete
 
-    update(obseleted_at: obselete_time)
+    update(obsoleted_at: obsolete_time)
     meetings_to_handle.each do |x|
-      x.update(obselete: obselete?)
+      x.update(obsolete: obsolete?)
     end
   end
 end

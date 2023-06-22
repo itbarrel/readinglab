@@ -10,14 +10,14 @@
         <th class="sort pe-1 align-middle white-space-nowrap">Name</th>
         <th class="sort pe-1 align-middle white-space-nowrap">Teacher</th>
         <th class="sort pe-1 align-middle white-space-nowrap">Room</th>
-        <th class="sort pe-1 align-middle white-space-nowrap">Obseleted At</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Obsoleted At</th>
         <th class="sort pe-1 align-middle white-space-nowrap" ></th>
 
       </tr>
     </thead>
     <tbody class="list" id="table-klasses-body">
       <% klasses.each_with_index do |klass, index| %>
-        <%= render 'klasses/obseletes/obselete', klass: klass, index: index %>
+        <%= render 'klasses/obsoletes/obsolete', klass: klass, index: index %>
       <% end %>
     </tbody>
   </table>

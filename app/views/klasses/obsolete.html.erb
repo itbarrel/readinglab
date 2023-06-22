@@ -1,5 +1,5 @@
 <% content_for :search_includes do %>
-  <%= render partial: 'shared/search', locals: { search_key: :teacher_first_name_or_teacher_last_name_or_room_name_cont, form_url: obselete_klasses_path } %>
+  <%= render partial: 'shared/search', locals: { search_key: :teacher_first_name_or_teacher_last_name_or_room_name_cont, form_url: obsolete_klasses_path } %>
 <% end %>
 
 <div class="card mb-3" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
@@ -25,7 +25,7 @@
   </div>
 
   <div class="card-body p-0" id="klassesTable">
-    <%= render partial: 'klasses/obseletes/table', locals: { klasses: @klasses } %>
+    <%= render partial: 'klasses/obsoletes/table', locals: { klasses: @klasses } %>
   </div>
 
 </div>

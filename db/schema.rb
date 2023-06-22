@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_20_112455) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_22_135604) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -79,7 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_112455) do
     t.string "grade"
     t.datetime "deleted_at"
     t.uuid "account_id", null: false
-    t.uuid "klass_id"
+    t.uuid "klass_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "name", "deleted_at"], name: "book_name", unique: true
@@ -118,7 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_112455) do
 
   create_table "form_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.jsonb "form_values"
-    t.uuid "user_id"
+    t.uuid "user_id", null: false
     t.uuid "form_id", null: false
     t.uuid "account_id", null: false
     t.string "parent_type", null: false
@@ -128,8 +128,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_112455) do
     t.datetime "deleted_at"
     t.uuid "student_id", null: false
     t.boolean "submitted", default: false
-    t.boolean "obselete", default: false
-    t.datetime "obseleted_at"
+    t.boolean "obsolete", default: false
+    t.datetime "obsoleted_at"
     t.index ["account_id"], name: "index_form_details_on_account_id"
     t.index ["form_id"], name: "index_form_details_on_form_id"
     t.index ["parent_type", "parent_id"], name: "index_form_details_on_parent"
@@ -238,8 +238,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_112455) do
     t.uuid "attendance_form_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "obselete", default: false
-    t.datetime "obseleted_at"
+    t.boolean "obsolete", default: false
+    t.datetime "obsoleted_at"
     t.index ["account_id"], name: "index_klasses_on_account_id"
     t.index ["attendance_form_id"], name: "index_klasses_on_attendance_form_id"
     t.index ["klass_template_id"], name: "index_klasses_on_klass_template_id"
@@ -257,8 +257,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_112455) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.boolean "obselete", default: false
-    t.datetime "obseleted_at"
+    t.boolean "obsolete", default: false
+    t.datetime "obsoleted_at"
     t.index ["account_id"], name: "index_meetings_on_account_id"
     t.index ["klass_id"], name: "index_meetings_on_klass_id"
   end
@@ -382,8 +382,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_112455) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.boolean "obselete", default: false
-    t.datetime "obseleted_at"
+    t.boolean "obsolete", default: false
+    t.datetime "obsoleted_at"
     t.index ["account_id", "meeting_id", "student_id", "deleted_at"], name: "student_meeting_id", unique: true
     t.index ["account_id"], name: "index_student_meetings_on_account_id"
     t.index ["meeting_id"], name: "index_student_meetings_on_meeting_id"
@@ -421,8 +421,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_112455) do
     t.integer "status"
     t.uuid "account_id", null: false
     t.uuid "student_id", null: false
-    t.uuid "klass_id"
-    t.uuid "book_id"
+    t.uuid "klass_id", null: false
+    t.uuid "book_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
