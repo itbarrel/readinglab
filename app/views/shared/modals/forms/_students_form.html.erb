@@ -1,4 +1,4 @@
-<% fields = form.form_fields %>
+<% fields = form.form_fields.includes(:field_values) %>
 
 <div class="modal-content border-0">
   <%= form_tag(form_url, method: form_method, remote: form_request_js, id: 'studentsForm') do %>
@@ -15,50 +15,14 @@
         <h4 class="mb-1" id="staticBackdropLabel"><%= form.name %></h4>
         <% if record_type == 'Interview' %>
           <p class="fs--2 mb-0">Interview of <%= link_to students.first.name, student_path(students.first), class: "link-600 fw-semi-bold" %></p>
+          <p class="fs--2 mb-0">Date by <%= l record.date %></p>
         <% elsif record_type == 'Meeting' %>
           <p class="fs--2 mb-0">Teaching by <%= link_to record.teacher.name, staff_path(record.teacher), class: "link-600 fw-semi-bold" %></p>
+          <p class="fs--2 mb-0">Date by <%= l record.starts_at %></p>
         <% end %>
       </div>
-      <div class="p-4" data-list='{ "valueNames":["name","email","age"], "page":5, "pagination":false }'>
-        <div class="table-responsive scrollbar">
-          <table class="table table-bordered table-striped fs--1 mb-0">
-            <thead class="bg-200 text-900">
-              <tr>
-                <th class="sort"></th>
-                <% students.each do |student| %>
-                  <th class="sort"><%= student.name %></th>
-                <% end %>
-              </tr>
-            </thead>
-            <tbody class="list">
-              <% if form.attendancable? %>
-                <tr>
-                  <td title="Is student Present? today.">Present?</td>
-                  <% students.each do |student| %>
-                    <td><%= generate_html_for(FormField.attendance_field, student, submit_resource) %></td>
-                  <% end %>
-                </tr>
-              <% end %>
-              <% fields.each do |field| %>
-                <tr>
-                  <td title="<%= field.description %>"><%= field.name %></td>
-                  <% students.each do |student| %>
-                    <% submitted_data = FormDetail.find_by(
-                        user: current_user,
-                        student_id: student.id,
-                        form_id: form.id,
-                        parent_type: record_type,
-                        parent_id: record.id,
-                        account: current_account
-                      )
-                    %>
-                    <td><%= generate_html_for(field, student, submit_resource, submitted_data) %></td>
-                  <% end %>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+      <div class="p-4">
+        <%= render 'shared/modals/forms/form_table', students: students, form: form, fields: fields, record_type: record_type, record: record, submit_resource: submit_resource %>
       </div>
     </div>
     <div class="card-footer d-flex justify-content-end align-items-center bg-light">
@@ -70,25 +34,3 @@
     </div>
   <% end %>
 </div>
-
-<script>
-  // $("document").ready(function () {
-  //   $('#studentFormSave').click((event)=>{
-  //     var formData = {};
-  //     $.each($('#studentsForm').serializeArray(), function(i, field) {
-  //       formData[field.name] = field.value;
-  //     });
-
-  //     const resource = (formData.record_type ==  'Meeting')? 'meetings' : 'interviews'
-  //     if (formData.record_id){
-  //       $.ajax({
-  //         url: `/${resource}/${formData.record_id}/form`,
-  //         method: "PUT",
-  //         data: formData,
-  //         dataType: 'script'
-  //       });
-  //     }
-  //   })
-  // });
-
-</script>

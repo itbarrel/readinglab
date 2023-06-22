@@ -27,7 +27,6 @@ class BooksController < ApplicationController
   # POST /books or /books.json
   def create
     @book = current_account.books.new(book_params)
-    attach_account_for(@book)
 
     respond_to do |format|
       if @book.save
@@ -36,7 +35,7 @@ class BooksController < ApplicationController
       else
         process_errors(@book)
         format.html { redirect_to request.referer }
-        format.json { render json: @book.errors, status: :unprocessable_entity }
+        format.json { render json: @book.errors }
       end
     end
   end
@@ -45,11 +44,11 @@ class BooksController < ApplicationController
   def update
     respond_to do |format|
       if @book.update(book_params)
-        format.html { redirect_to book_url(@book), notice: 'Book has been successfully updated.' }
+        format.html { redirect_to books_url, notice: 'Book has been successfully updated.' }
         format.json { render :index, status: :ok, location: @book }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @book.errors, status: :unprocessable_entity }
+        format.html { redirect_to books_url }
+        format.json { render json: @book.errors }
       end
     end
   end

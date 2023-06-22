@@ -11,27 +11,29 @@ module FormHelper
       data = { submitted: false }.to_dot
     end
 
+    field_disabled = data.submitted && !current_user.admin?
+
     case field.field_type
     when 'text_field'
-      text_field_tag model_key, value, class: 'form-control', required: field.necessary, disabled: data.submitted
+      text_field_tag model_key, value, class: 'form-control', required: field.necessary, disabled: field_disabled
     when 'number_field'
-      number_field_tag model_key, value, class: 'form-control', required: field.necessary, disabled: data.submitted
+      number_field_tag model_key, value, class: 'form-control', required: field.necessary, disabled: field_disabled
     when 'date_field'
-      date_field_tag model_key, value, class: 'form-control', required: field.necessary, disabled: data.submitted
+      date_field_tag model_key, value, class: 'form-control', required: field.necessary, disabled: field_disabled
     when 'date_time_field'
-      datetime_field_tag model_key, value, class: 'form-control', required: field.necessary, disabled: data.submitted
+      datetime_field_tag model_key, value, class: 'form-control', required: field.necessary, disabled: field_disabled
     when 'text_area'
-      text_area_tag model_key, value, class: 'form-control', required: field.necessary, disabled: data.submitted
+      text_area_tag model_key, value, class: 'form-control', required: field.necessary, disabled: field_disabled
     when 'select_field'
       select_tag model_key,
                  options_from_collection_for_select(field.field_values, :usage, :name, value),
                  class: 'form-control',
-                 include_blank: true, required: field.necessary
+                 include_blank: true, required: field.necessary, disabled: field_disabled
     when 'check_box'
       html = []
       field.field_values.map do |fv|
         html << content_tag(:div, class: 'form-check form-check-inline') do
-          (content_tag(:input, nil, type: 'checkbox', value: fv.usage, class: 'form-check-input', name: model_key) +
+          (content_tag(:input, nil, type: 'checkbox', value: fv.usage, class: 'form-check-input', name: model_key, disabled: field_disabled) +
           content_tag(:label, fv.name, class: 'form-check-label'))
         end
       end
@@ -40,13 +42,13 @@ module FormHelper
       html = []
       field.field_values.map do |fv|
         html << content_tag(:div, class: 'form-check form-check-inline') do
-          (content_tag(:input, nil, type: 'radio', value: fv.usage, class: 'form-check-input', name: model_key) +
+          (content_tag(:input, nil, type: 'radio', value: fv.usage, class: 'form-check-input', name: model_key, disabled: field_disabled) +
           content_tag(:label, fv.name, class: 'form-check-label'))
         end
       end
       safe_join(html)
     else
-      text_field_tag model_key, nil, class: 'form-control', required: field.necessary
+      text_field_tag model_key, nil, class: 'form-control', required: field.necessary, disabled: field_disabled
     end
   end
 end

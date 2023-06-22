@@ -32,18 +32,20 @@ class InterviewsController < ApplicationController
 
     @search = interview_students.ransack(params[:q])
     @search.sorts = 'first_name asc' if @search.sorts.empty?
-    @pagy, @interview_students = pagy(@search.result.includes(:latest_interview), items: per_page)
+    @pagy, @interview_students = pagy(@search.result, items: per_page)
   end
 
-  # GET /interviews/1 or /interviews/1.json
   def show; end
 
-  # GET /interviews/new
+  def form_details
+    @form_details = @interview.form_details
+    @form = @interview.form
+  end
+
   def new
     @interview.student_id = params[:student_id] if params[:student_id].present?
   end
 
-  # GET /interviews/1/edit
   def edit; end
 
   def open_form
@@ -69,21 +71,22 @@ class InterviewsController < ApplicationController
 
     flash[:notice] = 'Assessment Form Data submitted successfully.'
     respond_to do |format|
-      format.js { render 'shared/close_modal' }
+      format.js
     end
   end
 
   # POST /interviews or /interviews.json
   def create
     @interview = current_account.interviews.new(interview_params)
-    attach_account_for(@interview)
+
     respond_to do |format|
       if @interview.save
         format.html { redirect_to interviews_url, notice: 'Interview has been successfully created.' }
         format.json { render :show, status: :created, location: @interview }
       else
-        format.html { redirect_to interviews_url, status: :unprocessable_entity }
-        format.json { render json: @interview.errors, status: :unprocessable_entity }
+        process_errors(@interview)
+        format.html { redirect_to interviews_url }
+        format.json { render json: @interview.errors }
       end
     end
   end
@@ -92,12 +95,15 @@ class InterviewsController < ApplicationController
   def update
     respond_to do |format|
       if @interview.update(interview_params)
+        flash[:notice] = 'Assessment Cancelled successfully.' if @interview.cancel?
         format.html { redirect_to interviews_url, notice: 'Interview has been successfully updated.' }
         format.json { render :show, status: :ok, location: @interview }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @interview.errors, status: :unprocessable_entity }
+        process_errors(@interview)
+        format.html { redirect_to interviews_url }
+        format.json { render json: @interview.errors }
       end
+      format.js
     end
   end
 

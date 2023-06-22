@@ -16,7 +16,7 @@ class ApplicationRecord < ActiveRecord::Base
     []
   end
 
-  def self.to_csv
+  def self.to_csv(_options = {})
     attributes = Hash[all.model.column_names.map { |key, _value| [key, human_attribute_name(key)] }].symbolize_keys
     attributes.except!(*REJECTED_ATTRIBUTES).merge!(CHANGED_ATTRIBUTES)
 

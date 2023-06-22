@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 class AccountsController < ApplicationController
-  # load_and_authorize_resource
+  load_and_authorize_resource
   before_action :set_account, only: %i[show edit update destroy]
 
   # GET /accounts or /accounts.json
   def index
-    # @accounts = Account.all
-    @pagy, @accounts = pagy(Account.all, items: params[:per_page] || '10')
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @accounts.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @accounts = pagy(@search.result.includes([:account_type]), items: per_page)
   end
 
   # GET /accounts/1 or /accounts/1.json
@@ -16,6 +19,7 @@ class AccountsController < ApplicationController
   # GET /accounts/new
   def new
     @account = Account.new
+    @account.build_admin
   end
 
   # GET /accounts/1/edit
@@ -27,11 +31,12 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.save
-        format.html { redirect_to account_url(@account), notice: 'Account has been successfully created.' }
+        format.html { redirect_to accounts_url, notice: 'Account has been successfully created.' }
         format.json { render :show, status: :created, location: @account }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
+        process_errors(@account)
+        format.html { redirect_to accounts_url }
+        format.json { render json: @account.errors }
       end
     end
   end
@@ -43,8 +48,8 @@ class AccountsController < ApplicationController
         format.html { redirect_to request.referer, notice: 'Account has been successfully updated.' }
         format.json { render :show, status: :ok, location: @account }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
+        format.html { redirect_to request.referer }
+        format.json { render json: @account.errors }
       end
     end
   end
@@ -59,6 +64,8 @@ class AccountsController < ApplicationController
     end
   end
 
+  def stats; end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -71,6 +78,7 @@ class AccountsController < ApplicationController
     params.require(:account).permit(:name, :currency, :settings,
                                     :email, :address, :mobile,
                                     :timezone, :province, :postal_code, :country_code, :parent_id,
-                                    :notify_emails, :billing_scheme, :account_types_id)
+                                    :notify_emails, :billing_scheme, :account_type_id,
+                                    admin_attributes: %i[first_name last_name email password])
   end
 end

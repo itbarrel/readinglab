@@ -257,6 +257,8 @@ var getData = function getData(el, data) {
     return el.dataset[camelize(data)];
   }
 };
+
+window.getData = getData;
 /* ----------------------------- Colors function ---------------------------- */
 
 var hexToRgb = function hexToRgb(hexValue) {
@@ -299,6 +301,8 @@ var getColor = function getColor(name) {
     .trim();
 };
 
+window.getColor = getColor;
+
 var getColors = function getColors(dom) {
   return {
     primary: getColor("primary", dom),
@@ -311,6 +315,8 @@ var getColors = function getColors(dom) {
     dark: getColor("dark", dom),
   };
 };
+
+window.getColors = getColors;
 
 var getSoftColors = function getSoftColors(dom) {
   return {
@@ -342,6 +348,8 @@ var getGrays = function getGrays(dom) {
     black: getColor("black", dom),
   };
 };
+
+window.getGrays = getGrays
 
 var hasClass = function hasClass(el, className) {
   !el && false;
@@ -841,6 +849,8 @@ function bulkSelectInit() {
     });
   }
 }
+
+window.bulkSelectInit = bulkSelectInit;
 /*-----------------------------------------------
 |   Chat
 -----------------------------------------------*/
@@ -13149,106 +13159,106 @@ var usersByTimeChartInit = function usersByTimeChartInit() {
 
 /* -------------------------------------------------------------------------- */
 
-var weeklySalesInit = function weeklySalesInit() {
-  var ECHART_BAR_WEEKLY_SALES = ".echart-bar-weekly-sales";
-  var $echartBarWeeklySales = document.querySelector(ECHART_BAR_WEEKLY_SALES);
+// var weeklySalesInit = function weeklySalesInit() {
+//   var ECHART_BAR_WEEKLY_SALES = ".echart-bar-weekly-sales";
+//   var $echartBarWeeklySales = document.querySelector(ECHART_BAR_WEEKLY_SALES);
 
-  if ($echartBarWeeklySales) {
-    // Get options from data attribute
-    var userOptions = utils.getData($echartBarWeeklySales, "options");
-    var data = [120, 200, 150, 80, 70, 110, 120]; // Max value of data
+//   if ($echartBarWeeklySales) {
+//     // Get options from data attribute
+//     var userOptions = utils.getData($echartBarWeeklySales, "options");
+//     var data = [120, 200, 150, 80, 70, 110, 120]; // Max value of data
 
-    var yMax = Math.max.apply(Math, data);
-    var dataBackground = data.map(function () {
-      return yMax;
-    });
-    var chart = window.echarts.init($echartBarWeeklySales); // Default options
+//     var yMax = Math.max.apply(Math, data);
+//     var dataBackground = data.map(function () {
+//       return yMax;
+//     });
+//     var chart = window.echarts.init($echartBarWeeklySales); // Default options
 
-    var getDefaultOptions = function getDefaultOptions() {
-      return {
-        tooltip: {
-          trigger: "axis",
-          padding: [7, 10],
-          formatter: "{b0} : {c0}",
-          transitionDuration: 0,
-          backgroundColor: utils.getGrays()["100"],
-          borderColor: utils.getGrays()["300"],
-          textStyle: {
-            color: utils.getColors().dark,
-          },
-          borderWidth: 1,
-          position: function position(pos, params, dom, rect, size) {
-            return getPosition(pos, params, dom, rect, size);
-          },
-        },
-        xAxis: {
-          type: "category",
-          data: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-          boundaryGap: false,
-          axisLine: {
-            show: false,
-          },
-          axisLabel: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          axisPointer: {
-            type: "none",
-          },
-        },
-        yAxis: {
-          type: "value",
-          splitLine: {
-            show: false,
-          },
-          axisLine: {
-            show: false,
-          },
-          axisLabel: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          axisPointer: {
-            type: "none",
-          },
-        },
-        series: [
-          {
-            type: "bar",
-            showBackground: true,
-            backgroundStyle: {
-              borderRadius: 10,
-            },
-            barWidth: "5px",
-            itemStyle: {
-              barBorderRadius: 10,
-              color: utils.getColors().primary,
-            },
-            data: data,
-            z: 10,
-            emphasis: {
-              itemStyle: {
-                color: utils.getColors().primary,
-              },
-            },
-          },
-        ],
-        grid: {
-          right: 5,
-          left: 10,
-          top: 0,
-          bottom: 0,
-        },
-      };
-    };
+//     var getDefaultOptions = function getDefaultOptions() {
+//       return {
+//         tooltip: {
+//           trigger: "axis",
+//           padding: [7, 10],
+//           formatter: "{b0} : {c0}",
+//           transitionDuration: 0,
+//           backgroundColor: utils.getGrays()["100"],
+//           borderColor: utils.getGrays()["300"],
+//           textStyle: {
+//             color: utils.getColors().dark,
+//           },
+//           borderWidth: 1,
+//           position: function position(pos, params, dom, rect, size) {
+//             return getPosition(pos, params, dom, rect, size);
+//           },
+//         },
+//         xAxis: {
+//           type: "category",
+//           data: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+//           boundaryGap: false,
+//           axisLine: {
+//             show: false,
+//           },
+//           axisLabel: {
+//             show: false,
+//           },
+//           axisTick: {
+//             show: false,
+//           },
+//           axisPointer: {
+//             type: "none",
+//           },
+//         },
+//         yAxis: {
+//           type: "value",
+//           splitLine: {
+//             show: false,
+//           },
+//           axisLine: {
+//             show: false,
+//           },
+//           axisLabel: {
+//             show: false,
+//           },
+//           axisTick: {
+//             show: false,
+//           },
+//           axisPointer: {
+//             type: "none",
+//           },
+//         },
+//         series: [
+//           {
+//             type: "bar",
+//             showBackground: true,
+//             backgroundStyle: {
+//               borderRadius: 10,
+//             },
+//             barWidth: "5px",
+//             itemStyle: {
+//               barBorderRadius: 10,
+//               color: utils.getColors().primary,
+//             },
+//             data: data,
+//             z: 10,
+//             emphasis: {
+//               itemStyle: {
+//                 color: utils.getColors().primary,
+//               },
+//             },
+//           },
+//         ],
+//         grid: {
+//           right: 5,
+//           left: 10,
+//           top: 0,
+//           bottom: 0,
+//         },
+//       };
+//     };
 
-    echartSetOption(chart, userOptions, getDefaultOptions);
-  }
-};
+//     echartSetOption(chart, userOptions, getDefaultOptions);
+//   }
+// };
 /* -------------------------------------------------------------------------- */
 
 /*                            Theme Initialization                            */
@@ -13258,7 +13268,7 @@ var weeklySalesInit = function weeklySalesInit() {
 docReady(detectorInit);
 docReady(handleNavbarVerticalCollapsed);
 docReady(totalOrderInit);
-docReady(weeklySalesInit);
+// docReady(weeklySalesInit);
 docReady(marketShareInit);
 docReady(totalSalesInit);
 docReady(topProductsInit);

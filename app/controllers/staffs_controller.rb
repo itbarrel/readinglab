@@ -2,7 +2,7 @@
 
 class StaffsController < ApplicationController
   load_and_authorize_resource :staff, class: User
-  before_action :set_staff, only: %i[]
+  before_action :set_staff, only: %i[show update password]
   before_action :set_staffs, only: %i[trash]
 
   def index
@@ -19,13 +19,14 @@ class StaffsController < ApplicationController
   # GET /staffs/new
   def new; end
 
+  def password; end
+
   # GET /staffs/1/edit
   def edit; end
 
   # POST /staffs or /staffs.json
   def create
     @staff = current_account.users.new(staff_params)
-    attach_account_for(@staff)
 
     respond_to do |format|
       if @staff.save
@@ -34,7 +35,7 @@ class StaffsController < ApplicationController
       else
         process_errors(@staff)
         format.html { redirect_to staffs_url }
-        format.json { render json: @staff.errors, status: :unprocessable_entity }
+        format.json { render json: @staff.errors }
       end
     end
   end
@@ -46,8 +47,8 @@ class StaffsController < ApplicationController
         format.html { redirect_to request.referer, notice: 'Staff has been successfully updated.' }
         format.json { render :index, status: :ok, location: @staff }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @staff.errors, status: :unprocessable_entity }
+        format.html { redirect_to staffs_url }
+        format.json { render json: @staff.errors }
       end
     end
   end
@@ -81,7 +82,7 @@ class StaffsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def staff_params
-    params.require(:staff).permit(:first_name, :last_name, :email, :postal_code, :phone, :role,
+    params.require(:staff).permit(:first_name, :last_name, :email, :postal_code, :phone, :role, :profile, :password,
                                   :account_id)
   end
 end

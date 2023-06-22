@@ -19,17 +19,18 @@
           </div>
         </div>
         <div id="table-klasses-replace-element">
-          <%= link_to(new_klass_path, remote: true, class: 'btn btn-falcon-default btn-sm') do %>
-            <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
-            <span class="d-none d-sm-inline-block ms-1" >New</span>
+          <% if can? :create, Klass %>
+            <%= link_to(new_klass_path, remote: true, class: 'btn btn-falcon-default btn-sm') do %>
+              <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+              <span class="d-none d-sm-inline-block ms-1" >New</span>
+            <% end %>
           <% end %>
-
           <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Filter</span></button>
           <%= link_to(export_klasses_path(format: :csv), class: 'btn btn-falcon-default btn-sm') do %>
-          <span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span>
-          <span class="d-none d-sm-inline-block ms-1">Export</span>
-        <% end %>
-      </div>
+            <span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span>
+            <span class="d-none d-sm-inline-block ms-1">Export</span>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

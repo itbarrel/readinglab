@@ -1,7 +1,12 @@
 
 <% if @event.is_a?(Meeting) %>
   $('#showEventModal .modal-content').html("<%= j render 'shared/modals/meetings/show', meeting: @event %>");
+<% elsif @event.is_a?(Vacation) %>
+  $('#showEventModal .modal-content').html("<%= j render 'shared/modals/vacations/show', vacation: @event %>");
 <% else %>
   $('#showEventModal .modal-content').html("<%= j render 'shared/modals/interviews/show', interview: @event %>");
+  document.querySelector('#interview_date').flatpickr({
+    enableTime: true,
+  });
 <% end %>
 $('#showEventModal').modal('show');

@@ -2,7 +2,7 @@
 
 class FormsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_form, only: %i[]
+  before_action :set_form, only: %i[form_duplicate]
   before_action :set_forms, only: %i[trash]
 
   # GET /forms or /forms.json
@@ -16,6 +16,27 @@ class FormsController < ApplicationController
 
   def show; end
 
+  def form_duplicate
+    new_form = @form.form_duplicate_with_uniqueness_validation
+    return unless new_form.save
+
+    @form.form_fields.each do |form_field|
+      new_form_field = form_field.dup
+      new_form_field.form_id = new_form.id
+      new_form_field.save!
+
+      form_field.field_values.each do |field_value|
+        new_field_value = field_value.dup
+        new_field_value.form_field_id = new_form_field.id
+        new_field_value.save!
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to request.referer, notice: 'Form has been successfully created.' }
+      format.json { render :show, status: :created, location: @form }
+    end
+  end
+
   # GET /forms/new
   def new
     @form = current_account.forms.new
@@ -28,7 +49,6 @@ class FormsController < ApplicationController
   # POST /forms or /forms.json
   def create
     @form = current_account.forms.new(form_params)
-    attach_account_for(@form)
 
     respond_to do |format|
       if @form.save
@@ -91,8 +111,11 @@ class FormsController < ApplicationController
                                           :id, :name, :description, :sort_order, :field_type, :necessary, :_destroy,
                                           { field_values_attributes: %i[id name usage _destroy] }
                                         ])
-    pars[:form_fields_attributes].each do |_key, value|
-      value['data_type'] = data_type_mapping[value['field_type'].to_sym]
+
+    if pars[:form_fields_attributes].present?
+      pars[:form_fields_attributes].each do |_key, value|
+        value['data_type'] = data_type_mapping[value['field_type'].to_sym]
+      end
     end
     pars
   end

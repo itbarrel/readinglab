@@ -21,6 +21,7 @@
 #  last_sign_in_ip        :string
 #  phone                  :string
 #  postal_code            :string
+#  profile                :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string

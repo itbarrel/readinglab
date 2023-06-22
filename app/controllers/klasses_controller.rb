@@ -2,7 +2,8 @@
 
 class KlassesController < ApplicationController
   load_and_authorize_resource
-  before_action :set_klass, only: %i[extend_sessions]
+  before_action :set_working_klasses
+  before_action :set_klass, only: %i[extend_sessions mark_obsolete]
   before_action :set_klasses, only: %i[trash]
 
   def index
@@ -50,7 +51,6 @@ class KlassesController < ApplicationController
   # POST /klasses or /klasses.json
   def create
     @klass = current_account.klasses.new(klass_params)
-    attach_account_for(@klass)
 
     respond_to do |format|
       if @klass.save
@@ -69,13 +69,18 @@ class KlassesController < ApplicationController
   # PATCH/PUT /klasses/1 or /klasses/1.json
   def update
     respond_to do |format|
-      if @klass.update(klass_params)
-        flash[:notice] = 'Class has been updated successfully.'
-        format.html { redirect_to klass_url(@klass), notice: 'Class has been successfully updated.' }
-        format.json { render :show, status: :ok, location: @klass }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @klass.errors, status: :unprocessable_entity }
+      begin
+        if @klass.update(klass_params)
+          flash[:notice] = 'Class has been updated successfully.'
+          format.html { redirect_to klass_url(@klass), notice: 'Class has been successfully updated.' }
+          format.json { render :show, status: :ok, location: @klass }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @klass.errors, status: :unprocessable_entity }
+        end
+      rescue StandardError
+        @klass.errors.add(:base, 'Unsccessful, Please remove data associated first.')
+        process_errors(@klass)
       end
       format.js { render 'shared/flash' }
     end
@@ -85,7 +90,7 @@ class KlassesController < ApplicationController
   def destroy
     @klass.destroy
     respond_to do |format|
-      format.html { redirect_to klasses_url, notice: 'Class has been successfully destroyed.' }
+      format.html { redirect_to request.referer, notice: 'Class has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -102,6 +107,27 @@ class KlassesController < ApplicationController
     render js: "window.location = '#{klasses_url}'"
   end
 
+  def obsolete
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+    @search = Klass.obsolete.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @klasses = pagy(@search.result.includes(:room, :teacher), items: per_page)
+  end
+
+  def mark_obsolete
+    respond_to do |format|
+      if @klass.update(obsolete: true)
+        flash[:notice] = 'Class has been marked as obsolete'
+        format.html { redirect_to request.referer, notice: 'Class has been marked as obsolete.' }
+        format.json { render :show, status: :ok, location: @klass }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @klass.errors, status: :unprocessable_entity }
+      end
+      format.js { render 'shared/flash' }
+    end
+  end
+
   private
 
   def check_availability_for(start_date)
@@ -112,6 +138,10 @@ class KlassesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_klass
     @klass = current_account.klasses.find(params[:id])
+  end
+
+  def set_working_klasses
+    @klasses = @klasses.working if @klasses.present?
   end
 
   def set_klasses

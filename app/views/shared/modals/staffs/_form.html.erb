@@ -1,4 +1,5 @@
-<%= form_for(staff, as: :staff, url: "staffs", id: 'addStaffForm') do |f| %>
+<%= form_for(staff, as: :staff, url: staff_path, id: 'addStaffForm') do |f| %>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <div class="modal-header px-card bg-light border-bottom-0">
     <h5 class="modal-title"><%= title %></h5>
     <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -18,7 +19,7 @@
     </div>
     <div class="mb-3">
       <%= f.label :role, class: 'fs-0' %>
-      <%= f.text_field :role, class: 'form-control' %>
+      <%= f.select :role, User.roles.map { |key, value| [key.humanize, key] }, { include_blank: true }, { class: 'form-select form-field-type' } %>
     </div>
     <div class="mb-3">
       <%= f.label :phone, class: 'fs-0' %>

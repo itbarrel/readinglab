@@ -15,6 +15,10 @@
         <th class="sort pe-1 align-middle white-space-nowrap">Vacation Type</th>
         <th class="sort pe-1 align-middle white-space-nowrap">Starting Date</th>
         <th class="sort pe-1 align-middle white-space-nowrap">Ending Date</th>
+        <% if current_user.super_admin? %>
+         <th class="sort pe-1 align-middle white-space-nowrap">Account</th>
+        <% end %>
+
         <th class="sort pe-1 align-middle white-space-nowrap" ></th>
 
       </tr>

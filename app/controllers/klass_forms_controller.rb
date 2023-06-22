@@ -30,11 +30,11 @@ class KlassFormsController < ApplicationController
 
     respond_to do |format|
       if @klass_form.save
-        format.html { redirect_to klass_form_url(@klass_form), notice: 'Klass form was successfully created.' }
+        format.html { redirect_to klass_forms_url, notice: 'Klass form was successfully created.' }
         format.json { render :show, status: :created, location: @klass_form }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @klass_form.errors, status: :unprocessable_entity }
+        format.html { redirect_to klass_forms_url }
+        format.json { render json: @klass_form.errors }
       end
     end
   end
@@ -43,11 +43,11 @@ class KlassFormsController < ApplicationController
   def update
     respond_to do |format|
       if @klass_form.update(klass_form_params)
-        format.html { redirect_to klass_form_url(@klass_form), notice: 'Klass form was successfully updated.' }
+        format.html { redirect_to klass_forms_url, notice: 'Klass form was successfully updated.' }
         format.json { render :show, status: :ok, location: @klass_form }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @klass_form.errors, status: :unprocessable_entity }
+        format.html { redirect_to klass_forms_url }
+        format.json { render json: @klass_form.errors }
       end
     end
   end

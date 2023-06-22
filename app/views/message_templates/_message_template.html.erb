@@ -6,6 +6,10 @@
   </td>
   <td class="name align-middle white-space-nowrap py-2"><%= message_template.name %></td>
   <td class="phone align-middle white-space-nowrap py-2"><%= message_template.description %></td>
+  <% if current_user.super_admin? %>
+   <td class="phone align-middle white-space-nowrap py-2"><%= message_template.account.name %></td>
+  <% end %>
+
 
   <td class="align-middle white-space-nowrap py-2 text-end">
     <div class="dropdown font-sans-serif position-static">

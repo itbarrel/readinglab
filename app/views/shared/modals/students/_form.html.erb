@@ -32,6 +32,12 @@
       <%= f.label :school, class: 'fs-0' %>
       <%= f.text_field :school, class: 'form-control' %>
     </div>
+    <% if current_user.admin? %>
+      <div class="mb-3">
+        <%= f.label :status, class: 'fs-0' %>
+        <%= f.select :status, Student.statuses.map { |key, value| [key.humanize, key] }, {include_blank: true}, {class: 'form-select form-select-md'} %>
+      </div>
+    <% end %>
   </div>
   <div class="card-footer d-flex justify-content-end align-items-center bg-light">
     <%= f.submit 'Save', class: 'btn btn-primary px-4' %>

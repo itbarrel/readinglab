@@ -4,16 +4,18 @@
 #
 # Table name: meetings
 #
-#  id         :uuid             not null, primary key
-#  cancel     :boolean
-#  deleted_at :datetime
-#  ends_at    :datetime
-#  hold       :boolean
-#  starts_at  :datetime
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  account_id :uuid             not null
-#  klass_id   :uuid             not null
+#  id           :uuid             not null, primary key
+#  cancel       :boolean
+#  deleted_at   :datetime
+#  ends_at      :datetime
+#  hold         :boolean
+#  obsolete     :boolean          default(FALSE)
+#  obsoleted_at :datetime
+#  starts_at    :datetime
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  account_id   :uuid             not null
+#  klass_id     :uuid             not null
 #
 # Indexes
 #
@@ -41,18 +43,23 @@ class Meeting < ApplicationRecord
   delegate :student_classes, to: :klass
   delegate :attendance_form, to: :klass
   delegate :forms, to: :klass
+  delegate :name, to: :klass
+  delegate :short_name, to: :klass
 
   has_many :student_meetings, dependent: :destroy
   has_many :form_details, as: :parent, dependent: nil
   has_many :attentive_students, through: :student_meetings, source: 'student'
 
+  scope :at, ->(date) { where('date(starts_at) = ?', date) }
+
+  scope :obsolete, -> { where obsolete: true }
+  scope :working, -> { where obsolete: false }
+
   validates :starts_at, presence: true
   validates :ends_at, presence: true, date: { after_or_equal_to: :starts_at }
 
   before_validation :set_end_time
-
-  delegate :name, to: :klass
-  delegate :short_name, to: :klass
+  after_save :handle_obsolete, if: :saved_change_to_obsolete?
 
   def set_end_time
     self.ends_at = starts_at + klass.duration.minutes
@@ -85,5 +92,41 @@ class Meeting < ApplicationRecord
           .where('created_at <= ? and deleted_at >= ?', starts_at, starts_at)
 
     scs.map(&:student)
+  end
+
+  def self.to_csv(options = {})
+    CSV.generate(headers: true) do |csv|
+      csv << ['Date:', options[:date]]
+      csv << []
+
+      all.find_each do |record|
+        csv << [record.klass.name, '', record.starts_at]
+        csv << []
+
+        record.form_details.group_by(&:form).each do |form, values|
+          csv << ['Form Name', 'Student name', *form.form_fields.order(:id).map(&:name)]
+          values.each do |fd|
+            csv << [form.name, fd.student.name, *form.form_fields.order(:id).map { |x| fd.form_values[x.model_key] }]
+          end
+        end
+        csv << []
+      end
+    end
+  end
+
+  private
+
+  def handle_obsolete
+    obsolete_time = obsolete? ? Time.zone.now : nil
+    student_meetings_to_handle = obsolete? ? student_meetings.working : student_meetings.obsolete
+    form_details_to_handle = obsolete? ? form_details.working : form_details.obsolete
+
+    update(obsoleted_at: obsolete_time)
+    student_meetings_to_handle.each do |x|
+      x.update(obsolete: obsolete?)
+    end
+    form_details_to_handle.each do |x|
+      x.update(obsolete: obsolete?)
+    end
   end
 end

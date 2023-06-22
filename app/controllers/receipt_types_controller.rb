@@ -28,7 +28,6 @@ class ReceiptTypesController < ApplicationController
   # POST /receipt_types or /receipt_types.json
   def create
     @receipt_type = current_account.receipt_types.new(receipt_type_params)
-    attach_account_for(@receipt_type)
 
     respond_to do |format|
       if @receipt_type.save
@@ -37,7 +36,7 @@ class ReceiptTypesController < ApplicationController
       else
         process_errors(@receipt_type)
         format.html { redirect_to receipt_types_url }
-        format.json { render json: @receipt_type.errors, status: :unprocessable_entity }
+        format.json { render json: @receipt_type.errors }
       end
     end
   end
@@ -49,8 +48,8 @@ class ReceiptTypesController < ApplicationController
         format.html { redirect_to receipt_types_url, notice: 'Receipt type has been successfully updated.' }
         format.json { render :show, status: :ok, location: @receipt_type }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @receipt_type.errors, status: :unprocessable_entity }
+        format.html { redirect_to receipt_types_url }
+        format.json { render json: @receipt_type.errors }
       end
     end
   end

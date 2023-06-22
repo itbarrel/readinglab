@@ -17,9 +17,8 @@
           class="fas fa-ellipsis-h fs--1"></span></button>
       <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
         <div class="bg-white py-2">
-          <% if %i[registered scheduled wait_listed].include?(student.status&.to_sym) %>
-          <%= link_to('Schedule Interview', new_interview_path(:student_id => student.id), remote: true, class: 'dropdown-item') %>
-          <% end %>
+          <%= link_to('View Assesments', interviews_student_path(student), remote: true, class: 'dropdown-item') %>
+          <%= link_to('Schedule Assessment', new_interview_path(:student_id => student.id), remote: true, class: 'dropdown-item') %>
           <%= link_to('Edit', edit_student_path(student), remote: true, class: 'dropdown-item') %>
           <%= link_to('Delete', student_path(student), method: :delete, class: 'dropdown-item text-danger', data: { confirm: 'Are you sure' }) %>
         </div>

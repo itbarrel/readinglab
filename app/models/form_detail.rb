@@ -4,18 +4,20 @@
 #
 # Table name: form_details
 #
-#  id          :uuid             not null, primary key
-#  deleted_at  :datetime
-#  form_values :jsonb
-#  parent_type :string           not null
-#  submitted   :boolean          default(FALSE)
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  account_id  :uuid             not null
-#  form_id     :uuid             not null
-#  parent_id   :uuid             not null
-#  student_id  :uuid             not null
-#  user_id     :uuid
+#  id           :uuid             not null, primary key
+#  deleted_at   :datetime
+#  form_values  :jsonb
+#  obsolete     :boolean          default(FALSE)
+#  obsoleted_at :datetime
+#  parent_type  :string           not null
+#  submitted    :boolean          default(FALSE)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  account_id   :uuid             not null
+#  form_id      :uuid             not null
+#  parent_id    :uuid             not null
+#  student_id   :uuid             not null
+#  user_id      :uuid             not null
 #
 # Indexes
 #
@@ -38,14 +40,20 @@ class FormDetail < ApplicationRecord
   belongs_to :student
   belongs_to :parent, polymorphic: true
 
+  scope :obsolete, -> { where obsolete: true }
+  scope :working, -> { where obsolete: false }
+
   validates :form_values, presence: true, allow_blank: true
 
   before_validation :default_form_values
   after_save :set_parent_status
+  after_save :handle_obsolete, if: :saved_change_to_obsolete?
 
   def default_form_values
     self.form_values ||= {}
   end
+
+  private
 
   def set_parent_status
     return unless parent.is_a?(Interview)
@@ -54,5 +62,11 @@ class FormDetail < ApplicationRecord
     return unless parent.student.scheduled?
 
     student.wait_listed!
+  end
+
+  def handle_obsolete
+    obsolete_time = obsolete? ? Time.zone.now : nil
+
+    update(obsoleted_at: obsolete_time)
   end
 end

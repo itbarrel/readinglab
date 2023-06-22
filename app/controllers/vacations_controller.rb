@@ -2,10 +2,9 @@
 
 class VacationsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_vacation, only: %i[]
+  before_action :set_vacation, only: %i[show]
   before_action :set_vacations, only: %i[trash]
 
-  # GET /vacations or /vacations.json
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
 
@@ -14,10 +13,8 @@ class VacationsController < ApplicationController
     @pagy, @vacations = pagy(@search.result.includes(:vacation_type), items: per_page)
   end
 
-  # GET /vacations/1 or /vacations/1.json
   def show; end
 
-  # GET /vacations/new
   def new
     @vacation = current_account.vacations.new
   end
@@ -28,7 +25,6 @@ class VacationsController < ApplicationController
   # POST /vacations or /vacations.json
   def create
     @vacation = current_account.vacations.new(vacation_params)
-    attach_account_for(@vacation)
 
     respond_to do |format|
       if @vacation.save
@@ -37,7 +33,7 @@ class VacationsController < ApplicationController
       else
         process_errors(@vacation)
         format.html { redirect_to vacations_url }
-        format.json { render json: vacation.errors, status: :unprocessable_entity }
+        format.json { render json: vacation.errors }
       end
     end
   end
@@ -49,8 +45,8 @@ class VacationsController < ApplicationController
         format.html { redirect_to vacations_url, notice: 'Message has been successfully updated.' }
         format.json { render :show, status: :ok, location: @vacation }
       else
-        format.html { render :index, status: :unprocessable_entity }
-        format.json { render json: @vacation.errors, status: :unprocessable_entity }
+        format.html { redirect_to vacations_url }
+        format.json { render json: @vacation.errors }
       end
     end
   end

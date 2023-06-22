@@ -1,30 +1,48 @@
 document.addEventListener("DOMContentLoaded", () => {
   var teacher_id = null
-  const events = [
-    {
-      url: "/interviews.json",
-      method: "GET",
-      color: 'yellow',
-      extraParams: {
+  let event_filter = 'all'
+
+  const interviews = {
+    url: "/interviews.json",
+    method: "GET",
+    className: 'bg-soft-primary',
+    extraParams: {
+      cachebuster: new Date().valueOf(),
+      pagination: false,
+      calendar: true
+    }
+  }
+  const meetings = {
+    url: "/meetings.json",
+    method: "GET",
+    className: 'bg-soft-primary',
+    extraParams: () => {
+      return {
         cachebuster: new Date().valueOf(),
         pagination: false,
-        calendar: true
-      }
-    },
-    {
-      url: "/meetings.json",
-      method: "GET",
-      // color: '#fef0e8',
-      // textColor: '#f2600e',
-      extraParams: () => {
-        return {
-          cachebuster: new Date().valueOf(),
-          pagination: false,
-          teacher_id
-        }
+        teacher_id
       }
     }
-  ];
+  }
+  const vacations = {
+    url: "/vacations.json",
+    className: 'bg-soft-info',
+    method: "GET",
+    extraParams: () => {
+      return {
+        cachebuster: new Date().valueOf(),
+        pagination: false
+      }
+    }
+  }
+
+  const event_source_mapping = {
+    all: [interviews, meetings, vacations],
+    interviews: [interviews],
+    meetings: [meetings],
+    vacations: [vacations]
+  }
+
   const domEvents = {
     eventClick: (info) => {
       const { event } = info
@@ -32,6 +50,19 @@ document.addEventListener("DOMContentLoaded", () => {
         url: `/events/${event.id}`,
         dataType: 'script'
       });
+    },
+    eventContent: (info) => {
+      const { event } = info
+      if (event.extendedProps && !('percentage' in event.extendedProps)) return
+
+      let html = `<div class="fc-event-main-frame calender-tiles calender-tiles-${Math.ceil(event.extendedProps.percentage / 20) * 20}">`
+      html += '<div class="fc-event-title-container">'
+      html += '<div class="fc-event-title fc-sticky">'
+      html += event.title
+      html += '</div>'
+      html += '</div>'
+      html += '</div>'
+      return { html };
     },
     eventDrop: (info) => {
       const { event, oldEvent } = info
@@ -57,10 +88,21 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   }
-  const calendar = calendarInit(undefined, events, true, domEvents);
+  const calendar = calendarInit(undefined, event_source_mapping[event_filter], true, domEvents);
 
   $('#calendar_teacher_id').change(function() {
     teacher_id = $(this).val()
     calendar.refetchEvents();
   });
+
+  $('#event-selector').change(function() {
+    event_filter = $(this).val()
+    console.log(this.value)
+    calendar.removeAllEventSources();
+    event_source_mapping[event_filter].forEach(function(eventSource) {
+      calendar.addEventSource(eventSource);
+    });
+  });
+  
 });
+// hussnain mubasit

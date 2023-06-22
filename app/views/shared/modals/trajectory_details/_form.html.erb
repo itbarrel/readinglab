@@ -34,8 +34,7 @@
         </div>
         <div class="mb-3">
           <%= f.label :season , class: 'fs-0' %>
-          <%= f.select :season, options_for_select([['Fall'], ['Winter'], ['Spring'] ]), { prompt: true }, class: 'form-control' %>
-        </div>
+          <%= f.select :season, TrajectoryDetail.seasons.map { |key, value| [key.humanize, key] }, {include_blank: true}, {class: 'form-select form-select-md'} %>
         <div class="mb-3">
           <%= f.label :grade, class: 'fs-0' %>
           <%= f.select :grade, options_for_select([[1], [2], [3], [4],[5]]), { prompt: true }, class: 'form-control' %>

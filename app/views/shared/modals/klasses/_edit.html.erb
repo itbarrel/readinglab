@@ -25,7 +25,7 @@
 
             <div class="mb-3">
               <%= f.label :add_student, class: 'fs-0' %>
-              <%= f.collection_select :student_id, current_account.students.eligible_for_klass(klass.id), :id, :name, { include_blank: true }, { class: 'form-select js-choice', data:{ options: { searchEnabled: true }} } %>
+              <%= f.collection_select :student_id, current_account.students.  eligible_for_klass(klass.id), :id, :name, { include_blank: true }, { class: 'form-select js-choice', data:{ options: { searchEnabled: true }} } %>
             </div>
             <div class="d-flex justify-content-end align-items-center">
               <%= f.submit 'Add', class: 'btn btn-primary px-4' %>
@@ -33,6 +33,14 @@
           <% end %>
 
           <%= form_for klass, remote: true do |f| %>
+            <div class="mb-3">
+              <%= f.label :start_date, class: 'fs-0' %>
+              <%= f.text_field :starts_at, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
+            </div>
+            <div class="mb-3">
+              <%= f.label :max_students, class: 'fs-0' %>
+              <%= f.number_field :max_students, class: 'form-control' %>
+            </div>
             <div class="mb-3">
               <%= f.label :teacher_id, class: 'fs-0' %>
               <%= f.collection_select :teacher_id, current_account.teachers, :id, :name, { include_blank: true }, { class: 'form-control' } %>
@@ -47,6 +55,7 @@
             </div>
             <div class="mb-3">
               <%= f.label :forms, class:' fs-0' %>
+              <%= f.hidden_field :form_ids, multiple: true, value: '' %>
               <%= f.collection_select :form_ids, current_account.forms.lessonable, :id, :name, {include_blank: true, include_hidden: false }, { class: 'form-select js-choice', multiple: "multiple-select-example" }%>
             </div>
 
@@ -83,7 +92,7 @@
       const student_class_id = data.source.id
       const klass_form_id = data.originalSource.parentNode.id
       const sourceContainerId = data.sourceContainer.id
-      
+
       if (klass_form_id == sourceContainerId) return
 
       const student_form = { klass_form_id }

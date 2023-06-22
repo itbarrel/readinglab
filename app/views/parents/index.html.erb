@@ -1,5 +1,5 @@
 <% content_for :search_includes do %>
-  <%= render partial: 'shared/search', locals: { search_key: :father_first_or_father_last_or_mother_first_or_mother_last_or_father_email_or_mother_email_cont } %>
+  <%= render partial: 'shared/search', locals: { search_key: :identifer_cont } %>
 <% end %>
 
 <div class="card mb-3" data-list='{"valueNames":["name","strating date","ending date","vacation type","action"],"page":15}'>
@@ -19,9 +19,9 @@
           </div>
         </div>
         <div id="table-parents-replace-element">
-          <%= link_to(new_parent_path, remote: true, class: 'btn btn-falcon-default btn-sm') do %>
-          <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
-          <span class="d-none d-sm-inline-block ms-1">New</span>
+          <%= link_to(new_parent_path, class: 'btn btn-falcon-default btn-sm') do %>
+            <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+            <span class="d-none d-sm-inline-block ms-1">New</span>
           <% end %>
           <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Filter</span></button>
           <%= link_to(export_parents_path(format: :csv), class: 'btn btn-falcon-default btn-sm') do %>

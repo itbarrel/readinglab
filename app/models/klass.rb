@@ -11,6 +11,8 @@
 #  max_students       :integer
 #  min_students       :integer          default(0)
 #  monday             :boolean          default(FALSE)
+#  obsolete           :boolean          default(FALSE)
+#  obsoleted_at       :datetime
 #  range_type         :integer
 #  saturday           :boolean          default(FALSE)
 #  session_range      :integer          default(8)
@@ -60,17 +62,27 @@ class Klass < ApplicationRecord
 
   has_many :student_forms, dependent: :destroy
   has_many :meetings, dependent: :destroy
+  has_many :student_meetings, through: :meetings, dependent: :destroy
 
   enum :range_type, %i[sessional monthly]
 
+  scope :obsolete, -> { where obsolete: true }
+  scope :working, -> { where obsolete: false }
+
   attr_accessor :skip_validations
 
-  validates :duration, :starts_at, presence: true
+  validates :duration, :starts_at, :max_students, presence: true
   validates :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, inclusion: { in: [true, false] }
 
   accepts_nested_attributes_for :student_forms, allow_destroy: true, reject_if: :all_blank
 
+  before_validation :set_default_max_student
   after_create :create_meetings, unless: :skip_validations
+  after_save :handle_obsolete, if: :saved_change_to_obsolete?
+
+  def set_default_max_student
+    self.max_students ||= 5 if max_students.nil?
+  end
 
   def days_abbr
     (monday ? 'M' : '.') + (tuesday ? 'T' : '.') + (wednesday ? 'W' : '.') + \
@@ -87,10 +99,17 @@ class Klass < ApplicationRecord
   end
 
   def short_name
-    rclass_time = starts_at.strftime('%H:%M %p')
+    rclass_time = starts_at.strftime('%-I%p')
     class_name = "#{days_abbr} at #{rclass_time}"
     class_name = "#{room.name} on #{class_name}" if room.present?
     "Class in #{class_name}"
+  end
+
+  def calendar_name
+    class_name = starts_at.strftime('%I%p').gsub('M', '')
+    class_name = "#{class_name}-#{teacher.calendar_name}" if teacher.present?
+    class_name = "#{class_name} in #{room.name}" if room.present?
+    "#{class_name} on #{days_abbr}"
   end
 
   def un_assigned_student_classes
@@ -99,11 +118,6 @@ class Klass < ApplicationRecord
 
   def assigned_student_classes
     student_classes.where(id: student_forms.pluck(:student_class_id))
-  end
-
-  def calendar_name
-    rclass_time = starts_at.strftime('%I:%M %P')
-    "#{rclass_time} #{teacher.calendar_name} in #{room.name}"
   end
 
   def extended_meeting_dates(limit, starting_date, extend_type = :sessional, vacation_dates = Vacation.all)
@@ -120,7 +134,7 @@ class Klass < ApplicationRecord
     est_last_date = if meetings.empty?
                       starting_date
                     else
-                      [meetings.try(:first).try(:starts_at).presence, starting_date].max
+                      [meetings.try(:first).starts_at + 1.day, starting_date].max
                     end
 
     end_day = est_last_date.to_date + limit.weeks if extend_type == :monthly
@@ -131,8 +145,6 @@ class Klass < ApplicationRecord
       break if extend_type == :sessional && day_limit <= 0
       break if extend_type == :monthly && day >= end_day
 
-      day += 1.day
-
       dow = day.days_to_week_start
 
       if (dow.zero? && !monday) ||
@@ -142,6 +154,7 @@ class Klass < ApplicationRecord
          ((dow == 4) && !friday) ||
          ((dow == 5) && !saturday) ||
          ((dow == 6) && !sunday)
+        day += 1.day
         next
       end
 
@@ -157,10 +170,14 @@ class Klass < ApplicationRecord
         starting_date.zone
       )
 
-      next if vacation_dates.select { |x| x.starting_at < day_to_check && day_to_check < x.ending_at }.any?
+      if vacation_dates.select { |x| x.starting_at < day_to_check && day_to_check < x.ending_at }.any?
+        day += 1.day
+        next
+      end
 
       virtual << day_to_check
       day_limit -= 1
+      day += 1.day
     end
 
     virtual
@@ -170,10 +187,6 @@ class Klass < ApplicationRecord
     extended_meeting_dates(limit, start_date).each do |expected_date|
       meetings.create!(starts_at: expected_date, account_id:)
     end
-  end
-
-  def create_meetings
-    extend_meetings(session_range, starts_at)
   end
 
   def est_end_date
@@ -186,7 +199,25 @@ class Klass < ApplicationRecord
   end
 
   def self.at(date)
-    klass_ids = Meeting.where(starts_at: date).map(&:klass_id)
+    klass_ids = Meeting.where('date(starts_at) = ?', date).map(&:klass_id)
     all.where(id: klass_ids)
+  end
+
+  private
+
+  def create_meetings
+    return if obselete?
+
+    extend_meetings(session_range, starts_at)
+  end
+
+  def handle_obsolete
+    obsolete_time = obsolete? ? Time.zone.now : nil
+    meetings_to_handle = obsolete? ? meetings.working : meetings.obsolete
+
+    update(obsoleted_at: obsolete_time)
+    meetings_to_handle.each do |x|
+      x.update(obsolete: obsolete?)
+    end
   end
 end

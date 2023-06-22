@@ -1,0 +1,44 @@
+<div class="modal-header px-card bg-light border-bottom-0">
+  <h5 class="modal-title"><%= title %></h5>
+  <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body p-card">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="mb-3">
+        <label class="fs-0">Rooms:</label>
+        <%= account.rooms.length %>
+      </div>
+      <div class="mb-3">
+        <label class="fs-0">Staff:</label>
+        <%= account.users.length %>
+      </div>
+      <div class="mb-3">
+        <label class="fs-0">Teachers:</label>
+        <%= account.teachers.length %>
+      </div>
+      <div class="mb-3">
+        <label class="fs-0">Classes:</label>
+        <%= account.klasses.length %>
+      </div>
+
+    </div>
+    <div class="col-lg-6">
+      <div class="mb-3">
+        <label class="fs-0">Students:</label>
+        <%= account.students.length %>
+      </div>
+      <div class="mb-3">
+        <label class="fs-0">Forms</label>
+        <%= account.forms.length %>
+      </div>
+      <div class="mb-3">
+        <label class="fs-0">Vacations:</label>
+        <%= account.vacations.length %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card-footer d-flex justify-content-end align-items-center bg-light">
+  <button class='btn btn-default px-4' data-bs-dismiss="modal">Cancel</button>
+</div>

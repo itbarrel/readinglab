@@ -11,7 +11,7 @@ class EventsController < ApplicationController
         flash[:notice] = 'Event has been successfully updated.'
         format.js { render 'shared/flash' }
       else
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+        format.json { render json: @event.errors }
       end
     end
   end
@@ -21,6 +21,7 @@ class EventsController < ApplicationController
   def set_event
     @event = current_account.meetings.find_by(id: params[:id])
     @event = current_account.interviews.find_by(id: params[:id]) if @event.blank?
+    @event = current_account.vacations.find_by(id: params[:id]) if @event.blank?
   end
 
   def event_params

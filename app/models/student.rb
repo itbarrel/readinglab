@@ -48,8 +48,10 @@ class Student < ApplicationRecord
   has_many :student_classes, dependent: :destroy
   has_many :klasses, through: :student_classes
   has_many :meetings, through: :klasses
+  has_many :student_meetings, dependent: nil
   has_many :form_details, dependent: nil
   has_many :payments, dependent: nil
+  has_many :receipts, dependent: :destroy
 
   enum :status, %i[registered scheduled wait_listed active]
   enum :gender, %i[male female others not_mentioned]
@@ -60,6 +62,14 @@ class Student < ApplicationRecord
 
   ransacker :status do |parent|
     parent.table[:status]
+  end
+
+  ransacker :identifer, formatter: proc { |value| value.downcase } do |parent|
+    Arel::Nodes::NamedFunction.new('CONCAT_WS', [
+                                     Arel::Nodes.build_quoted(' '),
+                                     parent.table[:first_name],
+                                     parent.table[:last_name]
+                                   ])
   end
 
   def self.ids_studing_at(start_date = DateTime.now, duration = 60)
@@ -98,10 +108,34 @@ class Student < ApplicationRecord
   end
 
   def payable_meetings
-    meetings.where('meetings.starts_at > ?', latest_payment.meeting.starts_at).order(starts_at: :asc)
+    if latest_payment.nil?
+      [Student.active]
+    else
+      meetings.where('meetings.starts_at > ?', latest_payment.meeting.starts_at).order(starts_at: :asc)
+    end
   end
 
   def next_billing_date
     payable_meetings&.first&.starts_at
+  end
+
+  def total_sessions
+    student_meetings.length
+  end
+
+  def leave_count
+    student_meetings.leave.length
+  end
+
+  def sessions_count
+    student_meetings.present.length
+  end
+
+  def meeting_purchased
+    count = 0
+    receipts.each do |recp|
+      count += recp.sessions_count
+    end
+    count
   end
 end

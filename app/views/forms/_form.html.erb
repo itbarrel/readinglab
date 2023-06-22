@@ -6,6 +6,10 @@
   </td>
   <td class="name align-middle white-space-nowrap py-2" style="padding-right: 10.25rem "><%= form.name %></td>
   <td class="purpose align-middle white-space-nowrap py-2" style="padding-right: 18.25rem "><%= form.purpose&.capitalize %></td>
+  <% if current_user.super_admin? %>
+   <td class="purpose align-middle white-space-nowrap py-2" style="padding-right: 18.25rem "><%= form.account.name %></td>
+  <% end %>
+
   <td class="align-middle white-space-nowrap py-2 text-end">
     <div class="dropdown font-sans-serif position-static">
       <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0"
@@ -13,6 +17,7 @@
           class="fas fa-ellipsis-h fs--1"></span></button>
       <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
         <div class="bg-white py-2">
+          <%= link_to('Duplicate', form_duplicate_form_path(form), method: :post, class: 'dropdown-item') %>
           <%= link_to('Edit', edit_form_path(form), class: 'dropdown-item') %>
           <%= link_to('Delete', form_path(form), method: :delete, class: 'dropdown-item text-danger') %>
         </div>

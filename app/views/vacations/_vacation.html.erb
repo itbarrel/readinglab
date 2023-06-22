@@ -4,12 +4,14 @@
       <input class="form-check-input" type="checkbox" id="<%= vacation.id %>" data-bulk-select-row="data-bulk-select-row" />
     </div>
   </td>
-  <td class="name align-middle white-space-nowrap py-2">
-    <%= vacation.name %>
-  </td>
+  <td class="name align-middle white-space-nowrap py-2"><%= vacation.name %></td>
+  <% if current_user.super_admin? %>
+   <td class="name align-middle white-space-nowrap py-2"><%= vacation.account.name %></td>
+  <% end %>
+
   <td class="address align-middle white-space-nowrap ps-5 py-2"><%= vacation.vacation_type.name %></td>
-  <td class="email align-middle py-2"><%= vacation.starting_at %></td>
-  <td class="phone align-middle white-space-nowrap py-2"><%= vacation.ending_at %></td>
+  <td class="email align-middle py-2"><%= l vacation.starting_at, format: :medium %></td>
+  <td class="phone align-middle white-space-nowrap py-2"><%= l vacation.ending_at, format: :medium %></td>
   <td class="align-middle white-space-nowrap py-2 text-end">
     <div class="dropdown font-sans-serif position-static">
       <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>

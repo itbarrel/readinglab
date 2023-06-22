@@ -5,12 +5,16 @@
     </div>
   </td>
   <td class="name align-middle white-space-nowrap py-2"><%= klass_template.name %></td>
-  <td class="phone align-middle white-space-nowrap py-2"><%= klass_template.teacher&.first_name%></td>
+  <td class="phone align-middle white-space-nowrap py-2"><%= klass_template.teacher&.first_name %></td>
   <td class="phone align-middle white-space-nowrap py-2"><%= klass_template.room&.name %></td>
   <td class="phone align-middle white-space-nowrap py-2"><%= klass_template.max_students %></td>
-  <td class="email align-middle py-2"><%= klass_template.duration%></td>
-  <td class="email align-middle py-2"><%= klass_template.start%></td>
-  <td class="email align-middle py-2"><%= klass_template.session_range%></td>
+  <td class="email align-middle py-2"><%= klass_template.duration %></td>
+  <td class="email align-middle py-2"><%= klass_template.start %></td>
+  <td class="email align-middle py-2"><%= klass_template.session_range %></td>
+  <% if current_user.super_admin? %>
+   <td class="email align-middle py-2"><%= klass_template.account.name %></td>
+  <% end %>
+
 
   <td class="align-middle white-space-nowrap py-2 text-end">
     <div class="dropdown font-sans-serif position-static">

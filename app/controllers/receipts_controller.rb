@@ -11,7 +11,7 @@ class ReceiptsController < ApplicationController
 
     @search = @receipts.ransack(params[:q])
     @search.sorts = 'amount asc' if @search.sorts.empty?
-    @pagy, @receipts = pagy(@search.result.includes(:student, :receipt_type), items: per_page)
+    @pagy, @receipts = pagy(@search.result, items: per_page)
   end
 
   # GET /receipts/1 or /receipts/1.json
@@ -28,15 +28,14 @@ class ReceiptsController < ApplicationController
   # POST /receipts or /receipts.json
   def create
     @receipt = current_account.receipts.new(receipt_params)
-
     respond_to do |format|
       if @receipt.save
         format.html { redirect_to receipts_url, notice: 'Receipt has been successfully created.' }
         format.json { render :show, status: :created, location: @receipt }
       else
         process_errors(@receipt)
-        format.html { render :index }
-        format.json { render json: @receipt.errors, status: :unprocessable_entity }
+        format.html { redirect_to request.referer }
+        format.json { render json: @receipt.errors }
       end
     end
   end
@@ -49,7 +48,7 @@ class ReceiptsController < ApplicationController
         format.json { render :show, status: :created, location: @receipt }
       else
         format.html { redirect_to receipts_url }
-        format.json { render json: @receipt.errors, status: :unprocessable_entity }
+        format.json { render json: @receipt.errors }
       end
     end
   end

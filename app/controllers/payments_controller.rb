@@ -19,7 +19,7 @@ class PaymentsController < ApplicationController
     end
 
     @search = @meetings.ransack(params[:q])
-    @search.sorts = 'starts_at asc' if @search.sorts.empty?
+    @search.sorts = 'starts_at desc' if @search.sorts.empty?
     @pagy, @meetings = pagy(@search.result.includes([klass: %i[room teacher]]), items: per_page)
   end
 
@@ -56,11 +56,11 @@ class PaymentsController < ApplicationController
   def update
     respond_to do |format|
       if @payment.update(payment_params)
-        format.html { redirect_to payment_url(@payment), notice: 'payment has been successfully updated.' }
+        format.html { redirect_to payments_url, notice: 'payment has been successfully updated.' }
         format.json { render :index, status: :ok, location: @payment }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @payment.errors, status: :unprocessable_entity }
+        format.html { redirect_to payments_url }
+        format.json { render json: @payment.errors }
       end
     end
   end

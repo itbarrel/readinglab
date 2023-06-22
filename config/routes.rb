@@ -18,12 +18,34 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web => '/sidekiq'
 
-  resources :accounts, :rooms, :teachers, :vacations, :parents, :staffs, :books, :forms, concerns: %i[trashable exportable]
-  resources :message_templates, :form_fields, :field_values, :trajectory_details, concerns: %i[trashable exportable]
+  resources :rooms, :teachers, :vacations, :books, concerns: %i[trashable exportable]
+  resources :message_templates, :trajectory_details, concerns: %i[trashable exportable]
   resources :receipt_types, :receipts, :parents, :payments, concerns: %i[trashable exportable]
 
   resources :events, only: %i[show update]
   resources :student_classes, only: %i[create destroy]
+
+  resources :staffs do
+    concerns %i[trashable exportable]
+    member do
+      get :password
+    end
+  end
+
+  resources :forms do
+    concerns %i[trashable exportable]
+    member do
+      post :form_duplicate
+    end
+  end
+
+  resources :accounts do
+    concerns %i[trashable exportable]
+    member do
+      get :stats
+    end
+  end
+
   resources :klass_templates do
     concerns %i[trashable exportable]
     member do
@@ -35,8 +57,10 @@ Rails.application.routes.draw do
     concerns %i[trashable exportable]
     collection do
       get :availability
+      get  :obsolete
     end
     member do
+      put  :mark_obsolete
       post :extend_sessions
     end
   end
@@ -52,6 +76,7 @@ Rails.application.routes.draw do
       get :form, action: 'open_form'
       post :form, action: 'submit_form'
       put :form, action: 'save_form'
+      get :forms
       get :student_detail, action: 'open_student_details'
     end
   end
@@ -61,6 +86,7 @@ Rails.application.routes.draw do
     member do
       get :form, action: 'open_form'
       post :form, action: 'submit_form'
+      get :form_details
     end
   end
 
@@ -69,12 +95,23 @@ Rails.application.routes.draw do
     collection do
       get :present_search
     end
+
+    member do
+      get :interviews
+    end
   end
 
   resources :reports, only: %i[] do
-    concerns %i[trashable exportable]
     collection do
+      get :weekly_attendance
       get :graph
+      get :daily
+    end
+  end
+
+  resources :billings, only: %i[] do
+    collection do
+      get :students
     end
   end
 

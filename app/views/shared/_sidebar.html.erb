@@ -55,7 +55,7 @@
             </div>
 
             <% list.each_with_index do |second_list, sindex| %>
-              <% unless second_list[:sub_items].present? %>
+              <% unless second_list[:items].present? %>
                 <a class="nav-link <%= (request.path_info.include?(second_list[:url])? 'active' : '')%>" href="<%= second_list[:url] %>" role="button" aria-expanded="false">
                   <div class="d-flex align-items-center">
                     <span class="nav-link-icon">
@@ -70,8 +70,8 @@
                   </div>
                 </a>
                 <ul class="nav collapse false" id="<%= "#{key}_#{sindex}" %>">
-                  <% second_list[:sub_items].each_with_index do |third_list, tindex| %>
-                    <% unless third_list[:sub_items].present? %>
+                  <% second_list[:items].each_with_index do |third_list, tindex| %>
+                    <% unless third_list[:items].present? %>
                       <li class="nav-item">
                         <a class="nav-link" href="<%= third_list[:url] %>" role="button" aria-expanded="false">
                           <div class="d-flex align-items-center">
@@ -89,7 +89,7 @@
                           </div>
                         </a>
                         <ul class="nav collapse false" id="<%= "#{key}_#{sindex}_#{tindex}"%> ">
-                          <% third_list[:sub_items].each_with_index do |forth_list, findex| %>
+                          <% third_list[:items].each_with_index do |forth_list, findex| %>
                             <li class="nav-item"><a class="nav-link" href="<%= third_list[:url] %>" aria-expanded="false">
                                 <div class="d-flex align-items-center"><span class="nav-link-text ps-1"><%= third_list[:text] %></span>
                                 </div>

@@ -32,21 +32,26 @@ class Interview < ApplicationRecord
   belongs_to :form
   belongs_to :student
   has_many :form_details, as: :parent, dependent: nil
+  has_one :recent_submission, -> { order created_at: :desc },
+          class_name: 'FormDetail',
+          as: :parent, dependent: nil,
+          inverse_of: 'parent'
 
   enum :status, %i[done waiting cancel]
 
   validates :date, :status, presence: true
 
-  after_create :set_student_status
+  after_save :set_student_status
   after_destroy :set_student_default_status
   before_validation :set_status
 
   def set_student_status
-    student.scheduled! if student.registered?
+    student.scheduled! if student.registered? && waiting?
+    student.registered! if student.scheduled? && cancel?
   end
 
   def set_status
-    waiting! if status.blank?
+    self.status = :waiting if status.blank?
   end
 
   def set_student_default_status

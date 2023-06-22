@@ -7,6 +7,8 @@ class TrajectoryDetailsController < ApplicationController
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
 
+    @trajectory_details = @trajectory_details.where(student_id: params[:student_id]) if params[:student_id].present?
+
     @search = @trajectory_details.ransack(params[:q])
     @search.sorts = 'wpm asc' if @search.sorts.empty?
     @pagy, @trajectory_details = pagy(@search.result, items: per_page)
@@ -26,7 +28,6 @@ class TrajectoryDetailsController < ApplicationController
   # POST /trajectory_details or /trajectory_details.json
   def create
     @trajectory_detail = current_account.trajectory_details.new(trajectory_detail_params)
-    attach_account_for(@trajectory_detail)
 
     respond_to do |format|
       if @trajectory_detail.save
@@ -35,8 +36,8 @@ class TrajectoryDetailsController < ApplicationController
         end
         format.json { render :show, status: :created, location: @trajectory_detail }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @trajectory_detail.errors, status: :unprocessable_entity }
+        format.html { redirect_to request.referer }
+        format.json { render json: @trajectory_detail.errors }
       end
     end
   end
@@ -46,13 +47,13 @@ class TrajectoryDetailsController < ApplicationController
     respond_to do |format|
       if @trajectory_detail.update(trajectory_detail_params)
         format.html do
-          redirect_to trajectory_detail_url(@trajectory_detail),
+          redirect_to trajectory_details_url,
                       notice: 'Trajectory detail has been successfully updated.'
         end
         format.json { render :show, status: :ok, location: @trajectory_detail }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @trajectory_detail.errors, status: :unprocessable_entity }
+        format.html { redirect_to trajectory_details_url }
+        format.json { render json: @trajectory_detail.errors }
       end
     end
   end
@@ -76,7 +77,6 @@ class TrajectoryDetailsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def trajectory_detail_params
-    params.require(:trajectory_detail).permit(:error_count, :wpm, :grade, :season, :entry_date,
-                                              :user_id, :klass_id, :book_id, :student_id)
+    params.require(:trajectory_detail).permit(:error_count, :wpm, :grade, :season, :entry_date, :klass_id, :book_id, :student_id)
   end
 end

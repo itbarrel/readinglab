@@ -30,11 +30,11 @@ class FormDetailsController < ApplicationController
 
     respond_to do |format|
       if @form_detail.save
-        format.html { redirect_to form_detail_url(@form_detail), notice: 'Form detail was successfully created.' }
+        format.html { redirect_to form_details_url, notice: 'Form detail was successfully created.' }
         format.json { render :show, status: :created, location: @form_detail }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @form_detail.errors, status: :unprocessable_entity }
+        format.html { redirect_to form_details_url }
+        format.json { render json: @form_detail.errors }
       end
     end
   end
@@ -43,11 +43,11 @@ class FormDetailsController < ApplicationController
   def update
     respond_to do |format|
       if @form_detail.update(form_detail_params)
-        format.html { redirect_to form_detail_url(@form_detail), notice: 'Form detail was successfully updated.' }
+        format.html { redirect_to form_details_url, notice: 'Form detail was successfully updated.' }
         format.json { render :show, status: :ok, location: @form_detail }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @form_detail.errors, status: :unprocessable_entity }
+        format.html { redirect_to form_details_url }
+        format.json { render json: @form_detail.errors }
       end
     end
   end

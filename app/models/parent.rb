@@ -39,8 +39,25 @@ class Parent < ApplicationRecord
   has_many :children, class_name: 'Student', dependent: :destroy
 
   validates :father_first, :mother_first, :father_phone, presence: true
-
   validates :father_email, presence: true
+
+  accepts_nested_attributes_for :children, allow_destroy: true, reject_if: :all_blank
+
+  ransacker :status do |parent|
+    parent.table[:status]
+  end
+
+  ransacker :identifer, formatter: proc { |value| value.downcase } do |parent|
+    Arel::Nodes::NamedFunction.new('CONCAT_WS', [
+                                     Arel::Nodes.build_quoted(' '),
+                                     parent.table[:father_first],
+                                     parent.table[:father_last],
+                                     parent.table[:mother_first],
+                                     parent.table[:mother_last],
+                                     parent.table[:father_email],
+                                     parent.table[:mother_email]
+                                   ])
+  end
 
   def self.notify_all_about_klass(options)
     all.find_each(batch_size: 10) do |p|

@@ -21,6 +21,7 @@
 #  last_sign_in_ip        :string
 #  phone                  :string
 #  postal_code            :string
+#  profile                :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -52,7 +53,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  enum role: { admin: 0, staff: 1, teacher: 2, super_admin: 3, admin_junior: 4, supervisor: 5 }
+  has_one_attached :profile
+
+  enum role: { admin: 0, supervisor: 1, teacher: 2, super_admin: 3 }
 
   validates :first_name, :last_name, :email, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }

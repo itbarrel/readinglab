@@ -7,6 +7,11 @@
   <td class="name align-middle white-space-nowrap py-2"><%= room.name %></td>
   <td class="email align-middle py-2"><%= room.capacity %></td>
   <td class="phone align-middle white-space-nowrap py-2"><%= room.color.to_s %></td>
+  <% if current_user.super_admin? %>
+   <td class="email align-middle py-2"><%= room.account.name %></td>
+  <% end %>
+
+
   <td class="align-middle white-space-nowrap py-2 text-end">
     <div class="dropdown font-sans-serif position-static">
       <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="room-dropdown-<%= index %>" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>

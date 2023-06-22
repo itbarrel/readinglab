@@ -6,7 +6,7 @@ if ENV.fetch("SEED_DATABASE").present? && true?(ENV.fetch("SEED_DATABASE"))
       Student.find_or_create_by!(
         first_name: Faker::Name.first_name, 
         last_name: Faker::Name.last_name, 
-        school: 'saadschoolsystem',
+        school: 'atchison',
         gender: (index %= 2)? 'male' : 'female',
         account: Account.sample,
         parent: Parent.sample

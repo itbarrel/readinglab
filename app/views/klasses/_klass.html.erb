@@ -15,8 +15,14 @@
         <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
         <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
         <div class="bg-white py-2">
-          <%= link_to('Edit', edit_klass_path(klass), remote: true, class: 'dropdown-item') %>
-        <%= link_to('Delete', klass_path(klass), method: :delete, class: 'dropdown-item text-danger', data: {confirm: 'Are you sure'}) %>
+          <%= link_to('Mark Obselete', mark_obsolete_klass_path(klass), method: :put, class: 'dropdown-item') %>
+
+          <% if can? :edit, Klass %>
+            <%= link_to('Edit', edit_klass_path(klass), remote: true, class: 'dropdown-item') %>
+          <% end %>
+          <% if can? :delete, Klass %>
+            <%= link_to('Delete', klass_path(klass), method: :delete, class: 'dropdown-item text-danger', data: {confirm: 'Are you sure'}) %>
+          <% end %>
         </div>
         </div>
     </div>

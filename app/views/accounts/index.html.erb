@@ -59,7 +59,8 @@
 </div>
 
 <% content_for :modal_includes do %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addAccountModal' } %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addAccountModal', modal_size: 'modal-lg' } %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'showStatsModal' } %>
 <% end %>
 
 <% content_for :javascript_includes do %>

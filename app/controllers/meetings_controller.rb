@@ -2,13 +2,18 @@
 
 class MeetingsController < ApplicationController
   load_and_authorize_resource
-  # before_action :set_meeting, only: %i[open_attendance submit_attendance]
+  before_action :set_working_meetings
   before_action :set_student, only: %i[student_details form_details]
   before_action :set_form, only: %i[student_details form_details]
 
   # GET /meetings or /meetings.json
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    if params[:classes_at].present?
+      @meetings_for_date = true
+      @meetings = @meetings.at(params[:classes_at])
+    end
 
     if params[:start].present?
       start_date = params[:start]
@@ -33,7 +38,6 @@ class MeetingsController < ApplicationController
 
   def show; end
 
-  # GET /meetings/new
   def new
     @meeting = Meeting.new
   end
@@ -50,14 +54,22 @@ class MeetingsController < ApplicationController
     params[:meeting].each do |student_id, submission|
       continue if submission['attendance'].blank?
 
-      StudentMeeting.find_or_create_by!(meeting_id: @meeting.id, student_id:, account: current_account)
-                    .update(attendance: submission['attendance'])
+      sm = StudentMeeting.find_by(meeting_id: @meeting.id, student_id:, account: current_account)
+      if sm.blank?
+        StudentMeeting.create!(meeting_id: @meeting.id, student_id:, account: current_account, attendance: submission['attendance'])
+      else
+        sm.update(attendance: submission['attendance'])
+      end
     end
 
     flash[:notice] = 'Attendance submitted successfully.'
     respond_to do |format|
       format.js { render 'shared/close_modal' }
     end
+  end
+
+  def forms
+    @forms = @meeting.forms.includes(form_fields: :field_values)
   end
 
   def open_form
@@ -68,7 +80,10 @@ class MeetingsController < ApplicationController
                               .where(klass_form_id: @form.klass_forms.ids)
                               .pluck(:student_class_id)
 
-    @students = StudentClass.where(id: students_class_ids).map(&:student)
+    # @students = StudentClass.where(id: students_class_ids).includes(:student).map(&:student)
+    students_ids = StudentClass.where(id: students_class_ids).map(&:student_id)
+    student_attendance_ids = StudentMeeting.where(meeting_id: @meeting.id, student_id: students_ids).not_present.map(&:student_id)
+    @students = Student.where(id: students_ids - student_attendance_ids)
   end
 
   def open_student_details; end
@@ -140,11 +155,11 @@ class MeetingsController < ApplicationController
 
     respond_to do |format|
       if @meeting.save
-        format.html { redirect_to meeting_url(@meeting), notice: 'Meeting was successfully created.' }
+        format.html { redirect_to meetings_url, notice: 'Meeting was successfully created.' }
         format.json { render :show, status: :created, location: @meeting }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @meeting.errors, status: :unprocessable_entity }
+        format.html { redirect_to meetings_url }
+        format.json { render json: @meeting.errors }
       end
     end
   end
@@ -157,8 +172,8 @@ class MeetingsController < ApplicationController
         format.json { render :show, status: :ok, location: @meeting }
         format.js { render 'shared/flash' }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @meeting.errors, status: :unprocessable_entity }
+        format.html { redirect_to meetings_url }
+        format.json { render json: @meeting.errors }
       end
     end
   end
@@ -173,9 +188,25 @@ class MeetingsController < ApplicationController
     end
   end
 
+  def export
+    options = { date: params[:date] }
+    records = current_account.meetings
+                             .includes(
+                               form_details: %i[student form],
+                               klass: %i[teacher room]
+                             )
+                             .where(id: params[:ids])
+    respond_to do |format|
+      format.csv { send_data records.to_csv(options), filename: "#{records.model.name}-#{Time.zone.today}.csv" }
+    end
+  end
+
   private
 
-  # Use callbacks to share common setup or constraints between actions.
+  def set_working_meetings
+    @meetings = @meetings.working if @meetings.present?
+  end
+
   def set_meeting
     @meeting = current_account.meetings.find_by(id: params[:id])
   end
@@ -188,7 +219,6 @@ class MeetingsController < ApplicationController
     @form = current_account.forms.find_by(id: params[:form_id])
   end
 
-  # Only allow a list of trusted parameters through.
   def meeting_params
     params.require(:meeting).permit(:starts_at, :cancel, :klass_id, :form_id)
   end

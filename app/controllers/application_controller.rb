@@ -18,34 +18,58 @@ class ApplicationController < ActionController::Base
       { url: '/klass_templates', text: 'Class Templates ', class: '', icon: 'micon bi bi-people-fill', model: KlassTemplate },
       { url: '/forms', text: 'Forms', class: '', icon: 'micon bi bi-clipboard-data-fill', model: Form },
       { url: '/message_templates', text: 'Message Templates', class: '', icon: 'bi bi-envelope-fill', model: MessageTemplate },
-      { url: '/payments', text: 'Payments', class: '', icon: 'micon bi bi-credit-card', model: Payment },
       { url: '/rooms', text: 'Rooms', class: '', icon: 'micon bi bi-building-fill', model: Room },
       { url: '/receipt_types', text: 'Receipt Types', class: '', icon: 'micon bi bi-receipt-cutoff', model: ReceiptType },
       { url: '/staffs', text: 'Staff', class: '', icon: 'micon bi bi-person-vcard', model: User },
       { url: '/vacations', text: 'Vacations', class: '', icon: 'micon bi bi-train-front-fill', model: Vacation }
     ]
+    general_items = [
+      { url: '/calendar', text: 'Calendar', class: '', icon: 'bi bi-calendar', models: [Klass, Interview], sub_items: [] },
+      { text: 'Registration', class: '', icon: 'bi bi-person-plus-fill', sub_items: [
+        { url: '/parents', text: 'Parents', class: '', icon: 'micon bi bi-people', models: [Parent] },
+        { url: '/students', text: 'Student Listing', class: '', icon: 'micon bi bi-layout-text-sidebar-reverse', models: [Student] },
+        { url: '/interviews', text: 'Interviews', class: '', icon: 'micon bi bi-calendar-week', models: [Interview] }
+      ] },
+      { text: 'Classes', class: '', icon: 'micon bi bi-book-half', sub_items: [
+        { url: '/klasses', text: 'Active', class: '', icon: 'micon bi bi-check-circle', models: [Klass] },
+        { url: '/klasses/obsolete', text: 'Obsolote', class: '', icon: 'micon bi bi-exclamation-circle', models: [Klass] }
+      ] },
+      { text: 'Billing', class: '', icon: 'micon bi bi-file-earmark-text-fill', sub_items: [
+        { url: '/billings/students', text: 'Students', class: '', icon: 'micon bi bi-receipt', models: [:billing] },
+        { url: '/payments', text: 'Payments', class: '', icon: 'micon bi bi-credit-card', models: [Receipt, :payment] },
+        { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-receipt', models: [Receipt, :billing] }
+
+      ] },
+      { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-chat-text-fill', models: [:communication], sub_items: [] },
+      { text: 'Reports', class: '', icon: 'micon bi bi-bar-chart-line-fill', sub_items: [
+        { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] },
+        { url: '/reports/daily', text: 'Daily Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] }
+      ] }
+    ]
     @menu_list = {
-      'General': [
-        { url: '/calendar', text: 'Calendar', class: '', icon: 'bi bi-calendar', sub_items: [] },
-        { text: 'Registration', class: '', icon: 'bi bi-person-plus-fill', sub_items: [
-          { url: '/parents', text: 'Parents', class: '', icon: 'micon bi bi-people' },
-          { url: '/students', text: 'Student Listing', class: '', icon: 'micon bi bi-layout-text-sidebar-reverse' },
-          { url: '/interviews', text: 'Interviews', class: '', icon: 'micon bi bi-calendar-week' }
-        ] },
-        { text: 'Classes', class: '', icon: 'micon bi bi-book-half', sub_items: [
-          { url: '/klasses', text: 'Active', class: '', icon: 'micon bi bi-check-circle' }
-          # { url: '/rooms', text: 'Obselote', class: '', icon: 'micon bi bi-exclamation-circle' }
-        ] },
-        { text: 'Billing', class: '', icon: 'micon bi bi-file-earmark-text-fill', sub_items: [
-          { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-receipt', sub_items: [] }
-        ] },
-        { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-chat-text-fill', sub_items: [] },
-        { text: 'Reports', class: '', icon: 'micon bi bi-bar-chart-line-fill', sub_items: [
-          { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-graph-up-arrow' }
-        ] }
-      ],
-      'Settings': []
+      General: [],
+      Settings: []
     }
+
+    general_items.each do |item|
+      if item[:sub_items].present?
+        item[:items] ||= []
+        item[:sub_items].each do |sitem|
+          next if sitem[:models].blank?
+
+          filtered = sitem[:models].filter do |mdl|
+            sitem if can? :read, mdl
+          end
+          item[:items].push(sitem) if filtered.any?
+        end
+        @menu_list[:General].push(item) if item[:items].any?
+      else
+        filtered = item[:models].filter do |mdl|
+          item if can? :read, mdl
+        end
+        @menu_list[:General].push(item) if filtered.any?
+      end
+    end
 
     settings.each do |setting|
       @menu_list[:Settings].push(setting) if can? :read, setting[:model]

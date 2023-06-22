@@ -4,14 +4,16 @@
 #
 # Table name: student_meetings
 #
-#  id         :uuid             not null, primary key
-#  attendance :integer
-#  deleted_at :datetime
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  account_id :uuid             not null
-#  meeting_id :uuid             not null
-#  student_id :uuid             not null
+#  id           :uuid             not null, primary key
+#  attendance   :integer
+#  deleted_at   :datetime
+#  obsolete     :boolean          default(FALSE)
+#  obsoleted_at :datetime
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  account_id   :uuid             not null
+#  meeting_id   :uuid             not null
+#  student_id   :uuid             not null
 #
 # Indexes
 #
@@ -32,9 +34,18 @@ class StudentMeeting < ApplicationRecord
   belongs_to :student
   enum :attendance, %i[absent present leave hold nothing]
 
+  scope :obsolete, -> { where obsolete: true }
+  scope :working, -> { where obsolete: false }
+
   validates :attendance, presence: true
 
-  def student_attendance(date)
-    # meeting=[]
+  after_save :handle_obsolete, if: :saved_change_to_obsolete?
+
+  private
+
+  def handle_obsolete
+    obsolete_time = obsolete? ? Time.zone.now : nil
+
+    update(obsoleted_at: obsolete_time)
   end
 end
