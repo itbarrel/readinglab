@@ -3,7 +3,7 @@
 class KlassesController < ApplicationController
   load_and_authorize_resource
   before_action :set_working_klasses
-  before_action :set_klass, only: %i[extend_sessions]
+  before_action :set_klass, only: %i[extend_sessions mark_obselete]
   before_action :set_klasses, only: %i[trash]
 
   def index
@@ -90,7 +90,7 @@ class KlassesController < ApplicationController
   def destroy
     @klass.destroy
     respond_to do |format|
-      format.html { redirect_to klasses_url, notice: 'Class has been successfully destroyed.' }
+      format.html { redirect_to request.referer, notice: 'Class has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -107,7 +107,26 @@ class KlassesController < ApplicationController
     render js: "window.location = '#{klasses_url}'"
   end
 
-  def obselete; end
+  def obselete
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+    @search = Klass.obselete.ransack(params[:q])
+    @search.sorts = 'name asc' if @search.sorts.empty?
+    @pagy, @klasses = pagy(@search.result.includes(:room, :teacher), items: per_page)
+  end
+
+  def mark_obselete
+    respond_to do |format|
+      if @klass.update(obselete: true)
+        flash[:notice] = 'Class has been marked as obselete'
+        format.html { redirect_to request.referer, notice: 'Class has been marked as obselete.' }
+        format.json { render :show, status: :ok, location: @klass }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @klass.errors, status: :unprocessable_entity }
+      end
+      format.js { render 'shared/flash' }
+    end
+  end
 
   private
 

@@ -1,0 +1,25 @@
+<div class="table-responsive">
+  <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+    <thead class="bg-200 text-900">
+      <tr>
+        <th>
+          <div class="form-check fs-0 mb-0 d-flex align-items-center">
+            <input class="form-check-input" id="checkbox-bulk-klasses-select" type="checkbox" data-bulk-select='{"body":"table-klasses-body","actions":"table-klasses-actions","replacedElement":"table-klasses-replace-element"}' />
+          </div>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Name</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Teacher</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Room</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Obseleted At</th>
+        <th class="sort pe-1 align-middle white-space-nowrap" ></th>
+
+      </tr>
+    </thead>
+    <tbody class="list" id="table-klasses-body">
+      <% klasses.each_with_index do |klass, index| %>
+        <%= render 'klasses/obseletes/obselete', klass: klass, index: index %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= render 'shared/pagination', query: {}, js_request: false if @pagy.present? %>

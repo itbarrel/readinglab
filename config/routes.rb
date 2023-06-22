@@ -60,6 +60,7 @@ Rails.application.routes.draw do
       get  :obselete
     end
     member do
+      put  :mark_obselete
       post :extend_sessions
     end
   end
