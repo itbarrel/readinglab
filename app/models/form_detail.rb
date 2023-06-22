@@ -7,8 +7,8 @@
 #  id           :uuid             not null, primary key
 #  deleted_at   :datetime
 #  form_values  :jsonb
-#  obselete     :boolean          default(FALSE)
-#  obseleted_at :datetime
+#  obsolete     :boolean          default(FALSE)
+#  obsoleted_at :datetime
 #  parent_type  :string           not null
 #  submitted    :boolean          default(FALSE)
 #  created_at   :datetime         not null
@@ -17,7 +17,7 @@
 #  form_id      :uuid             not null
 #  parent_id    :uuid             not null
 #  student_id   :uuid             not null
-#  user_id      :uuid
+#  user_id      :uuid             not null
 #
 # Indexes
 #
@@ -40,14 +40,14 @@ class FormDetail < ApplicationRecord
   belongs_to :student
   belongs_to :parent, polymorphic: true
 
-  scope :obselete, -> { where obselete: true }
-  scope :working, -> { where obselete: false }
+  scope :obsolete, -> { where obsolete: true }
+  scope :working, -> { where obsolete: false }
 
   validates :form_values, presence: true, allow_blank: true
 
   before_validation :default_form_values
   after_save :set_parent_status
-  after_save :handle_obselete, if: :saved_change_to_obselete?
+  after_save :handle_obsolete, if: :saved_change_to_obsolete?
 
   def default_form_values
     self.form_values ||= {}
@@ -64,9 +64,9 @@ class FormDetail < ApplicationRecord
     student.wait_listed!
   end
 
-  def handle_obselete
-    obselete_time = obselete? ? Time.zone.now : nil
+  def handle_obsolete
+    obsolete_time = obsolete? ? Time.zone.now : nil
 
-    update(obseleted_at: obselete_time)
+    update(obsoleted_at: obsolete_time)
   end
 end

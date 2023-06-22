@@ -7,8 +7,8 @@
 #  id           :uuid             not null, primary key
 #  attendance   :integer
 #  deleted_at   :datetime
-#  obselete     :boolean          default(FALSE)
-#  obseleted_at :datetime
+#  obsolete     :boolean          default(FALSE)
+#  obsoleted_at :datetime
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  account_id   :uuid             not null
@@ -34,18 +34,18 @@ class StudentMeeting < ApplicationRecord
   belongs_to :student
   enum :attendance, %i[absent present leave hold nothing]
 
-  scope :obselete, -> { where obselete: true }
-  scope :working, -> { where obselete: false }
+  scope :obsolete, -> { where obsolete: true }
+  scope :working, -> { where obsolete: false }
 
   validates :attendance, presence: true
 
-  after_save :handle_obselete, if: :saved_change_to_obselete?
+  after_save :handle_obsolete, if: :saved_change_to_obsolete?
 
   private
 
-  def handle_obselete
-    obselete_time = obselete? ? Time.zone.now : nil
+  def handle_obsolete
+    obsolete_time = obsolete? ? Time.zone.now : nil
 
-    update(obseleted_at: obselete_time)
+    update(obsoleted_at: obsolete_time)
   end
 end

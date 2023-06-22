@@ -57,9 +57,10 @@ Rails.application.routes.draw do
     concerns %i[trashable exportable]
     collection do
       get :availability
-      get  :obselete
+      get  :obsolete
     end
     member do
+      put  :mark_obsolete
       post :extend_sessions
     end
   end
