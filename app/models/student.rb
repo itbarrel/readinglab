@@ -109,7 +109,7 @@ class Student < ApplicationRecord
 
   def payable_meetings
     if latest_payment.nil?
-      [Student.active]
+      []
     else
       meetings.where('meetings.starts_at > ?', latest_payment.meeting.starts_at).order(starts_at: :asc)
     end
