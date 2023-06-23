@@ -206,7 +206,7 @@ class Klass < ApplicationRecord
   private
 
   def create_meetings
-    return if obselete?
+    return if obsolete?
 
     extend_meetings(session_range, starts_at)
   end
