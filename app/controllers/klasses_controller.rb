@@ -109,7 +109,7 @@ class KlassesController < ApplicationController
 
   def obsolete
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
-    @search = Klass.obsolete.ransack(params[:q])
+    @search = @klasses.obsolete.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
     @pagy, @klasses = pagy(@search.result.includes(:room, :teacher), items: per_page)
   end
