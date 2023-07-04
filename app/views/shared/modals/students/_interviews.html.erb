@@ -10,6 +10,9 @@
           <div class="card bg-transparent-50 overflow-hidden">
             <div class="card-body p-0">
               <ul class="mb-0 list-unstyled">
+                <% if student.interviews.empty? %>
+                <center><p class="fs--3 ps-2 mb-2">There is no Assesment</p></center>
+                <% else %>
                 <% student.interviews.each do |iv| %>
                   <li class="alert mb-0 rounded-0 py-3 px-card alert-<%= (iv.id == student.latest_interview.id)? 'primary' : 'info' %> border-top border-x-0 border-top-0">
                     <div class="row flex-between-center">
@@ -29,6 +32,7 @@
                       </div>
                     </div>
                   </li>
+                <% end %>
                 <% end %>
               </ul>
             </div>
