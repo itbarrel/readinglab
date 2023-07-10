@@ -33,7 +33,7 @@ class MeetingsController < ApplicationController
       @meetings = @meetings.joins(:klass).where(klass: { teacher_id: params[:teacher_id] })
     end
 
-    @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room]), items: per_page)
+    @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room students]), items: per_page)
   end
 
   def show; end
