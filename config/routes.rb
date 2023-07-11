@@ -60,6 +60,8 @@ Rails.application.routes.draw do
       get  :obsolete
     end
     member do
+      post :toggle_obsolete
+      get  :see_details
       put  :mark_obsolete
       post :extend_sessions
     end
@@ -98,6 +100,8 @@ Rails.application.routes.draw do
 
     member do
       get :interviews
+      get :student_attendance
+      get :student_attendance_search
     end
   end
 

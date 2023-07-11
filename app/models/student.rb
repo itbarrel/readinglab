@@ -138,4 +138,8 @@ class Student < ApplicationRecord
     end
     count
   end
+
+  def sessions_left_in_class(klass)
+    klass.sessions_left
+  end
 end
