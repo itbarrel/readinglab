@@ -3,7 +3,7 @@
 class KlassesController < ApplicationController
   load_and_authorize_resource
   before_action :set_working_klasses
-  before_action :set_klass, only: %i[extend_sessions mark_obsolete see_details]
+  before_action :set_klass, only: %i[extend_sessions]
   before_action :set_klasses, only: %i[trash]
 
   def index

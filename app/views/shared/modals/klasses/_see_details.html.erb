@@ -12,15 +12,9 @@
         <p class="text-1000 mb-0">No. of Students:<%= klass.max_students %></p>
         <p class="text-1000 mb-0">Total Session:<%= klass.session_range %></p>
         <p class="text-1000 mb-0">Session Left:<%= klass.sessions_left %></p>
-          <button id="toggle-button">Toggle Obsolete</button>
-                    <input type="hidden" id="klass-id" value="<%= @klass.id %>">
-                    <div class="k-o-seller-class">
-                      <div class="column">
-                      </div>
-                      <div class="obsolete">
-                      </div>
-                    </div>
-        </div>
+        <%= link_to "Set as obsolete", mark_obsolete_klass_path(klass, obsolete: true), method: :put, class: "btn btn-primary" %>
+        <%= link_to "Set as working", mark_obsolete_klass_path(klass, obsolete: false), method: :put, class: "btn btn-primary" %>
       </div>
+    </div>
+  </div>
 </div>
-
