@@ -122,7 +122,8 @@ class MeetingsController < ApplicationController
         parent_id: @meeting.id,
         account: current_account
       )
-      fd.update(form_values: submission, submitted: true) unless fd.submitted
+      need_updation = current_user.super_admin? || current_user.admin? || !fd.submitted
+      fd.update(form_values: submission, submitted: true) if need_updation
     end
 
     flash[:notice] = 'Form Data submitted successfully.'
