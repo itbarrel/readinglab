@@ -100,9 +100,11 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
+    flash_message(:error, exception.message)
     respond_to do |format|
       format.json { head :forbidden }
       format.html { redirect_to root_path, alert: exception.message }
+      format.js { render 'shared/flash' }
     end
   end
 
