@@ -115,6 +115,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :notifications, only: %i[] do
+    member do
+      post :read
+    end
+  end
+
   scope module: :pages do
     get :home
     get :calendar

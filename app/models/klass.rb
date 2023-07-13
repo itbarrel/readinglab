@@ -52,6 +52,7 @@ class Klass < ApplicationRecord
   belongs_to :klass_template, optional: true
   belongs_to :attendance_form, optional: true, class_name: 'Form'
 
+  has_many :notifications, as: :record, dependent: nil
   has_many :klass_forms, dependent: :destroy
   has_many :forms, through: :klass_forms
   # has_many :student_forms, through: :student_classes
