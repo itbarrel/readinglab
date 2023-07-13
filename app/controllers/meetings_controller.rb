@@ -33,6 +33,11 @@ class MeetingsController < ApplicationController
       @meetings = @meetings.joins(:klass).where(klass: { teacher_id: params[:teacher_id] })
     end
 
+    if params[:student_id].present? && validate_uuid_format(params[:student_id])
+      klass_ids = StudentClass.where(student_id: params[:student_id]).map(&:klass_id)
+      @meetings = @meetings.where(klass_id: klass_ids)
+    end
+
     @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room students]), items: per_page)
   end
 

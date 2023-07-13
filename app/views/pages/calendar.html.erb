@@ -35,6 +35,16 @@
         </select>
       </div>
 
+      <div class="form-floating col-lg-2 col-auto d-flex justify-content-end order-md-1" id="calendar-student-selection">
+        <label for="floatingSelectGrid">Student: </label>
+        <select class="form-select" id="calendar_student_id" aria-label="Floating label select example">
+          <option selected>Select Please</option>
+          <% current_account.students.each do |student| %>
+            <option value="<%= student.id %>"><%= student.name %></option>
+          <% end %>
+        </select>
+      </div>
+
       <div class="col col-md-auto d-flex justify-content-end order-md-4">
         <button class="btn btn-falcon-primary btn-sm" type="button" data-event="today">Today</button>
       </div>
