@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         const series = [{
           name: 'Average Reader',
-          data: [10, 20, 30, 25, 30, 45, 40, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100],
+          data: [0, 9, 18, 23, 35, 43, 40, 62, 63, 60, 71, 83, 64, 84, 102, 89, 91, 91],
           class: 'warning'
         },{
           name: 'Student',
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
           class: 'primary'
         },{
           name: 'Successful Reader',
-          data: [20, 40, 60, 55, 80, 85, 90, 100, 120, 125, 130, 140, 145, 150, 160, 165, 170, 180],
+          data: [0, 29, 60, 50, 84, 100, 83, 97, 112, 94, 120, 133, 121, 133, 146, 132, 145, 146],
           class: 'success'
         }]
         window.graphInit("echart-line-marker-chart", {
