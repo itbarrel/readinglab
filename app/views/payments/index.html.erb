@@ -7,7 +7,7 @@
     <div class="form-floating col-auto d-flex justify-content-end order-md-1 mb-2" id="payments-student-selection">
       <select class="form-select" id="payment_student" aria-label="Floating label select">
         <option selected>Select Please</option>
-        <% current_account.students.active.each do |student| %>
+        <% current_account.students.active.order(:first_name).each do |student| %>
           <option value="<%= student.id %>"><%= student.name %></option>
         <% end %>
       </select>
