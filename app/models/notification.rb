@@ -50,9 +50,13 @@ class Notification < ApplicationRecord
   def affirmative
     case purpose
     when :creation, 'creation'
-      "has been created on #{created_at}"
+      true
     when :mark_obsolete, 'mark_obsolete'
-      record.update(obsolete: true)
+      # record.update(obsolete: true)
+      return {
+        modal_file: 'shared/modals/klasses/edit',
+        params: { klass: record, title: 'WOW' }
+      }
     end
     mark_as_seen
   end
@@ -60,9 +64,9 @@ class Notification < ApplicationRecord
   def negative
     case purpose
     when :creation, 'creation'
-      "has been created on #{created_at}"
+      true
     when :mark_obsolete, 'mark_obsolete'
-      1 + 1
+      true
     end
     mark_as_seen
   end

@@ -4,17 +4,17 @@ class NotificationsController < ApplicationController
   load_and_authorize_resource
 
   def read
-    @notification.send(params[:operation])
-  end
+    operation_response = @notification.send(params[:operation])
 
-  def update
+    modal_invoke = !([true, false].include? operation_response)
+
     respond_to do |format|
-      if @account_type.update(notifications_params)
-        format.html { redirect_to account_types_url, notice: 'Account type was successfully updated.' }
-        format.json { render :show, status: :ok, location: @account_type }
+      if true?(modal_invoke)
+        @modal_file = operation_response[:modal_file]
+        @params = operation_response[:params]
+        format.js
       else
-        format.html { redirect_to account_types_url }
-        format.json { render json: @account_type.errors }
+        format.js { render 'shared/flash' }
       end
     end
   end

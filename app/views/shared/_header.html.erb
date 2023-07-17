@@ -173,19 +173,26 @@
                       <span class="me-2" role="img" aria-label="Emoji">💬</span>
                       Just now
                     </span>
-                  <div>
+                    <div class="row">
+                      <div class="col-2">
+                        <%= form_with(url: read_notification_path(notification), method: :post, local: false, class: 'form-inline') do |f| %>
+                          <%= f.hidden_field :operation, value: 'affirmative' %>
+                          <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
+                            <i class="fas fa-check"></i>
+                          <% end %>
+                        <% end %>
+                      </div>
 
-                  <%= form_with(url: read_notification_path(notification), method: :post) do |f| %>
-                    <%= f.hidden_field :operation, value: 'affirmative' %>
-                    <%= f.submit 'yes', class: 'btn btn-primary px-4' %>
-                  <% end %>
+                      <div class="col-8">
+                        <%= form_with(url: read_notification_path(notification), method: :post, class: 'form-inline') do |f| %>
+                          <%= f.hidden_field :operation, value: 'negative' %>
+                          <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
+                            <i class="fas fa-times"></i>
+                          <% end %>
+                        <% end %>
+                      </div>
 
-                  <%= form_with(url: read_notification_path(notification), method: :post) do |f| %>
-                    <%= f.hidden_field :operation, value: 'negative' %>
-                    <%= f.submit 'no', class: 'btn btn-primary px-4' %>
-                  <% end %>
-
-                   </div>
+                    </div>
                   </div>
                 </span>
               </div>
@@ -280,3 +287,7 @@
     </li>
   </ul>
 </nav>
+
+<% content_for :modal_includes do %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'showNotificationModal' } %>
+<% end %>
