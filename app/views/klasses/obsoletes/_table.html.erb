@@ -23,6 +23,6 @@
   </table>
 </div>
 <% content_for :modal_includes do %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addSeeDetailsModal', modal_size: 'modal-lg' } %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'showDetailsModal', modal_size: 'modal-lg' } %>
 <% end %>
 <%= render 'shared/pagination', query: {}, js_request: false if @pagy.present? %>

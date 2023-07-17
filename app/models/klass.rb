@@ -204,10 +204,7 @@ class Klass < ApplicationRecord
   end
 
   def sessions_left
-    total_sessions = session_range
-    attended_sessions = meetings.count
-    sessions_left = total_sessions - attended_sessions
-    sessions_left >= 0 ? sessions_left : 0
+    meetings.where('starts_at > ?', Time.zone.now).length
   end
 
   private
