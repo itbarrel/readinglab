@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   var teacher_id = null
+  var student_id = null
   let event_filter = 'all'
 
   const interviews = {
@@ -20,7 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return {
         cachebuster: new Date().valueOf(),
         pagination: false,
-        teacher_id
+        teacher_id,
+        student_id
       }
     }
   }
@@ -95,6 +97,11 @@ document.addEventListener("DOMContentLoaded", () => {
     calendar.refetchEvents();
   });
 
+  $('#calendar_student_id').change(function() {
+    student_id = $(this).val()
+    calendar.refetchEvents();
+  });
+
   $('#event-selector').change(function() {
     event_filter = $(this).val()
     console.log(this.value)
@@ -103,6 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
       calendar.addEventSource(eventSource);
     });
   });
-  
+
 });
 // hussnain mubasit

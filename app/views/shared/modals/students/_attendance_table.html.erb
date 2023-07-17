@@ -1,0 +1,33 @@
+<% if students.present? %>
+<div class="table-responsive">
+  <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+    <thead class="bg-200 text-900">
+      <tr>
+        <th class="sort pe-1 align-middle white-space-nowrap">Name</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Attendance</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Date</th>
+      </tr>
+    </thead>
+    <tbody class="list">
+      <tr class="btn-reveal-trigger">
+          <% students.each do |student| %>
+            <td class="name align-middle white-space-nowrap py-2"><%= student.student.name %></td>
+            <td class="name align-middle white-space-nowrap py-2"><%= student.attendance %></td>
+            <td class="name align-middle white-space-nowrap py-2"><%=l student.meeting.starts_at, format: :short %></td>
+          <% end %>
+
+        </tr>
+    </tbody>
+  </table>
+</div>
+<% else %>
+<div class="row">
+  <div class="col-md-6 h-100">
+    <div class="d-flex btn-reveal-trigger">
+      <div class="flex-1 position-relative ps-3">
+        <center><p class="text-1000 mb-3">There is No Data</p></center>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

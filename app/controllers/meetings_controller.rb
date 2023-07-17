@@ -33,7 +33,12 @@ class MeetingsController < ApplicationController
       @meetings = @meetings.joins(:klass).where(klass: { teacher_id: params[:teacher_id] })
     end
 
-    @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room]), items: per_page)
+    if params[:student_id].present? && validate_uuid_format(params[:student_id])
+      klass_ids = StudentClass.where(student_id: params[:student_id]).map(&:klass_id)
+      @meetings = @meetings.where(klass_id: klass_ids)
+    end
+
+    @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room students]), items: per_page)
   end
 
   def show; end
@@ -122,7 +127,8 @@ class MeetingsController < ApplicationController
         parent_id: @meeting.id,
         account: current_account
       )
-      fd.update(form_values: submission, submitted: true) unless fd.submitted
+      need_updation = current_user.super_admin? || current_user.admin? || !fd.submitted
+      fd.update(form_values: submission, submitted: true) if need_updation
     end
 
     flash[:notice] = 'Form Data submitted successfully.'
