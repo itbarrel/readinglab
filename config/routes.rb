@@ -60,7 +60,6 @@ Rails.application.routes.draw do
       get  :obsolete
     end
     member do
-      post :toggle_obsolete
       get  :details
       put  :mark_obsolete
       post :extend_sessions
