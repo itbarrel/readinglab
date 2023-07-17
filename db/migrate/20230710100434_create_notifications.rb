@@ -9,5 +9,7 @@ class CreateNotifications < ActiveRecord::Migration[7.0]
       t.timestamps
       t.datetime :deleted_at
     end
+
+    add_index :notifications, [:record_id, :record_type, :user_id, :purpose, :deleted_at], unique: true, name: 'notification_index'
   end
 end

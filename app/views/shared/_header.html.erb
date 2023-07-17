@@ -175,20 +175,22 @@
                     </span>
                     <div class="row">
                       <div class="col-2">
+                      <% if notification.seen_at.blank? %>
                         <%= form_with(url: read_notification_path(notification), method: :post, local: false, class: 'form-inline') do |f| %>
-                          <%= f.hidden_field :operation, value: 'affirmative' %>
-                          <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
-                            <i class="fas fa-check"></i>
-                          <% end %>
+                        <%= f.hidden_field :operation, value: 'affirmative' %>
+                        <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
+                        <i class="fas fa-check"></i>
+                        <% end %>
                         <% end %>
                       </div>
 
                       <div class="col-8">
                         <%= form_with(url: read_notification_path(notification), method: :post, class: 'form-inline') do |f| %>
-                          <%= f.hidden_field :operation, value: 'negative' %>
-                          <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
-                            <i class="fas fa-times"></i>
-                          <% end %>
+                        <%= f.hidden_field :operation, value: 'negative' %>
+                        <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
+                        <i class="fas fa-times"></i>
+                        <% end %>
+                        <% end %>
                         <% end %>
                       </div>
 
@@ -289,5 +291,5 @@
 </nav>
 
 <% content_for :modal_includes do %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'showNotificationModal' } %>
+<%= render partial: 'shared/modals/basic', locals: { modal_id: 'showNotificationModal' } %>
 <% end %>

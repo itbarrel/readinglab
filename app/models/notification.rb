@@ -18,6 +18,7 @@
 #
 #  index_notifications_on_record   (record_type,record_id)
 #  index_notifications_on_user_id  (user_id)
+#  notification_index              (record_id,record_type,user_id,purpose,deleted_at) UNIQUE
 #
 # Foreign Keys
 #
@@ -48,27 +49,27 @@ class Notification < ApplicationRecord
   end
 
   def affirmative
+    mark_as_seen
     case purpose
     when :creation, 'creation'
       true
     when :mark_obsolete, 'mark_obsolete'
       # record.update(obsolete: true)
-      return {
-        modal_file: 'shared/modals/klasses/edit',
-        params: { klass: record, title: 'WOW' }
+      {
+        modal_file: 'shared/modals/klasses/details',
+        params: { klass: record, title: 'Details' }
       }
     end
-    mark_as_seen
   end
 
   def negative
+    mark_as_seen
     case purpose
     when :creation, 'creation'
       true
     when :mark_obsolete, 'mark_obsolete'
       true
     end
-    mark_as_seen
   end
 
   def seen?

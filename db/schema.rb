@@ -283,6 +283,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_100434) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["record_id", "record_type", "user_id", "purpose", "deleted_at"], name: "notification_index", unique: true
     t.index ["record_type", "record_id"], name: "index_notifications_on_record"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
