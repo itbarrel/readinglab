@@ -203,6 +203,13 @@ class Klass < ApplicationRecord
     all.where(id: klass_ids)
   end
 
+  def sessions_left
+    total_sessions = session_range
+    attended_sessions = meetings.count
+    sessions_left = total_sessions - attended_sessions
+    sessions_left >= 0 ? sessions_left : 0
+  end
+
   private
 
   def create_meetings

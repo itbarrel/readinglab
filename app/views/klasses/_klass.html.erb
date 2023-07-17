@@ -18,6 +18,8 @@
           <% if can? :manage, Klass %>
             <%= link_to('Mark Obsolete', mark_obsolete_klass_path(klass), method: :put, class: 'dropdown-item') %>
           <% end %>
+          <%= link_to('See Details', see_details_klass_path(klass), method: :get, remote: true, class: 'dropdown-item') %>
+          <%= link_to('Mark Obsolete', mark_obsolete_klass_path(klass), method: :put, class: 'dropdown-item') %>
 
           <% if can? :edit, Klass %>
             <%= link_to('Edit', edit_klass_path(klass), remote: true, class: 'dropdown-item') %>
