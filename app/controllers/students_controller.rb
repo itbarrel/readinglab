@@ -83,6 +83,24 @@ class StudentsController < ApplicationController
 
   def interviews; end
 
+  # modal
+  def student_attendance
+    calculate_attendance_for(@student)
+  end
+
+  # table
+  def student_attendance_search
+    calculate_attendance_for(@student, params[:search][:from], params[:search][:to])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def calculate_attendance_for(student, from = Time.zone.today.beginning_of_month, to = Time.zone.today)
+    meeting_ids = current_account.meetings.working.where(starts_at: from..to).ids
+    @student_attendance = student.student_meetings.where(meeting_id: meeting_ids)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

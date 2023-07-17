@@ -3,7 +3,7 @@
 class KlassesController < ApplicationController
   load_and_authorize_resource
   before_action :set_working_klasses
-  before_action :set_klass, only: %i[extend_sessions mark_obsolete]
+  before_action :set_klass, only: %i[extend_sessions mark_obsolete see_details]
   before_action :set_klasses, only: %i[trash]
 
   def index
@@ -126,6 +126,15 @@ class KlassesController < ApplicationController
       end
       format.js { render 'shared/flash' }
     end
+  end
+
+  def see_details; end
+
+  def toggle_obsolete
+    @klass = Klass.find(params[:id])
+    @klass.obsolete = !@klass.obsolete
+    @klass.save
+    render json: { obsolete: @klass.obsolete }
   end
 
   private
