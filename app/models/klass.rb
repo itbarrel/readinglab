@@ -203,6 +203,10 @@ class Klass < ApplicationRecord
     all.where(id: klass_ids)
   end
 
+  def sessions_left
+    meetings.where('starts_at > ?', Time.zone.now).length
+  end
+
   private
 
   def create_meetings
