@@ -10,7 +10,7 @@
 }
 
 .logo_name{
-  font-size: 24px;  
+  font-size: 24px;
 }
 
 .nav-link-card-details{
@@ -52,6 +52,23 @@
 }
 
 #calendar-teacher-selection label{
+  padding: 0px;
+  bottom: 0;
+  top: auto;
+  padding-left: 8px;
+  transform: translateY(5px);
+}
+
+#calendar-student-selection{
+  margin-left: 20px;
+}
+
+#calendar-student-selection select{
+  padding: 20px 0px 5px 8px;
+  height: auto;
+}
+
+#calendar-student-selection label{
   padding: 0px;
   bottom: 0;
   top: auto;
@@ -198,4 +215,8 @@
   content: '';
   width: 109%;
   z-index: -1
+}
+
+#calendar-student-selection .choices__list.choices__list--dropdown{
+  z-index: 999;
 }

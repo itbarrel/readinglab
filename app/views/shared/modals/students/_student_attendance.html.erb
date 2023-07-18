@@ -1,0 +1,32 @@
+<div class="modal-header px-card bg-light border-bottom-0">
+  <h5 class="modal-title"><%= title %></h5>
+  <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body p-card">
+  <%= form_for(:search, class: 'form-inline', url: student_attendance_search_student_path, remote: true, method: :get) do |form| %>
+  <div class="display_flex">
+    <div class="row">
+      <div class="col-4">
+        <div class="form-group">
+          <%= form.date_field :from, data: { behavior: 'daterangepicker' } , class: "form-control datepicker " %>
+        </div>
+      </div>
+        <div class="col-4">
+          <div class="form-group">
+              <%= form.date_field :to, data: { behavior: 'daterangepicker' }, class: "form-control datepicker" %>
+          </div>
+        </div>
+      <div class="col-4">
+        <div class="form-group ml-2">
+              <%= form.submit "Search", class: 'btn btn-primary' %>
+        </div>
+      </div>
+      </div>
+
+  </div>
+  </div>
+<% end %>
+<div id="student_attendance_table">
+  <%= render partial: 'shared/modals/students/attendance_table', locals: { students: students } %>
+</div>
+</div>

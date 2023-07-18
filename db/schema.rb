@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_22_135604) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_10_100434) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -79,7 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_135604) do
     t.string "grade"
     t.datetime "deleted_at"
     t.uuid "account_id", null: false
-    t.uuid "klass_id", null: false
+    t.uuid "klass_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "name", "deleted_at"], name: "book_name", unique: true
@@ -118,7 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_135604) do
 
   create_table "form_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.jsonb "form_values"
-    t.uuid "user_id", null: false
+    t.uuid "user_id"
     t.uuid "form_id", null: false
     t.uuid "account_id", null: false
     t.string "parent_type", null: false
@@ -274,6 +274,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_135604) do
     t.index ["name", "account_id", "deleted_at"], name: "message_template_index", unique: true
   end
 
+  create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "purpose"
+    t.string "record_type", null: false
+    t.uuid "record_id", null: false
+    t.uuid "user_id", null: false
+    t.datetime "seen_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["record_id", "record_type", "user_id", "purpose", "deleted_at"], name: "notification_index", unique: true
+    t.index ["record_type", "record_id"], name: "index_notifications_on_record"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "parents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "father_first"
     t.string "father_last"
@@ -421,8 +435,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_135604) do
     t.integer "status"
     t.uuid "account_id", null: false
     t.uuid "student_id", null: false
-    t.uuid "klass_id", null: false
-    t.uuid "book_id", null: false
+    t.uuid "klass_id"
+    t.uuid "book_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -521,6 +535,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_135604) do
   add_foreign_key "meetings", "accounts"
   add_foreign_key "meetings", "klasses"
   add_foreign_key "message_templates", "accounts"
+  add_foreign_key "notifications", "users"
   add_foreign_key "parents", "accounts"
   add_foreign_key "parents", "cities"
   add_foreign_key "payments", "meetings"

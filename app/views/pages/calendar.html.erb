@@ -35,6 +35,15 @@
         </select>
       </div>
 
+      <div class="col-lg-2 col-auto justify-content-end order-md-1" id="calendar-student-selection">
+        <select class="form-select js-choice" id="calendar_student_id" aria-label="Floating label select example">
+          <option value="">Select Student</option>
+          <% current_account.students.active.each do |student| %>
+            <option value="<%= student.id %>"><%= student.name %></option>
+          <% end %>
+        </select>
+      </div>
+
       <div class="col col-md-auto d-flex justify-content-end order-md-4">
         <button class="btn btn-falcon-primary btn-sm" type="button" data-event="today">Today</button>
       </div>

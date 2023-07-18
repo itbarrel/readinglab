@@ -33,6 +33,11 @@ class MeetingsController < ApplicationController
       @meetings = @meetings.joins(:klass).where(klass: { teacher_id: params[:teacher_id] })
     end
 
+    if params[:student_id].present? && validate_uuid_format(params[:student_id])
+      klass_ids = StudentClass.where(student_id: params[:student_id]).map(&:klass_id)
+      @meetings = @meetings.where(klass_id: klass_ids)
+    end
+
     @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room students]), items: per_page)
   end
 
@@ -143,7 +148,7 @@ class MeetingsController < ApplicationController
                .where(form_details: { student_id: @student.id, form_id: @form.id })
                .order(starts_at: :desc).distinct.limit(3)
     @form_details = meetings.map do |meeting|
-      meeting.form_details.filter  do |fd|
+      meeting.form_details.filter do |fd|
         fd.student_id == @student.id && fd.form_id == @form.id
       end
     end.flatten

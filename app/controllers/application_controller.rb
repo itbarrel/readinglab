@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   # include EsbuildErrorRendering if Rails.env.development?
 
   before_action :generate_sidebar, unless: :json_request?
+  before_action :fetch_notifications, unless: :json_request?
   around_action :set_time_zone, if: :current_user
   before_action :authenticate_user!
 
@@ -75,6 +76,12 @@ class ApplicationController < ActionController::Base
       @menu_list[:Settings].push(setting) if can? :read, setting[:model]
     end
     @menu_list[:Settings].push({ url: '/profile', text: 'Profile', class: '', icon: 'micon bi bi-person-circle' })
+  end
+
+  def fetch_notifications
+    return if current_user.blank?
+
+    @notifications = current_user.notifications
   end
 
   def set_layout
