@@ -35,10 +35,11 @@
         </select>
       </div>
 
-      <div class="col-lg-2 col-auto justify-content-end order-md-1" id="calendar-student-selection">
-        <select class="form-select js-choice" id="calendar_student_id" aria-label="Floating label select example">
-          <option value="">Select Student</option>
-          <% current_account.students.active.each do |student| %>
+      <div class="form-floating col-lg-2 col-auto d-flex justify-content-end order-md-1" id="calendar-student-selection">
+        <label for="floatingSelectGrid">Student: </label>
+        <select class="form-select" id="calendar_student_id" aria-label="Floating label select example">
+          <option selected>Select Please</option>
+          <% current_account.students.each do |student| %>
             <option value="<%= student.id %>"><%= student.name %></option>
           <% end %>
         </select>
