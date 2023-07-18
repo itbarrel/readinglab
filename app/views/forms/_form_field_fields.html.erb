@@ -34,10 +34,10 @@
         <div class="col-12">
           <%= f.label :form_values, class: "form-label" %>
         </div>
+        <%= f.simple_fields_for :field_values do |fv| %>
+          <%= render 'field_value_fields', f: fv %>
+        <% end %>
         <div id="form_values">
-          <%= f.simple_fields_for :field_values do |fv| %>
-            <%= render 'field_value_fields', f: fv %>
-          <% end %>
           <%= link_to_add_association f, :field_values do %>
             <div class="d-grid gap-2">
               <button class="btn btn-falcon-default btn-sm mb-2" type="submit">
