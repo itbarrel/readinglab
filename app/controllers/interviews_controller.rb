@@ -32,7 +32,7 @@ class InterviewsController < ApplicationController
 
     @search = interview_students.ransack(params[:q])
     @search.sorts = 'first_name asc' if @search.sorts.empty?
-    @pagy, @interview_students = pagy(@search.result, items: per_page)
+    @pagy, @interview_students = pagy(@search.result.includes([:latest_interview]), items: per_page)
   end
 
   def show; end
