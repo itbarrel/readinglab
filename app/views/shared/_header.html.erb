@@ -157,24 +157,50 @@
           </div>
           <div class="scrollbar-overlay" style="max-height:19rem">
             <div class="list-group list-group-flush fw-normal fs--1">
-              <div class="list-group-title border-bottom">NEW</div>
+              <!--<div class="list-group-title border-bottom">NEW</div>-->
+              <% @notifications.each do |notification| %>
               <div class="list-group-item">
-                <a class="notification notification-flush notification-unread" href="#!">
+                <span class="notification notification-flush <%= notification.seen?? '' : 'notification-unread' %>"
+                  href="#!">
                   <div class="notification-avatar">
                     <div class="avatar avatar-2xl me-3">
                       <%= image_tag('team/1-thumb.png', class: 'rounded-circle') %>
                     </div>
                   </div>
                   <div class="notification-body">
-                    <p class="mb-1"><strong>Emma Watson</strong> replied to your comment : "Hello world 😍"</p>
-                    <span class="notification-time"><span class="me-2" role="img" aria-label="Emoji">💬</span>Just
-                      now</span>
-                  </div>
-                </a>
+                    <p class="mb-1"><strong><%= notification.text %></strong> <%= notification.description %></p>
+                    <span class="notification-time">
+                      <span class="me-2" role="img" aria-label="Emoji">💬</span>
+                      Just now
+                    </span>
+                    <div class="row">
+                      <div class="col-2">
+                      <% if notification.seen_at.blank? %>
+                        <%= form_with(url: read_notification_path(notification), method: :post, local: false, class: 'form-inline') do |f| %>
+                        <%= f.hidden_field :operation, value: 'affirmative' %>
+                        <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
+                        <i class="fas fa-check"></i>
+                        <% end %>
+                        <% end %>
+                      </div>
 
+                      <div class="col-8">
+                        <%= form_with(url: read_notification_path(notification), method: :post, class: 'form-inline') do |f| %>
+                        <%= f.hidden_field :operation, value: 'negative' %>
+                        <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
+                        <i class="fas fa-times"></i>
+                        <% end %>
+                        <% end %>
+                        <% end %>
+                      </div>
+
+                    </div>
+                  </div>
+                </span>
               </div>
-              <div class="list-group-item">
-                <a class="notification notification-flush notification-unread" href="#!">
+              <% end %>
+              <!--<div class="list-group-item">
+                <a class="notification notification-flush" href="#!">
                   <div class="notification-avatar">
                     <div class="avatar avatar-2xl me-3">
                       <div class="avatar-name rounded-circle"><span>AB</span></div>
@@ -186,9 +212,8 @@
 
                   </div>
                 </a>
-
               </div>
-              <div class="list-group-title border-bottom">EARLIER</div>
+              <div class="list-group-title border-bottom">EARLIER</div>-->
               <div class="list-group-item">
                 <a class="notification notification-flush" href="#!">
                   <div class="notification-avatar">
@@ -235,19 +260,19 @@
               </div>
             </div>
           </div>
-          <div class="card-footer text-center border-top"><a class="card-link d-block"
+          <!--<div class="card-footer text-center border-top"><a class="card-link d-block"
               href="app/social/notifications.html">View all</a></div>
+        </div>-->
         </div>
-      </div>
 
     </li>
     <li class="nav-item dropdown"><a class="nav-link pe-0" id="navbarDropdownUser" href="#" role="button"
         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="avatar avatar-xl">
           <% if current_user.profile.attached? %>
-            <%= image_tag(current_user.profile, class: 'rounded-circle', width: 200) %>
+          <%= image_tag(current_user.profile, class: 'rounded-circle', width: 200) %>
           <% else %>
-            <%= image_tag('team/2.jpg', class: 'rounded-circle', width: 200) %>
+          <%= image_tag('team/2.jpg', class: 'rounded-circle', width: 200) %>
           <% end %>
         </div>
       </a>
@@ -264,3 +289,7 @@
     </li>
   </ul>
 </nav>
+
+<% content_for :modal_includes do %>
+<%= render partial: 'shared/modals/basic', locals: { modal_id: 'showNotificationModal' } %>
+<% end %>

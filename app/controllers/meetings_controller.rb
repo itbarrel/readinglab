@@ -148,7 +148,7 @@ class MeetingsController < ApplicationController
                .where(form_details: { student_id: @student.id, form_id: @form.id })
                .order(starts_at: :desc).distinct.limit(3)
     @form_details = meetings.map do |meeting|
-      meeting.form_details.filter  do |fd|
+      meeting.form_details.filter do |fd|
         fd.student_id == @student.id && fd.form_id == @form.id
       end
     end.flatten

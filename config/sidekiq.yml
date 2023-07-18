@@ -8,3 +8,6 @@
     archive_klasses:
       cron: '0 0 * * *'   # Runs once per minute
       class: ArchiveKlassesJob
+    delete_seen_notifications:
+      cron: '0 0 * * *'   # Runs once per minute
+      class: DeleteNotificationsJob
