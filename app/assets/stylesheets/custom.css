@@ -216,3 +216,7 @@
   width: 109%;
   z-index: -1
 }
+
+#calendar-student-selection .choices__list.choices__list--dropdown{
+  z-index: 999;
+}
