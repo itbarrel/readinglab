@@ -35,16 +35,16 @@ class Notification < ApplicationRecord
     when :creation, 'creation'
       record_type.to_s
     when :mark_obsolete, 'mark_obsolete'
-      "System has proposed this #{record_id}"
+      'System has proposed a class'
     end
   end
 
   def description
     case purpose
     when :creation, 'creation'
-      "has been created on #{created_at}"
+      "has been created on #{created_at.strftime('%H:%M %p-%d-%h-%Y')}"
     when :mark_obsolete, 'mark_obsolete'
-      ' to mark obsolete, approve?'
+      ' to mark obsolete'
     end
   end
 
@@ -74,6 +74,10 @@ class Notification < ApplicationRecord
 
   def seen?
     seen_at.present?
+  end
+
+  def self.seen_all?
+    where(seen_at: nil).any?
   end
 
   def mark_as_seen

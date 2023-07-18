@@ -1,0 +1,109 @@
+<a class="nav-link notification-indicator-primary px-0 fa-icon-wait <%= notifications.seen_all? ? 'notification-indicator' : '' %>"
+  id="navbarDropdownNotification" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <span class="fas fa-bell" data-fa-transform="shrink-6" style="font-size: 33px;"></span>
+</a>
+<div class="dropdown-menu dropdown-menu-end dropdown-menu-card dropdown-menu-notification"  aria-labelledby="navbarDropdownNotification">
+  <div class="card card-notification shadow-none">
+    <div class="card-header">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-auto">
+          <h6 class="card-header-title mb-0">Notifications</h6>
+        </div>
+        <div class="col-auto ps-0 ps-sm-3"><a class="card-link fw-normal" href="#">Mark all as read</a></div>
+      </div>
+    </div>
+    <div class="scrollbar-overlay" style="max-height:19rem">
+      <div class="list-group list-group-flush fw-normal fs--1">
+        <!--<div class="list-group-title border-bottom">NEW</div>-->
+        <% notifications.each do |notification| %>
+          <div class="list-group-item">
+            <span class="notification notification-flush <%= notification.seen?? '' : 'notification-unread' %>">
+              <div class="notification-avatar">
+                <div class="avatar avatar-2xl me-3">
+                  <%= image_tag('team/1-thumb.png', class: 'rounded-circle') %>
+                </div>
+              </div>
+              <div class="notification-body">
+                <p class="mb-1"><strong><%= notification.text %></strong> <%= notification.description %></p>
+                <span class="notification-time">
+                  <span class="me-2" role="img" aria-label="Emoji">💬</span>
+                  Just now
+                </span>
+                <% if notification.seen_at.blank? %>
+                  <div class="row">
+                    <div class="col-2">
+                      <%= form_with(url: read_notification_path(notification), method: :post, local: false, class: 'form-inline') do |f| %>
+                        <%= f.hidden_field :operation, value: 'affirmative' %>
+                        <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
+                          <i class="fas fa-check"></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+
+                    <div class="col-8">
+                      <%= form_with(url: read_notification_path(notification), method: :post, class: 'form-inline') do |f| %>
+                        <%= f.hidden_field :operation, value: 'negative' %>
+                        <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
+                          <i class="fas fa-times"></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </span>
+          </div>
+        <% end %>
+        
+        <!--<div class="list-group-title border-bottom">EARLIER</div>
+        <div class="list-group-item">
+          <a class="notification notification-flush" href="#!">
+            <div class="notification-avatar">
+              <div class="avatar avatar-2xl me-3">
+                <%= image_tag('icons/weather-sm.jpg', class: 'rounded-circle') %>
+              </div>
+            </div>
+            <div class="notification-body">
+              <p class="mb-1">The forecast today shows a low of 20&#8451; in California. See today's weather.</p>
+              <span class="notification-time"><span class="me-2" role="img" aria-label="Emoji">🌤️</span>1d</span>
+            </div>
+          </a>
+
+        </div>
+        <div class="list-group-item">
+          <a class="border-bottom-0 notification-unread  notification notification-flush" href="#!">
+            <div class="notification-avatar">
+              <div class="avatar avatar-xl me-3">
+                <%= image_tag('logos/oxford.png', class: 'rounded-circle') %>
+              </div>
+            </div>
+            <div class="notification-body">
+              <p class="mb-1"><strong>University of Oxford</strong> created an event : "Causal Inference Hilary
+                2019"</p>
+              <span class="notification-time"><span class="me-2" role="img" aria-label="Emoji">✌️</span>1w</span>
+            </div>
+          </a>
+
+        </div>
+        <div class="list-group-item">
+          <a class="border-bottom-0 notification notification-flush" href="#!">
+            <div class="notification-avatar">
+              <div class="avatar avatar-xl me-3">
+                <%= image_tag('team/10.jpg', class: 'rounded-circle') %>
+              </div>
+            </div>
+            <div class="notification-body">
+              <p class="mb-1"><strong>James Cameron</strong> invited to join the group: United Nations
+                International Children's Fund</p>
+              <span class="notification-time"><span class="me-2" role="img" aria-label="Emoji">🙋‍</span>2d</span>
+            </div>
+          </a>
+
+        </div>-->
+      </div>
+    </div>
+    <!--<div class="card-footer text-center border-top">
+      <a class="card-link d-block" href="app/social/notifications.html">View all</a>
+    </div>-->
+  </div>
+</div>
