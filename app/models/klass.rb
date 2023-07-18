@@ -52,6 +52,7 @@ class Klass < ApplicationRecord
   belongs_to :klass_template, optional: true
   belongs_to :attendance_form, optional: true, class_name: 'Form'
 
+  has_many :notifications, as: :record, dependent: nil
   has_many :klass_forms, dependent: :destroy
   has_many :forms, through: :klass_forms
   # has_many :student_forms, through: :student_classes
@@ -201,6 +202,10 @@ class Klass < ApplicationRecord
   def self.at(date)
     klass_ids = Meeting.where('date(starts_at) = ?', date).map(&:klass_id)
     all.where(id: klass_ids)
+  end
+
+  def sessions_left
+    meetings.where('starts_at > ?', Time.zone.now).length
   end
 
   private

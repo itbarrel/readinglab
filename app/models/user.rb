@@ -47,6 +47,7 @@
 class User < ApplicationRecord
   belongs_to :account
   has_many :form_details, dependent: nil
+  has_many :notifications, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
