@@ -42,7 +42,7 @@ class Notification < ApplicationRecord
   def description
     case purpose
     when :creation, 'creation'
-      "has been created on #{created_at.strftime('%H:%M %p-%d-%h-%Y')}"
+      "has been created on #{created_at.strftime('%l:%M %P, %B-%-d-%Y')}"
     when :mark_obsolete, 'mark_obsolete'
       ' to mark obsolete'
     end

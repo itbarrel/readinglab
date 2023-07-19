@@ -9,13 +9,13 @@
         <div class="col-auto">
           <h6 class="card-header-title mb-0">Notifications</h6>
         </div>
-        <div class="col-auto ps-0 ps-sm-3"><a class="card-link fw-normal" href="#">Mark all as read</a></div>
+       <!-- <div class="col-auto ps-0 ps-sm-3"><a class="card-link fw-normal" href="#">Mark all as read</a></div>-->
       </div>
     </div>
     <div class="scrollbar-overlay" style="max-height:19rem">
       <div class="list-group list-group-flush fw-normal fs--1">
         <!--<div class="list-group-title border-bottom">NEW</div>-->
-        <% notifications.each do |notification| %>
+        <% notifications.order(created_at: :desc).each do |notification| %>
           <div class="list-group-item">
             <span class="notification notification-flush <%= notification.seen?? '' : 'notification-unread' %>">
               <div class="notification-avatar">
@@ -25,10 +25,10 @@
               </div>
               <div class="notification-body">
                 <p class="mb-1"><strong><%= notification.text %></strong> <%= notification.description %></p>
-                <span class="notification-time">
+                <!--<span class="notification-time">
                   <span class="me-2" role="img" aria-label="Emoji">💬</span>
                   Just now
-                </span>
+                </span>-->
                 <% if notification.seen_at.blank? %>
                   <div class="row">
                     <div class="col-2">
