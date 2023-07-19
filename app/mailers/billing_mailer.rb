@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class BillingMailer < ApplicationMailer
-  def mailer(email)
-    mail(to: email, subject: 'fee_submission_reminder')
+  def mailer(student, parent, reason)
+    @student = student
+    @reason = reason
+
+    mail(to: parent.father_email, subject: 'Fee Submission Reminder')
   end
 end
