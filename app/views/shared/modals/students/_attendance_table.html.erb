@@ -9,25 +9,24 @@
       </tr>
     </thead>
     <tbody class="list">
-      <tr class="btn-reveal-trigger">
-          <% students.each do |student| %>
-            <td class="name align-middle white-space-nowrap py-2"><%= student.student.name %></td>
-            <td class="name align-middle white-space-nowrap py-2"><%= student.attendance %></td>
-            <td class="name align-middle white-space-nowrap py-2"><%=l student.meeting.starts_at, format: :short %></td>
-          <% end %>
-
+      <% students.each do |student| %>
+        <tr class="btn-reveal-trigger">
+          <td class="name align-middle white-space-nowrap py-2"><%= student.student.name %></td>
+          <td class="name align-middle white-space-nowrap py-2"><%= student.attendance %></td>
+          <td class="name align-middle white-space-nowrap py-2"><%=l student.meeting.starts_at, format: :short %></td>
         </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
 <% else %>
-<div class="row">
-  <div class="col-md-6 h-100">
-    <div class="d-flex btn-reveal-trigger">
-      <div class="flex-1 position-relative ps-3">
-        <center><p class="text-1000 mb-3">There is No Data</p></center>
+  <div class="row">
+    <div class="col-md-6 h-100">
+      <div class="d-flex btn-reveal-trigger">
+        <div class="flex-1 position-relative ps-3">
+          <center><p class="text-1000 mb-3">There is No Data</p></center>
+        </div>
       </div>
     </div>
   </div>
-</div>
 <% end %>
