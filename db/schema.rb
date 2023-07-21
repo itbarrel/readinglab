@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_10_100434) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_21_094733) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -79,7 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_100434) do
     t.string "grade"
     t.datetime "deleted_at"
     t.uuid "account_id", null: false
-    t.uuid "klass_id"
+    t.uuid "klass_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "name", "deleted_at"], name: "book_name", unique: true
@@ -118,7 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_100434) do
 
   create_table "form_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.jsonb "form_values"
-    t.uuid "user_id"
+    t.uuid "user_id", null: false
     t.uuid "form_id", null: false
     t.uuid "account_id", null: false
     t.string "parent_type", null: false
@@ -272,6 +272,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_100434) do
     t.datetime "deleted_at"
     t.index ["account_id"], name: "index_message_templates_on_account_id"
     t.index ["name", "account_id", "deleted_at"], name: "message_template_index", unique: true
+  end
+
+  create_table "notices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "reason"
+    t.text "email_text"
+    t.uuid "student_id", null: false
+    t.uuid "parent_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["parent_id"], name: "index_notices_on_parent_id"
+    t.index ["student_id"], name: "index_notices_on_student_id"
   end
 
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -435,8 +447,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_100434) do
     t.integer "status"
     t.uuid "account_id", null: false
     t.uuid "student_id", null: false
-    t.uuid "klass_id"
-    t.uuid "book_id"
+    t.uuid "klass_id", null: false
+    t.uuid "book_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -535,6 +547,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_10_100434) do
   add_foreign_key "meetings", "accounts"
   add_foreign_key "meetings", "klasses"
   add_foreign_key "message_templates", "accounts"
+  add_foreign_key "notices", "parents"
+  add_foreign_key "notices", "students"
   add_foreign_key "notifications", "users"
   add_foreign_key "parents", "accounts"
   add_foreign_key "parents", "cities"

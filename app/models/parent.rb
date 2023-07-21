@@ -37,6 +37,7 @@ class Parent < ApplicationRecord
   belongs_to :account
   belongs_to :city
   has_many :children, class_name: 'Student', dependent: :destroy
+  has_many :notices, dependent: :destroy
 
   validates :father_first, :mother_first, :father_phone, presence: true
   validates :father_email, presence: true

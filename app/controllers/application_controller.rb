@@ -38,7 +38,8 @@ class ApplicationController < ActionController::Base
       { text: 'Billing', class: '', icon: 'micon bi bi-file-earmark-text-fill', sub_items: [
         { url: '/billings/students', text: 'Students', class: '', icon: 'micon bi bi-receipt', models: [:billing] },
         { url: '/payments', text: 'Payments', class: '', icon: 'micon bi bi-credit-card', models: [Receipt, :payment] },
-        { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-receipt', models: [Receipt, :billing] }
+        { url: '/receipts', text: 'Receipts', class: '', icon: 'micon bi bi-receipt', models: [Receipt, :billing] },
+        { url: '/notices', text: 'Notice', class: '', icon: 'micon bi bi-receipt', models: [Receipt, :notice] }
 
       ] },
       { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-chat-text-fill', models: [:communication], sub_items: [] },
