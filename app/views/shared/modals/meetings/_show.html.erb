@@ -12,14 +12,16 @@
     </div>
     <div class="p-4">
       <div class="row">
-        <div class="calender-not-present-student alert alert-warning border-2 d-flex align-items-center" role="alert">
-          <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
-          <% result_hash = meeting.current_students %>
-          <% result_hash[:without_deleted_at].each do |sc| %>
-            <span class="me-2 me-lg-0 "> <%= sc.name %>,</span>
-          <% end %>
-          Inactive Students.
-        </div>
+        <% result_hash = meeting.current_students %>
+        <% if result_hash[:without_deleted_at].present? %>
+          <div class="calender-not-present-student alert alert-warning border-2 d-flex align-items-center" role="alert">
+            <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
+            <% result_hash[:without_deleted_at].each do |sc| %>
+              <span class="me-2 me-lg-0 "> <%= sc.name %>,</span>
+            <% end %>
+            Inactive Students.
+          </div>
+        <% end %>
         <div class="col-lg-6">
           <div class="d-flex">
             <span class="fa-stack ms-n1 me-3">
@@ -57,10 +59,13 @@
                 <% meeting.students.each do |sc| %>
                   <li class="nav-item me-2 me-lg-0 ">
                     <span class="nav-link nav-link-card-details">
-                      <span class="fas fa-user me-2"></span>
+                      <span class="fas fa-user d-flex justify-content-end"></span>
                       <%= sc.name %>
                       <%= link_to(student_details_meeting_path(meeting, student_id: sc.id), class: "badge badge-soft-warning rounded-pill", remote: true) do %>
-                        <span class="fas fa-list"></span>
+                        <span class="fas fa-list d-flex justify-content-end"></span>
+                      <% end %>
+                      <%= link_to(student_attendance_student_path(sc.id), class: "badge badge-soft-primary rounded-pill", remote: true) do %>
+                        <span class="fas fa-clipboard d-flex justify-content-end"></span>
                       <% end %>
                     </span>
                   </li>
