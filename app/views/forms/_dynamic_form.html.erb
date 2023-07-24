@@ -25,11 +25,10 @@
     </div>
 
     <div class="col-lg-8 pe-lg-2">
+      <%= form.simple_fields_for :form_fields do |field| %>
+        <%= render 'form_field_fields', f: field %>
+      <% end %>
       <div id="form_fields">
-        <%= form.simple_fields_for :form_fields do |field| %>
-          <%= render 'form_field_fields', f: field %>
-        <% end %>
-
         <%= link_to_add_association form, :form_fields do %>
           <div class="d-grid gap-2">
             <button class="btn btn-falcon-default btn-sm mb-2" type="submit">

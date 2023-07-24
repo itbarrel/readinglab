@@ -2,8 +2,8 @@
 
 class KlassesController < ApplicationController
   load_and_authorize_resource
-  before_action :set_working_klasses
-  before_action :set_klass, only: %i[extend_sessions mark_obsolete]
+  before_action :set_working_klasses, except: %i[obsolete]
+  before_action :set_klass, only: %i[extend_sessions mark_obsolete details]
   before_action :set_klasses, only: %i[trash]
 
   def index
@@ -109,16 +109,18 @@ class KlassesController < ApplicationController
 
   def obsolete
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
-    @search = Klass.obsolete.ransack(params[:q])
+    @search = @klasses.obsolete.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
     @pagy, @klasses = pagy(@search.result.includes(:room, :teacher), items: per_page)
   end
 
   def mark_obsolete
     respond_to do |format|
-      if @klass.update(obsolete: true)
-        flash[:notice] = 'Class has been marked as obsolete'
-        format.html { redirect_to request.referer, notice: 'Class has been marked as obsolete.' }
+      if @klass.update!(obsolete: params[:obsolete])
+        notice = @klass.obsolete? ? 'obsolete' : 'working'
+        flash_notice = "Class has been marked as #{notice}."
+        flash[:notice] = flash_notice
+        format.html { redirect_to request.referer, notice: flash_notice }
         format.json { render :show, status: :ok, location: @klass }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -127,6 +129,8 @@ class KlassesController < ApplicationController
       format.js { render 'shared/flash' }
     end
   end
+
+  def details; end
 
   private
 

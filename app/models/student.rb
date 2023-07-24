@@ -47,7 +47,7 @@ class Student < ApplicationRecord
           inverse_of: 'student'
   has_many :student_classes, dependent: :destroy
   has_many :klasses, through: :student_classes
-  has_many :meetings, through: :klasses
+  has_many :meetings, through: :klasses # faulty
   has_many :student_meetings, dependent: nil
   has_many :form_details, dependent: nil
   has_many :payments, dependent: nil
@@ -107,12 +107,17 @@ class Student < ApplicationRecord
     payments.joins(:meeting).order('meetings.starts_at desc').first
   end
 
-  def payable_meetings
-    if latest_payment.nil?
-      [Student.active]
-    else
-      meetings.where('meetings.starts_at > ?', latest_payment.meeting.starts_at).order(starts_at: :asc)
+  def active_meetings
+    meeting_ids = []
+    student_classes.each do |x|
+      meeting_ids.push(*x.klass.meetings.where('meetings.starts_at > ?', x.created_at).ids)
     end
+    meetings.where(id: meeting_ids)
+  end
+
+  def payable_meetings
+    escape_meeting_time = latest_payment.nil? ? DateTime.new(2000, 1, 1) : latest_payment.meeting.starts_at
+    active_meetings.where('meetings.starts_at > ?', escape_meeting_time).order(starts_at: :asc)
   end
 
   def next_billing_date

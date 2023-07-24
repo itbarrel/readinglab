@@ -11,7 +11,7 @@ class ReceiptsController < ApplicationController
 
     @search = @receipts.ransack(params[:q])
     @search.sorts = 'amount asc' if @search.sorts.empty?
-    @pagy, @receipts = pagy(@search.result, items: per_page)
+    @pagy, @receipts = pagy(@search.result.includes(:student, :receipt_type), items: per_page)
   end
 
   # GET /receipts/1 or /receipts/1.json

@@ -60,6 +60,7 @@ Rails.application.routes.draw do
       get  :obsolete
     end
     member do
+      get  :details
       put  :mark_obsolete
       post :extend_sessions
     end
@@ -98,6 +99,8 @@ Rails.application.routes.draw do
 
     member do
       get :interviews
+      get :student_attendance
+      get :student_attendance_search
     end
   end
 
@@ -112,6 +115,12 @@ Rails.application.routes.draw do
   resources :billings, only: %i[] do
     collection do
       get :students
+    end
+  end
+
+  resources :notifications, only: %i[] do
+    member do
+      post :read
     end
   end
 

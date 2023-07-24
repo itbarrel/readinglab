@@ -52,6 +52,7 @@ class Klass < ApplicationRecord
   belongs_to :klass_template, optional: true
   belongs_to :attendance_form, optional: true, class_name: 'Form'
 
+  has_many :notifications, as: :record, dependent: nil
   has_many :klass_forms, dependent: :destroy
   has_many :forms, through: :klass_forms
   # has_many :student_forms, through: :student_classes
@@ -91,7 +92,7 @@ class Klass < ApplicationRecord
   end
 
   def name
-    rclass_time = starts_at.strftime('%H:%M %p')
+    rclass_time = starts_at.strftime('%h:%M %p')
     class_name = "#{days_abbr} at #{rclass_time}"
     class_name = "#{room.name} on #{class_name}" if room.present?
     class_name = "#{teacher.name} in #{class_name}" if teacher.present?
@@ -203,10 +204,14 @@ class Klass < ApplicationRecord
     all.where(id: klass_ids)
   end
 
+  def sessions_left
+    meetings.where('starts_at > ?', Time.zone.now).length
+  end
+
   private
 
   def create_meetings
-    return if obselete?
+    return if obsolete?
 
     extend_meetings(session_range, starts_at)
   end
