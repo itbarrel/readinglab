@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_25_105404) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_123721) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -79,7 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_105404) do
     t.string "grade"
     t.datetime "deleted_at"
     t.uuid "account_id", null: false
-    t.uuid "klass_id", null: false
+    t.uuid "klass_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id", "name", "deleted_at"], name: "book_name", unique: true
@@ -118,7 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_105404) do
 
   create_table "form_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.jsonb "form_values"
-    t.uuid "user_id", null: false
+    t.uuid "user_id"
     t.uuid "form_id", null: false
     t.uuid "account_id", null: false
     t.string "parent_type", null: false
@@ -431,17 +431,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_105404) do
   create_table "trajectory_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "error_count"
     t.integer "wpm"
+    t.string "grade"
+    t.string "season"
     t.datetime "entry_date"
     t.integer "status"
     t.uuid "account_id", null: false
     t.uuid "student_id", null: false
-    t.uuid "klass_id", null: false
-    t.uuid "book_id", null: false
+    t.uuid "klass_id"
+    t.uuid "book_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.integer "grade"
-    t.integer "season"
     t.index ["account_id"], name: "index_trajectory_details_on_account_id"
     t.index ["book_id"], name: "index_trajectory_details_on_book_id"
     t.index ["klass_id"], name: "index_trajectory_details_on_klass_id"
@@ -514,6 +514,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_105404) do
     t.string "whodunnit"
     t.text "object"
     t.datetime "created_at"
+    t.text "object_changes"
     t.index ["item_type", "item_id"], name: "index_versions_on_item"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
