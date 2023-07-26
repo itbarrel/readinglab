@@ -5,6 +5,7 @@
 # Table name: users
 #
 #  id                     :uuid             not null, primary key
+#  active                 :boolean          default(TRUE)
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :string
 #  date_of_hire           :date
@@ -28,6 +29,7 @@
 #  role                   :integer
 #  settings               :jsonb
 #  sign_in_count          :integer          default(0), not null
+#  status                 :integer
 #  termination_date       :string
 #  undeletable            :boolean
 #  created_at             :datetime         not null

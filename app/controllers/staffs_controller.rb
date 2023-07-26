@@ -69,6 +69,14 @@ class StaffsController < ApplicationController
     render js: "window.location = '#{staffs_url}'"
   end
 
+  def mark_as_active
+    @staff.update(active: false)
+    respond_to do |format|
+      format.html { redirect_to staffs_url, notice: 'Staff has been successfully Active.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

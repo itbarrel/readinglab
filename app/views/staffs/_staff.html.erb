@@ -9,6 +9,8 @@
   <td class="email align-middle py-2"><%= staff.role%></td>
   <td class="phone align-middle white-space-nowrap py-2"><%= staff.email %></td>
   <td class="phone align-middle white-space-nowrap py-2"><%= staff.phone %></td>
+  <td class="phone align-middle white-space-nowrap py-2"><%= staff.active %></td>
+
   <% if current_user.super_admin? %>
    <td class="phone align-middle white-space-nowrap py-2"><%= staff.account.name %></td>
   <% end %>
@@ -18,6 +20,7 @@
       <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
       <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
       <div class="bg-white py-">
+        <%= link_to('Mark As Active', mark_as_active_staff_path(staff), remote: true, method: :put, class: 'dropdown-item') %>
         <%= link_to('Edit Password', password_staff_path(staff), remote: true, class: 'dropdown-item') %>
         <%= link_to('Edit', edit_staff_path(staff), remote: true, class: 'dropdown-item') %>
         <%= link_to('Delete', staff_path(staff), method: :delete, class: 'dropdown-item text-danger', data: {confirm: 'Are you sure'}) %>
