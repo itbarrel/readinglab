@@ -2,6 +2,7 @@
 
 require 'csv'
 class ApplicationRecord < ActiveRecord::Base
+  has_paper_trail ignore: %i[id created_at updated_at obsoleted_at deleted_at]
   primary_abstract_class
   include Randomizer
 
