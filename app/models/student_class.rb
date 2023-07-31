@@ -39,6 +39,8 @@ class StudentClass < ApplicationRecord
   end
 
   def mark_student_waitlisted
+    return unless student.student_classes.length.zero?
+
     student.wait_listed!
   end
 
