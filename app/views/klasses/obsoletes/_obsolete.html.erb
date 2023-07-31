@@ -7,6 +7,16 @@
   <td class="name align-middle white-space-nowrap py-2"><%= klass.name %></td>
   <td class="email align-middle white-space-nowrap py-2"><%= klass.teacher&.name %></td>
   <td class="phone align-middle white-space-nowrap py-2"><%= klass.room&.name %></td>
+  <td class="phone align-middle white-space-nowrap py-2">
+    <%= form_for klass, remote: true do |f| %>
+      <%= f.hidden_field :klass_id, value: klass.id %>
+
+      <div class="form-check form-switch">
+        <%= f.text_field :obsolete, checked: klass.obsolete, type: 'checkbox', class: 'form-check-input obsolete_switch', id: "switch_#{klass.id}"%>
+        <label class="form-check-label" for="switch_<%= klass.id %>"></label>
+      </div>
+    <% end %>
+  </td>
   <td class="phone align-middle white-space-nowrap py-2"><%=l klass.obsoleted_at %></td>
   <td class="align-middle white-space-nowrap py-2 text-end">
     <div class="dropdown font-sans-serif position-static">
