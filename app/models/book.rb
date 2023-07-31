@@ -11,7 +11,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  account_id :uuid             not null
-#  klass_id   :uuid
+#  klass_id   :uuid             not null
 #
 # Indexes
 #
