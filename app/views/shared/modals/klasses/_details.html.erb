@@ -8,7 +8,7 @@
       <div class="flex-1 position-relative ps-3">
         <p class="text-1000 mb-0">Class Name:<%= klass.name %></p>
         <p class="text-1000 mb-0">Class Time:<%=l klass.starts_at, format: :short %></p>
-        <p class="text-1000 mb-0">Class Teacher:<%= klass.teacher.name %></p>
+        <p class="text-1000 mb-0">Class Teacher:<%= klass&.teacher&.name %></p>
         <p class="text-1000 mb-0">No. of Students:<%= klass.max_students %></p>
         <p class="text-1000 mb-0">Total Session:<%= klass.session_range %></p>
         <p class="text-1000 mb-0">Session Left:<%= klass.sessions_left %></p>

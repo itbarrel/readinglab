@@ -220,3 +220,7 @@
 #calendar-student-selection .choices__list.choices__list--dropdown{
   z-index: 999;
 }
+
+.calender-not-present-student {
+  padding: 5px !important;
+}

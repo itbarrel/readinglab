@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :fetch_notifications, unless: :json_request?
   around_action :set_time_zone, if: :current_user
   before_action :authenticate_user!
+  before_action :set_paper_trail_whodunnit
 
   layout :set_layout
   helper_method :zone_date, :bootstrap_class_for, :status_for_interview, :interview_status_icon, :current_account

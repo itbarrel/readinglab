@@ -224,5 +224,7 @@ class Klass < ApplicationRecord
     meetings_to_handle.each do |x|
       x.update(obsolete: obsolete?)
     end
+
+    student_classes.destroy_all if obsolete?
   end
 end

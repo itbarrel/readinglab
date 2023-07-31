@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_21_094733) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_123721) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -517,6 +517,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_21_094733) do
     t.index ["account_id", "name", "deleted_at"], name: "vacations_name", unique: true
     t.index ["account_id"], name: "index_vacations_on_account_id"
     t.index ["vacation_type_id"], name: "index_vacations_on_vacation_type_id"
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string "item_type", null: false
+    t.uuid "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object"
+    t.datetime "created_at"
+    t.text "object_changes"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "accounts", "account_types"
