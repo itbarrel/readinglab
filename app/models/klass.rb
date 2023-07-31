@@ -217,14 +217,6 @@ class Klass < ApplicationRecord
   end
 
   def handle_obsolete
-    obsolete_time = obsolete? ? Time.zone.now : nil
-    meetings_to_handle = obsolete? ? meetings.working : meetings.obsolete
-
-    update(obsoleted_at: obsolete_time)
-    meetings_to_handle.each do |x|
-      x.update(obsolete: obsolete?)
-    end
-
-    student_classes.destroy_all if obsolete?
+    KlassManageObsoleteJob.perform_async(id)
   end
 end

@@ -118,16 +118,6 @@ class Meeting < ApplicationRecord
   private
 
   def handle_obsolete
-    obsolete_time = obsolete? ? Time.zone.now : nil
-    student_meetings_to_handle = obsolete? ? student_meetings.working : student_meetings.obsolete
-    form_details_to_handle = obsolete? ? form_details.working : form_details.obsolete
-
-    update(obsoleted_at: obsolete_time)
-    student_meetings_to_handle.each do |x|
-      x.update(obsolete: obsolete?)
-    end
-    form_details_to_handle.each do |x|
-      x.update(obsolete: obsolete?)
-    end
+    MeetingManageObsoleteJob.perform_async(id)
   end
 end
