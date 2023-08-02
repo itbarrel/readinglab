@@ -13,10 +13,10 @@ class MeetingManageObsoleteJob
 
     meeting.update(obsoleted_at: obsolete_time)
     student_meetings_to_handle.each do |x|
-      x.update(obsolete: obsolete?)
+      x.update(obsolete: meeting.obsolete?)
     end
     form_details_to_handle.each do |x|
-      x.update(obsolete: obsolete?)
+      x.update(obsolete: meeting.obsolete?)
     end
   end
 end
