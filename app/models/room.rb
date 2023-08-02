@@ -26,6 +26,7 @@ class Room < ApplicationRecord
   belongs_to :account
   has_many :klasses, dependent: :nullify
   has_many :klass_templates, dependent: :nullify
+  has_many :allocations, as: :substance, dependent: nil
 
   validates :name, presence: true, uniqueness: { scope: %i[account_id name deleted_at] }
   validates :capacity, presence: true

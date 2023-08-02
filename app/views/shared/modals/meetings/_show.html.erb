@@ -22,6 +22,16 @@
             Inactive Students.
           </div>
         <% end %>
+        <% [User, Room].each do |rsrc| %>
+          <% allocation = meeting.klass.valid_allocation(meeting.starts_at, rsrc) %>
+          <% resouce_map = {User: 'Teacher', Room: 'Room'} %>
+          <% if allocation.present? %>
+            <div class="calender-not-present-student alert alert-warning border-2 d-flex align-items-center" role="alert">
+              <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
+              <span class="me-2 me-lg-0 "><%= "#{resouce_map[rsrc.name.to_sym]}: #{allocation.substance.name} was attached to this class." %></span>
+            </div>
+          <% end %>
+        <% end %>
         <div class="col-lg-6">
           <div class="d-flex">
             <span class="fa-stack ms-n1 me-3">
