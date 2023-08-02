@@ -10,6 +10,16 @@
     <td class="phone align-middle white-space-nowrap py-2"><%= klass.max_students %></td>
     <td class="phone align-middle white-space-nowrap py-2"><%= klass.duration %></td>
     <td class="phone align-middle white-space-nowrap py-2"><%= klass.session_range %></td>
+    <td class="phone align-middle white-space-nowrap py-2">
+      <%= form_for klass, remote: true do |f| %>
+        <%= f.hidden_field :klass_id, value: klass.id %>
+
+        <div class="form-check form-switch">
+          <%= f.text_field :obsolete, checked: klass.obsolete, type: 'checkbox', class: 'form-check-input obsolete_switch', id: "switch_#{klass.id}"%>
+          <label class="form-check-label" for="switch_<%= klass.id %>"></label>
+        </div>
+      <% end %>
+    </td>
     <td class="align-middle white-space-nowrap py-2 text-end">
       <div class="dropdown font-sans-serif position-static">
         <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
@@ -20,6 +30,7 @@
           <% if can? :edit, Klass %>
             <%= link_to('Edit', edit_klass_path(klass), remote: true, class: 'dropdown-item') %>
           <% end %>
+
           <% if can? :delete, Klass %>
             <%= link_to('Delete', klass_path(klass), method: :delete, class: 'dropdown-item text-danger', data: {confirm: 'Are you sure'}) %>
           <% end %>

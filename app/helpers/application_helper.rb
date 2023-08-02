@@ -18,4 +18,9 @@ module ApplicationHelper
     false
     # log_and_raise_error("Given argument is not a valid UUID: '#{format_argument_output(uuid)}'")
   end
+
+  def seconds_to_days(seconds)
+    days = seconds / (24 * 60 * 60)
+    days.floor
+  end
 end
