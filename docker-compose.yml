@@ -14,9 +14,6 @@ x-app: &default-app
   restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
   stop_grace_period: "3s"
   tty: true
-  volumes:
-    - "${DOCKER_WEB_VOLUME:-./public:/app/public}"
-    - "storage:/app/storage"
 
 services:
   worker:
@@ -47,6 +44,9 @@ services:
       - '${DOCKER_WEB_PORT_FORWARD:-3000}:${PORT:-3000}'
     depends_on:
       - "worker"
+    volumes:
+      - "${DOCKER_WEB_VOLUME:-./public:/app/public}"
+      - "./storage:/app/app/storage"
 
   nginx:
     image: nginx:alpine
