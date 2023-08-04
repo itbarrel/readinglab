@@ -19,7 +19,8 @@ class ArchiveKlassesJob
       users ||= oc.account.users.where(role: :super_visor) if users.empty?
 
       users.each do |x|
-        x.notifications.create!(record: oc, purpose: :mark_obsolete)
+        notification = x.notifications.find_or_initialize_by(record: oc, purpose: :mark_obsolete)
+        notification.save unless notification.persisted?
       end
     end
   end
