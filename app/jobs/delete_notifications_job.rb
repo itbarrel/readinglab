@@ -6,9 +6,9 @@ class DeleteNotificationsJob
   include Sidekiq::Worker
 
   def perform
-    time_to_check = 3.months.ago
+    time_to_check = 1.month.ago
 
     notifications = Notification.where('seen_at < ?', time_to_check)
-    notifications.destroy_all
+    notifications.delete_all
   end
 end
