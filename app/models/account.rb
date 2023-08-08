@@ -61,11 +61,17 @@ class Account < ApplicationRecord
   validates :email, :mobile, :postal_code, presence: true
   validates :name, presence: true, uniqueness: { scope: %i[name deleted_at] }
 
+  after_initialize :set_default_values
+
   accepts_nested_attributes_for :admin
 
   enum :billing_scheme, %i[sessionly monthly annual]
 
   def self.default_seeds
     %w[ReadingLab]
+  end
+
+  def set_default_values
+    self.notify_emails = true if new_record?
   end
 end

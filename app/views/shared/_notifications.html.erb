@@ -1,4 +1,4 @@
-<a class="nav-link notification-indicator-primary px-0 fa-icon-wait <%= notifications.seen_all? ? 'notification-indicator' : '' %>"
+<a class="nav-link notification-indicator-primary px-0 fa-icon-wait <%= (notifications&.any? && notifications.seen?)? 'notification-indicator' : '' %>"
   id="navbarDropdownNotification" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
   <span class="fas fa-bell" data-fa-transform="shrink-6" style="font-size: 33px;"></span>
 </a>
@@ -15,44 +15,47 @@
     <div class="scrollbar-overlay" style="max-height:19rem">
       <div class="list-group list-group-flush fw-normal fs--1">
         <!--<div class="list-group-title border-bottom">NEW</div>-->
-        <% notifications.order(created_at: :desc).each do |notification| %>
-          <div class="list-group-item">
-            <span class="notification notification-flush <%= notification.seen?? '' : 'notification-unread' %>">
-              <div class="notification-avatar">
-                <div class="avatar avatar-2xl me-3">
-                  <%= image_tag('team/1-thumb.png', class: 'rounded-circle') %>
-                </div>
-              </div>
-              <div class="notification-body">
-                <p class="mb-1"><strong><%= notification.text %></strong> <%= notification.description %></p>
-                <!--<span class="notification-time">
-                  <span class="me-2" role="img" aria-label="Emoji">💬</span>
-                  Just now
-                </span>-->
-                <% if notification.seen_at.blank? %>
-                  <div class="row">
-                    <div class="col-2">
-                      <%= form_with(url: read_notification_path(notification), method: :post, local: false, class: 'form-inline') do |f| %>
-                        <%= f.hidden_field :operation, value: 'affirmative' %>
-                        <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
-                          <i class="fas fa-check"></i>
-                        <% end %>
-                      <% end %>
-                    </div>
 
-                    <div class="col-8">
-                      <%= form_with(url: read_notification_path(notification), method: :post, class: 'form-inline') do |f| %>
-                        <%= f.hidden_field :operation, value: 'negative' %>
-                        <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
-                          <i class="fas fa-times"></i>
-                        <% end %>
-                      <% end %>
-                    </div>
+        <% if notifications.present? %>
+          <% notifications.order(created_at: :desc).each do |notification| %>
+            <div class="list-group-item">
+              <span class="notification notification-flush <%= notification.seen?? '' : 'notification-unread' %>">
+                <div class="notification-avatar">
+                  <div class="avatar avatar-2xl me-3">
+                    <%= image_tag('team/1-thumb.png', class: 'rounded-circle') %>
                   </div>
-                <% end %>
-              </div>
-            </span>
-          </div>
+                </div>
+                <div class="notification-body">
+                  <p class="mb-1"><strong><%= notification.text %></strong> <%= notification.description %></p>
+                  <!--<span class="notification-time">
+                    <span class="me-2" role="img" aria-label="Emoji">💬</span>
+                    Just now
+                  </span>-->
+                  <% if notification.seen_at.blank? %>
+                    <div class="row">
+                      <div class="col-2">
+                        <%= form_with(url: read_notification_path(notification), method: :post, local: false, class: 'form-inline') do |f| %>
+                          <%= f.hidden_field :operation, value: 'affirmative' %>
+                          <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
+                            <i class="fas fa-check"></i>
+                          <% end %>
+                        <% end %>
+                      </div>
+
+                      <div class="col-8">
+                        <%= form_with(url: read_notification_path(notification), method: :post, class: 'form-inline') do |f| %>
+                          <%= f.hidden_field :operation, value: 'negative' %>
+                          <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
+                            <i class="fas fa-times"></i>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </span>
+            </div>
+          <% end %>
         <% end %>
         
         <!--<div class="list-group-title border-bottom">EARLIER</div>

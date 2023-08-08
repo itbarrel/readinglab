@@ -62,6 +62,7 @@ RUN adduser -D -u $UID -g $GID ruby
 RUN chown -R ruby /app
 USER ruby
 
+RUN mkdir -p /app/storage && chown -R ruby:ruby /app/storage
 COPY --chown=ruby:ruby bin/ ./bin
 RUN chmod 0755 bin/*
 

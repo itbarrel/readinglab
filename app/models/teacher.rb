@@ -49,6 +49,7 @@
 class Teacher < User
   has_many :klass_templates, dependent: :nullify
   has_many :klasses, dependent: :nullify
+  has_many :allocations, as: :substance, class_name: 'Allocation', dependent: nil
 
   default_scope { teacher }
 
