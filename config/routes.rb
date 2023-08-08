@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     concerns %i[trashable exportable]
     member do
       get :password
-      put :mark_as_active
+      put :mark_active
     end
   end
 

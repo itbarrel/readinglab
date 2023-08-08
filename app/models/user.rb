@@ -29,7 +29,6 @@
 #  role                   :integer
 #  settings               :jsonb
 #  sign_in_count          :integer          default(0), not null
-#  status                 :integer
 #  termination_date       :string
 #  undeletable            :boolean
 #  created_at             :datetime         not null
