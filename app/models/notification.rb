@@ -76,7 +76,7 @@ class Notification < ApplicationRecord
     seen_at.present?
   end
 
-  def self.seen_all?
+  def self.seen?
     where(seen_at: nil).any?
   end
 

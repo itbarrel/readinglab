@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   # include EsbuildErrorRendering if Rails.env.development?
 
-  before_action :generate_sidebar, unless: :json_request?
-  before_action :fetch_notifications, unless: :json_request?
+  before_action :generate_sidebar, unless: :js_request?
+  before_action :fetch_notifications, unless: :js_request?
   around_action :set_time_zone, if: :current_user
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit

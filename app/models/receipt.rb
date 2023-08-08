@@ -53,7 +53,7 @@ class Receipt < ApplicationRecord
   private
 
   def validate_payable_meetings
-    return true unless student.payable_meetings.any?
+    return true if student.payable_meetings.any?
 
     errors.add(:base, 'Student has no sessions to pay for.')
     false

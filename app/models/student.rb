@@ -45,6 +45,11 @@ class Student < ApplicationRecord
           foreign_key: 'student_id',
           dependent: :destroy,
           inverse_of: 'student'
+  has_one :latest_attendance, -> { order created_at: :desc },
+          class_name: 'StudentMeeting',
+          foreign_key: 'student_id',
+          dependent: :destroy,
+          inverse_of: 'student'
   has_many :student_classes, dependent: :destroy
   has_many :klasses, through: :student_classes
   has_many :meetings, through: :klasses # faulty

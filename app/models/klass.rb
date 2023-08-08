@@ -53,6 +53,7 @@ class Klass < ApplicationRecord
   belongs_to :attendance_form, optional: true, class_name: 'Form'
 
   has_many :notifications, as: :record, dependent: nil
+  has_many :allocated_resources, as: :allocatee, class_name: 'Allocation', dependent: nil
   has_many :klass_forms, dependent: :destroy
   has_many :forms, through: :klass_forms
   # has_many :student_forms, through: :student_classes
@@ -80,6 +81,8 @@ class Klass < ApplicationRecord
   before_validation :set_default_max_student
   after_create :create_meetings, unless: :skip_validations
   after_save :handle_obsolete, if: :saved_change_to_obsolete?
+  around_save :allocate_teacher, if: :teacher_id_changed?
+  around_save :allocate_room, if: :room_id_changed?
 
   def set_default_max_student
     self.max_students ||= 5 if max_students.nil?
@@ -208,6 +211,10 @@ class Klass < ApplicationRecord
     meetings.where('starts_at > ?', Time.zone.now).length
   end
 
+  def valid_allocation(starts_at, rsrc)
+    allocated_resources.where(substance_type: rsrc.name).where('starts_at < ? and ends_at > ?', starts_at, starts_at)&.first
+  end
+
   private
 
   def create_meetings
@@ -216,15 +223,25 @@ class Klass < ApplicationRecord
     extend_meetings(session_range, starts_at)
   end
 
+  def allocate_teacher
+    date = Time.zone.now
+    previous_allocation = allocated_resources.latest(User)
+
+    previous_allocation.update(ends_at: date) if previous_allocation.present?
+    yield
+    allocated_resources.create(substance: teacher, starts_at: date)
+  end
+
+  def allocate_room
+    date = Time.zone.now
+    previous_allocation = allocated_resources.latest(Room)
+
+    previous_allocation.update(ends_at: date) if previous_allocation.present?
+    yield
+    allocated_resources.create(substance: room, starts_at: date)
+  end
+
   def handle_obsolete
-    obsolete_time = obsolete? ? Time.zone.now : nil
-    meetings_to_handle = obsolete? ? meetings.working : meetings.obsolete
-
-    update(obsoleted_at: obsolete_time)
-    meetings_to_handle.each do |x|
-      x.update(obsolete: obsolete?)
-    end
-
-    student_classes.destroy_all if obsolete?
+    KlassManageObsoleteJob.perform_async(id)
   end
 end
