@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_07_081800) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_08_085621) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -373,6 +373,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_07_081800) do
     t.index ["name", "account_id", "deleted_at"], name: "message_template_index", unique: true
   end
 
+  create_table "notices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "reason"
+    t.text "email_text"
+    t.uuid "student_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["student_id"], name: "index_notices_on_student_id"
+  end
+
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "purpose"
     t.string "record_type", null: false
@@ -659,6 +669,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_07_081800) do
   add_foreign_key "meetings", "accounts"
   add_foreign_key "meetings", "klasses"
   add_foreign_key "message_templates", "accounts"
+  add_foreign_key "notices", "students"
   add_foreign_key "notifications", "users"
   add_foreign_key "parents", "accounts"
   add_foreign_key "parents", "cities"
