@@ -25,6 +25,11 @@ module Readinglab
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
 
+    config.skylight.environments << 'development'
+    config.skylight.environments << 'production'
+
+    config.skylight.probes += %w[redis]
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
