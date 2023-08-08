@@ -9,6 +9,7 @@
   <td class="email align-middle py-2"><%= staff.role%></td>
   <td class="phone align-middle white-space-nowrap py-2"><%= staff.email %></td>
   <td class="phone align-middle white-space-nowrap py-2"><%= staff.phone %></td>
+  <% if current_user.admin? %>
   <td class="phone align-middle white-space-nowrap py-2">
      <%= form_for staff_url(staff), remote: true do |f| %>
         <%= f.hidden_field :staff, value: staff %>
@@ -18,6 +19,7 @@
       </div>
       <% end %>
   </td>
+  <% end %>
 
   <% if current_user.super_admin? %>
    <td class="phone align-middle white-space-nowrap py-2"><%= staff.account.name %></td>
