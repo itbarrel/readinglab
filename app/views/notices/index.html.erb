@@ -1,0 +1,25 @@
+<div class="card mb-3" data-list='{"valueNames":[""],"page":15}'>
+  <div class="card-header">
+    <% if @notices.blank? %>
+      <span>No notices found.</span>
+    <% end %>
+    <% @notices.each do |notice| %>
+    <div class="accordion-item" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="<%= notice.id%>">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapse_<%= notice.id%>" aria-expanded="true" aria-controls="collapse_<%= notice.id %>">
+            <%= notice.student.name %>,
+            <%= notice.parent.father_name %>
+            Reason: (<%= notice.reason %>)
+          </button>
+        </h2>
+        <div class="accordion-collapse collapse show" id="collapse_<%= notice.id%>" aria-labelledby="<%= notice.id%>"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body"> <%= notice.email_text %>. </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

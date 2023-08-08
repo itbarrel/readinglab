@@ -57,6 +57,7 @@ class Student < ApplicationRecord
   has_many :form_details, dependent: nil
   has_many :payments, dependent: nil
   has_many :receipts, dependent: :destroy
+  has_many :notices, dependent: :destroy
 
   enum :status, %i[registered scheduled wait_listed active]
   enum :gender, %i[male female others not_mentioned]

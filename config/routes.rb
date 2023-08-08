@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   resources :rooms, :teachers, :vacations, :books, concerns: %i[trashable exportable]
   resources :message_templates, :trajectory_details, concerns: %i[trashable exportable]
-  resources :receipt_types, :receipts, :parents, :payments, concerns: %i[trashable exportable]
+  resources :receipt_types, :receipts, :notices, :parents, :payments, concerns: %i[trashable exportable]
 
   resources :events, only: %i[show update]
   resources :student_classes, only: %i[create destroy]
