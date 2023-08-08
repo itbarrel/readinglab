@@ -24,3 +24,4 @@ import "./theme/calendarInit";
 import "./theme/graphInit";
 import "./theme/draggable";
 import "./custom";
+import "./intercepter";
