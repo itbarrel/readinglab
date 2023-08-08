@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_31_091524) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_07_081800) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -86,6 +86,91 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_091524) do
     t.datetime "deleted_at"
     t.index ["allocatee_type", "allocatee_id"], name: "index_allocations_on_allocatee"
     t.index ["substance_type", "substance_id"], name: "index_allocations_on_substance"
+  end
+
+  create_table "archive_form_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.jsonb "form_values"
+    t.uuid "user_id"
+    t.uuid "form_id", null: false
+    t.uuid "account_id", null: false
+    t.string "parent_type", null: false
+    t.uuid "parent_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.datetime "form_detail_deleted_at"
+    t.datetime "form_detail_created_at"
+    t.datetime "form_detail_updated_at"
+    t.index ["account_id"], name: "index_archive_form_details_on_account_id"
+    t.index ["form_id"], name: "index_archive_form_details_on_form_id"
+    t.index ["parent_type", "parent_id"], name: "index_archive_form_details_on_parent"
+    t.index ["user_id"], name: "index_archive_form_details_on_user_id"
+  end
+
+  create_table "archive_klasses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "starts_at"
+    t.boolean "monday", default: false
+    t.boolean "tuesday", default: false
+    t.boolean "wednesday", default: false
+    t.boolean "thursday", default: false
+    t.boolean "friday", default: false
+    t.boolean "saturday", default: false
+    t.boolean "sunday", default: false
+    t.integer "duration"
+    t.integer "session_range", default: 8
+    t.integer "range_type"
+    t.integer "max_students"
+    t.integer "min_students", default: 0
+    t.datetime "deleted_at"
+    t.datetime "klass_deleted_at"
+    t.datetime "klass_created_at"
+    t.datetime "klass_updated_at"
+    t.uuid "account_id", null: false
+    t.uuid "teacher_id"
+    t.uuid "room_id"
+    t.uuid "klass_template_id"
+    t.uuid "attendance_form_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_archive_klasses_on_account_id"
+    t.index ["attendance_form_id"], name: "index_archive_klasses_on_attendance_form_id"
+    t.index ["klass_template_id"], name: "index_archive_klasses_on_klass_template_id"
+    t.index ["room_id"], name: "index_archive_klasses_on_room_id"
+    t.index ["teacher_id"], name: "index_archive_klasses_on_teacher_id"
+  end
+
+  create_table "archive_meetings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.boolean "cancel"
+    t.boolean "hold"
+    t.uuid "account_id", null: false
+    t.uuid "archive_klass_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.datetime "meeting_deleted_at"
+    t.datetime "meeting_created_at"
+    t.datetime "meeting_updated_at"
+    t.index ["account_id"], name: "index_archive_meetings_on_account_id"
+    t.index ["archive_klass_id"], name: "index_archive_meetings_on_archive_klass_id"
+  end
+
+  create_table "archive_student_meetings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "attendance"
+    t.uuid "account_id", null: false
+    t.uuid "archive_meeting_id", null: false
+    t.uuid "student_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.datetime "student_meeting_deleted_at"
+    t.datetime "student_meeting_created_at"
+    t.datetime "student_meeting_updated_at"
+    t.index ["account_id", "archive_meeting_id", "student_id", "deleted_at"], name: "archive_student_meeting_id", unique: true
+    t.index ["account_id"], name: "index_archive_student_meetings_on_account_id"
+    t.index ["archive_meeting_id"], name: "index_archive_student_meetings_on_archive_meeting_id"
+    t.index ["student_id"], name: "index_archive_student_meetings_on_student_id"
   end
 
   create_table "books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -536,6 +621,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_091524) do
   add_foreign_key "accounts", "account_types"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "archive_form_details", "accounts"
+  add_foreign_key "archive_form_details", "forms"
+  add_foreign_key "archive_form_details", "users"
+  add_foreign_key "archive_klasses", "accounts"
+  add_foreign_key "archive_klasses", "forms", column: "attendance_form_id"
+  add_foreign_key "archive_klasses", "klass_templates"
+  add_foreign_key "archive_klasses", "rooms"
+  add_foreign_key "archive_klasses", "users", column: "teacher_id"
+  add_foreign_key "archive_meetings", "accounts"
+  add_foreign_key "archive_meetings", "archive_klasses"
+  add_foreign_key "archive_student_meetings", "accounts"
+  add_foreign_key "archive_student_meetings", "archive_meetings"
+  add_foreign_key "archive_student_meetings", "students"
   add_foreign_key "books", "accounts"
   add_foreign_key "books", "klasses"
   add_foreign_key "content_libraries", "accounts"
