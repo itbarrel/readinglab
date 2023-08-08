@@ -69,6 +69,22 @@ class StaffsController < ApplicationController
     render js: "window.location = '#{staffs_url}'"
   end
 
+  def mark_active
+    respond_to do |format|
+      if @staff.update!(active: params[:active])
+        notice = @staff.active? ? 'active' : 'inactive'
+        flash_notice = "staff has been marked #{notice}."
+        flash[:notice] = flash_notice
+        format.html { redirect_to request.referer, notice: flash_notice }
+        format.json { render :show, status: :ok, location: @staff }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @staff.errors, status: :unprocessable_entity }
+      end
+      format.js { render 'shared/flash' }
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -5,6 +5,7 @@
 # Table name: users
 #
 #  id                     :uuid             not null, primary key
+#  active                 :boolean          default(TRUE)
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :string
 #  date_of_hire           :date

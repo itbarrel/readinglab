@@ -1,25 +1,63 @@
-<h2>Change your password</h2>
+<div class="row min-vh-100 flex-center g-0">
+  <div class="col-lg-8 col-xxl-5 py-3 position-relative">
+    <%= image_tag('icons/spot-illustrations/bg-shape.png', class: 'bg-auth-circle-shape', width: 250) %>
+    <%= image_tag('icons/spot-illustrations/shape-1.png', class: 'bg-auth-circle-shape-2', width: 150) %>
+    <div class="card overflow-hidden z-index-1">
+      <div class="card-body p-0">
+        <div class="row g-0 h-100">
+          <div class="col-md-5 text-center bg-card-gradient">
+            <div class="position-relative p-4 pt-md-5 pb-md-7 light">
+              <div class="bg-holder bg-auth-card-shape login-side-card"></div>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  <%= f.hidden_field :reset_password_token %>
+              <div class="z-index-1 position-relative">
+                <span class="link-light mb-4 font-sans-serif fs-4 d-inline-block fw-bolder">
+                  <i class="fab fa-pied-piper-hat"></i>ReadingLab
+                </span>
+                <p class="opacity-75 text-white"></p>
+              </div>
+            </div>
+            <div class="mt-3 mb-4 mt-md-4 mb-md-5 light">
+              <!-- <p class="text-white">Don't have an account?<br><a class="text-decoration-underline link-light" href="../../../pages/authentication/card/register.html">Get started!</a></p> -->
+              <!-- <p class="mb-0 mt-4 mt-md-5 fs--1 fw-semi-bold text-white opacity-75">Read our <a class="text-decoration-underline text-white" href="#!">terms</a> and <a class="text-decoration-underline text-white" href="#!">conditions </a></p> -->
+            </div>
+          </div>
+          <div class="col-md-7 d-flex flex-center">
+            <div class="p-4 p-md-5 flex-grow-1">
+              <div class="row flex-between-center">
+                <div class="col-auto">
+                  <h3>Change your password</h3>
+                </div>
+              </div>
+              <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+                <%= render "devise/shared/error_messages", resource: resource %>
+                <%= f.hidden_field :reset_password_token %>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-    <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                      <label class="form-label" for="card-password">Password</label>
+                    </div>
+                  <% if @minimum_password_length %>
+                    <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+                  <% end %>
+                  <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control", id:"card-password" %>
+                </div>
+
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between">
+                    <label class="form-label" for="card-password">Password</label>
+                  </div>
+                  <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", id:"card-password" %>
+                </div>
+
+                <div class="actions">
+                  <%= f.submit "Change my password", class: "btn btn-primary d-block w-100 mt-3" %>
+                </div>
+              <% end %>
+              <%= render "devise/shared/links" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
