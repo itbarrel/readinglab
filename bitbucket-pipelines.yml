@@ -22,10 +22,11 @@ pipelines:
       - step:
           name: Deploy to DigitalOcean
           deployment: Readinglab
+          trigger: manual
           script:
             - pipe: atlassian/ssh-run:0.4.3
               variables:
                 SSH_USER: $SSH_USER
                 SERVER: $SERVER
                 MODE: 'script'
-                COMMAND: 'cd /apps/readinglab'
+                COMMAND: 'deploy.sh'
