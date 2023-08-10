@@ -22,8 +22,6 @@ pipelines:
       - step:
           name: Deploy to DigitalOcean
           deployment: Readinglab
-          # services:
-          #   - docker
           script:
             - pipe: atlassian/ssh-run:0.4.3
               variables:
