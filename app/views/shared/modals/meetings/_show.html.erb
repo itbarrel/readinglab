@@ -17,9 +17,9 @@
           <div class="calender-not-present-student alert alert-warning border-2 d-flex align-items-center" role="alert">
             <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
             <% result_hash[:without_deleted_at].each do |sc| %>
-              <span class="me-2 me-lg-0 "> <%= sc.name %>,</span>
+              <span class="me-2 me-lg-0 "> <%= sc.name %>,&nbsp</span>
             <% end %>
-            Inactive Students.
+            were not the part of Class atm.
           </div>
         <% end %>
         <% [User, Room].each do |rsrc| %>
@@ -33,38 +33,40 @@
           <% end %>
         <% end %>
         <div class="col-lg-6">
-          <div class="d-flex">
-            <span class="fa-stack ms-n1 me-3">
-              <i class="fas fa-circle fa-stack-2x text-200"></i>
-              <i class="fa-inverse fa-stack-1x text-primary fas fa-users" data-fa-transform="shrink-2"></i>
-            </span>
-            <div class="flex-1">
-              <h5 class="mb-2 fs-0">Student Was in Class</h5>
-              <ul class="nav flex-lg-column fs--1">
-                <% result_hash[:with_deleted_at].each do |sc| %>
-                  <li class="nav-item me-2 me-lg-0 ">
-                    <span class="nav-link nav-link-card-details">
-                      <span class="fas fa-user me-2"></span>
-                      <%= sc.name %>
-                      <%= link_to(student_details_meeting_path(meeting, student_id: sc.id), class: "badge badge-soft-warning rounded-pill", remote: true) do %>
-                        <span class="fas fa-list"></span>
-                      <% end %>
-                    </span>
-                  </li>
-                <% end %>
-                <% unless result_hash[:with_deleted_at].present? %>
-                  <p class="text-word-break fs--1">No student.<p>
-                <% end %>
-              </ul>
+          <% if result_hash[:with_deleted_at].present? %>
+            <div class="d-flex">
+              <span class="fa-stack ms-n1 me-3">
+                <i class="fas fa-circle fa-stack-2x text-200"></i>
+                <i class="fa-inverse fa-stack-1x text-primary fas fa-users" data-fa-transform="shrink-2"></i>
+              </span>
+              <div class="flex-1">
+                <h5 class="mb-2 fs-0">Students were part of Class atm.</h5>
+                <ul class="nav flex-lg-column fs--1">
+                  <% result_hash[:with_deleted_at].each do |sc| %>
+                    <li class="nav-item me-2 me-lg-0 ">
+                      <span class="nav-link nav-link-card-details">
+                        <span class="fas fa-user me-2"></span>
+                        <%= sc.name %>
+                        <%= link_to(student_details_meeting_path(meeting, student_id: sc.id), class: "badge badge-soft-warning rounded-pill", remote: true) do %>
+                          <span class="fas fa-list"></span>
+                        <% end %>
+                      </span>
+                    </li>
+                  <% end %>
+                  <% unless result_hash[:with_deleted_at].present? %>
+                    <p class="text-word-break fs--1">No student.<p>
+                  <% end %>
+                </ul>
+              </div>
             </div>
-          </div>
+          <% end %>
           <div class="d-flex">
             <span class="fa-stack ms-n1 me-3">
               <i class="fas fa-circle fa-stack-2x text-200"></i>
               <i class="fa-inverse fa-stack-1x text-primary fas fa-users" data-fa-transform="shrink-2"></i>
             </span>
             <div class="flex-1">
-              <h5 class="mb-2 fs-0">Students</h5>
+              <h5 class="mb-2 fs-0">Current Students</h5>
               <ul class="nav flex-lg-column fs--1">
                 <% meeting.students.each do |sc| %>
                   <li class="nav-item me-2 me-lg-0 ">
