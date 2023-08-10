@@ -19,3 +19,15 @@ pipelines:
             - docker build -t naveediftikhar/readinglab:latest .
             - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             - docker push naveediftikhar/readinglab:latest
+      - step:
+          name: Deploy to DigitalOcean
+          deployment: Readinglab
+          # services:
+          #   - docker
+          script:
+            - pipe: atlassian/ssh-run:0.4.3
+              variables:
+                SSH_USER: $SSH_USER
+                SERVER: $SERVER
+                MODE: 'script'
+                COMMAND: 'cd /apps/readinglab'
