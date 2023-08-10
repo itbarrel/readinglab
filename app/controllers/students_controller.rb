@@ -98,7 +98,7 @@ class StudentsController < ApplicationController
 
   def calculate_attendance_for(student, from = Time.zone.today.beginning_of_month, to = Time.zone.today)
     meeting_ids = current_account.meetings.working.where(starts_at: from..to).ids
-    @student_attendance = student.student_meetings.where(meeting_id: meeting_ids)
+    @student_attendance = student.student_meetings.where(meeting_id: meeting_ids).includes(:meeting).order('meetings.starts_at desc')
   end
 
   private
