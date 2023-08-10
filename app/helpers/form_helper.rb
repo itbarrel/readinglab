@@ -11,7 +11,7 @@ module FormHelper
       data = { created_at: Time.zone.now }.to_dot
     end
 
-    field_disabled = data.created_at < 2.weeks.ago && !(current_user.admin? && current_user.supervisor?)
+    field_disabled = data.created_at < 2.weeks.ago && !(current_user.admin? || current_user.supervisor?)
 
     case field.field_type
     when 'text_field'
