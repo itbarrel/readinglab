@@ -1,0 +1,1 @@
+cd apps/readinglab && docker compose pull && docker compose down && sudo docker rmi $(sudo docker images -f "dangling=true" -q) && docker compose up -d
