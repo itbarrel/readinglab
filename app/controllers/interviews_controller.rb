@@ -30,6 +30,8 @@ class InterviewsController < ApplicationController
       )
     end
 
+    interview_students = interview_students.accessible_by(current_ability)
+
     @search = interview_students.ransack(params[:q])
     @search.sorts = 'first_name asc' if @search.sorts.empty?
     @pagy, @interview_students = pagy(@search.result.includes([:latest_interview]), items: per_page)
