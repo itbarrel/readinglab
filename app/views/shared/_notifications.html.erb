@@ -43,7 +43,7 @@
                       </div>
 
                       <div class="col-8">
-                        <%= form_with(url: read_notification_path(notification), method: :post, class: 'form-inline') do |f| %>
+                        <%= form_with(url: read_notification_path(notification), method: :post, local: false, class: 'form-inline') do |f| %>
                           <%= f.hidden_field :operation, value: 'negative' %>
                           <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
                             <i class="fas fa-times"></i>
