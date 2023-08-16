@@ -1,4 +1,7 @@
 $('#klass_students').html("<%= j render 'shared/modals/klasses/students', klass: @student_class.klass %>");
+$('#klass_settings').html("<%= j render 'shared/modals/klasses/form', klass: @student_class.klass %>");
+window.draggableInit({})
+window.choicesInit();
 
 $("#flash_messages").html("<%= j render 'shared/flash' %>");
 var toastElList = [].slice.call(document.querySelectorAll('.toast'))

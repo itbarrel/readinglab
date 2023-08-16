@@ -17,67 +17,8 @@
         <div class="col-lg-6" id="klass_students">
           <%= render 'shared/modals/klasses/students', klass: klass %>
         </div>
-        <div class="col-lg-6">
-          <h6 class="mt-5 mt-lg-0">Class Settings</h6>
-
-          <% if can? :manage, klass %>
-            <%= form_for StudentClass.new, remote: true do |f| %>
-              <%= f.hidden_field :klass_id, value: klass.id %>
-
-              <div class="mb-3">
-                <%= f.label :add_student, class: 'fs-0' %>
-                <%= f.collection_select :student_id, current_account.students.  eligible_for_klass(klass.id), :id, :name, { include_blank: true }, { class: 'form-select js-choice', data:{ options: { searchEnabled: true }} } %>
-              </div>
-              <div class="d-flex justify-content-end align-items-center">
-                <%= f.submit 'Add', class: 'btn btn-primary px-4' %>
-              </div>
-            <% end %>
-
-            <%= form_for klass, remote: true do |f| %>
-              <div class="mb-3">
-                <%= f.label :start_date, class: 'fs-0' %>
-                <%= f.text_field :starts_at, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
-              </div>
-              <div class="mb-3">
-                <%= f.label :max_students, class: 'fs-0' %>
-                <%= f.number_field :max_students, class: 'form-control' %>
-              </div>
-              <div class="mb-3">
-                <%= f.label :teacher_id, class: 'fs-0' %>
-                <%= f.collection_select :teacher_id, current_account.teachers, :id, :name, { include_blank: true }, { class: 'form-control' } %>
-              </div>
-              <div class="mb-3">
-                <%= f.label :room_id, class: 'fs-0' %>
-                <%= f.collection_select :room_id, current_account.rooms, :id, :name, { include_blank: true }, { class: 'form-control' } %>
-              </div>
-              <div class="mb-3">
-                <%= f.label :attendance_form_id, class: 'fs-0' %>
-                <%= f.collection_select :attendance_form_id, current_account.forms.attendancable, :id, :name, { include_blank: true }, { class: 'form-control' } %>
-              </div>
-              <div class="mb-3">
-                <%= f.label :forms, class:' fs-0' %>
-                <%= f.hidden_field :form_ids, multiple: true, value: '' %>
-                <%= f.collection_select :form_ids, current_account.forms.lessonable, :id, :name, {include_blank: true, include_hidden: false }, { class: 'form-select js-choice', multiple: "multiple-select-example" }%>
-              </div>
-
-              <div class="d-flex justify-content-end align-items-center">
-                <%= f.submit 'Update', class: 'btn btn-primary px-4' %>
-              </div>
-            <% end %>
-
-            <%= form_tag(extend_sessions_klass_path(klass), remote: true) do |f| %>
-              <div class="mb-3">
-                <label class="fs-0">Extend Seesions:</label>
-                <%= text_field_tag :session_count, nil ,class: 'form-control' %>
-              </div>
-
-              <div class="d-flex justify-content-end align-items-center">
-                <%= submit_tag 'Extend', class: 'btn btn-primary px-4' %>
-              </div>
-            <% end %>
-          <% else %>
-            <p>Please consult Admins to manage the class.</p>
-          <% end %>
+        <div class="col-lg-6" id="klass_settings">
+          <%= render 'shared/modals/klasses/form', klass: klass %>
         </div>
       </div>
     </div>
@@ -88,51 +29,5 @@
 </div>
 
 <script>
-  const drag_start = ()=>{}
-  const drag_stop = ({ data })=>{
-    setTimeout(()=>{
-      const { source: el } = data
-      const klass_id = $('#klass_id').attr('name')
-      const student_class_id = data.source.id
-      const klass_form_id = data.originalSource.parentNode.id
-      const sourceContainerId = data.sourceContainer.id
-
-      if (klass_form_id == sourceContainerId) return
-
-      const student_form = { klass_form_id }
-      const student_forms_attributes = []
-
-      if(klass_form_id == 'unassigned'){
-        student_forms_attributes.push({
-          id: student_class_id,
-          _destroy: true
-        })
-      } else {
-        if (sourceContainerId == 'unassigned'){
-          student_forms_attributes.push({
-            klass_form_id, student_class_id
-          })
-        } else {
-          student_forms_attributes.push({
-            id: student_class_id,
-            _destroy: true
-          })
-          student_forms_attributes.push({
-            klass_form_id,
-            student_class_id: data.originalSource.attributes['data-scid'].nodeValue
-          })
-        }
-      }
-
-      if(klass_id && student_class_id){
-        $.ajax({
-          url: `/klasses/${klass_id}`,
-          method: 'PUT',
-          dataType: 'script',
-          data: { klass: { student_forms_attributes }}
-        });
-      }
-    }, 0)
-  }
-  draggableInit({drag_start, drag_stop})
+  window.draggableInit({})
 </script>
