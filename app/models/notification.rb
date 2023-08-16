@@ -39,9 +39,9 @@ class Notification < ApplicationRecord
     when :missing_attendance, 'missing_attendance'
       case record_type
       when 'Student'
-        "Attendance-- #{record.name}  is missing "
+        "#{record&.name}'s Attendance on #{(created_at - 1.day).strftime('%B-%-d-%Y')} is missing"
       when 'Meeting'
-        "#{record&.teacher&.name || 'A Teacher'}'s Session attendance on #{record.starts_at.strftime('%l:%M %P, %B-%-d-%Y')} is missing "
+        "#{record&.teacher&.name || 'A Teacher'}'s Session attendance on #{record.starts_at.strftime('%l:%M %P, %B-%-d-%Y')} is missing"
       end
     end
   end
