@@ -15,10 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
         $.parseJSON(response).trajectory_details.map((td)=>{
           student_grades[`${td.season}-${td.grade}`] = td.wpm - td.error_count
         })
-        seasons.map((season)=>{
-          grades.map((grade)=>{
+        grades.map((grade)=>{
+          seasons.map((season)=>{
             student_data.push((student_grades[`${season}-${grade}`])? student_grades[`${season}-${grade}`] : undefined)
-            headings.push(`${season}-${grade}`)
+            headings.push(`${season.toUpperCase()[0]}-${parseInt(grade) + 1}`)
           })
         })
         const series = [{
