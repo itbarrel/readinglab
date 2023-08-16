@@ -91,8 +91,9 @@
         </div>
 
         <div class="col-lg-6">
-          <h6 class="mt-5 mt-lg-0">Daily Workables</h6>
-          <% if can? :read, StudentMeeting %>
+        <h6 class="mt-5 mt-lg-0">Daily Workables</h6>
+        <% if (meeting.starts_at > (Time.zone.now - 21.day) && meeting.starts_at < Time.zone.now) %>
+           <% if can? :read, StudentMeeting %>
             <%= form_tag(form_meeting_path(meeting), id: 'showAssessmentForm', method: :get, remote: true) do |f| %>
               <%= select_tag(:form_id, options_from_collection_for_select(meeting.klass.forms.order("name ASC"), :id, :name), include_blank: 'Please select form', class: 'form-control', required: true) %>
               <%= button_tag nil do %>
@@ -103,11 +104,12 @@
               <%= link_to('Bulk Form Submission', forms_meeting_path, class: 'btn btn-primary') %>
             </div>
           <% end %>
-          <% if meeting.attendance_form.present? %>
-            <div class="mt-2 d-grid gap-2">
-              <%= link_to('Attendance', attendance_meeting_path, remote: true, class: 'btn btn-primary') %>
-            </div>
-          <% end %>
+            <% if meeting.attendance_form.present? %>
+              <div class="mt-2 d-grid gap-2">
+                <%= link_to('Attendance', attendance_meeting_path, remote: true, class: 'btn btn-primary') %>
+              </div>
+            <% end %>
+        <% end %>
 
         </div>
       </div>
