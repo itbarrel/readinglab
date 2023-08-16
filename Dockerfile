@@ -62,7 +62,6 @@ RUN adduser -D -u $UID -g $GID ruby
 RUN chown -R ruby /app
 USER ruby
 
-RUN mkdir -p /app/storage && chown -R ruby:ruby /app/storage
 COPY --chown=ruby:ruby bin/ ./bin
 RUN chmod 0755 bin/*
 
@@ -74,6 +73,9 @@ ENV RAILS_ENV="${RAILS_ENV}" \
 COPY --chown=ruby:ruby --from=assets /usr/local/bundle/ /usr/local/bundle/
 COPY --chown=ruby:ruby --from=assets /app/public /app/public
 COPY --chown=ruby:ruby . .
+RUN mkdir -p /app/log && chown -R ruby:ruby /app/log
+RUN mkdir -p /app/storage && chown -R ruby:ruby /app/storage
+RUN mkdir -p /app/tmp && chown -R ruby:ruby /app/tmp
 
 EXPOSE 3000
 

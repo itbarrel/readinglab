@@ -84,14 +84,12 @@ class Meeting < ApplicationRecord
   end
 
   def current_students
-    scs_without_deleted_at = student_classes.includes(:student).where('created_at >= ?', starts_at)
+    scs_without_deleted_at = student_classes.includes(:student).where('created_at >= ?', starts_at.end_of_day)
     scs_with_deleted_at =  student_classes.with_deleted.includes(:student).where('created_at <= ? and deleted_at >= ?', starts_at, starts_at)
-    scs_without_deleted_at_array = scs_without_deleted_at.to_a
-    scs_with_deleted_at_array = scs_with_deleted_at.to_a
 
     {
-      without_deleted_at: scs_without_deleted_at_array.map(&:student),
-      with_deleted_at: scs_with_deleted_at_array.map(&:student)
+      without_deleted_at: scs_without_deleted_at.map(&:student),
+      with_deleted_at: scs_with_deleted_at.map(&:student)
     }
   end
 

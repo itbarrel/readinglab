@@ -69,4 +69,12 @@ class User < ApplicationRecord
   def calendar_name
     "#{first_name} #{last_name}"
   end
+
+  def active_for_authentication?
+    super && active?
+  end
+
+  def inactive_message
+    'User account is inactive'
+  end
 end
