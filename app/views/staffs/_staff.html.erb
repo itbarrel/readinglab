@@ -10,13 +10,15 @@
   <td class="phone align-middle white-space-nowrap py-2"><%= staff.email %></td>
   <td class="phone align-middle white-space-nowrap py-2"><%= staff.phone %></td>
   <td class="phone align-middle white-space-nowrap py-2">
-     <%= form_for staff_url(staff), remote: true do |f| %>
+    <% if current_user.admin? && !staff.admin? %>
+      <%= form_for staff_url(staff), remote: true do |f| %>
         <%= f.hidden_field :staff, value: staff %>
-      <div class="form-check form-switch">
-        <%= f.text_field :active, checked: staff.active, type: 'checkbox', class: 'form-check-input staff_switch', id: "switch_#{staff.id}"%>
-        <label class="form-check-label" for="switch_<%= staff.id %>"></label>
-      </div>
+        <div class="form-check form-switch">
+          <%= f.text_field :active, checked: staff.active, type: 'checkbox', class: 'form-check-input staff_switch', id: "switch_#{staff.id}"%>
+          <label class="form-check-label" for="switch_<%= staff.id %>"></label>
+        </div>
       <% end %>
+    <% end %>
   </td>
 
   <% if current_user.super_admin? %>
