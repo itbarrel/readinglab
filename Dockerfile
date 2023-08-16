@@ -75,6 +75,7 @@ COPY --chown=ruby:ruby --from=assets /app/public /app/public
 COPY --chown=ruby:ruby . .
 RUN mkdir -p /app/log && chown -R ruby:ruby /app/log
 RUN mkdir -p /app/storage && chown -R ruby:ruby /app/storage
+RUN mkdir -p /app/tmp && chown -R ruby:ruby /app/tmp
 
 EXPOSE 3000
 
