@@ -28,7 +28,7 @@ class Notification < ApplicationRecord
   belongs_to :user
   belongs_to :record, polymorphic: true
 
-  enum :purpose, %i[creation mark_obsolete]
+  enum :purpose, %i[creation mark_obsolete missing_attendance]
 
   def text
     case purpose
@@ -36,6 +36,13 @@ class Notification < ApplicationRecord
       record_type.to_s
     when :mark_obsolete, 'mark_obsolete'
       'System has proposed a class'
+    when :missing_attendance, 'missing_attendance'
+      case record_type
+      when 'Student'
+        "#{record&.name}'s Attendance on #{(created_at - 1.day).strftime('%B-%-d-%Y')} is missing"
+      when 'Meeting'
+        "#{record&.teacher&.name || 'A Teacher'}'s Session attendance on #{record.starts_at.strftime('%l:%M %P, %B-%-d-%Y')} is missing"
+      end
     end
   end
 
@@ -45,6 +52,8 @@ class Notification < ApplicationRecord
       "has been created on #{created_at.strftime('%l:%M %P, %B-%-d-%Y')}"
     when :mark_obsolete, 'mark_obsolete'
       ' to mark obsolete'
+    when :missing_attendance, 'missing_attendance'
+      ' '
     end
   end
 
@@ -59,6 +68,8 @@ class Notification < ApplicationRecord
         modal_file: 'shared/modals/klasses/details',
         params: { klass: record, title: 'Details' }
       }
+    when :missing_attendance, 'missing_attendance'
+      true
     end
   end
 
@@ -68,6 +79,8 @@ class Notification < ApplicationRecord
     when :creation, 'creation'
       true
     when :mark_obsolete, 'mark_obsolete'
+      true
+    when :missing_attendance, 'missing_attendance'
       true
     end
   end
