@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_08_085621) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_17_120926) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -532,6 +532,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_085621) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "deleted_at"
+    t.integer "session_credit", default: 0
+    t.datetime "session_processed_at"
     t.index ["account_id", "first_name", "last_name", "parent_id", "deleted_at"], name: "students_name", unique: true
     t.index ["account_id"], name: "index_students_on_account_id"
     t.index ["parent_id"], name: "index_students_on_parent_id"
@@ -540,6 +542,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_085621) do
   create_table "trajectory_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "error_count"
     t.integer "wpm"
+    t.string "grade"
+    t.string "season"
     t.datetime "entry_date"
     t.integer "status"
     t.uuid "account_id", null: false
@@ -549,8 +553,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_085621) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.integer "grade"
-    t.integer "season"
     t.index ["account_id"], name: "index_trajectory_details_on_account_id"
     t.index ["book_id"], name: "index_trajectory_details_on_book_id"
     t.index ["klass_id"], name: "index_trajectory_details_on_klass_id"
