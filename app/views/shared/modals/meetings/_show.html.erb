@@ -92,7 +92,7 @@
 
         <div class="col-lg-6">
         <h6 class="mt-5 mt-lg-0">Daily Workables</h6>
-        <% if (meeting.starts_at > (Time.zone.now - 21.day) && meeting.starts_at < Time.zone.now) %>
+        <% if (meeting.starts_at > (Time.zone.now - 21.day) && meeting.starts_at < Time.zone.now.end_of_day) %>
            <% if can? :read, StudentMeeting %>
             <%= form_tag(form_meeting_path(meeting), id: 'showAssessmentForm', method: :get, remote: true) do |f| %>
               <%= select_tag(:form_id, options_from_collection_for_select(meeting.klass.forms.order("name ASC"), :id, :name), include_blank: 'Please select form', class: 'form-control', required: true) %>
