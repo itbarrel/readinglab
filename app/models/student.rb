@@ -133,9 +133,9 @@ class Student < ApplicationRecord
   def total_sessions
     return 0 if last_session_processed.blank?
 
-    duration = 1.month
-    duration_clause = (last_session_processed..(last_session_processed + duration))
-    meetings.where(starts_at: duration_clause).length
+    meetings.select do |sm|
+      sm.starts_at >= last_session_processed.beginning_of_month && sm.starts_at <= last_session_processed.end_of_month
+    end.length
   end
 
   def leave_count
@@ -145,23 +145,23 @@ class Student < ApplicationRecord
   def attended_sessions
     return 0 if last_session_processed.blank?
 
-    duration = 1.month
-    duration_clause = (last_session_processed..(last_session_processed + duration))
-    student_meetings.where(created_at: duration_clause).where(attendance: %i[present absent]).length
-
     student_meetings.select do |sm|
-      # byebug
-      sm.created_at >= last_session_processed && sm.created_at <= last_session_processed + duration && sm.attendance
+      sm.created_at >= last_session_processed.beginning_of_month &&
+        sm.created_at <= last_session_processed.end_of_month &&
+        [:present, :absent, 'present', 'absent'].include?(sm.attendance)
     end.length
   end
 
   def paid_sessions
     return 0 if last_session_processed.blank?
 
-    duration = 1.month
     receipts.select do |receipt|
-      receipt.created_at >= last_session_processed && receipt.created_at <= last_session_processed + duration
-    end.sum(:sessions_count)
+      receipt.created_at >= last_session_processed.beginning_of_month && receipt.created_at <= last_session_processed.end_of_month
+    end.sum(&:sessions_count)
+  end
+
+  def credit_sessions_to_show
+    credit_sessions.to_i + paid_sessions - attended_sessions
   end
 
   def meeting_purchased
