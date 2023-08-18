@@ -525,15 +525,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_120926) do
     t.string "programs"
     t.integer "status"
     t.integer "prepaid_sessions"
-    t.integer "credit_session"
+    t.integer "credit_sessions", default: 0
     t.datetime "registration_date"
     t.uuid "account_id", null: false
     t.uuid "parent_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "deleted_at"
-    t.integer "session_credit", default: 0
-    t.datetime "session_processed_at"
+    t.datetime "last_session_processed"
     t.index ["account_id", "first_name", "last_name", "parent_id", "deleted_at"], name: "students_name", unique: true
     t.index ["account_id"], name: "index_students_on_account_id"
     t.index ["parent_id"], name: "index_students_on_parent_id"
