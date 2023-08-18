@@ -32,7 +32,7 @@ class StudentMeeting < ApplicationRecord
   belongs_to :account
   belongs_to :meeting
   belongs_to :student
-  enum :attendance, %i[absent present leave hold]
+  enum :attendance, %i[absent present leave]
 
   scope :obsolete, -> { where obsolete: true }
   scope :working, -> { where obsolete: false }
