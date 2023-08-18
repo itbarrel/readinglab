@@ -4,25 +4,26 @@
 #
 # Table name: students
 #
-#  id                :uuid             not null, primary key
-#  credit_session    :integer
-#  dates             :string
-#  deleted_at        :string
-#  dob               :date
-#  first_name        :string
-#  gender            :integer
-#  grade             :string
-#  last_name         :string
-#  prepaid_sessions  :integer
-#  programs          :string
-#  registration_date :datetime
-#  school            :string
-#  settings          :jsonb
-#  status            :integer
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  account_id        :uuid             not null
-#  parent_id         :uuid             not null
+#  id                     :uuid             not null, primary key
+#  credit_sessions        :integer          default(0)
+#  dates                  :string
+#  deleted_at             :string
+#  dob                    :date
+#  first_name             :string
+#  gender                 :integer
+#  grade                  :string
+#  last_name              :string
+#  last_session_processed :datetime
+#  prepaid_sessions       :integer
+#  programs               :string
+#  registration_date      :datetime
+#  school                 :string
+#  settings               :jsonb
+#  status                 :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  account_id             :uuid             not null
+#  parent_id              :uuid             not null
 #
 # Indexes
 #
@@ -35,7 +36,6 @@
 #  fk_rails_...  (account_id => accounts.id)
 #  fk_rails_...  (parent_id => parents.id)
 #
-# ff0eedf6-77d9-49c8-b30f-5d5f8b89a814
 class Student < ApplicationRecord
   belongs_to :account
   belongs_to :parent
@@ -143,10 +143,6 @@ class Student < ApplicationRecord
   end
 
   def meeting_purchased
-    count = 0
-    receipts.each do |recp|
-      count += recp.sessions_count
-    end
-    count
+    receipts.sum(:sessions_count)
   end
 end
