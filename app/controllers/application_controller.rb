@@ -83,7 +83,7 @@ class ApplicationController < ActionController::Base
   def fetch_notifications
     return if current_user.blank?
 
-    @notifications = current_user.notifications
+    @notifications = current_user.notifications.includes(:record)
   end
 
   def set_layout

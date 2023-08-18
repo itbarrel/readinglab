@@ -11,3 +11,7 @@
     delete_seen_notifications:
       cron: '0 0 * * *'   # Runs once per minute
       class: DeleteNotificationsJob
+    process_billing:
+      cron: '0 0 1 * *'   # Runs once per minute
+      class: ProcessAllStudentJob
+

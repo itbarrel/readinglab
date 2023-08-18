@@ -6,8 +6,6 @@ class ProcessStudentBillingJob
   include Sidekiq::Worker
 
   def perform(student_id)
-    duration = 1.month
-
     student = Student.find(student_id)
 
     if student.last_session_processed.blank?
@@ -18,12 +16,16 @@ class ProcessStudentBillingJob
       ].compact.min)
     end
 
-    duration_clause = (student.last_session_processed..(student.last_session_processed + duration))
+    return if student.last_session_processed.blank?
 
-    paid_sessions = student.where(created_at: duration_clause).sum(:sessions_count)
-    consumed_sessions = student.student_meetings.where(created_at: duration_clause).where(attendance: %i[present absent])
-    net_credit = student.credit_sessions + paid_sessions - consumed_sessions
+    duration_clause = (student.last_session_processed.beginning_of_month..(student.last_session_processed.end_of_month))
 
-    student.update(credit_sessions: net_credit, last_session_processed: last_session_processed + duration)
+    paid_sessions = student.receipts.where(created_at: duration_clause).sum(:sessions_count)
+    consumed_sessions = student.student_meetings.where(created_at: duration_clause).where(attendance: %i[present absent]).count
+    net_credit = student.credit_sessions.to_i + paid_sessions - consumed_sessions
+
+    student.update(credit_sessions: net_credit, last_session_processed: student.last_session_processed.end_of_month + 10.minutes)
+
+    ProcessStudentBillingJob.perform_in(2.seconds, student.id) if student.last_session_processed < 1.month.ago
   end
 end
