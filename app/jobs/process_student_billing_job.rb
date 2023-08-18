@@ -18,12 +18,16 @@ class ProcessStudentBillingJob
       ].compact.min)
     end
 
+    return if student.last_session_processed.blank?
+
     duration_clause = (student.last_session_processed..(student.last_session_processed + duration))
 
-    paid_sessions = student.where(created_at: duration_clause).sum(:sessions_count)
-    consumed_sessions = student.student_meetings.where(created_at: duration_clause).where(attendance: %i[present absent])
-    net_credit = student.credit_sessions + paid_sessions - consumed_sessions
+    paid_sessions = student.receipts.where(created_at: duration_clause).sum(:sessions_count)
+    consumed_sessions = student.student_meetings.where(created_at: duration_clause).where(attendance: %i[present absent]).count
+    net_credit = student.credit_sessions.to_i + paid_sessions - consumed_sessions
 
-    student.update(credit_sessions: net_credit, last_session_processed: last_session_processed + duration)
+    student.update(credit_sessions: net_credit, last_session_processed: student.last_session_processed + duration)
+
+    ProcessStudentBillingJob.perform_in(2.seconds, student.id) if student.last_session_processed < 2.months.ago
   end
 end

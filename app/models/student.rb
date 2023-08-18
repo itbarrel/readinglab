@@ -131,15 +131,37 @@ class Student < ApplicationRecord
   end
 
   def total_sessions
-    student_meetings.length
+    return 0 if last_session_processed.blank?
+
+    duration = 1.month
+    duration_clause = (last_session_processed..(last_session_processed + duration))
+    meetings.where(starts_at: duration_clause).length
   end
 
   def leave_count
     student_meetings.leave.length
   end
 
-  def sessions_count
-    student_meetings.present.length
+  def attended_sessions
+    return 0 if last_session_processed.blank?
+
+    duration = 1.month
+    duration_clause = (last_session_processed..(last_session_processed + duration))
+    student_meetings.where(created_at: duration_clause).where(attendance: %i[present absent]).length
+
+    student_meetings.select do |sm|
+      # byebug
+      sm.created_at >= last_session_processed && sm.created_at <= last_session_processed + duration && sm.attendance
+    end.length
+  end
+
+  def paid_sessions
+    return 0 if last_session_processed.blank?
+
+    duration = 1.month
+    receipts.select do |receipt|
+      receipt.created_at >= last_session_processed && receipt.created_at <= last_session_processed + duration
+    end.sum(:sessions_count)
   end
 
   def meeting_purchased
