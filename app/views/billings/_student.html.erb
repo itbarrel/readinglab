@@ -14,4 +14,11 @@
       <%= l student.next_billing_date, format: :short %>
     <% end %>
   </td>
+  <td class="phone align-middle white-space-nowrap py-2" >
+    <% if student.calculated_next_billing_date.present? %>
+      <%= l student.calculated_next_billing_date, format: :short %>
+    <% else %>
+      <p>Fee is Due</p>
+    <% end %>
+  </td>
 </tr>

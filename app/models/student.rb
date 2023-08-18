@@ -130,6 +130,16 @@ class Student < ApplicationRecord
     payable_meetings&.first&.starts_at
   end
 
+  def calculated_next_billing_date
+    return nil if credit_sessions.to_i.negative?
+
+    filtered = meetings.select do |meet|
+      meet.starts_at >= last_session_processed.beginning_of_month
+    end.sort_by(&:starts_at)
+    jump = filtered.length > credit_sessions.to_i ? credit_sessions.to_i : filtered.length
+    filtered[jump]&.starts_at
+  end
+
   def total_sessions
     return 0 if last_session_processed.blank?
 
