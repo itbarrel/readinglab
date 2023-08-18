@@ -20,27 +20,10 @@ class ProcessStudentBillingJob
 
     duration_clause = (student.last_session_processed..(student.last_session_processed + duration))
 
-    # meeting_purchased = student.meeting_purchased
+    paid_sessions = student.where(created_at: duration_clause).sum(:sessions_count)
+    consumed_sessions = student.student_meetings.where(created_at: duration_clause).where(attendance: %i[present absent])
+    net_credit = student.credit_sessions + paid_sessions - consumed_sessions
 
-    student.student_meetings.where(created_at: duration_clause).count
-
-    # return if student.student_meetings.empty? && student.student_classes.empty?
-
-    # if student.session_processed_at.blank?
-    #   initial_attendance = student.student_meetings.first&.created_at
-    #   initial_admission = student.student_classes.order(created_at: :asc).first&.created_at
-    #   new_session_processed_at = [initial_attendance, initial_admission].compact.min
-    #   student.update!(session_processed_at: new_session_processed_at)
-    # end
-
-    # student.student_meetings.where(created_at: student.session_processed_at..(student.session_processed_at + duration)).map(&:meeting_id)
-    # student.meetings.where(starts_at: student.session_processed_at..(student.session_processed_at + duration)).ids
-
-    # sm_ids - m_ids # if left class and attendance is there for that meeting
-    # m_ids - sm_ids # if no attendance submitted
-
-    # Rails.logger.debug 'azeem here', student.id, '>>>>>>>left>>>>>>>>>', sm_ids - m_ids, '>>>>>>>attendance>>>>>', m_ids - sm_ids
-    # Rails.logger.debug 'm count ', m_ids.count, '>>>>>>>sm count>>>>>>>>>', sm_ids.count
-    # byebug
+    student.update(credit_sessions: net_credit, last_session_processed: last_session_processed + duration)
   end
 end
