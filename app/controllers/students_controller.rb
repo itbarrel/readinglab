@@ -56,7 +56,7 @@ class StudentsController < ApplicationController
   def update
     respond_to do |format|
       if @student.update(student_params)
-        format.html { redirect_to students_url, notice: 'Student has been successfully updated.' }
+        format.html { redirect_to request.referer, notice: 'Student has been successfully updated.' }
         format.json { render :show, status: :ok, location: @student }
       else
         format.html { redirect_to students_url }
@@ -116,6 +116,6 @@ class StudentsController < ApplicationController
   def student_params
     params.require(:student).permit(:first_name, :last_name, :dob, :grade, :school, :gender, :settings,
                                     :dates, :programs, :status, :parent_id,
-                                    :prepaid_sessions, :credit_session, :registration_date)
+                                    :prepaid_sessions, :credit_sessions, :last_session_processed, :registration_date)
   end
 end

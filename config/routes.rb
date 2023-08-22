@@ -113,7 +113,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :billings, only: %i[] do
+  resources :billings, only: %i[edit] do
     collection do
       get :students
     end
