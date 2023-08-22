@@ -1,8 +1,15 @@
 .login-side-card {
-  background-image: url('icons/spot-illustrations/half-circle.png')
+  background-image: url('icons/spot-illustrations/half-circle.png');
 }
 .profile-background{
-  background-image: url('generic/4.jpg')
+  background-image: url('generic/4.jpg');
+}
+
+.application-show-card {
+  background-image: url('illustrations/ecommerce-bg.png');
+  background-size: 230px;
+  background-position: 'right bottom';
+  z-index: -1;
 }
 
 .pagination{

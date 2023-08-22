@@ -1,16 +1,20 @@
-<div class="card-header">
-  <div class="row flex-between-center">
-    <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-        <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Student Listing</h5>
+<div class="card mb-3">
+  <div class="card-header">
+    <div class="row flex-between-center">
+      <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+          <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">History</h5>
+      </div>
     </div>
+  </div>
+
+  <div class="card-body p-0"">
     <div class="table-responsive">
-      </br>
-      <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden table-bordered">
+      <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
         <thead class="bg-200 text-900">
           <tr>
             <th>
               <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                <input class="form-check-input" id="checkbox-bulk-students-select" type="checkbox" data-bulk-select='{"body":"table-students-body","actions":"table-students-actions","replacedElement":"table-students-replace-element"}' />
+                <input class="form-check-input" id="checkbox-bulk-history-select" type="checkbox" data-bulk-select='{"body":"table-history-body","actions":"table-history-actions","replacedElement":"table-history-replace-element"}' />
               </div>
             </th>
             <th class="sort pe-1 align-middle white-space-nowrap">Date&Time</th>
@@ -19,8 +23,8 @@
             <th class="sort pe-1 align-middle white-space-nowrap">Changes</th>
           </tr>
         </thead>
-        <tbody class="list" id="table-students-body">
-          <% records.each_with_index do |change, index| %>
+        <tbody class="list" id="table-history-body">
+          <% record.versions.each_with_index do |change, index| %>
             <tr class="btn-reveal-trigger">
               <td class="align-middle py-2" style="width: 28px;">
                 <div class="form-check fs-0 mb-0 d-flex align-items-center">
@@ -55,5 +59,6 @@
         </tbody>
       </table>
     </div>
+    <%= render 'shared/pagination', query: {}, js_request: false if @pagy.present? %>
   </div>
 </div>

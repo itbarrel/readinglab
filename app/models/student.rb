@@ -66,6 +66,8 @@ class Student < ApplicationRecord
 
   before_create :set_status
 
+  VIEW_REJECTED_ATTRIBUTES = %i[id first_name last_name settings account_id parent_id account_id created_at updated_at deleted_at].freeze
+
   ransacker :status do |parent|
     parent.table[:status]
   end

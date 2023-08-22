@@ -25,9 +25,6 @@ class StudentsController < ApplicationController
     redirect_to communication_path
   end
 
-  # GET /students/1 or /students/1.json
-  def show; end
-
   # GET /students/new
   def new
     @student.parent_id = params[:parent_id] if params[:parent_id].present?

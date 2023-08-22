@@ -8,12 +8,17 @@ class ApplicationRecord < ActiveRecord::Base
 
   acts_as_paranoid
 
-  REJECTED_ATTRIBUTES = %i[id deleted_at].freeze
+  VIEW_REJECTED_ATTRIBUTES = %i[id created_at updated_at deleted_at].freeze
+  EXPORT_REJECTED_ATTRIBUTES = %i[id deleted_at].freeze
   CHANGED_ATTRIBUTES = {}.freeze
+
+  def viewable_attribs
+    serializable_hash.reject { |key, _| self.class::VIEW_REJECTED_ATTRIBUTES.include?(key.to_sym) }
+  end
 
   def self.to_csv(_options = {})
     attributes = Hash[all.model.column_names.map { |key, _value| [key, human_attribute_name(key)] }].symbolize_keys
-    attributes.except!(*REJECTED_ATTRIBUTES).merge!(CHANGED_ATTRIBUTES)
+    attributes.except!(*EXPORT_REJECTED_ATTRIBUTES).merge!(CHANGED_ATTRIBUTES)
 
     CSV.generate(headers: true) do |csv|
       csv << attributes.values
