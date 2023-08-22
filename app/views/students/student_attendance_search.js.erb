@@ -1,1 +1,1 @@
-$('#student_attendance_table').html("<%= j render 'shared/modals/students/attendance_table', students: @student_attendance %>");
+$('#student_attendance_table').html("<%= j render 'shared/modals/students/attendance_table', student: @student, attendance: @student_attendance, title: "#{@student.name}'s Attendance" %>");

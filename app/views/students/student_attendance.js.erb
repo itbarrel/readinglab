@@ -1,2 +1,3 @@
-$('#showStudentAttendanceModal .modal-content').html("<%= j render 'shared/modals/students/student_attendance', students: @student_attendance, title: 'Attendance' %>");
+$('#showStudentAttendanceModal .modal-content').html("<%= j render 'shared/modals/students/student_attendance', student: @student, attendance: @student_attendance, title: "#{@student.name}'s Attendance" %>");
 $('#showStudentAttendanceModal').modal('show');
+window.choicesInit();
