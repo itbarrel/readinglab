@@ -8,12 +8,17 @@ class ApplicationRecord < ActiveRecord::Base
 
   acts_as_paranoid
 
+  VIEW_ADDED_ATTRIBUTES = %i[].freeze
   VIEW_REJECTED_ATTRIBUTES = %i[id created_at updated_at deleted_at].freeze
   EXPORT_REJECTED_ATTRIBUTES = %i[id deleted_at].freeze
   CHANGED_ATTRIBUTES = {}.freeze
 
   def viewable_attribs
-    serializable_hash.reject { |key, _| self.class::VIEW_REJECTED_ATTRIBUTES.include?(key.to_sym) }
+    added_hash = self.class::VIEW_ADDED_ATTRIBUTES.index_with { |key| send(key) }.symbolize_keys
+    serializable_hash
+      .reject { |key, _| self.class::VIEW_REJECTED_ATTRIBUTES.include?(key.to_sym) }
+      .merge(added_hash)
+      .symbolize_keys
   end
 
   def self.to_csv(_options = {})

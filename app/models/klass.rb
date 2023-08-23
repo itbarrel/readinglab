@@ -76,9 +76,12 @@ class Klass < ApplicationRecord
   validates :duration, :starts_at, :max_students, presence: true
   validates :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday, inclusion: { in: [true, false] }
 
+  VIEW_REJECTED_ATTRIBUTES = %i[id account_id klass_template_id created_at updated_at deleted_at].freeze
+
   accepts_nested_attributes_for :student_forms, allow_destroy: true, reject_if: :all_blank
 
   before_validation :set_default_max_student
+
   after_create :create_meetings, unless: :skip_validations
   after_save :handle_obsolete, if: :saved_change_to_obsolete?
   around_save :allocate_teacher, if: :teacher_id_changed?
