@@ -71,14 +71,16 @@
                 <% meeting.students.each do |sc| %>
                   <li class="nav-item me-2 me-lg-0 ">
                     <span class="nav-link nav-link-card-details">
-                      <span class="fas fa-user d-flex justify-content-end"></span>
+                      <span class="fas fa-user d-flex justify-content-end me-1"></span>
                       <%= sc.name %>
-                      <%= link_to(student_details_meeting_path(meeting, student_id: sc.id), class: "badge badge-soft-warning rounded-pill", remote: true) do %>
-                        <span class="fas fa-list d-flex justify-content-end"></span>
-                      <% end %>
-                      <%= link_to(student_attendance_student_path(sc.id), class: "badge badge-soft-primary rounded-pill", remote: true) do %>
-                        <span class="fas fa-clipboard d-flex justify-content-end"></span>
-                      <% end %>
+                      <div class="card-detail">
+                        <%= link_to(student_details_meeting_path(meeting, student_id: sc.id), class: "badge badge-soft-warning rounded-pill", remote: true) do %>
+                          <span class="fas fa-list d-flex justify-content-end"></span>
+                        <% end %>
+                        <%= link_to(student_attendance_student_path(sc.id), class: "badge badge-soft-primary rounded-pill", remote: true) do %>
+                          <span class="fas fa-clipboard d-flex justify-content-end"></span>
+                        <% end %>
+                      </div>
                     </span>
                   </li>
                 <% end %>
