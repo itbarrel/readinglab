@@ -16,7 +16,7 @@
                 <% @record.viewable_attribs.each do |attr| %>
                   <% next unless attr.second.present? %>
                   <div class="pe-3">
-                    <p class="text-600 fs--1 fw-medium"><%= attr.first %></p>
+                    <p class="text-600 fs--1 fw-medium"><%= @record.class.human_attribute_name(attr.first) %></p>
                     <h4 class="text-800 mb-0"><%= attr.second %></h4>
                   </div>
                 <% end %>

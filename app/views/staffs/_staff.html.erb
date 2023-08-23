@@ -30,6 +30,7 @@
       <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
       <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
       <div class="bg-white py-">
+        <%= link_to('Show', staff_path(staff), class: 'dropdown-item') %>
         <%= link_to('Edit Password', password_staff_path(staff), remote: true, class: 'dropdown-item') %>
         <%= link_to('Edit', edit_staff_path(staff), remote: true, class: 'dropdown-item') %>
         <%= link_to('Delete', staff_path(staff), method: :delete, class: 'dropdown-item text-danger', data: {confirm: 'Are you sure'}) %>

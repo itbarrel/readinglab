@@ -103,7 +103,8 @@ class ApplicationController < ActionController::Base
   end
 
   def show
-    @record = controller_name.classify.constantize.find(params[:id])
+    model_name = controller_name == 'staffs' ? 'users' : controller_name
+    @record = model_name.classify.constantize.find_by(id: params[:id])
   end
 
   private

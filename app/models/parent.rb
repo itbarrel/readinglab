@@ -41,6 +41,10 @@ class Parent < ApplicationRecord
   validates :father_first, :mother_first, :father_phone, presence: true
   validates :father_email, presence: true
 
+  VIEW_REJECTED_ATTRIBUTES = %i[id father_first father_last mother_first mother_last account_id mother_email mother_phone mother_last city_id
+                                created_at updated_at deleted_at].freeze
+  VIEW_ADDED_ATTRIBUTES = %i[father_name mother_name].freeze
+
   accepts_nested_attributes_for :children, allow_destroy: true, reject_if: :all_blank
 
   ransacker :status do |parent|
