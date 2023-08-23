@@ -6,7 +6,6 @@
 #
 #  id              :uuid             not null, primary key
 #  amount          :decimal(, )
-#  datetime        :string
 #  deleted_at      :string
 #  detail          :text
 #  discount        :integer

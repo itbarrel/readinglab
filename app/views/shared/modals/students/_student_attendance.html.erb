@@ -4,20 +4,24 @@
 </div>
 <div class="modal-body p-card">
   <%= form_for(:search, class: 'form-inline', url: student_attendance_search_student_path, remote: true, method: :get) do |form| %>
-    <div class="display_flex">
-      <div class="row">
-        <div class="col-4">
-          <div class="form-group">
-            <%= form.date_field :from, data: { behavior: 'daterangepicker' } , class: "form-control datepicker " %>
-          </div>
+    <div class="">
+      <div class="col-auto justify-content-end order-md-1 mb-2">
+        <%= form.collection_select(:student_id, current_account.students.order(first_name: :asc), :id, :name, { prompt: 'Select Student', selected: student.id }, { class: 'form-select js-choice', 'aria-label': 'Floating label select', data: { options: { searchEnabled: true } } }) %>
+      </div >
+    </div>
+    <div class="row">
+      <div class="col-5">
+        <div class="form-group">
+          <%= form.date_field :from, data: { behavior: 'daterangepicker' } , class: "form-control datepicker " %>
         </div>
-        <div class="col-4">
-          <div class="form-group">
-            <%= form.date_field :to, data: { behavior: 'daterangepicker' }, class: "form-control datepicker" %>
-          </div>
+      </div>
+      <div class="col-5">
+        <div class="form-group">
+          <%= form.date_field :to, data: { behavior: 'daterangepicker' }, class: "form-control datepicker" %>
         </div>
-      <div class="col-4">
-        <div class="form-group ml-2">
+      </div>
+      <div class="col-2">
+        <div class="form-group ml-4">
           <%= form.submit "Search", class: 'btn btn-primary' %>
         </div>
       </div>
@@ -25,5 +29,5 @@
   <% end %>
 </div>
 <div id="student_attendance_table">
-  <%= render partial: 'shared/modals/students/attendance_table', locals: { students: students } %>
+  <%= render partial: 'shared/modals/students/attendance_table', locals: { attendance: attendance } %>
 </div>

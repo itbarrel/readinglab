@@ -14,9 +14,6 @@ class RoomsController < ApplicationController
     @pagy, @rooms = pagy(@search.result, items: per_page)
   end
 
-  # GET /rooms/1 or /rooms/1.json
-  def show; end
-
   # GET /rooms/new
   def new
     @room = current_account.rooms.new

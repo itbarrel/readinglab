@@ -102,6 +102,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def show
+    @record = controller_name.classify.constantize.find(params[:id])
+  end
+
   private
 
   def set_time_zone(&block)
