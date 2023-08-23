@@ -135,10 +135,12 @@ class Student < ApplicationRecord
   def calculated_next_billing_date
     return nil if credit_sessions.to_i.negative?
 
-    filtered = meetings.select do |meet|
+    filtered = active_meetings.select do |meet|
       meet.starts_at >= last_session_processed.beginning_of_month
     end.sort_by(&:starts_at)
-    jump = filtered.length > credit_sessions.to_i ? credit_sessions.to_i : filtered.length
+
+    credit = credit_sessions.to_i + paid_sessions + leave_count
+    jump = filtered.length > credit.to_i ? credit.to_i : filtered.length
     filtered[jump]&.starts_at
   end
 
@@ -151,7 +153,13 @@ class Student < ApplicationRecord
   end
 
   def leave_count
-    student_meetings.leave.length
+    return 0 if last_session_processed.blank?
+
+    student_meetings.select do |sm|
+      sm.created_at >= last_session_processed.beginning_of_month &&
+        sm.created_at <= last_session_processed.end_of_month &&
+        [:leave, 'leave'].include?(sm.attendance)
+    end.length
   end
 
   def attended_sessions
