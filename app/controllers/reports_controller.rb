@@ -41,4 +41,19 @@ class ReportsController < ApplicationController
   end
 
   def daily; end
+
+  def student
+    return unless params[:search].present? && params[:search][:student_id].present?
+
+    from = params[:search][:from] || Date.new(2015, 1, 1)
+    to = params[:search][:to] || Time.zone.now
+    options = {
+      from:,
+      to:
+    }
+    records = Student.where(id: (params[:search][:student_id]))
+    respond_to do |format|
+      format.csv { send_data records.to_csv(options), filename: "#{records.model.name}-#{Time.zone.today}.csv" }
+    end
+  end
 end

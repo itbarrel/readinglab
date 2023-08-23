@@ -1,0 +1,34 @@
+<div class="card-header">
+  <h5 class="mb-0">Student Report</h5>
+</div>
+
+<div class="row g-0">
+  <div class="col-lg-4 pe-lg-2">
+    <div class="col-auto justify-content-end order-md-1 mb-2" id="payments-student-selection">
+        <%= form_for(:search, class: 'form-inline', url: student_reports_path, remote: true, method: :get) do |form| %>
+    <div class="">
+      <div class="col-auto justify-content-end order-md-1 mb-2">
+        <%= form.collection_select(:student_id, current_account.students.order(first_name: :asc), :id, :name, { prompt: 'Select Student', selected: nil }, { class: 'form-select js-choice', 'aria-label': 'Floating label select', data: { options: { searchEnabled: true } } }) %>
+      </div >
+    </div>
+    <div class="row">
+      <div class="col-5">
+        <div class="form-group">
+          <%= form.date_field :from, data: { behavior: 'daterangepicker' } , class: "form-control datepicker " %>
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="form-group">
+          <%= form.date_field :to, data: { behavior: 'daterangepicker' }, class: "form-control datepicker" %>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="form-group ml-4">
+          <%= form.submit "Search", class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+    </div>
+  </div>
+</div>

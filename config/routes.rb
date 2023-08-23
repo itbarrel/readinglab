@@ -110,6 +110,7 @@ Rails.application.routes.draw do
       get :weekly_attendance
       get :graph
       get :daily
+      get :student
     end
   end
 
