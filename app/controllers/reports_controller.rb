@@ -45,15 +45,18 @@ class ReportsController < ApplicationController
   def student
     return unless params[:search].present? && params[:search][:student_id].present?
 
-    from = params[:search][:from] || Date.new(2015, 1, 1)
-    to = params[:search][:to] || Time.zone.now
-    options = {
-      from:,
-      to:
-    }
-    records = Student.where(id: (params[:search][:student_id]))
-    respond_to do |format|
-      format.csv { send_data records.to_csv(options), filename: "#{records.model.name}-#{Time.zone.today}.csv" }
-    end
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+    @from = params[:search][:from].presence || Date.new(2015, 1, 1)
+    @to = params[:search][:to].presence || Time.zone.now
+
+    @record = Student.find_by(id: params[:search][:student_id])
+    meeting_ids = @record.meetings.where(starts_at: @from..@to).ids
+    @search = @record.form_details.where(parent_type: 'Meeting', parent_id: meeting_ids).ransack(params[:q])
+
+    @search.sorts = 'created_at desc' if @search.sorts.empty?
+    @pagy, @records = pagy(@search.result.includes(:parent, :form), items: per_page)
+    # respond_to do |format|
+    #   format.csv { send_data records.to_csv(options), filename: "#{records.model.name}-#{Time.zone.today}.csv" }
+    # end
   end
 end
