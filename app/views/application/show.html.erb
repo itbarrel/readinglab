@@ -30,5 +30,5 @@
 </div>
 
 <% if @record.versions.present? %>
-  <%= render partial: 'shared/histroy/versions', locals: { record: @record } %>
+  <%= render partial: 'shared/histroy/versions', locals: { changes: @changes } %>
 <% end %>
