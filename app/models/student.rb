@@ -118,7 +118,7 @@ class Student < ApplicationRecord
   def active_meetings
     meeting_ids = []
     student_classes.each do |x|
-      meeting_ids.push(*x.klass.meetings.where('meetings.starts_at > ?', x.created_at).ids)
+      meeting_ids.push(*x.klass.meetings.where('meetings.starts_at > ?', x.created_at.beginning_of_day).ids)
     end
     meetings.where(id: meeting_ids)
   end
