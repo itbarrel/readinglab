@@ -95,7 +95,7 @@ class Klass < ApplicationRecord
   end
 
   def name
-    rclass_time = starts_at.strftime('%h:%M %p')
+    rclass_time = starts_at.strftime('%b %Y-%m-%d %I:%M %p')
     class_name = "#{days_abbr} at #{rclass_time}"
     class_name = "#{room.name} on #{class_name}" if room.present?
     class_name = "#{teacher.name} in #{class_name}" if teacher.present?

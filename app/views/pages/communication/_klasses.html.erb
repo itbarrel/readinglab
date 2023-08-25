@@ -37,4 +37,4 @@
     </div>
   </div>
 </div>
-<%= render 'shared/pagination', query: {}, js_request: true if @pagy.present? %>
+<%= render 'shared/pagination', query: {classes_at: params[:classes_at]}, js_request: true if @pagy.present? %>

@@ -45,7 +45,7 @@ class ReportsController < ApplicationController
   def student
     return unless params[:search].present? && params[:search][:student_id].present?
 
-    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 20)
     @from = params[:search][:from].presence || Date.new(2015, 1, 1)
     @to = params[:search][:to].presence || Time.zone.now
 

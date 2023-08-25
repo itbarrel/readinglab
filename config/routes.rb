@@ -92,6 +92,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :form_details, only: %i[] do
+    concerns %i[exportable]
+  end
+
   resources :students do
     concerns %i[trashable exportable]
     collection do

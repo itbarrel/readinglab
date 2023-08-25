@@ -5,18 +5,18 @@
         <tr>
           <th>
             <div class="form-check fs-0 mb-0 d-flex align-items-center">
-              <input class="form-check-input" id="checkbox-bulk-student-select" type="checkbox" data-bulk-select='{"body":"table-student-body","actions":"table-student-actions","replacedElement":"table-student-replace-element"}' />
+              <input class="form-check-input" id="checkbox-bulk-form_details-select" type="checkbox" data-bulk-select='{"body":"table-form_details-body","actions":"table-form_details-actions","replacedElement":"table-form_details-replace-element"}' />
             </div>
           </th>
           <th class="sort pe-1 align-middle text-center white-space-nowrap">Meeting Start Time</th>
-          <th class="sort pe-1 align-middle text-center white-space-nowrap">form Name</th>
+          <th class="sort pe-1 align-middle text-center white-space-nowrap">Form Name</th>
           <th class="sort pe-1 align-middle text-center white-space-nowrap">Form Submission</th>
           <th class="sort pe-1 align-middle text-center white-space-nowrap"></th>
         </tr>
       </thead>
       
       <% if @records.present? %>
-        <tbody class="list" id="table-student-body">
+        <tbody class="list" id="table-form_details-body">
           <% @records.each do |record| %>
             <tr class="btn-reveal-trigger">
               <td class="align-middle py-2" style="width: 28px;">
