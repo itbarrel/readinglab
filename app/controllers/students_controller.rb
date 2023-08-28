@@ -6,8 +6,7 @@ class StudentsController < ApplicationController
   before_action :set_students, only: %i[trash]
 
   # GET /students or /students.json
-  def
-    byebug
+  def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
 
     params[:classes_at].present? && @students = current_account.students.studing_at(params[:classes_at].to_datetime)
