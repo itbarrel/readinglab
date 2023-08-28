@@ -17,7 +17,7 @@
         <!--<div class="list-group-title border-bottom">NEW</div>-->
 
         <% if notifications.present? %>
-          <% notifications.order(created_at: :desc).each do |notification| %>
+          <% notifications.each do |notification| %>
             <div class="list-group-item">
               <span class="notification notification-flush <%= notification.seen?? '' : 'notification-unread' %>">
                 <div class="notification-avatar">
