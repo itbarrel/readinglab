@@ -103,8 +103,14 @@ class ApplicationController < ActionController::Base
   end
 
   def show
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 5)
+
     model_name = controller_name == 'staffs' ? 'users' : controller_name
     @record = model_name.classify.constantize.find_by(id: params[:id])
+
+    search = @record.versions.ransack(params[:q])
+    search.sorts = 'created_at desc' if search.sorts.empty?
+    @pagy, @changes = pagy(search.result, items: per_page)
   end
 
   private
