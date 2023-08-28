@@ -187,4 +187,23 @@ class Student < ApplicationRecord
   def meeting_purchased
     receipts.sum(:sessions_count)
   end
+
+  def self.to_csv(options = {})
+    CSV.generate(headers: true) do |csv|
+      all.find_each do |record|
+        meeting_ids = record.meetings.where(starts_at: options[:from]..options[:to]).ids
+        details = record.form_details.where(parent_type: 'Meeting', parent_id: meeting_ids).map(&:parent_id)
+        csv << [record.name, '', record.parent.name]
+        csv << []
+
+        details.group_by(&:form).each do |form, values|
+          csv << ['Meeting date', 'Form Name', 'Form Sumbmission Date', *form.form_fields.order(:id).map(&:name)]
+          values.each do |fd|
+            csv << [fd.parent.starts_at, form.name, fd.created_at, *form.form_fields.order(:id).map { |x| fd.form_values[x.model_key] }]
+          end
+        end
+        csv << []
+      end
+    end
+  end
 end

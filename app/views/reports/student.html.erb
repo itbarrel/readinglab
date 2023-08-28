@@ -1,0 +1,64 @@
+<div class="card-header">
+  <h5 class="mb-0">Student Report</h5>
+</div>
+
+<div class="row g-0">
+  <div class="col-lg-12 pe-lg-2">
+    <div class="col-auto justify-content-end order-md-1 mb-2" id="students-report-selection">
+      <%= form_for(:search, class: 'form-inline', url: student_reports_path, remote: true, method: :get) do |form| %>
+        <div class="col-auto justify-content-end order-md-1 mb-2">
+          <%= form.collection_select(:student_id, current_account.students.order(first_name: :asc), :id, :name, { prompt: 'Select Student', selected: nil }, { class: 'form-select js-choice', 'aria-label': 'Floating label select', data: { options: { searchEnabled: true } } }) %>
+        </div >
+        <div class="row">
+          <div class="col-5">
+            <div class="form-group">
+              <%= form.date_field :from, data: { behavior: 'daterangepicker' } , class: "form-control datepicker " %>
+            </div>
+          </div>
+          <div class="col-5">
+            <div class="form-group">
+              <%= form.date_field :to, data: { behavior: 'daterangepicker' }, class: "form-control datepicker" %>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="form-group ml-4">
+              <%= form.submit "Search", class: 'btn btn-primary' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="card mb-3">
+  <div class="card-header">
+    <div class="row flex-between-center">
+      <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+          <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Student Report</h5>
+      </div>
+      <div class="col-8 col-sm-auto text-end ps-2">
+        <div class="d-none" id="table-form_details-actions">
+          <div class="d-flex">
+            <select class="form-select form-select-sm" aria-label="Bulk actions">
+              <option selected="">Bulk actions</option>
+              <option value="Export">Export</option>
+            </select>
+            <button class="btn btn-falcon-default btn-sm ms-2" id="listing-bulk-action" type="button">Apply</button>
+          </div>
+        </div>
+        <div id="table-form_details-replace-element">
+          <button class="btn btn-falcon-default btn-sm mx-2" type="button">
+            <span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span>
+            <span class="d-none d-sm-inline-block ms-1">Filter</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="students-report-classes">
+  </div>
+</div>
+
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
+<% end %>

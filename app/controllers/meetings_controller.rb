@@ -9,7 +9,6 @@ class MeetingsController < ApplicationController
   # GET /meetings or /meetings.json
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
-
     if params[:classes_at].present?
       @meetings_for_date = true
       @meetings = @meetings.at(params[:classes_at])
@@ -144,7 +143,7 @@ class MeetingsController < ApplicationController
   def form_details
     meetings = Meeting
                .joins(:form_details)
-               .where('starts_at < ?', @meeting.starts_at)
+               .where('starts_at < ?', @meeting.starts_at.strf)
                .where(form_details: { student_id: @student.id, form_id: @form.id })
                .order(starts_at: :desc).distinct.limit(3)
     @form_details = meetings.map do |meeting|

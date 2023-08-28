@@ -46,7 +46,8 @@ class ApplicationController < ActionController::Base
       { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-chat-text-fill', models: [:communication], sub_items: [] },
       { text: 'Reports', class: '', icon: 'micon bi bi-bar-chart-line-fill', sub_items: [
         { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] },
-        { url: '/reports/daily', text: 'Daily Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] }
+        { url: '/reports/daily', text: 'Daily Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] },
+        { url: '/reports/student', text: 'Student Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] }
       ] }
     ]
     @menu_list = {
