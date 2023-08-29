@@ -42,6 +42,7 @@ class Meeting < ApplicationRecord
   delegate :student_classes, to: :klass
   delegate :attendance_form, to: :klass
   delegate :forms, to: :klass
+  delegate :name, to: :klass
   delegate :short_name, to: :klass
 
   has_many :student_meetings, dependent: :destroy
