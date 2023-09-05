@@ -12,6 +12,7 @@ module FormHelper
     end
 
     field_disabled = data.created_at < 2.weeks.ago && !(current_user.admin? || current_user.supervisor?)
+    field.field_type = 'text_field' if field.field_type.nil?
 
     case field.field_type
     when 'text_field'
