@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
   def fetch_notifications
     return if current_user.blank?
 
-    @notifications = current_user.notifications.order(created_at: :desc)
+    @notifications = current_user.notifications.includes(:record).order(created_at: :desc)
   end
 
   def set_layout
