@@ -11,6 +11,7 @@ class ApplicationRecord < ActiveRecord::Base
   VIEW_REJECTED_ATTRIBUTES = %i[id created_at updated_at deleted_at].freeze
   EXPORT_REJECTED_ATTRIBUTES = %i[id deleted_at].freeze
   CHANGED_ATTRIBUTES = {}.freeze
+  DATE_FORMATER_ATTRIBUTES = [].freeze
 
   def viewable_attribs
     serializable_hash.reject { |key, _| self.class::VIEW_REJECTED_ATTRIBUTES.include?(key.to_sym) }
