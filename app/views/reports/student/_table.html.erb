@@ -1,0 +1,41 @@
+<div class="card-body p-0">
+  <div class="table-responsive">
+    <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+      <thead class="bg-200 text-900">
+        <tr>
+          <th>
+            <div class="form-check fs-0 mb-0 d-flex align-items-center">
+              <input class="form-check-input" id="checkbox-bulk-form_details-select" type="checkbox" data-bulk-select='{"body":"table-form_details-body","actions":"table-form_details-actions","replacedElement":"table-form_details-replace-element"}' />
+            </div>
+          </th>
+          <th class="sort pe-1 align-middle text-center white-space-nowrap">Meeting Start Time</th>
+          <th class="sort pe-1 align-middle text-center white-space-nowrap">Form Name</th>
+          <th class="sort pe-1 align-middle text-center white-space-nowrap">Form Submission</th>
+          <th class="sort pe-1 align-middle text-center white-space-nowrap"></th>
+        </tr>
+      </thead>
+      
+      <% if @records.present? %>
+        <tbody class="list" id="table-form_details-body">
+          <% @records.each do |record| %>
+            <tr class="btn-reveal-trigger">
+              <td class="align-middle py-2" style="width: 28px;">
+                <div class="form-check fs-0 mb-0 d-flex align-items-center">
+                  <input class="form-check-input communications-klasses" type="checkbox" id="<%= record.id %>"
+                    data-bulk-select-row="data-bulk-select-row" />
+                </div>
+              </td>
+              <td class="align-middle text-center align-items-center white-space-nowrap py-2"><%= l record.parent.starts_at, format: :short %></td>
+              <td class="align-middle text-center align-items-center white-space-nowrap py-2"><%= record.form.name %></td>
+              <td class="align-middle text-center align-items-center white-space-nowrap py-2 "><%= l record.created_at, format: :short %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= render 'shared/pagination', query: { search: {student_id: @record.id, from: @from, to: @to} }, js_request: true if @pagy.present? %>
+</div>
+
+
+

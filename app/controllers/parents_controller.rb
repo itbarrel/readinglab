@@ -14,8 +14,6 @@ class ParentsController < ApplicationController
     @pagy, @parents = pagy(@search.result.includes(:city, :children), items: per_page)
   end
 
-  def show; end
-
   def new
     @parent = current_account.parents.new
   end

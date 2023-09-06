@@ -10,7 +10,7 @@
         <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Daily Report</h5>
       </div>
       <div class="col-8 col-sm-auto text-end ps-2">
-        <div class="d-none" id="table-reports-actions">
+        <div class="d-none" id="table-meetings-actions">
           <div class="d-flex">
             <select class="form-select form-select-sm" aria-label="Bulk actions">
               <option selected="">Bulk actions</option>
@@ -19,7 +19,7 @@
             <button class="btn btn-falcon-default btn-sm ms-2" id="listing-bulk-action" type="button">Apply</button>
           </div>
         </div>
-        <div id="table-reports-replace-element">
+        <div id="table-meetings-replace-element">
           <button class="btn btn-falcon-default btn-sm mx-2" type="button">
             <span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span>
             <span class="d-none d-sm-inline-block ms-1">Filter</span>
@@ -28,7 +28,7 @@
       </div>
     </div>
   </div>
-  <div class="card-body" id="dailyReportsTable">
+  <div class="card-body" id="daily-meetingsTable">
     <div class="table">
       <%= form_tag( meetings_path, id: 'showMeetingForm', method: :get, remote: true) do %>
         <div class="p-2 mb-3">

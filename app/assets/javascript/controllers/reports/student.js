@@ -1,3 +1,3 @@
 document.addEventListener("DOMContentLoaded", () => {
-  assignBulkActions('meetings')
+  assignBulkActions('form_details')
 })

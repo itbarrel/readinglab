@@ -33,8 +33,6 @@ class KlassesController < ApplicationController
     @pagy, @klasses = pagy(@search.result.includes(:room, :teacher), items: per_page)
   end
 
-  def show; end
-
   def new
     start_date = params[:start_date] ? params[:start_date].to_date : Time.zone.today + 8.hours
     @klass = current_account.klasses.new(starts_at: start_date)

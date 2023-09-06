@@ -3,16 +3,17 @@
     <tr>
       <th>
         <div class="form-check fs-0 mb-0 d-flex align-items-center">
-          <input class="form-check-input" id="checkbox-bulk-reports-select" type="checkbox"
-            data-bulk-select='{"body":"table-reports-body","actions":"table-reports-actions","replacedElement":"table-reports-replace-element"}' />
+          <input class="form-check-input" id="checkbox-bule-meetings-select" type="checkbox"
+            data-bulk-select='{"body":"table-meetings-body","actions":"table-meetings-actions","replacedElement":"table-meetings-replace-element"}' />
         </div>
       </th>
       <th class="sort pe-1 align-middle white-space-nowrap" data-sort="name">Name</th>
     </tr>
   </thead>
-  <tbody class="list" id="table-reports-body">
+  <tbody class="list" id="table-meetings-body">
     <% meetings.each do |meeting| %>
       <%= render 'reports/daily/meeting', meeting: meeting %>
     <% end %>
   </tbody>
 </table>
+<%= render 'shared/pagination', query: {classes_at: params[:classes_at]}, js_request: true if @pagy.present? %>
