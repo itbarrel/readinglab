@@ -143,7 +143,7 @@ class MeetingsController < ApplicationController
   def form_details
     meetings = Meeting
                .joins(:form_details)
-               .where('starts_at < ?', @meeting.starts_at.strf)
+               .where('starts_at < ?', @meeting.starts_at)
                .where(form_details: { student_id: @student.id, form_id: @form.id })
                .order(starts_at: :desc).distinct.limit(3)
     @form_details = meetings.map do |meeting|
