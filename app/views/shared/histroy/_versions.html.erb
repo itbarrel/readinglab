@@ -12,14 +12,14 @@
       <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
         <thead class="bg-200 text-900">
           <tr>
-            <th class="sort pe-1 align-middle text-center white-space-nowrap">Date & Time</th>
-            <th class="sort pe-1 align-middle text-center white-space-nowrap">Author</th>
-            <th class="sort pe-1 align-middle text-center white-space-nowrap">Action</th>
-            <th class="sort pe-1 align-middle text-center white-space-nowrap">Changes</th>
+            <th class="sort pe-1 align-middle text-center align-items-center white-space-nowrap">Date&Time</th>
+            <th class="sort pe-1 align-middle text-center align-items-center white-space-nowrap">Author</th>
+            <th class="sort pe-1 align-middle text-center align-items-center white-space-nowrap">Action</th>
+            <th class="sort pe-1 align-middle text-center align-items-center white-space-nowrap">Changes</th>
           </tr>
         </thead>
         <tbody class="list" id="table-history-body">
-          <% changes.each_with_index do |change, index| %>
+          <% record.versions.includes(:item).each_with_index do |change, index| %>
             <tr class="btn-reveal-trigger">
               <td class="align-middle text-center align-items-center white-space-nowrap py-2"><%=l change.created_at, format: :long %></td>
               <td class="align-middle text-center align-items-center white-space-nowrap py-2 "><%=change.whodunnit.present? ? User.find(change.whodunnit)&.email : "Change by job" %></td>
@@ -33,10 +33,15 @@
                       <th>After</th>
                     </tr>
                     <% change.changeset.each do |key| %>
+                      <% is_date = record.class::DATE_FORMATER_ATTRIBUTES.include?(key.first.to_sym) %>
                       <tr>
-                        <td class="align-middle align-items-center white-space-nowrap py-2"><%=key.first %></td>
-                        <td class="align-middle align-items-center white-space-nowrap py-2"><%= key[1][0] || '-' %></td>
-                        <td class="align-middle align-items-center white-space-nowrap py-2"><%= key[1][1] || '-'  %></td>
+                        <td class="align-middle align-items-center white-space-nowrap py-2"><%= key.first %></td>
+                        <td class="align-middle align-items-center white-space-nowrap py-2">
+                          <%= key[1][0].nil? ? '-' : true?(is_date)? (l key[1][0], format: :medium) : key[1][0] %>
+                        </td>
+                        <td class="align-middle align-items-center white-space-nowrap py-2">
+                          <%= key[1][1].nil? ? '-' : true?(is_date)? (l key[1][1], format: :medium) : key[1][1] %>
+                        </td>
                       </tr>
                     <% end %>
                   </table>

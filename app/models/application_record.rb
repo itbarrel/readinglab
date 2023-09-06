@@ -12,6 +12,7 @@ class ApplicationRecord < ActiveRecord::Base
   VIEW_REJECTED_ATTRIBUTES = %i[id created_at updated_at deleted_at].freeze
   EXPORT_REJECTED_ATTRIBUTES = %i[id deleted_at].freeze
   CHANGED_ATTRIBUTES = {}.freeze
+  DATE_FORMATER_ATTRIBUTES = [].freeze
 
   def viewable_attribs
     added_hash = self.class::VIEW_ADDED_ATTRIBUTES.index_with { |key| send(key) }.symbolize_keys

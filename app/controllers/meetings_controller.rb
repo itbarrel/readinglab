@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MeetingsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:index]
   before_action :set_working_meetings
   before_action :set_student, only: %i[student_details form_details]
   before_action :set_form, only: %i[student_details form_details]
@@ -9,6 +9,8 @@ class MeetingsController < ApplicationController
   # GET /meetings or /meetings.json
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+    @meetings = current_account.meetings
+
     if params[:classes_at].present?
       @meetings_for_date = true
       @meetings = @meetings.at(params[:classes_at])
@@ -37,6 +39,7 @@ class MeetingsController < ApplicationController
       @meetings = @meetings.where(klass_id: klass_ids)
     end
 
+    @meetings = @meetings.accessible_by(current_ability)
     @pagy, @meetings = pagy(@meetings.includes(klass: %i[teacher room students]), items: per_page)
   end
 
@@ -143,7 +146,7 @@ class MeetingsController < ApplicationController
   def form_details
     meetings = Meeting
                .joins(:form_details)
-               .where('starts_at < ?', @meeting.starts_at.strf)
+               .where('starts_at < ?', @meeting.starts_at)
                .where(form_details: { student_id: @student.id, form_id: @form.id })
                .order(starts_at: :desc).distinct.limit(3)
     @form_details = meetings.map do |meeting|
