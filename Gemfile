@@ -27,6 +27,7 @@ gem 'pagy', '~> 5.10'
 gem 'paper_trail'
 gem 'paranoia'
 gem 'ransack'
+gem 'rolify'
 gem 'simple_form', '~> 5.2'
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
