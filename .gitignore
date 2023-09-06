@@ -39,3 +39,4 @@
 *.env
 /esbuild_error_*
 dump.sql
+setup_readinglab.sh

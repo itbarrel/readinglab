@@ -46,7 +46,8 @@ class ApplicationController < ActionController::Base
       { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-chat-text-fill', models: [:communication], sub_items: [] },
       { text: 'Reports', class: '', icon: 'micon bi bi-bar-chart-line-fill', sub_items: [
         { url: '/reports/graph', text: 'Graph Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] },
-        { url: '/reports/daily', text: 'Daily Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] }
+        { url: '/reports/daily', text: 'Daily Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] },
+        { url: '/reports/student', text: 'Student Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] }
       ] }
     ]
     @menu_list = {
@@ -83,7 +84,7 @@ class ApplicationController < ActionController::Base
   def fetch_notifications
     return if current_user.blank?
 
-    @notifications = current_user.notifications.includes(:record)
+    @notifications = current_user.notifications.includes(:record).order(created_at: :desc)
   end
 
   def set_layout
@@ -103,7 +104,14 @@ class ApplicationController < ActionController::Base
   end
 
   def show
-    @record = controller_name.classify.constantize.find(params[:id])
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 5)
+
+    model_name = controller_name == 'staffs' ? 'users' : controller_name
+    @record = model_name.classify.constantize.find_by(id: params[:id])
+
+    search = @record.versions.ransack(params[:q])
+    search.sorts = 'created_at desc' if search.sorts.empty?
+    @pagy, @changes = pagy(search.result, items: per_page)
   end
 
   private

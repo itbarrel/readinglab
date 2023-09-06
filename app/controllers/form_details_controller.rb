@@ -62,6 +62,16 @@ class FormDetailsController < ApplicationController
     end
   end
 
+  def export
+    student = Student.find_by(id: params[:student_id])
+    records = current_account.form_details.includes(%i[student form]).where(id: params[:ids])
+
+    options = { student: }
+    respond_to do |format|
+      format.csv { send_data records.to_csv(options), filename: "#{records.model.name}-#{Time.zone.today}.csv" }
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

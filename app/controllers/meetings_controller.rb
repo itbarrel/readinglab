@@ -10,6 +10,7 @@ class MeetingsController < ApplicationController
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
     @meetings = current_account.meetings
+
     if params[:classes_at].present?
       @meetings_for_date = true
       @meetings = @meetings.at(params[:classes_at])

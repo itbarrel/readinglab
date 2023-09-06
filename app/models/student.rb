@@ -67,6 +67,7 @@ class Student < ApplicationRecord
   before_create :set_status
 
   VIEW_REJECTED_ATTRIBUTES = %i[id first_name last_name settings account_id parent_id account_id created_at updated_at deleted_at].freeze
+  DATE_FORMATER_ATTRIBUTES = %i[registration_date last_session_processed].freeze
 
   ransacker :status do |parent|
     parent.table[:status]
@@ -118,7 +119,7 @@ class Student < ApplicationRecord
   def active_meetings
     meeting_ids = []
     student_classes.each do |x|
-      meeting_ids.push(*x.klass.meetings.where('meetings.starts_at > ?', x.created_at).ids)
+      meeting_ids.push(*x.klass.meetings.where('meetings.starts_at > ?', x.created_at.beginning_of_day).ids)
     end
     meetings.where(id: meeting_ids)
   end
@@ -135,10 +136,12 @@ class Student < ApplicationRecord
   def calculated_next_billing_date
     return nil if credit_sessions.to_i.negative?
 
-    filtered = meetings.select do |meet|
+    filtered = active_meetings.select do |meet|
       meet.starts_at >= last_session_processed.beginning_of_month
     end.sort_by(&:starts_at)
-    jump = filtered.length > credit_sessions.to_i ? credit_sessions.to_i : filtered.length
+
+    credit = credit_sessions.to_i + paid_sessions + leave_count
+    jump = filtered.length > credit.to_i ? credit.to_i : filtered.length
     filtered[jump]&.starts_at
   end
 
@@ -151,7 +154,13 @@ class Student < ApplicationRecord
   end
 
   def leave_count
-    student_meetings.leave.length
+    return 0 if last_session_processed.blank?
+
+    student_meetings.select do |sm|
+      sm.created_at >= last_session_processed.beginning_of_month &&
+        sm.created_at <= last_session_processed.end_of_month &&
+        [:leave, 'leave'].include?(sm.attendance)
+    end.length
   end
 
   def attended_sessions
@@ -178,5 +187,24 @@ class Student < ApplicationRecord
 
   def meeting_purchased
     receipts.sum(:sessions_count)
+  end
+
+  def self.to_csv(options = {})
+    CSV.generate(headers: true) do |csv|
+      all.find_each do |record|
+        meeting_ids = record.meetings.where(starts_at: options[:from]..options[:to]).ids
+        details = record.form_details.where(parent_type: 'Meeting', parent_id: meeting_ids).map(&:parent_id)
+        csv << [record.name, '', record.parent.name]
+        csv << []
+
+        details.group_by(&:form).each do |form, values|
+          csv << ['Meeting date', 'Form Name', 'Form Sumbmission Date', *form.form_fields.order(:id).map(&:name)]
+          values.each do |fd|
+            csv << [fd.parent.starts_at, form.name, fd.created_at, *form.form_fields.order(:id).map { |x| fd.form_values[x.model_key] }]
+          end
+        end
+        csv << []
+      end
+    end
   end
 end

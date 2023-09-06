@@ -2,7 +2,7 @@
 
 class StaffsController < ApplicationController
   load_and_authorize_resource :staff, class: User
-  before_action :set_staff, only: %i[show update password]
+  before_action :set_staff, only: %i[update password]
   before_action :set_staffs, only: %i[trash]
 
   def index
@@ -12,9 +12,6 @@ class StaffsController < ApplicationController
     @search.sorts = 'first_name asc' if @search.sorts.empty?
     @pagy, @staffs = pagy(@search.result, items: per_page)
   end
-
-  # GET /staffs/1 or /staffs/1.json
-  def show; end
 
   # GET /staffs/new
   def new; end

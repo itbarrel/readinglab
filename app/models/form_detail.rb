@@ -53,6 +53,26 @@ class FormDetail < ApplicationRecord
     self.form_values ||= {}
   end
 
+  def self.to_csv(options = {})
+    student = options[:student]
+
+    CSV.generate(headers: true) do |csv|
+      csv << [student.name, '', student.parent.name]
+      csv << []
+      all.group_by(&:form).each do |form, values|
+        csv << ['Meeting date', 'Form Name', 'Form Sumbmission Date', *form.form_fields.order(:id).map(&:name)]
+        values.each do |fd|
+          csv << [fd.parent.starts_at.strftime('%Y-%m-%d %H:%M:%p'),
+                  form.name, fd.created_at.strftime('%Y-%m-%d %H:%M:%p'),
+                  *form.form_fields.order(:id).map do |x|
+                    fd.form_values[x.model_key]
+                  end]
+        end
+      end
+      csv << []
+    end
+  end
+
   private
 
   def set_parent_status

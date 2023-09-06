@@ -26,6 +26,7 @@
 #
 class Notification < ApplicationRecord
   belongs_to :user
+  # Meeting, Klass, Student
   belongs_to :record, polymorphic: true
 
   enum :purpose, %i[creation mark_obsolete missing_attendance]

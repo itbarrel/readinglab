@@ -42,12 +42,17 @@ window.assignBulkActions = (resourceId) => {
           return elem.id;
         }).get();
 
+        const params = {
+          meetings: { ids: selected_ids, date: $('#classes_at').val() },
+          form_details: { ids: selected_ids, student_id: $('#search_student_id').val() }
+        }
+
         $.ajax({
-          url: `/meetings/export`,
+          url: `/${resourceId}/export`,
           method: 'GET',
           // processData: false,
           contentType: "application/json",
-          data: { ids: selected_ids, date: $('#classes_at').val() },
+          data: params[resourceId],
           success: function (result) {
             // var csv = JSON.parse(result.replace(/"([\w]+)":/g, function ($0, $1) { return ('"' + $1.toLowerCase() + '":'); }));
             downloadFile('download.csv', result);

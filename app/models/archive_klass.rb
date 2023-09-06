@@ -53,7 +53,6 @@ class ArchiveKlass < ApplicationRecord
   belongs_to :klass_template, optional: true
   belongs_to :attendance_form, optional: true, class_name: 'Form'
 
-  has_many :notifications, as: :record, dependent: nil
   has_many :allocated_resources, as: :allocatee, class_name: 'Allocation', dependent: nil
   has_many :klass_forms, dependent: :destroy
   has_many :forms, through: :klass_forms

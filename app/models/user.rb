@@ -62,6 +62,8 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :email, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
+  VIEW_REJECTED_ATTRIBUTES = %i[id account_id created_at updated_at deleted_at].freeze
+
   def name
     "Mr/s. #{first_name} #{last_name}"
   end
