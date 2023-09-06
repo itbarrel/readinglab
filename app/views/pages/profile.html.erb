@@ -28,7 +28,11 @@
           </span>
         </h4>
         <h5 class="fs-0 fw-normal"></h5>
-        <p class="text-500"><%= current_user.role.humanize.capitalize %></p>
+        <p class="text-500">
+          <% current_user.roles.each do |role| %>
+            <%= role.name.humanize %>,
+          <% end %>
+        </p>
         <div class="border-dashed-bottom my-4 d-lg-none"></div>
       </div>
       <div class="col ps-2 ps-lg-3">

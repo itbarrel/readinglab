@@ -61,3 +61,6 @@ PerceivedComplexity:
 # Disables "Method has too many lines" warning
 MethodLength:
   Enabled: false
+
+Rails/HasAndBelongsToMany:
+  Enabled: false

@@ -34,6 +34,8 @@
 #
 class Account < ApplicationRecord
   belongs_to :account_type
+  resourcify
+
   has_one :admin, -> { admin }, class_name: 'User', dependent: :destroy, inverse_of: :account
   has_many :books, dependent: :destroy
   has_many :vacations, dependent: :destroy

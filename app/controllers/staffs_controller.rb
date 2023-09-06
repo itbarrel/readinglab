@@ -10,7 +10,7 @@ class StaffsController < ApplicationController
 
     @search = @staffs.ransack(params[:q])
     @search.sorts = 'first_name asc' if @search.sorts.empty?
-    @pagy, @staffs = pagy(@search.result, items: per_page)
+    @pagy, @staffs = pagy(@search.result.includes(:roles, :account), items: per_page)
   end
 
   # GET /staffs/new
@@ -95,7 +95,6 @@ class StaffsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def staff_params
-    params.require(:staff).permit(:first_name, :last_name, :email, :postal_code, :phone, :role, :profile, :password,
-                                  :account_id)
+    params.require(:staff).permit(:first_name, :last_name, :email, :postal_code, :phone, :profile, :password, role_ids: [])
   end
 end
