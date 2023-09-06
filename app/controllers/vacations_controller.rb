@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class VacationsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:index]
   before_action :set_vacation, only: %i[show]
   before_action :set_vacations, only: %i[trash]
 
   def index
     per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
 
+    @vacations = current_account.vacations.accessible_by(current_ability)
     @search = @vacations.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
     @pagy, @vacations = pagy(@search.result.includes(:vacation_type), items: per_page)
