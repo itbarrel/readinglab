@@ -47,6 +47,7 @@ class FormDetail < ApplicationRecord
 
   before_validation :default_form_values
   after_save :set_parent_status
+  after_create :mark_attendance
   after_save :handle_obsolete, if: :saved_change_to_obsolete?
 
   def default_form_values
@@ -88,5 +89,15 @@ class FormDetail < ApplicationRecord
     obsolete_time = obsolete? ? Time.zone.now : nil
 
     update(obsoleted_at: obsolete_time)
+  end
+
+  def mark_attendance
+    return unless parent_type == 'Meeting'
+
+    StudentMeeting.find_or_create_by!(
+      account_id:,
+      student_id:,
+      meeting_id: parent_id
+    ).update(attendance: :present)
   end
 end
