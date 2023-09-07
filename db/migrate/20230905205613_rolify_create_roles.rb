@@ -15,11 +15,5 @@ class RolifyCreateRoles < ActiveRecord::Migration[7.0]
     
     add_index(:roles, [ :name, :resource_type, :resource_id ])
     add_index(:users_roles, [ :user_id, :role_id ])
-
-    User.all.each do |x|
-      x.add_role(x.role.to_sym, x.account)
-    end
-
-    
   end
 end
