@@ -26,7 +26,6 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  role                   :integer
 #  settings               :jsonb
 #  sign_in_count          :integer          default(0), not null
 #  termination_date       :string
@@ -49,18 +48,22 @@ class User < ApplicationRecord
   belongs_to :account
   has_many :form_details, dependent: nil
   has_many :notifications, dependent: :destroy
+  # has_and_belongs_to_many :users, :join_table => :users_roles
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  rolify
   has_one_attached :profile
 
-  enum role: { admin: 0, supervisor: 1, teacher: 2, super_admin: 3 }
+  # enum role: { admin: 0, supervisor: 1, teacher: 2, super_admin: 3 }
 
   validates :first_name, :last_name, :email, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+
+  # accepts_nested_attributes_for :user_roles
 
   VIEW_REJECTED_ATTRIBUTES = %i[id account_id created_at updated_at deleted_at].freeze
 
@@ -78,5 +81,21 @@ class User < ApplicationRecord
 
   def inactive_message
     'User account is inactive'
+  end
+
+  def super_admin?
+    has_role?(:super_admin, account)
+  end
+
+  def admin?
+    has_role?(:admin, account)
+  end
+
+  def supervisor?
+    has_role?(:supervisor, account)
+  end
+
+  def teacher?
+    has_role?(:teacher, account)
   end
 end

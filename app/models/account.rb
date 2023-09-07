@@ -34,12 +34,14 @@
 #
 class Account < ApplicationRecord
   belongs_to :account_type
+  resourcify
+
   has_one :admin, -> { admin }, class_name: 'User', dependent: :destroy, inverse_of: :account
   has_many :books, dependent: :destroy
   has_many :vacations, dependent: :destroy
   has_many :vacation_types, dependent: :destroy
   has_many :users, dependent: :destroy
-  has_many :teachers, -> { teacher }, dependent: :destroy, inverse_of: :account
+  has_many :teachers, class_name: 'Teacher', dependent: :destroy, inverse_of: :account
   has_many :rooms, dependent: :destroy
   has_many :forms, dependent: :destroy
   has_many :form_details, dependent: :destroy

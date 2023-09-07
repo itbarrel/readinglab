@@ -26,7 +26,6 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  role                   :integer
 #  settings               :jsonb
 #  sign_in_count          :integer          default(0), not null
 #  termination_date       :string
@@ -50,12 +49,12 @@ class Teacher < User
   has_many :klasses, dependent: :nullify
   has_many :allocations, as: :substance, class_name: 'Allocation', dependent: nil
 
-  default_scope { teacher }
+  default_scope { joins(:roles).where(roles: { name: :teacher }) }
 
-  before_save :default_type
+  after_save :default_type
 
   def default_type
-    self.role ||= :teacher
+    add_role(:teacher, account)
   end
 
   def self.available_at(start_date = DateTime.now, duration = 60)
