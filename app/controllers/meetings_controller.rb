@@ -141,6 +141,12 @@ class MeetingsController < ApplicationController
 
   def student_details
     @student = Student.find_by(id: params[:student_id])
+    starts_at = @meeting.starts_at
+    deleted_std_ids = @meeting.student_classes
+                              .with_deleted
+                              .where('created_at <= ? and deleted_at >= ?', starts_at, starts_at)
+                              .map(&:student_id)
+    @stds = @meeting.students + Student.where(id: deleted_std_ids)
   end
 
   def form_details
