@@ -126,6 +126,7 @@ GEM
     globalid (1.0.0)
       activesupport (>= 5.0)
     hash_dot (2.5.0)
+    honeybadger (5.2.1)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     io-console (0.5.11)
@@ -326,6 +327,7 @@ DEPENDENCIES
   faker
   foreman
   hash_dot
+  honeybadger (~> 5.2)
   jbuilder
   jsbundling-rails
   json_validator
