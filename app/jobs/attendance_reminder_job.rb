@@ -29,7 +29,7 @@ class AttendanceReminderJob
       users = meeting.account.users.where(role: :admin)
       users ||= meeting.account.users.where(role: :super_visor) if users.empty?
 
-      Student.where(id: all_students - students_with_attendance).each do |stu|
+      Student.where(id: all_students - students_with_attendance).find_each do |stu|
         users.each do |x|
           notification = x.notifications.find_or_initialize_by(record: stu, purpose: :missing_attendance)
           notification.save unless notification.persisted?

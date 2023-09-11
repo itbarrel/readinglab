@@ -9,7 +9,7 @@ namespace :remove do
 
     father_mapping = {}
 
-    Parent.where(father_email: parent_dup_emails).each do |p|
+    Parent.where(father_email: parent_dup_emails).find_each do |p|
       next if father_mapping[p.father_email].present?
 
       father_mapping[p.father_email] = p.id
