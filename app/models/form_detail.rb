@@ -98,6 +98,8 @@ class FormDetail < ApplicationRecord
       account_id:,
       student_id:,
       meeting_id: parent_id
-    ).update(attendance: :present)
+    ) do |sm|
+      sm.attendance = :present
+    end
   end
 end
