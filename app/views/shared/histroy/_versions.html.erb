@@ -33,7 +33,7 @@
                       <th>After</th>
                     </tr>
                     <% change.changeset.each do |key| %>
-                      <% is_date = record.class::DATE_FORMATER_ATTRIBUTES.include?(key.first.to_sym) %>
+                      <% is_date = @record.class::DATE_FORMATER_ATTRIBUTES.include?(key.first.to_sym) %>
                       <tr>
                         <td class="align-middle align-items-center white-space-nowrap py-2"><%= key.first %></td>
                         <td class="align-middle align-items-center white-space-nowrap py-2">
