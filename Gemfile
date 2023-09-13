@@ -13,7 +13,6 @@ gem 'pg', '~> 1.4'
 gem 'puma', '~> 5.0'
 gem 'sidekiq', '<7'
 gem 'sidekiq-scheduler'
-gem 'skylight'
 gem 'sprockets-rails'
 
 gem 'cancancan'

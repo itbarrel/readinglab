@@ -135,6 +135,7 @@ class Student < ApplicationRecord
 
   def calculated_next_billing_date
     return nil if credit_sessions.to_i.negative?
+    return nil if last_session_processed.blank?
 
     filtered = active_meetings.select do |meet|
       meet.starts_at >= last_session_processed.beginning_of_month
