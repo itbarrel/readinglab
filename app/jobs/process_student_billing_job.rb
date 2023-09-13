@@ -26,6 +26,6 @@ class ProcessStudentBillingJob
 
     student.update(credit_sessions: net_credit, last_session_processed: student.last_session_processed.end_of_month + 10.minutes)
 
-    ProcessStudentBillingJob.perform_in(2.seconds, student.id) if student.last_session_processed < 1.month.ago
+    ProcessStudentBillingJob.perform_in(5.seconds, student.id) if student.last_session_processed < 1.month.ago
   end
 end
