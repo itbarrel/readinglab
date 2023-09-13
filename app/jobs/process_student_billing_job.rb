@@ -9,12 +9,11 @@ class ProcessStudentBillingJob
     student = Student.find(student_id)
 
     if student.last_session_processed.blank?
-      student.update!(last_session_processed: [
+      student.update!(last_session_processed: [[
         student.student_classes.order(created_at: :asc)&.first&.created_at,
         student.receipts.order(created_at: :asc)&.first&.created_at,
-        student.student_meetings.order(created_at: :asc)&.first&.created_at,
-        Date.new(2015, 1, 1)
-      ].compact.min - 2.months)
+        student.student_meetings.order(created_at: :asc)&.first&.created_at
+      ].compact.min, Date.new(2015, 1, 1)].max - 2.months)
     end
 
     return if student.last_session_processed.blank?
