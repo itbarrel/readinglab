@@ -13,7 +13,7 @@ class ProcessStudentBillingJob
         student.student_classes.order(created_at: :asc)&.first&.created_at,
         student.receipts.order(created_at: :asc)&.first&.created_at,
         student.student_meetings.order(created_at: :asc)&.first&.created_at
-      ].compact.min - 2.months)
+      ].compact.min.to_i - 2.months)
     end
 
     return if student.last_session_processed.blank?

@@ -15,10 +15,7 @@ class ArchiveKlassesJob
       next if oc.student_classes.where('updated_at > ?', time_to_check).any?
       next if FormDetail.working.where(parent_id: oc.meetings.ids).where('updated_at > ?', time_to_check).any?
 
-      users = oc.account.users.where(role: :admin)
-      users ||= oc.account.users.where(role: :super_visor) if users.empty?
-
-      users.each do |x|
+      oc.account.admins.each do |x|
         notification = x.notifications.find_or_initialize_by(record: oc, purpose: :mark_obsolete)
         notification.save unless notification.persisted?
       end

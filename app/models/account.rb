@@ -76,4 +76,10 @@ class Account < ApplicationRecord
   def set_default_values
     self.notify_emails = true if new_record?
   end
+
+  def admins
+    admins = users.with_role(:admin, self)
+    admins = users.with_role(:supervisor, self) if admins.empty?
+    admins
+  end
 end
