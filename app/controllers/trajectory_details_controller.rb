@@ -11,7 +11,7 @@ class TrajectoryDetailsController < ApplicationController
 
     @search = @trajectory_details.ransack(params[:q])
     @search.sorts = 'wpm asc' if @search.sorts.empty?
-    @pagy, @trajectory_details = pagy(@search.result, items: per_page)
+    @pagy, @trajectory_details = pagy(@search.result.includes(%i[student klass]), items: per_page)
   end
 
   # GET /trajectory_details/1 or /trajectory_details/1.json

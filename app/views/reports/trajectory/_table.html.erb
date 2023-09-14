@@ -1,0 +1,34 @@
+<div class="table-responsive">
+  <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+    <thead class="bg-200 text-900">
+      <tr>
+        <th>
+          <div class="form-check fs-0 mb-0 d-flex align-items-center">
+            <input class="form-check-input" id="checkbox-bulk-trajectory_details-select" type="checkbox"
+              data-bulk-select='{"body":"table-trajectory_details","actions":"table-trajectory_details-actions","replacedElement":"table-trajectory_details-replace-element"}' />
+          </div>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">
+          <% if @search.present? %>
+          <%= sort_link(@search, :name, default_order: :asc)%>
+          <% end %>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Book</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Class</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Error count</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Wpm</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Season</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Grade</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Status</th>
+      </tr>
+    </thead>
+
+    <tbody class="list" id="table-receipt-types-body">
+      <% records.each_with_index do |records| %>
+      <%= render 'reports/trajectory/trajectory_detail', records: records%>
+      <% end %>
+    </tbody>
+
+  </table>
+</div>
+<%= render 'shared/pagination', query: {}, js_request: false if @pagy.present? %>
