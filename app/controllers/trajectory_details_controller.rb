@@ -47,12 +47,12 @@ class TrajectoryDetailsController < ApplicationController
     respond_to do |format|
       if @trajectory_detail.update(trajectory_detail_params)
         format.html do
-          redirect_to trajectory_details_url,
+          redirect_to request.referer,
                       notice: 'Trajectory detail has been successfully updated.'
         end
         format.json { render :show, status: :ok, location: @trajectory_detail }
       else
-        format.html { redirect_to trajectory_details_url }
+        format.html { redirect_to request.referer }
         format.json { render json: @trajectory_detail.errors }
       end
     end
@@ -63,7 +63,7 @@ class TrajectoryDetailsController < ApplicationController
     @trajectory_detail.destroy
 
     respond_to do |format|
-      format.html { redirect_to trajectory_details_url, notice: 'Trajectory detail has been successfully destroyed.' }
+      format.html { redirect_to request.referer, notice: 'Trajectory detail has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end
