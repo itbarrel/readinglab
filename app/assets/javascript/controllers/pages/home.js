@@ -1,9 +1,7 @@
 $("document").ready(function () {
-  // window.graphInit("echart-default-total-order", {
-  //   data: [20,40,100,120],
-  //   xAxisData: ["Week 4","Week 5","week 6","week 7"]
-  // })
   computeWeeklyAttendanceReport()
+  computeWeeklyReceiptReport()
+  computeStudentsReport()
   computeWeather()
 });
 
@@ -14,12 +12,63 @@ const computeWeeklyAttendanceReport = () => {
     data: {},
     success: ((response) => {
       response = JSON.parse(response)
-      console.log('>>>>', response)
       $('#weeking_attendance_count').html(response.total)
       $('#weeking_attendance_precentage').html(`${response.percentage_sign}${response.percentage}%`)
       window.graphInit("echart-bar-weekly-sales", {
         data: Object.values(response.data),
         xAxisData: Object.keys(response.data)
+      })
+    })
+  })
+}
+
+const computeWeeklyReceiptReport = () => {
+  $.ajax({
+    url: "/reports/weekly_receipts",
+    dataType: 'script',
+    data: {},
+    success: ((response) => {
+      response = JSON.parse(response)
+      $('#weekly_receipts_count').html(response.total)
+      $('#weekly_receipts_precentage').html(`${response.percentage_sign}${response.percentage}%`)
+      window.graphInit("echart-default-total-order", {
+        data: Object.values(response.data).reverse(),
+        xAxisData: Object.keys(response.data).reverse()
+      })
+    })
+  })
+}
+
+const computeStudentsReport = () => {
+  $.ajax({
+    url: "/reports/students",
+    dataType: 'script',
+    data: {},
+    success: ((response) => {
+      response = JSON.parse(response)
+      let html = ''
+      console.log(response.data)
+      let index = 0
+      const graphData = []
+      const colors = []
+      for (let status in response.data) {
+        let count = response.data[status]; index += 1;
+        html += '<div class="d-flex flex-between-center mb-1">'
+        html += `<div class="d-flex align-items-center"><span class="dot bg-${8 - index}00"></span>`
+        html += `<span class="fw-semi-bold">${status}</span></div>`
+        html += `<div class="d-xxl-none">${(count/response.total)}%</div></div>`
+        graphData.push({
+          value: response.data[status],
+          name: status,
+        })
+        colors.push(parseInt(`${8 - index}00`))
+      }
+      
+      $('#students_report').html(html)
+      $('#students_report_total').html(response.total)
+      window.graphInit("echart-market-share", {
+        data: graphData,
+        colors
       })
     })
   })

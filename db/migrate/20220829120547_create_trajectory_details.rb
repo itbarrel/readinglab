@@ -5,8 +5,8 @@ class CreateTrajectoryDetails < ActiveRecord::Migration[7.0]
     create_table :trajectory_details, id: :uuid do |t|
       t.integer :error_count
       t.integer :wpm
-      t.string :grade
-      t.string :season
+      t.integer :grade
+      t.integer :season
       t.datetime :entry_date
       t.integer :status
 

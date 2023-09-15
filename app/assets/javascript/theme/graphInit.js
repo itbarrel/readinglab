@@ -96,11 +96,45 @@ const composeOptions = (divClass, options = {}) => {
     },
     xAxis: {
       type: "category",
-      data: options.xAxisData
+      data: options.xAxisData,
+      boundaryGap: false,
+      axisLine: {
+        show: false,
+      },
+      axisLabel: {
+        show: false,
+      },
+      axisTick: {
+        show: false,
+      },
+      axisPointer: {
+        type: "none",
+      },
     },
-    series: [
-      { type: "line", data: options.data, smooth: true, lineStyle: { width: 3 } }
-    ],
+    yAxis: {
+      type: "value",
+      splitLine: {
+        show: false,
+      },
+      axisLine: {
+        show: false,
+      },
+      axisLabel: {
+        show: false,
+      },
+      axisTick: {
+        show: false,
+      },
+      axisPointer: {
+        type: "none",
+      },
+    },
+    series: [{ 
+      type: "line",
+      data: options.data,
+      smooth: true,
+      lineStyle: { width: 3, color: getColors().primary }
+    }],
     grid: {
       bottom: "2%",
       top: "2%",
@@ -266,16 +300,78 @@ const composeOptions = (divClass, options = {}) => {
       top: '15%'
     }
   }
+  const echart_market_share = {
+    color: options?.colors?.map((color)=>{
+      return getGrays()[color]
+    }),
+    tooltip: {
+      trigger: "item",
+      padding: [7, 10],
+      backgroundColor: getGrays()["100"],
+      borderColor: getGrays()["300"],
+      textStyle: {
+        color: getColors().dark,
+      },
+      borderWidth: 1,
+      transitionDuration: 0,
+      formatter: function formatter(params) {
+        return "<strong>"
+          .concat(params.data.name, ":</strong> ")
+          .concat(params.percent, "%");
+      },
+    },
+    position: function position(pos, params, dom, rect, size) {
+      return getPosition(pos, params, dom, rect, size);
+    },
+    legend: {
+      show: false,
+    },
+    series: [
+      {
+        type: "pie",
+        radius: ["100%", "87%"],
+        avoidLabelOverlap: false,
+        hoverAnimation: false,
+        itemStyle: {
+          borderWidth: 2,
+          borderColor: getColor("card-bg"),
+        },
+        label: {
+          normal: {
+            show: false,
+            position: "center",
+            textStyle: {
+              fontSize: "20",
+              fontWeight: "500",
+              color: getGrays()["700"],
+            },
+          },
+          emphasis: {
+            show: false,
+          },
+        },
+        labelLine: {
+          normal: {
+            show: false,
+          },
+        },
+        data: options.data,
+      },
+    ],
+  }
   const optionsMapping = {
     echart_bar_weekly_sales,
     echart_default_total_order,
     echart_stacked_area_chart,
-    echart_line_marker_chart
+    echart_line_marker_chart,
+    echart_market_share
   }
   // echart_bar_weekly_sales, echart_default_total_order
   // xAxisData, data
   // echart-stacked-area-chart, echart-line-marker-chart
   // days, series
+  // echart_market_share
+  // data, colors
 
   return optionsMapping[formatGraphName(divClass)]
 }
@@ -288,6 +384,9 @@ const echartSetOption = (
   const themeController = document.body; // Merge user options with lodash
 
   chart.setOption(window._.merge(getDefaultOptions(), userOptions));
+  window.addEventListener('resize', function () {
+    chart.resize();
+  });
   themeController.addEventListener("clickControl", function (_ref15) {
     const control = _ref15.detail.control;
 
@@ -298,6 +397,7 @@ const echartSetOption = (
 };
 
 window.graphInit = (divClass, options = {}) => {
+  console.log(divClass)
   const ECHART_GRAPH_CLASS = `.${divClass}`;
 
   const $echartGraph = document.querySelector(ECHART_GRAPH_CLASS);

@@ -259,3 +259,8 @@
 .nav-link-card-details .card-detail{
   margin-left: auto;
 }
+
+#students_report{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

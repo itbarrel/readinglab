@@ -1,20 +1,18 @@
 # frozen_string_literal: true
 
 class ReportsController < ApplicationController
-  def graph; end
-
   def weekly_attendance
-    start_of_week = Time.zone.today.beginning_of_day
-    end_of_week = (start_of_week - 7.days).end_of_day
-    end_of_last_week = (start_of_week - 14.days).end_of_day
+    start_of_week = Time.zone.today.beginning_of_week
+    end_of_week = Time.zone.today.end_of_week
+    end_of_last_week = (start_of_week - 1.week).end_of_day
 
     weekly_mapping = {}
-    (end_of_week.to_date..start_of_week.to_date).each do |date|
-      weekly_mapping[date] = 0
+    (start_of_week.to_date..end_of_week.to_date).each do |date|
+      weekly_mapping[Date::DAYNAMES[date.wday]] = 0
     end
 
-    this_week_meetings = current_account.student_meetings.includes(:meeting).present.where(meetings: { starts_at: end_of_week..start_of_week })
-    last_week_meetings = current_account.student_meetings.includes(:meeting).present.where(meetings: { starts_at: end_of_last_week..end_of_week })
+    this_week_meetings = current_account.student_meetings.includes(:meeting).present.where(meetings: { starts_at: start_of_week..end_of_week })
+    last_week_meetings = current_account.student_meetings.includes(:meeting).present.where(meetings: { starts_at: end_of_last_week..start_of_week })
 
     if this_week_meetings.length >= last_week_meetings.length
       max = this_week_meetings.length
@@ -29,16 +27,75 @@ class ReportsController < ApplicationController
                    max.zero? ? 0 : Float::INFINITY
                  else
                    (max.to_f / min) * 100
-                 end
+                 end.round(1)
 
     percentage = percentage == Float::INFINITY ? '∞' : percentage
     render json: {
       percentage:,
       total: this_week_meetings.length,
       percentage_sign:,
-      data: weekly_mapping.merge!(this_week_meetings.group_by { |sm| sm.meeting.starts_at.to_date }.transform_values(&:length))
+      data: weekly_mapping.merge!(this_week_meetings.group_by { |sm| Date::DAYNAMES[sm.meeting.starts_at.wday] }.transform_values(&:length))
     }
   end
+
+  def weekly_receipts
+    current_date = Time.zone.today
+    weekly_mapping = {}
+    total = 0
+
+    6.times do |_date|
+      monthly_amount = current_account.receipts.where(created_at: current_date.beginning_of_month..current_date.end_of_month).sum(:amount)
+      weekly_mapping[Date::MONTHNAMES[current_date.month]] = monthly_amount
+      current_date -= 1.month
+      total += monthly_amount
+    end
+
+    current_ammount = weekly_mapping[Date::MONTHNAMES[Time.zone.today.month]]
+    previous_ammount = weekly_mapping[Date::MONTHNAMES[(Time.zone.today - 1.month).month]]
+
+    if current_ammount >= previous_ammount
+      max = current_ammount
+      min = previous_ammount
+      percentage_sign = '+'
+    else
+      max = previous_ammount
+      min = current_ammount
+      percentage_sign = '-'
+    end
+
+    percentage = if min.zero?
+                   max.zero? ? 0 : Float::INFINITY
+                 else
+                   (max.to_f / min) * 100
+                 end.round(1)
+
+    percentage = percentage == Float::INFINITY ? '∞' : percentage
+    render json: {
+      percentage:,
+      total: total >= 1000 ? "#{(total / 1000).round(1)}K" : total,
+      percentage_sign:,
+      data: weekly_mapping
+    }
+  end
+
+  def students
+    student_mapping = {}
+
+    total = Student.count
+
+    Student.statuses.each do |status|
+      student_mapping[status.first.humanize] = Student.where(status: status.second).size
+    end
+
+    # student_mapping['Deleted'] = Student.with_deleted.count
+
+    render json: {
+      total:,
+      data: student_mapping
+    }
+  end
+
+  def graph; end
 
   def daily; end
 
