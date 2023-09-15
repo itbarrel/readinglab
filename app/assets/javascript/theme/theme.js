@@ -10118,94 +10118,21 @@ var marketShareEcommerceInit = function marketShareEcommerceInit() {
 
 /* -------------------------------------------------------------------------- */
 
-var marketShareInit = function marketShareInit() {
-  var ECHART_MARKET_SHARE = ".echart-market-share";
-  var $echartMarketShare = document.querySelector(ECHART_MARKET_SHARE);
+// var marketShareInit = function marketShareInit() {
+//   var ECHART_MARKET_SHARE = ".echart-market-share";
+//   var $echartMarketShare = document.querySelector(ECHART_MARKET_SHARE);
 
-  if ($echartMarketShare) {
-    var userOptions = utils.getData($echartMarketShare, "options");
-    var chart = window.echarts.init($echartMarketShare);
+//   if ($echartMarketShare) {
+//     var userOptions = utils.getData($echartMarketShare, "options");
+//     var chart = window.echarts.init($echartMarketShare);
 
-    var getDefaultOptions = function getDefaultOptions() {
-      return {
-        color: [
-          utils.getColors().primary,
-          utils.getColors().info,
-          utils.getGrays()[300],
-        ],
-        tooltip: {
-          trigger: "item",
-          padding: [7, 10],
-          backgroundColor: utils.getGrays()["100"],
-          borderColor: utils.getGrays()["300"],
-          textStyle: {
-            color: utils.getColors().dark,
-          },
-          borderWidth: 1,
-          transitionDuration: 0,
-          formatter: function formatter(params) {
-            return "<strong>"
-              .concat(params.data.name, ":</strong> ")
-              .concat(params.percent, "%");
-          },
-        },
-        position: function position(pos, params, dom, rect, size) {
-          return getPosition(pos, params, dom, rect, size);
-        },
-        legend: {
-          show: false,
-        },
-        series: [
-          {
-            type: "pie",
-            radius: ["100%", "87%"],
-            avoidLabelOverlap: false,
-            hoverAnimation: false,
-            itemStyle: {
-              borderWidth: 2,
-              borderColor: utils.getColor("card-bg"),
-            },
-            label: {
-              normal: {
-                show: false,
-                position: "center",
-                textStyle: {
-                  fontSize: "20",
-                  fontWeight: "500",
-                  color: utils.getGrays()["700"],
-                },
-              },
-              emphasis: {
-                show: false,
-              },
-            },
-            labelLine: {
-              normal: {
-                show: false,
-              },
-            },
-            data: [
-              {
-                value: 5300000,
-                name: "Samsung",
-              },
-              {
-                value: 1900000,
-                name: "Huawei",
-              },
-              {
-                value: 2000000,
-                name: "Apple",
-              },
-            ],
-          },
-        ],
-      };
-    };
+//     var getDefaultOptions = function getDefaultOptions() {
+//       return {};
+//     };
 
-    echartSetOption(chart, userOptions, getDefaultOptions);
-  }
-};
+//     echartSetOption(chart, userOptions, getDefaultOptions);
+//   }
+// };
 /* -------------------------------------------------------------------------- */
 
 /*                                Market Share                                */
@@ -13269,7 +13196,7 @@ docReady(detectorInit);
 docReady(handleNavbarVerticalCollapsed);
 docReady(totalOrderInit);
 // docReady(weeklySalesInit);
-docReady(marketShareInit);
+// docReady(marketShareInit);
 docReady(totalSalesInit);
 docReady(topProductsInit);
 docReady(navbarTopDropShadow);
