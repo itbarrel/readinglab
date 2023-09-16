@@ -1,5 +1,5 @@
 <% content_for :search_includes do %>
-  <%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
+<%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
 <% end %>
 
 <div class="card mb-3">
@@ -37,35 +37,52 @@
     </form>
   </div>
 </div>
-<div class="row g-3 mb-3">
-  <div class="card h-100">
+<div id="trajectory-detail-graph">
+</div>
+
+<div class="card mb-3" data-list='{"valueNames":["name"],"page":15}'>
+  <div class="card mb-3">
     <div class="card-header">
-      <div class="row flex-between-end">
-        <div class="col-auto align-self-center">
-          <h5 class="mb-0" data-anchor="data-anchor">Stacked area chart</h5>
+      <div class="row flex-between-center">
+        <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+          <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Students</h5>
         </div>
-      </div>
-    </div>
-    <div class="card-body bg-light">
-      <div class="tab-content">
-        <div class="tab-pane preview-tab-pane active" role="tabpanel"
-          aria-labelledby="tab-dom-ce4113cd-4f6c-40a1-91df-b85a1a51dd61"
-          id="dom-ce4113cd-4f6c-40a1-91df-b85a1a51dd61">
-          <div class="echart-line-marker-chart" style="min-height: 300px;" data-echart-responsive="true"></div>
-        </div>
-        <div class="tab-pane code-tab-pane" role="tabpanel"
-          aria-labelledby="tab-dom-9f60772b-1ef6-455d-932a-6381c7cf853e"
-          id="dom-9f60772b-1ef6-455d-932a-6381c7cf853e">
-          <pre class="scrollbar rounded-1" style="max-height:420px"><code class="language-html"></code></pre>
+        <div class="col-8 col-sm-auto text-end ps-2">
+          <div class="d-none" id="table-receipts-actions">
+            <div class="d-flex">
+              <select class="form-select form-select-sm" aria-label="Bulk actions">
+                <option selected="">Bulk actions</option>
+                <option value="Delete">Delete</option>
+              </select>
+              <button class="btn btn-falcon-default btn-sm ms-2" id="listing-bulk-action" type="button">Apply</button>
+            </div>
+          </div>
+          <div id="table-receipts-replace-element">
+            <%= link_to(new_receipt_path, remote: true, class: 'btn btn-falcon-default btn-sm') do %>
+            <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+            <span class="d-none d-sm-inline-block ms-1">New</span>
+            <% end %>
+            <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter"
+                data-fa-transform="shrink-3 down-2"></span><span
+                class="d-none d-sm-inline-block ms-1">Filter</span></button>
+            <%= link_to(export_receipts_path(format: :csv), class: 'btn btn-falcon-default btn-sm') do %>
+            <span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span>
+            <span class="d-none d-sm-inline-block ms-1">Export</span>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <div id="students-trajectory-details">
+  </div>
 </div>
+
 
 <% content_for :modal_includes do %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addBookModal' } %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addTrajectoryModal', modal_size: 'modal-lg' } %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addStudentModal' } %>
 <% end %>
 
 <% content_for :javascript_includes do %>
