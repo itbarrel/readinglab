@@ -32,7 +32,7 @@
     <form class="row g-3">
       <div class="col-lg-6 ">
         <label class="form-label">Student Name</label><br>
-        <%= select_tag('student name', options_from_collection_for_select(Student.active, 'id', 'name'), { id: 'reports_student', class: "form-select js-choice" }) %>
+        <%= select_tag('student name', options_from_collection_for_select(Student.active, 'id', 'name'), { id: 'reports_student', class: "form-select js-choice", include_blank: 'Select a Student'  }) %>
       </div>
     </form>
   </div>
