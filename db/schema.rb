@@ -551,6 +551,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_090851) do
   create_table "trajectory_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "error_count"
     t.integer "wpm"
+    t.integer "grade"
+    t.integer "season"
     t.datetime "entry_date"
     t.integer "status"
     t.uuid "account_id", null: false
@@ -560,8 +562,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_090851) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.integer "grade"
-    t.integer "season"
     t.index ["account_id"], name: "index_trajectory_details_on_account_id"
     t.index ["book_id"], name: "index_trajectory_details_on_book_id"
     t.index ["klass_id"], name: "index_trajectory_details_on_klass_id"
