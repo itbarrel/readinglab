@@ -4,13 +4,12 @@
       <input class="form-check-input" type="checkbox" id="<%= records.id %>" data-bulk-select-row="data-bulk-select-row" />
     </div>
   </td>
-  <td class="name align-middle white-space-nowrap py-2"><%= records.student.name %></td>
   <td class="name align-middle white-space-nowrap py-2"><%= records.book.name %></td>
-  <td class="phone align-middle white-space-nowrap py-2"><%= records.klass.name %></td>
   <td class="wpm align-middle white-space-nowrap py-2"><%= records.season %></td>
-  <td class="phone align-middle white-space-nowrap py-2"><%= records.error_count %></td>
-  <td class="wpm align-middle white-space-nowrap py-2"><%= records.wpm %></td>
   <td class="grade align-middle white-space-nowrap py-2"><%= records.grade %></td>
+  <td class="wpm align-middle white-space-nowrap py-2"><%= records.wpm %></td>
+  <td class="phone align-middle white-space-nowrap py-2"><%= records.error_count %></td>
+  <td class="grade align-middle white-space-nowrap py-2"><%=l records.entry_date %></td>
   <td class="align-middle white-space-nowrap py-2 text-end">
     <div class="dropdown font-sans-serif position-static">
       <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button" id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>

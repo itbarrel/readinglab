@@ -20,6 +20,7 @@ class TrajectoryDetailsController < ApplicationController
   # GET /trajectory_details/new
   def new
     @trajectory_detail = current_account.trajectory_details.new
+    @trajectory_detail.student_id = params[:student_id] if params[:student_id].present?
   end
 
   # GET /trajectory_details/1/edit
