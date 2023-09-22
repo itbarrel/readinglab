@@ -134,14 +134,16 @@ class Student < ApplicationRecord
   end
 
   def calculated_next_billing_date
-    return nil if credit_sessions.to_i.negative?
     return nil if last_session_processed.blank?
+
+    credit = credit_sessions.to_i + paid_sessions + leave_count
+
+    return nil if credit.negative?
 
     filtered = active_meetings.select do |meet|
       meet.starts_at >= last_session_processed.beginning_of_month
     end.sort_by(&:starts_at)
 
-    credit = credit_sessions.to_i + paid_sessions + leave_count
     jump = filtered.length > credit.to_i ? credit.to_i : filtered.length
     filtered[jump]&.starts_at
   end
