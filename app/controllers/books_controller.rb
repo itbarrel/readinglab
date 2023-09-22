@@ -44,10 +44,10 @@ class BooksController < ApplicationController
   def update
     respond_to do |format|
       if @book.update(book_params)
-        format.html { redirect_to books_url, notice: 'Book has been successfully updated.' }
+        format.html { redirect_to request.referer, notice: 'Book has been successfully updated.' }
         format.json { render :index, status: :ok, location: @book }
       else
-        format.html { redirect_to books_url }
+        format.html { redirect_to request.referer }
         format.json { render json: @book.errors }
       end
     end
@@ -58,7 +58,7 @@ class BooksController < ApplicationController
     @book.destroy
 
     respond_to do |format|
-      format.html { redirect_to books_url, notice: 'Book has been successfully destroyed.' }
+      format.html { redirect_to request.referer, notice: 'Book has been successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -2,89 +2,77 @@
 <%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
 <% end %>
 
-<div class="card mb-3">
-  <div class="card-header">
-    <div class="row flex-between-center">
-      <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-        <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Graph Report</h5>
-      </div>
-      <div class="col-8 col-sm-auto text-end ps-2">
-        <div id="table-customers-replace-element">
-          <%= link_to(new_book_path , remote: true, class: 'btn btn-falcon-default btn-sm') do %>
-          <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
-          <span class="d-none d-sm-inline-block ms-1">Add Books</span>
-          <% end %>
-          <%= link_to(new_trajectory_detail_path , remote: true, class: 'btn btn-falcon-default btn-sm') do %>
-          <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
-          <span class="d-none d-sm-inline-block ms-1">Add Trajectory Points</span>
-          <% end %>
-          <button class="btn btn-falcon-default btn-sm" type="button"><span class="bi bi-graph-up-arrow"
-              data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Show Trajectory
-              Points </span></button>
-          <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-download"
-              data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Download
-              Pdf</span></button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="card-body bg-light">
-    <form class="row g-3">
-      <div class="col-lg-6 ">
-        <label class="form-label">Student Name</label><br>
-        <%= select_tag('student name', options_from_collection_for_select(Student.active, 'id', 'name'), { id: 'reports_student', class: "form-select js-choice" }) %>
-      </div>
-    </form>
-  </div>
-</div>
-<div id="trajectory-detail-graph">
-</div>
-
-<div class="card mb-3" data-list='{"valueNames":["name"],"page":15}'>
-  <div class="card mb-3">
-    <div class="card-header">
-      <div class="row flex-between-center">
-        <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-          <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Students</h5>
-        </div>
-        <div class="col-8 col-sm-auto text-end ps-2">
-          <div class="d-none" id="table-receipts-actions">
-            <div class="d-flex">
-              <select class="form-select form-select-sm" aria-label="Bulk actions">
-                <option selected="">Bulk actions</option>
-                <option value="Delete">Delete</option>
-              </select>
-              <button class="btn btn-falcon-default btn-sm ms-2" id="listing-bulk-action" type="button">Apply</button>
+<div class="card overflow-hidden height-full-page">
+  <div class="card-header audience-chart-header p-0 bg-light scrollbar-overlay">
+    <ul class="nav nav-tabs border-0 chart-tab flex-nowrap" id="communication-tabs" role="tablist">
+      <li class="nav-item" role="presentation"><a class="nav-link mb-0 active" id="klasses-tab" data-bs-toggle="tab"
+          href="#klasses" role="tab" aria-controls="klasses" aria-selected="true">
+          <div class="audience-tab-item p-2 pe-4">
+            <h6 class="text-800">Graph</h6>
+            <div class="d-flex align-items-center">
             </div>
           </div>
-          <div id="table-receipts-replace-element">
-            <%= link_to(new_receipt_path, remote: true, class: 'btn btn-falcon-default btn-sm') do %>
-            <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
-            <span class="d-none d-sm-inline-block ms-1">New</span>
-            <% end %>
-            <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter"
-                data-fa-transform="shrink-3 down-2"></span><span
-                class="d-none d-sm-inline-block ms-1">Filter</span></button>
-            <%= link_to(export_receipts_path(format: :csv), class: 'btn btn-falcon-default btn-sm') do %>
-            <span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span>
-            <span class="d-none d-sm-inline-block ms-1">Export</span>
-            <% end %>
+        </a></li>
+      <li class="nav-item" role="presentation"><a class="nav-link mb-0" id="books-tab" data-bs-toggle="tab"
+          href="#books" role="tab" aria-controls="books" aria-selected="false">
+          <div class="audience-tab-item p-2 pe-4">
+            <h6 class="text-800">Book</h6>
+            <div class="d-flex align-items-center"></div>
+          </div>
+        </a></li>
+      <li class="nav-item" role="presentation"><a class="nav-link mb-0" id="grades-tab" data-bs-toggle="tab"
+          href="#grades" role="tab" aria-controls="grades" aria-selected="false">
+          <div class="audience-tab-item p-2 pe-4">
+            <h6 class="text-800">Grade</h6>
+            <div class="d-flex align-items-center"></div>
+          </div>
+        </a></li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <div class="tab-content">
+      <div class="tab-pane active" id="klasses" role="tabpanel" aria-labelledby="klasses-tab">
+        <div class="row flex-between-center">
+          <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+            <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Graph Report</h5>
+          </div>
+          <div class="col-8 col-sm-auto text-end ps-2">
+            <div id="table-customers-replace-element">
+              <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-download"
+                  data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Download
+                  Pdf</span></button>
+            </div>
           </div>
         </div>
+        <div class="card-body bg-light">
+          <form class="row g-3">
+            <div class="col-lg-6 ">
+              <label class="form-label">Student Name</label><br>
+              <%= select_tag('student name', options_from_collection_for_select(current_account.students.where(status: [:active, :wait_listed]), 'id', 'name'), { id: 'reports_student', class: "form-select js-choice" }) %>
+            </div>
+          </form>
+        </div>
+        <div id="trajectory-detail-graph">
+        </div>
+        <div id="students-trajectory-details">
+        </div>
+      </div>
+      <div class="tab-pane" id="books" role="tabpanel" aria-labelledby="books-tab">
+        <%= render 'books/book', books: @books %>
+      </div>
+      <div class="tab-pane" id="grades" role="tabpanel" aria-labelledby="grades-tab">
+        <%= render 'grades/grade', grades: @grades %>
       </div>
     </div>
   </div>
-  <div id="students-trajectory-details">
-  </div>
 </div>
 
-
 <% content_for :modal_includes do %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addBookModal' } %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addTrajectoryModal', modal_size: 'modal-lg' } %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addStudentModal' } %>
+<%= render partial: 'shared/modals/basic', locals: { modal_id: 'addBookModal' } %>
+<%= render partial: 'shared/modals/basic', locals: { modal_id: 'addTrajectoryModal', modal_size: 'modal-lg' } %>
+<%= render partial: 'shared/modals/basic', locals: { modal_id: 'addStudentModal' } %>
 <% end %>
 
 <% content_for :javascript_includes do %>
-  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
+<%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
 <% end %>
