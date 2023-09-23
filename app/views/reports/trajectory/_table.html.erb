@@ -1,34 +1,67 @@
-<div class="table-responsive">
-  <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
-    <thead class="bg-200 text-900">
-      <tr>
-        <th>
-          <div class="form-check fs-0 mb-0 d-flex align-items-center">
-            <input class="form-check-input" id="checkbox-bulk-trajectory_details-select" type="checkbox"
-              data-bulk-select='{"body":"table-trajectory_details","actions":"table-trajectory_details-actions","replacedElement":"table-trajectory_details-replace-element"}' />
+<div class="card mb-3">
+  <div class="card-header">
+    <div class="row flex-between-center">
+      <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+        <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0" >Trajectory Points</h5>
+      </div>
+      <div class="col-8 col-sm-auto text-end ps-2">
+        <div class="d-none" id="table-receipts-actions">
+          <div class="d-flex">
+            <select class="form-select form-select-sm" aria-label="Bulk actions">
+              <option selected="">Bulk actions</option>
+              <option value="Delete">Delete</option>
+            </select>
+            <button class="btn btn-falcon-default btn-sm ms-2" id="listing-bulk-action" type="button">Apply</button>
           </div>
-        </th>
-        <th class="sort pe-1 align-middle white-space-nowrap">
-          <% if @search.present? %>
-          <%= sort_link(@search, :name, default_order: :asc)%>
-          <% end %>
-        </th>
-        <th class="sort pe-1 align-middle white-space-nowrap">Book</th>
-        <th class="sort pe-1 align-middle white-space-nowrap">Class</th>
-        <th class="sort pe-1 align-middle white-space-nowrap">Season</th>
-        <th class="sort pe-1 align-middle white-space-nowrap">Error count</th>
-        <th class="sort pe-1 align-middle white-space-nowrap">Wpm</th>
-        <th class="sort pe-1 align-middle white-space-nowrap">Grade</th>
-        <th class="sort pe-1 align-middle white-space-nowrap"></th>
-      </tr>
-    </thead>
-
-    <tbody class="list" id="table-receipt-types-body">
-      <% records.each_with_index do |records| %>
-      <%= render 'reports/trajectory/trajectory_detail', records: records%>
-      <% end %>
-    </tbody>
-
-  </table>
+        </div>
+        <div id="table-receipts-replace-element">
+          <button class="btn btn-falcon-default btn-sm" type="button"><span class="bi bi-plus"
+            data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1" onclick="display()">Add</span></button>
+          <button class="btn btn-falcon-default btn-sm" type="button"><span class="bi bi-graph-up-arrow"
+            data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Export </span></button>
+      </div>
+    </div>
+  </div>
 </div>
-<%= render 'shared/pagination', query: {}, js_request: false if @pagy.present? %>
+<% if records.any? %>
+  <div class="table-responsive">
+    <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+      <thead class="bg-200 text-900">
+        <tr>
+          <th>
+            <div class="form-check fs-0 mb-0 d-flex align-items-center">
+              <input class="form-check-input" id="checkbox-bulk-trajectory_details-select" type="checkbox"
+                data-bulk-select='{"body":"table-trajectory_details","actions":"table-trajectory_details-actions","replacedElement":"table-trajectory_details-replace-element"}' />
+            </div>
+          </th>
+          <th class="sort pe-1 align-middle white-space-nowrap">Book</th>
+          <th class="sort pe-1 align-middle white-space-nowrap">Season</th>
+          <th class="sort pe-1 align-middle white-space-nowrap">Grade</th>
+          <th class="sort pe-1 align-middle white-space-nowrap">Wpm</th>
+          <th class="sort pe-1 align-middle white-space-nowrap">Error count</th>
+          <th class="sort pe-1 align-middle white-space-nowrap">Entry date</th>
+          <th class="sort pe-1 align-middle white-space-nowrap"></th>
+        </tr>
+      </thead>
+
+        <tbody class="list" id="table-receipt-types-body">
+          <% records.each_with_index do |records| %>
+            <%= render 'reports/trajectory/trajectory_detail', records: records%>
+          <% end %>
+        </tbody>
+    </table>
+  </div>
+  <%= render 'shared/pagination', query: {}, js_request: false if @pagy.present? %>
+<% end %>
+
+<script>
+  function display(){
+    const student_id = $("#reports_student").val();
+
+    $.ajax({
+      url: `/trajectory_details/new`,
+      dataType: 'script',
+      data: { student_id }
+    });
+  };
+</script> 

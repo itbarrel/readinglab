@@ -27,4 +27,8 @@ module ApplicationHelper
     days = seconds / (24 * 60 * 60)
     days.floor
   end
+
+  def render_partial_if_exists(partial)
+    render partial: partial if lookup_context.exists?(partial, [], true)
+  end
 end

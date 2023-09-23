@@ -6,17 +6,19 @@
   <div class="modal-body p-card">
     <div class="row">
       <div class="col-lg-6">
+        <% unless params[:action] == 'edit' %>
+          <div class="mb-3">
+            <%= f.label :book_id, class: 'fs-0' %>
+            <%= f.collection_select :book_id, current_account.books, :id, :name, { include_blank: true }, { class: 'form-control' } %>
+          </div>
+        <% end %>
         <div class="mb-3">
-          <%= f.label :book_id, class: 'fs-0' %>
-          <%= f.collection_select :book_id, current_account.books, :id, :name, { include_blank: true }, { class: 'form-control' } %>
+          <%= f.label :season , class: 'fs-0' %>
+          <%= f.select :season, TrajectoryDetail.seasons.map { |key, value| [key.humanize, key] }, {include_blank: true}, {class: 'form-select form-select-md'} %>
         </div>
         <div class="mb-3">
-          <%= f.label :student_id, class: 'fs-0' %>
-          <%= f.collection_select :student_id, current_account.students, :id, :name, { include_blank: true }, { class: 'form-select js-choice', data:{ options: { searchEnabled: true }} } %>
-        </div>
-        <div class="mb-3">
-          <%= f.label :error_count, class: 'fs-0' %>
-          <%= f.number_field :error_count, class: 'form-control' %>
+          <%= f.label :wpm,"Words per minutes (Wpm)", class: 'fs-0' %>
+          <%= f.number_field :wpm, class: 'form-control' %>
         </div>
         <div class="mb-3">
           <%= f.label :entry_date, class: 'fs-0' %>
@@ -24,20 +26,19 @@
         </div>
       </div>
       <div class="col-lg-6">
-        <div class="mb-3">
-          <%= f.label :klass_id, "Class",class: 'fs-0' %>
-          <%= f.collection_select :klass_id, current_account.klasses, :id, :name, { include_blank: true }, { class: 'form-select js-choice', data:{ options: { searchEnabled: true }} } %>
-        </div>
-        <div class="mb-3">
-          <%= f.label :wpm,"Words per minutes (Wpm)", class: 'fs-0' %>
-          <%= f.number_field :wpm, class: 'form-control' %>
-        </div>
-        <div class="mb-3">
-          <%= f.label :season , class: 'fs-0' %>
-          <%= f.select :season, TrajectoryDetail.seasons.map { |key, value| [key.humanize, key] }, {include_blank: true}, {class: 'form-select form-select-md'} %>
+        <% unless params[:action] == 'edit' %>
+          <div class="mb-3">
+            <%= f.label :student_id, class: 'fs-0' %>
+            <%= f.collection_select :student_id, current_account.students.where(status: [:active, :wait_listed]), :id, :name, { include_blank: true }, { class: 'form-select js-choice', data:{ options: { searchEnabled: true }} } %>
+          </div>
+        <% end %>
         <div class="mb-3">
           <%= f.label :grade, class: 'fs-0' %>
           <%= f.select :grade, options_for_select([[1], [2], [3], [4],[5]]), { prompt: true }, class: 'form-control' %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :error_count, class: 'fs-0' %>
+          <%= f.number_field :error_count, class: 'form-control' %>
         </div>
       </div>
     </div>
@@ -47,3 +48,4 @@
     <%= f.button 'Cancel', class: 'btn btn-default px-4', type: 'button', data: { 'bs-dismiss': 'modal'} %>
   </div>
 <% end %>
+

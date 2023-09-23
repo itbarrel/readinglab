@@ -17,7 +17,10 @@
                   <% next unless attr.second.present? %>
                   <div class="pe-3">
                     <p class="text-600 fs--1 fw-medium"><%= @record.class.human_attribute_name(attr.first) %></p>
-                    <h4 class="text-800 mb-0"><%= attr.second %></h4>
+                    <% is_date = @record.class::DATE_FORMATER_ATTRIBUTES.include?(attr.first.to_sym) %>
+                    <h4 class="text-800 mb-0">
+                      <%= attr.second.nil? ? '-' : true?(is_date)? (l attr.second, format: :medium) : attr.second %>
+                    </h4>
                   </div>
                 <% end %>
               </div>
@@ -28,6 +31,8 @@
     </div>
   </div>
 </div>
+
+<%= render_partial_if_exists("#{params[:controller]}/show") %>
 
 <% if @changes.present? %>
   <%= render partial: 'shared/histroy/versions', locals: { changes: @changes } %>

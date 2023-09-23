@@ -12,10 +12,11 @@ class PaymentsController < ApplicationController
 
     if params[:student_id].present?
       @student =  current_account.students.find_by(id: params[:student_id])
-      meeting_ids = @student.meetings.ids
+      meeting_ids = @student.active_meetings.ids
+      std_meeting_ids = @student.student_meetings.map(&:meeting_id)
       @payment_meeting_ids = @student.payments.map(&:meeting_id)
 
-      @meetings = current_account.meetings.unscoped.where(id: meeting_ids + @payment_meeting_ids)
+      @meetings = current_account.meetings.unscoped.where(id: meeting_ids + std_meeting_ids + @payment_meeting_ids)
     end
 
     @search = @meetings.ransack(params[:q])

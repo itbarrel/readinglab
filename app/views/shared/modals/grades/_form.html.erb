@@ -2,15 +2,11 @@
   <h5 class="modal-title"><%= title %></h5>
   <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
-<%= form_for(book, id: 'addBookModal') do |f| %>
+<%= form_for(grade, id: 'addGradeModal') do |f| %>
   <div class="modal-body p-card">
     <div class="mb-3">
-      <%= f.label :book_name, class: 'fs-0' %>
-      <%= f.text_field :name, class: 'form-control', placeholder: 'name' %>
-    </div>
-    <div class="mb-3">
-      <%= f.label :grade, class: 'fs-0' %>
-      <%= f.number_field :grade, class: 'form-control' %>
+      <%= f.label :title, class: 'fs-0' %>
+      <%= f.text_field :title, class: 'form-control' %>
     </div>
   <div class="card-footer d-flex justify-content-end align-items-center bg-light">
     <%= f.submit 'Save', class: 'btn btn-primary px-4' %>
