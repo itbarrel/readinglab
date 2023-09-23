@@ -1,76 +1,23 @@
-<div class="card mb-3" data-list='{"valueNames":["name","action"],"page":15}'>
-  <div class="card-header">
-    <div class="row flex-between-center">
-      <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-        <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Book</h5>
-      </div>
-      <div class="col-8 col-sm-auto text-end ps-2">
-        <div class="d-none" id="table-books-actions">
-          <div class="d-flex">
-            <select class="form-select form-select-sm" aria-label="Bulk actions">
-              <option selected="">Bulk actions</option>
-              <option value="Delete">Delete</option>
-            </select>
-            <button class="btn btn-falcon-default btn-sm ms-2" id="listing-bulk-action" type="button">Apply</button>
-          </div>
-        </div>
-        <div id="table-books-replace-element">
-        <%= link_to(new_book_path , remote: true, class: 'btn btn-falcon-default btn-sm') do %>
-              <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
-              <span class="d-none d-sm-inline-block ms-1">Add Book</span>
-              <% end %>
+<tr class="btn-reveal-trigger">
+  <td class="align-middle py-2" style="width: 28px;">
+    <div class="form-check fs-0 mb-0 d-flex align-items-center">
+      <input class="form-check-input communications-books" type="checkbox" id="<%= book.id %>"
+        data-bulk-select-row="data-bulk-select-row" />
+    </div>
+  </td>
+  <td class="name align-middle white-space-nowrap py-2"><%= book.name %></td>
+  <td class="name align-middle white-space-nowrap py-2"><%= book&.grade&.title %></td>
+  <td class="align-middle white-space-nowrap py-2 text-end">
+    <div class="dropdown font-sans-serif position-static">
+      <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button"
+        id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true"
+        aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span>
+      </button>
+      <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
+        <div class="bg-white py-2">
+          <%= link_to('Edit', edit_book_path(book),remote: true, class: 'dropdown-item') %>
+          <%= link_to('Delete', book_path(book), method: :delete, class: 'dropdown-item text-danger') %>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="card-body p-0">
-    <div class="table-responsive">
-      <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
-        <thead class="bg-200 text-900">
-          <tr>
-            <th>
-              <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                <input class="form-check-input" id="checkbox-bulk-books-select" type="checkbox"
-                  data-bulk-select='{"body":"table-books-body","actions":"table-books-actions"}' />
-              </div>
-            </th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Name</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Grade</th>
-            <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date"></th>
-          </tr>
-        </thead>
-        <tbody class="list" id="table-books-body">
-          <% @books.each do |book| %>
-          <tr class="btn-reveal-trigger">
-            <td class="align-middle py-2" style="width: 28px;">
-              <div class="form-check fs-0 mb-0 d-flex align-items-center">
-                <input class="form-check-input communications-books" type="checkbox" id="<%= book.id %>"
-                  data-bulk-select-row="data-bulk-select-row" />
-              </div>
-            </td>
-            <td class="name align-middle white-space-nowrap py-2"><%= book.name %></td>
-            <td class="name align-middle white-space-nowrap py-2"><%= book.grade %></td>
-            <td class="align-middle white-space-nowrap py-2 text-end">
-              <div class="dropdown font-sans-serif position-static">
-                <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal" type="button"
-                  id="customer-dropdown-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true"
-                  aria-expanded="false"><span class="fas fa-ellipsis-h fs--1"></span></button>
-                <div class="dropdown-menu dropdown-menu-end border py-0" aria-labelledby="customer-dropdown-0">
-                  <div class="bg-white py-2">
-                    <%= link_to('Edit', edit_book_path(book),remote: true, class: 'dropdown-item') %>
-                    <%= link_to('Delete', book_path(book), method: :delete, class: 'dropdown-item text-danger') %>
-                  </div>
-                </div>
-            </td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <%= render 'shared/pagination', query: {}, js_request: true if @pagy.present? %>
-</div>
-
-<% content_for :javascript_includes do %>
-  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
-<% end %>
+  </td>
+</tr>

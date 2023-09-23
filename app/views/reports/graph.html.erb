@@ -2,7 +2,7 @@
   <%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
 <% end %>
 
-<div class="card overflow-hidden height-full-page">
+<div class="card height-full-page">
   <div class="card-header audience-chart-header p-0 bg-light scrollbar-overlay">
     <ul class="nav nav-tabs border-0 chart-tab flex-nowrap" id="communication-tabs" role="tablist">
       <li class="nav-item" role="presentation"><a class="nav-link mb-0 active" id="klasses-tab" data-bs-toggle="tab"
@@ -58,10 +58,10 @@
         </div>
       </div>
       <div class="tab-pane" id="books" role="tabpanel" aria-labelledby="books-tab">
-        <%= render 'books/book', books: @books %>
+        <%= render 'books/page', books: @books %>
       </div>
       <div class="tab-pane" id="grades" role="tabpanel" aria-labelledby="grades-tab">
-        <%= render 'grades/grade', grades: @grades %>
+        <%= render 'grades/page', grades: @grades %>
       </div>
     </div>
   </div>

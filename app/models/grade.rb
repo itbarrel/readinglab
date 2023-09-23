@@ -11,4 +11,5 @@
 #  updated_at :datetime         not null
 #
 class Grade < ApplicationRecord
+  has_many :books, dependent: nil
 end

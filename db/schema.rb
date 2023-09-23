@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_23_071006) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_23_125927) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -175,13 +175,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_071006) do
 
   create_table "books", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
-    t.string "grade"
     t.datetime "deleted_at"
     t.uuid "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "grade_id"
     t.index ["account_id", "name", "deleted_at"], name: "book_name", unique: true
     t.index ["account_id"], name: "index_books_on_account_id"
+    t.index ["grade_id"], name: "index_books_on_grade_id"
   end
 
   create_table "cities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -667,6 +668,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_071006) do
   add_foreign_key "archive_student_meetings", "archive_meetings"
   add_foreign_key "archive_student_meetings", "students"
   add_foreign_key "books", "accounts"
+  add_foreign_key "books", "grades"
   add_foreign_key "content_libraries", "accounts"
   add_foreign_key "field_values", "form_fields"
   add_foreign_key "form_details", "accounts"

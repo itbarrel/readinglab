@@ -1,0 +1,22 @@
+<div class="table-responsive">
+  <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden table-bordered">
+    <thead class="bg-200 text-900">
+      <tr>
+        <th>
+          <div class="form-check fs-0 mb-0 d-flex align-items-center">
+            <input class="form-check-input" id="checkbox-bulk-grades-select" type="checkbox"
+              data-bulk-select='{"body":"table-grades-body","actions":"table-grades-actions"}' />
+          </div>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date">Title</th>
+        <th class="sort pe-1 align-middle white-space-nowrap" data-sort="ending date"></th>
+      </tr>
+    </thead>
+    <tbody class="list" id="table-grades-body">
+      <% @grades.each do |grade| %>
+        <%= render 'grades/grade', grade: grade %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= render 'shared/pagination', query: {}, js_request: true if @pagy.present? %>

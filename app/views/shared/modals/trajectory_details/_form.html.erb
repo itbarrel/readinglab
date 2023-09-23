@@ -34,7 +34,7 @@
         <% end %>
         <div class="mb-3">
           <%= f.label :grade, class: 'fs-0' %>
-          <%= f.select :grade, options_for_select([[1], [2], [3], [4],[5]]), { prompt: true }, class: 'form-control' %>
+          <%= f.select :grade, TrajectoryDetail.grades.map { |key, value| [key.to_i + 1, key] }, {include_blank: true}, {class: 'form-select form-select-md'} %>
         </div>
         <div class="mb-3">
           <%= f.label :error_count, class: 'fs-0' %>

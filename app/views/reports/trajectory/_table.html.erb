@@ -45,8 +45,8 @@
       </thead>
 
         <tbody class="list" id="table-receipt-types-body">
-          <% records.each_with_index do |records| %>
-            <%= render 'reports/trajectory/trajectory_detail', records: records%>
+          <% records.each_with_index do |rec| %>
+            <%= render 'reports/trajectory/trajectory_detail', detail: rec %>
           <% end %>
         </tbody>
     </table>
