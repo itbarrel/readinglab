@@ -142,9 +142,15 @@ class Student < ApplicationRecord
 
     return nil if credit.negative?
 
+    attended_ids = student_meetings.select do |sm|
+      sm.created_at >= last_session_processed.beginning_of_month &&
+        sm.created_at <= last_session_processed.end_of_month &&
+        [:present, :absent, 'present', 'absent'].include?(sm.attendance)
+    end.map(&:meeting_id)
+
     filtered = active_meetings.select do |meet|
-      meet.starts_at >= last_session_processed.beginning_of_month
-    end.sort_by(&:starts_at)
+      meet.starts_at >= last_session_processed.beginning_of_month || attended_ids.include?(meet.id)
+    end.uniq.sort_by(&:starts_at)
 
     jump = filtered.length > credit.to_i ? credit.to_i : filtered.length
     filtered[jump]&.starts_at
