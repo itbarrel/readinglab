@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_22_140437) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_23_071006) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -215,7 +215,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_140437) do
 
   create_table "form_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.jsonb "form_values"
-    t.uuid "user_id", null: false
+    t.uuid "user_id"
     t.uuid "form_id", null: false
     t.uuid "account_id", null: false
     t.string "parent_type", null: false
@@ -258,13 +258,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_140437) do
     t.integer "purpose"
     t.index ["account_id", "name", "deleted_at"], name: "forms_name", unique: true
     t.index ["account_id"], name: "index_forms_on_account_id"
-  end
-
-  create_table "grades", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
   end
 
   create_table "interviews", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -540,15 +533,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_140437) do
     t.string "programs"
     t.integer "status"
     t.integer "prepaid_sessions"
-    t.integer "credit_session"
+    t.integer "credit_sessions", default: 0
     t.datetime "registration_date"
     t.uuid "account_id", null: false
     t.uuid "parent_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "deleted_at"
-    t.integer "session_credit", default: 0
-    t.datetime "session_processed_at"
+    t.datetime "last_session_processed"
     t.index ["account_id", "first_name", "last_name", "parent_id", "deleted_at"], name: "students_name", unique: true
     t.index ["account_id"], name: "index_students_on_account_id"
     t.index ["parent_id"], name: "index_students_on_parent_id"
@@ -561,8 +553,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_140437) do
     t.integer "status"
     t.uuid "account_id", null: false
     t.uuid "student_id", null: false
-    t.uuid "klass_id", null: false
-    t.uuid "book_id", null: false
+    t.uuid "book_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -570,7 +561,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_140437) do
     t.integer "season"
     t.index ["account_id"], name: "index_trajectory_details_on_account_id"
     t.index ["book_id"], name: "index_trajectory_details_on_book_id"
-    t.index ["klass_id"], name: "index_trajectory_details_on_klass_id"
     t.index ["student_id"], name: "index_trajectory_details_on_student_id"
   end
 
@@ -716,7 +706,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_22_140437) do
   add_foreign_key "students", "parents"
   add_foreign_key "trajectory_details", "accounts"
   add_foreign_key "trajectory_details", "books"
-  add_foreign_key "trajectory_details", "klasses"
   add_foreign_key "trajectory_details", "students"
   add_foreign_key "users", "accounts"
   add_foreign_key "vacation_types", "accounts"
