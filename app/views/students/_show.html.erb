@@ -1,0 +1,103 @@
+<% details = @record.form_details.includes(parent: [klass: :teacher], form: :form_fields).sort_by{|x| x.parent.is_a?(Meeting)? x.parent.starts_at : x.parent.date } %>
+
+<section class="cd-horizontal-timeline">
+	<div class="student-timeline">
+		<div class="events-wrapper">
+			<div class="events">
+				<ol class="student_detail_timeline">
+          <% details.each_with_index do |fd, index| %>
+            <% if fd.parent.is_a?(Meeting) %>
+              <li><a href="#0" data-date="<%= fd.parent.starts_at.strftime('%d/%m/%Y') %>" class="<%= (index == 0)? 'selected' : ''%>"><%= l fd.parent.starts_at, format: :short %></a></li>
+            <% elsif fd.parent.is_a?(Interview) %>
+              <li><a href="#0" data-date="<%= fd.parent.date.strftime('%d/%m/%Y') %>" class="<%= (index == 0)? 'selected' : ''%>"><%= l fd.parent.date, format: :short %></a></li>
+            <% end %>
+          <% end %>
+				</ol>
+
+				<span class="filling-line" aria-hidden="true"></span>
+			</div> <!-- .events -->
+		</div> <!-- .events-wrapper -->
+			
+		<ul class="cd-timeline-navigation student_detail_timeline">
+			<li><a href="#0" class="prev inactive">Prev</a></li>
+			<li><a href="#0" class="next">Next</a></li>
+		</ul> <!-- .cd-timeline-navigation -->
+	</div> <!-- .timeline -->
+
+	<div class="events-content">
+		<ol class="student_detail_timeline">
+      <% details.each_with_index do |fd, index| %>
+        <% if fd.parent.is_a?(Meeting) %>
+          <li class="<%= (index == 0)? 'selected' : ''%>" data-date="<%= fd.parent.starts_at.strftime('%d/%m/%Y') %>">
+            <h4>Meeting on Klass: <%= fd.parent.name %></h4>
+            <h5>On: <%= l fd.parent.starts_at, format: :medium %></h5>
+            <h5>Submission: <%= l fd.created_at, format: :medium %></h5>
+            <h5>Form: <%= fd.form.name %></h5>
+            <div class="table-responsive scrollbar">
+              <table class="table table-bordered overflow-hidden">
+                <colgroup>
+                  <col class="bg-soft-primary" />
+                  <col />
+                  <col />
+                </colgroup>
+                <thead>
+                  <tr class="btn-reveal-trigger">
+                    <th scope="col">Field Names</th>
+                    <th scope="col"><%= l fd.parent.starts_at, format: :medium %></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% unless (fd.form.form_fields.present? rescue nil) %>
+                    <tr class="btn-reveal-trigger">
+                      <td rowspan="20">No Data Available</td>
+                    </tr>
+                  <% end %>
+                  <% fd.form.form_fields.each do |field| %>
+                    <tr class="btn-reveal-trigger">
+                      <td><%= field.name %></td>
+                      <td><%= fd.form_values[field.model_key] %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </li>
+        <% elsif fd.parent.is_a?(Interview) %>
+          <li class="<%= (index == 0)? 'selected' : ''%>" data-date="<%= fd.parent.date.strftime('%d/%m/%Y') %>">
+            <h4>Interview Date: <%= l fd.parent.date, format: :medium %></h4>
+            <h5>Submission: <%= l fd.created_at, format: :medium %></h5>
+            <h5>Form: <%= fd.form.name %></h5>
+            <div class="table-responsive scrollbar">
+              <table class="table table-bordered overflow-hidden">
+                <colgroup>
+                  <col class="bg-soft-primary" />
+                  <col />
+                  <col />
+                </colgroup>
+                <thead>
+                  <tr class="btn-reveal-trigger">
+                    <th scope="col">Field Names</th>
+                    <th scope="col"><%= l fd.parent.date, format: :medium %></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% unless (fd.form.form_fields.present? rescue nil) %>
+                    <tr class="btn-reveal-trigger">
+                      <td rowspan="20">No Data Available</td>
+                    </tr>
+                  <% end %>
+                  <% fd.form.form_fields.each do |field| %>
+                    <tr class="btn-reveal-trigger">
+                      <td><%= field.name %></td>
+                      <td><%= fd.form_values[field.model_key] %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
+		</ol>
+	</div> <!-- .events-content -->
+</section>

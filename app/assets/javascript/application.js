@@ -23,5 +23,6 @@ import "./theme/theme";
 import "./theme/calendarInit";
 import "./theme/graphInit";
 import "./theme/draggable";
+import "./timeline";
 import "./custom";
 import "./intercepter";
