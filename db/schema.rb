@@ -260,6 +260,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_071006) do
     t.index ["account_id"], name: "index_forms_on_account_id"
   end
 
+  create_table "grades", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+  end
+
   create_table "interviews", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "date"
     t.string "feedback"
