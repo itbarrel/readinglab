@@ -56,9 +56,6 @@ class FormField < ApplicationRecord
       }, {
         name: 'On Leave',
         usage: 'leave'
-      }, {
-        name: 'On Hold',
-        usage: 'hold'
       }]
     }.to_dot
   end
