@@ -1,4 +1,6 @@
-<%= form_for(staff, as: :staff, url: staffs_path, id: 'addStaffForm') do |f| %>
+<% url = (params[:action] == 'new' ? staffs_path : staff_path(staff)) %>
+
+<%= form_for(staff, as: :staff, url: url, id: 'addStaffForm') do |f| %>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
   <div class="modal-header px-card bg-light border-bottom-0">
@@ -10,7 +12,7 @@
       <%= f.label :first_name, class: 'fs-0' %>
       <%= f.text_field :first_name, class: 'form-control' %>
     </div>
-     <div class="mb-3">
+    <div class="mb-3">
       <%= f.label :last_name, class: 'fs-0' %>
       <%= f.text_field :last_name, class: 'form-control' %>
     </div>
@@ -26,6 +28,12 @@
       <%= f.label :phone, class: 'fs-0' %>
       <%= f.text_field :phone, class: 'form-control' %>
     </div>
+    <% unless params[:action] == 'edit' %>
+      <div class="mb-3">
+        <%= f.label :new_password, class: 'fs-0' %>
+        <%= f.text_field :password, class: 'form-control' %>
+      </div>
+    <% end %>
   </div>
   <div class="card-footer d-flex justify-content-end align-items-center bg-light">
     <%= f.submit 'Save', class: 'btn btn-primary px-4' %>
