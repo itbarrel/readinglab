@@ -96,7 +96,6 @@ class ReportsController < ApplicationController
   end
 
   def graph
-    @books = Book.all
     @grades = Grade.all
   end
 

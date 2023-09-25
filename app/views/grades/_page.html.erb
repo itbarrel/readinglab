@@ -26,7 +26,3 @@
 <% content_for :modal_includes do %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addGradeModal' } %>
 <% end %>
-
-<% content_for :javascript_includes do %>
-  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
-<% end %>

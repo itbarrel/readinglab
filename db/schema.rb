@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_23_125927) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_25_094736) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -216,7 +216,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_125927) do
 
   create_table "form_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.jsonb "form_values"
-    t.uuid "user_id"
+    t.uuid "user_id", null: false
     t.uuid "form_id", null: false
     t.uuid "account_id", null: false
     t.string "parent_type", null: false
@@ -266,6 +266,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_125927) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.uuid "account_id", null: false
+    t.index ["account_id"], name: "index_grades_on_account_id"
   end
 
   create_table "interviews", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -548,6 +550,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_125927) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "deleted_at"
+    t.integer "session_credit", default: 0
+    t.datetime "session_processed_at"
     t.datetime "last_session_processed"
     t.index ["account_id", "first_name", "last_name", "parent_id", "deleted_at"], name: "students_name", unique: true
     t.index ["account_id"], name: "index_students_on_account_id"
@@ -561,7 +565,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_125927) do
     t.integer "status"
     t.uuid "account_id", null: false
     t.uuid "student_id", null: false
-    t.uuid "book_id"
+    t.uuid "book_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -676,6 +680,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_125927) do
   add_foreign_key "form_details", "users"
   add_foreign_key "form_fields", "forms"
   add_foreign_key "forms", "accounts"
+  add_foreign_key "grades", "accounts"
   add_foreign_key "interviews", "accounts"
   add_foreign_key "interviews", "forms"
   add_foreign_key "interviews", "students"

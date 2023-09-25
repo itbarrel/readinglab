@@ -18,6 +18,8 @@
 #  programs               :string
 #  registration_date      :datetime
 #  school                 :string
+#  session_credit         :integer          default(0)
+#  session_processed_at   :datetime
 #  settings               :jsonb
 #  status                 :integer
 #  created_at             :datetime         not null

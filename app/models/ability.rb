@@ -8,6 +8,7 @@ class Ability
     can :read, :reports
     can :read, :billing
     can :manage, Book, account_id: user.account_id
+    can :manage, Grade, account_id: user.account_id
     can :manage, City, account_id: user.account_id
     can :manage, ContentLibrary, account_id: user.account_id
     can :manage, Form, account_id: user.account_id
@@ -45,6 +46,7 @@ class Ability
     can :read, :reports
     can :read, :billing
     can :manage, Book, account_id: user.account_id
+    can :manage, Grade, account_id: user.account_id
     can :manage, City, account_id: user.account_id
     can :manage, ContentLibrary, account_id: user.account_id
     can :manage, Form, account_id: user.account_id

@@ -10,7 +10,7 @@ class BooksController < ApplicationController
 
     @search = @books.ransack(params[:q])
     @search.sorts = 'name asc' if @search.sorts.empty?
-    @pagy, @books = pagy(@search.result.includes([:grade]), items: per_page)
+    @pagy, @books = pagy(@search.result.includes(:grade), items: per_page)
   end
 
   # GET /books/1 or /books/1.json

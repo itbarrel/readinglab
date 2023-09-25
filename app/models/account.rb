@@ -37,7 +37,6 @@ class Account < ApplicationRecord
   resourcify
 
   has_one :admin, -> { admin }, class_name: 'User', dependent: :destroy, inverse_of: :account
-  has_many :books, dependent: :destroy
   has_many :vacations, dependent: :destroy
   has_many :vacation_types, dependent: :destroy
   has_many :users, dependent: :destroy
@@ -59,6 +58,8 @@ class Account < ApplicationRecord
   has_many :receipts, dependent: :destroy
   has_many :vaction_types, dependent: :destroy
   has_many :vacations, dependent: :destroy
+  has_many :grades, dependent: :destroy
+  has_many :books, dependent: :destroy
 
   validates :email, :mobile, :postal_code, presence: true
   validates :name, presence: true, uniqueness: { scope: %i[name deleted_at] }

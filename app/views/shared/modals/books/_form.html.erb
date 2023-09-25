@@ -10,7 +10,7 @@
     </div>
     <div class="mb-3">
       <%= f.label :grade, class: 'fs-0' %>
-      <%= f.collection_select :grade_id, Grade.order(:title), :id, :title, { include_blank: true }, { class: 'form-control' } %>
+      <%= f.collection_select :grade_id, current_account.grades.order(:title), :id, :title, { include_blank: true }, { class: 'form-control' } %>
     </div>
   <div class="card-footer d-flex justify-content-end align-items-center bg-light">
     <%= f.submit 'Save', class: 'btn btn-primary px-4' %>

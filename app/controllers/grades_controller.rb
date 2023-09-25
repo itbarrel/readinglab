@@ -1,9 +1,16 @@
 # frozen_string_literal: true
 
 class GradesController < ApplicationController
+  load_and_authorize_resource
   before_action :set_grade, only: %i[destroy update edit]
 
-  def index; end
+  def index
+    per_page = false?(params[:pagination]) ? 1000 : (params[:per_page] || 10)
+
+    @search = @grades.ransack(params[:q])
+    @search.sorts = 'title asc' if @search.sorts.empty?
+    @pagy, @grades = pagy(@search.result, items: per_page)
+  end
 
   def show; end
 
