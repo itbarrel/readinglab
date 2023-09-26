@@ -1,4 +1,4 @@
-<% details = @record.form_details.working.includes(parent: [klass: :teacher], form: :form_fields).sort_by{|x| x.parent.is_a?(Meeting)? x.parent.starts_at : x.parent.date } %>
+<% details = @record.form_details.working.includes(parent: [klass: [:teacher, :room]], form: :form_fields).sort_by{|x| x.parent.is_a?(Meeting)? x.parent.starts_at : x.parent.date } %>
 
 <% if details.any? %>
   <section class="cd-horizontal-timeline">

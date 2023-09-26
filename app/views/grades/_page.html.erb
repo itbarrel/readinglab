@@ -22,7 +22,3 @@
 </div>
 
 <%= render 'grades/table', records: grades %>
-
-<% content_for :modal_includes do %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addGradeModal' } %>
-<% end %>
