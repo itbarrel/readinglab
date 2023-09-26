@@ -80,6 +80,16 @@ class StudentsController < ApplicationController
 
   def interviews; end
 
+  def reset_billing
+    @student.update(credit_sessions: 0, last_session_processed: [[
+      @student.student_classes.order(created_at: :asc)&.first&.created_at,
+      @student.receipts.order(created_at: :asc)&.first&.created_at,
+      @student.student_meetings.order(created_at: :asc)&.first&.created_at
+    ].compact.min, Date.new(2015, 1, 1)].max - 2.months)
+
+    ProcessStudentBillingJob.perform_in(5.seconds, @student.id) if @student.last_session_processed < 1.month.ago
+  end
+
   # modal
   def student_attendance
     calculate_attendance_for(@student)

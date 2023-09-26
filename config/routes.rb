@@ -104,6 +104,7 @@ Rails.application.routes.draw do
 
     member do
       get :interviews
+      get :reset_billing
       get :student_attendance
       get :student_attendance_search
     end
