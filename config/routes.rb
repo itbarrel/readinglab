@@ -116,6 +116,8 @@ Rails.application.routes.draw do
       get :weekly_receipts
       get :students
       get :graph
+      get :book
+      get :grade
       get :daily
       get :student
     end

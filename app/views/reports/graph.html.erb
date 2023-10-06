@@ -4,30 +4,11 @@
 
 <div class="card height-full-page">
   <div class="card-header audience-chart-header p-0 bg-light scrollbar-overlay">
-    <ul class="nav nav-tabs border-0 chart-tab flex-nowrap" id="communication-tabs" role="tablist">
-      <li class="nav-item" role="presentation"><a class="nav-link mb-0 active" id="klasses-tab" data-bs-toggle="tab"
-          href="#klasses" role="tab" aria-controls="klasses" aria-selected="true">
           <div class="audience-tab-item p-2 pe-4">
-            <h6 class="text-800">Graph</h6>
+            <h5 class="text-800">Graph</h5>
             <div class="d-flex align-items-center">
             </div>
           </div>
-        </a></li>
-      <li class="nav-item" role="presentation"><a class="nav-link mb-0" id="books-tab" data-bs-toggle="tab"
-          href="#books" role="tab" aria-controls="books" aria-selected="false">
-          <div class="audience-tab-item p-2 pe-4">
-            <h6 class="text-800">Book</h6>
-            <div class="d-flex align-items-center"></div>
-          </div>
-        </a></li>
-      <li class="nav-item" role="presentation"><a class="nav-link mb-0" id="grades-tab" data-bs-toggle="tab"
-          href="#grades" role="tab" aria-controls="grades" aria-selected="false">
-          <div class="audience-tab-item p-2 pe-4">
-            <h6 class="text-800">Grade</h6>
-            <div class="d-flex align-items-center"></div>
-          </div>
-        </a></li>
-    </ul>
   </div>
   <div class="card-body">
     <div class="tab-content">
@@ -48,7 +29,7 @@
           <form class="row g-3">
             <div class="col-lg-6 ">
               <label class="form-label">Student Name</label><br>
-              <%= select_tag('student name', options_from_collection_for_select(current_account.students.where(status: [:active, :wait_listed]), 'id', 'name'), { id: 'reports_student', class: "form-select js-choice" }) %>
+              <%= select_tag('student name', options_from_collection_for_select(current_account.students.where(status: [:active, :wait_listed]), 'id', 'name'), { include_blank: true, id: 'reports_student', class: "form-select js-choice" }) %>
             </div>
           </form>
         </div>
@@ -57,18 +38,12 @@
         <div id="students-trajectory-details">
         </div>
       </div>
-      <div class="tab-pane" id="books" role="tabpanel" aria-labelledby="books-tab">
-      </div>
-      <div class="tab-pane" id="grades" role="tabpanel" aria-labelledby="grades-tab">
-      </div>
     </div>
   </div>
 </div>
 
 <% content_for :modal_includes do %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addBookModal' } %>
   <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addTrajectoryModal', modal_size: 'modal-lg' } %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addGradeModal' } %>
 <% end %>
 
 <% content_for :javascript_includes do %>

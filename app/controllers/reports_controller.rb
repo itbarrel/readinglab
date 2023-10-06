@@ -95,9 +95,15 @@ class ReportsController < ApplicationController
     }
   end
 
-  def graph
+  def book
+    @books = Book.all
+  end
+
+  def grade
     @grades = Grade.all
   end
+
+  def graph; end
 
   def daily; end
 
