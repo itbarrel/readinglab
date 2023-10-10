@@ -1,51 +1,42 @@
 <% content_for :search_includes do %>
-  <%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
+<%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
 <% end %>
 
+<div class="card-header">
+  <h5 class="mb-0">Graph Report</h5>
+</div>
 <div class="card height-full-page">
-  <div class="card-header audience-chart-header p-0 bg-light scrollbar-overlay">
-          <div class="audience-tab-item p-2 pe-4">
-            <h5 class="text-800">Graph</h5>
-            <div class="d-flex align-items-center">
-            </div>
-          </div>
-  </div>
   <div class="card-body">
-    <div class="tab-content">
-      <div class="tab-pane active" id="klasses" role="tabpanel" aria-labelledby="klasses-tab">
-        <div class="row flex-between-center">
-          <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-            <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Graph Report</h5>
-          </div>
-          <div class="col-8 col-sm-auto text-end ps-2">
-            <div id="table-customers-replace-element">
-              <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-download"
-                  data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Download
-                  Pdf</span></button>
-            </div>
-          </div>
-        </div>
-        <div class="card-body bg-light">
-          <form class="row g-3">
-            <div class="col-lg-6 ">
-              <label class="form-label">Student Name</label><br>
-              <%= select_tag('student name', options_from_collection_for_select(current_account.students.where(status: [:active, :wait_listed]), 'id', 'name'), { include_blank: true, id: 'reports_student', class: "form-select js-choice" }) %>
-            </div>
-          </form>
-        </div>
-        <div id="trajectory-detail-graph">
-        </div>
-        <div id="students-trajectory-details">
+    <div class="row flex-between-center">
+      <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+        <label class="text-muted h5">Student Name</label><br>
+      </div>
+      <div class="col-8 col-sm-auto text-end ps-2">
+        <div id="table-customers-replace-element">
+          <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-download"
+              data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Download
+              Pdf</span></button>
         </div>
       </div>
+    </div>
+    <div class="card-body" style="padding-left: 2px">
+      <form class="row g-3">
+        <div class="col-lg-6 ">
+          <%= select_tag('student name', options_from_collection_for_select(current_account.students.where(status: [:active, :wait_listed]), 'id', 'name', selected: params[:id]), { include_blank: true, id: 'reports_student', class: "form-select js-choice" }) %>
+        </div>
+      </form>
+    </div>
+    <div id="trajectory-detail-graph" style="padding: 9px;">
+    </div>
+    <div id="students-trajectory-details">
     </div>
   </div>
 </div>
 
 <% content_for :modal_includes do %>
-  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addTrajectoryModal', modal_size: 'modal-lg' } %>
+<%= render partial: 'shared/modals/basic', locals: { modal_id: 'addTrajectoryModal', modal_size: 'modal-lg' } %>
 <% end %>
 
 <% content_for :javascript_includes do %>
-  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
+<%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
 <% end %>

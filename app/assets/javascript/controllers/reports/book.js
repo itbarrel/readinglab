@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     url: "/books",
     dataType: 'script',
   });
- 
 })
 
  

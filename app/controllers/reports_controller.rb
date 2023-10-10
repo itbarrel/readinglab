@@ -105,6 +105,10 @@ class ReportsController < ApplicationController
 
   def graph; end
 
+  def student_graph
+    @trajectory_details = TrajectoryDetail.where(student_id: params[:id])
+  end
+
   def daily; end
 
   def student

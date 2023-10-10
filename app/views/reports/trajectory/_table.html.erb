@@ -49,26 +49,25 @@
 
         <tbody class="list" id="table-trajectory-details-types-body">
           <% records.each_with_index do |rec| %>
-          <%= render 'reports/trajectory/trajectory_detail', detail: rec, viewable: false  %>
+            <%= render 'reports/trajectory/trajectory_detail', detail: rec %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
+    <%= render 'shared/pagination', query: {}, js_request: false if @pagy.present? %>
     <% end %>
-    </tbody>
-    </table>
-  </div>
-  <%= render 'shared/pagination', query: {}, js_request: false if @pagy.present? %>
-  <% end %>
 
-  <script>
-    function display() {
-      const student_id = $("#reports_student").val();
+    <script>
+      function display() {
+        const student_id = $("#reports_student").val();
 
-      $.ajax({
-        url: `/trajectory_details/new`,
-        dataType: 'script',
-        data: {
-          student_id
-        }
-      });
-    };
+        $.ajax({
+          url: `/trajectory_details/new`,
+          dataType: 'script',
+          data: {
+            student_id
+          }
+        });
+      };
 
-  </script>
+    </script>

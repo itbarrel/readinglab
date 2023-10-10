@@ -116,6 +116,7 @@ Rails.application.routes.draw do
       get :weekly_receipts
       get :students
       get :graph
+      get '/graph/:id', action: 'student_graph', as: 'student_graph'
       get :book
       get :grade
       get :daily

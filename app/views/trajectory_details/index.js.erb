@@ -1,4 +1,4 @@
-$('#students-trajectory-details').html("<%= j render 'reports/trajectory/table', records: @trajectory_details, veiwable: true %>");
+$('#students-trajectory-details').html("<%= j render 'reports/trajectory/table', records: @trajectory_details %>");
 $('#trajectory-detail-graph').html("<%= j render 'reports/trajectory/graph', records: @trajectory_details, grades: TrajectoryDetail.grades.keys, seasons: TrajectoryDetail.seasons.keys %>");
 
 <%# window.bulkSelectInit() %>

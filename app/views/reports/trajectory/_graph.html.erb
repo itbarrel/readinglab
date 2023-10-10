@@ -23,8 +23,8 @@
     </div>
   </div>
 </div>
-<script>
 
+<script>
 var trajectory_details = <%= records.to_json.html_safe %>;
 var seasons = <%= seasons.to_json.html_safe %>;
 var grades  = <%= grades.to_json.html_safe %>;
@@ -41,8 +41,6 @@ grades.map((grade)=>{
     headings.push(`${season.toUpperCase()[0]}-${parseInt(grade) + 1}`)
   })
 })
-console.log('>>>>>', student_data, grades, seasons)
-
 
 var series = [{
   name: 'Average Reader',
@@ -68,17 +66,17 @@ window.graphInit("echart-line-marker-chart", {
       data: item.data,
       symbolSize: 10,
       itemStyle: {
-        color: getGrays().white,
-        borderColor: getColor(item.class),
+        color: window.getGrays().white,
+        borderColor: window.getColor(item.class),
         borderWidth: 2
       },
       lineStyle: {
-        color: getColor(item.class)
+        color: window.getColor(item.class)
       },
       symbol: 'circle',
       markPoint: {
         itemStyle: {
-          color: getColor(item.class)
+          color: window.getColor(item.class)
         },
         label: {
           color: '#fff'
@@ -92,10 +90,10 @@ window.graphInit("echart-line-marker-chart", {
       },
       markLine: {
         lineStyle: {
-          color: getColor(item.class)
+          color: window.getColor(item.class)
         },
         label: {
-          color: getGrays()['600']
+          color: window.getGrays()['600']
         },
         data: [{
           type: 'average',
