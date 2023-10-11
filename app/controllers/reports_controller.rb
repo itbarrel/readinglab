@@ -95,8 +95,14 @@ class ReportsController < ApplicationController
     }
   end
 
-  def graph
-    @grades = Grade.all
+  def books; end
+
+  def grades; end
+
+  def graph; end
+
+  def student_graph
+    @trajectory_details = TrajectoryDetail.where(student_id: params[:id])
   end
 
   def daily; end
