@@ -84,11 +84,11 @@
                       </li>
                     <% else %>
                       <li class="nav-item">
-                        <a class="nav-link dropdown-indicator" href="<%= "##{key}_#{sindex}_#{tindex}" %> data-bs-toggle="collapse" aria-expanded="false" aria-controls="multi-level">
+                        <a class="nav-link dropdown-indicator" href="<%= "##{key}_#{sindex}_#{tindex}" %>" data-bs-toggle="collapse" aria-expanded="false" aria-controls="multi-level">
                           <div class="d-flex align-items-center"><span class="nav-link-text ps-1"><%= third_list[:text] %></span>
                           </div>
                         </a>
-                        <ul class="nav collapse false" id="<%= "#{key}_#{sindex}_#{tindex}"%> ">
+                        <ul class="nav collapse false" id="<%= "#{key}_#{sindex}_#{tindex}"%>">
                           <% third_list[:items].each_with_index do |forth_list, findex| %>
                             <li class="nav-item">
                               <a class="nav-link" href="<%= forth_list[:url] %>" aria-expanded="false">

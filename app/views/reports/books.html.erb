@@ -1,0 +1,17 @@
+<% content_for :search_includes do %>
+  <%= render partial: 'shared/search', locals: { search_key: :name_cont } %>
+<% end %>
+
+<div class="col-lg-12 pe-lg-12">
+  <div id="books">
+  </div>
+</div>
+
+<% content_for :modal_includes do %>
+  <%= render partial: 'shared/modals/basic', locals: { modal_id: 'addBookModal' } %>
+<% end %>
+
+
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
+<% end %>

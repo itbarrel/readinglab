@@ -3,6 +3,7 @@
 class BooksController < ApplicationController
   load_and_authorize_resource
   before_action :set_book, only: %i[]
+  before_action :set_books, only: %i[trash]
 
   # GET /books or /books.json
   def index
@@ -63,11 +64,20 @@ class BooksController < ApplicationController
     end
   end
 
+  def trash
+    flash[:notice] = 'books has been successfully Deleted.'
+    render js: "window.location = '#{books_url}'"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_book
     @book = current_account.books.find(params[:id])
+  end
+
+  def set_books
+    @book = current_account.books.where(id: params[:ids])
   end
 
   # Only allow a list of trusted parameters through.

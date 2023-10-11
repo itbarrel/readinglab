@@ -19,8 +19,7 @@ class GradesController < ApplicationController
   def edit; end
 
   def create
-    @grade = Grade.new(grade_params)
-
+    @grade = current_account.grades.new(grade_params)
     respond_to do |format|
       if @grade.save
         format.html { redirect_to request.referer, notice: 'Grade has been successfully created.' }
