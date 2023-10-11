@@ -90,8 +90,13 @@
                         </a>
                         <ul class="nav collapse false" id="<%= "#{key}_#{sindex}_#{tindex}"%> ">
                           <% third_list[:items].each_with_index do |forth_list, findex| %>
-                            <li class="nav-item"><a class="nav-link" href="<%= third_list[:url] %>" aria-expanded="false">
-                                <div class="d-flex align-items-center"><span class="nav-link-text ps-1"><%= third_list[:text] %></span>
+                            <li class="nav-item">
+                              <a class="nav-link" href="<%= forth_list[:url] %>" aria-expanded="false">
+                                <div class="d-flex align-items-center">
+                                  <span class="nav-link-icon">
+                                    <span class="<%= forth_list[:icon] %>"></span>
+                                  </span>
+                                  <span class="nav-link-text ps-1"><%= forth_list[:text] %></span>
                                 </div>
                               </a>
                             </li>
