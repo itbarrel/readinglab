@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const get_details = (student_id) => {
+    if (!student_id || student_id == '') return;
+
     $.ajax({
       url: "/trajectory_details",
       dataType: 'script',

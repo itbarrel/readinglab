@@ -22,7 +22,7 @@
     <div class="card-body" style="padding-left: 2px">
       <form class="row g-3">
         <div class="col-lg-6 ">
-          <%= select_tag('student name', options_from_collection_for_select(current_account.students.where(status: [:active, :wait_listed]), 'id', 'name', selected: params[:id]), { include_blank: true, id: 'reports_student', class: "form-select js-choice" }) %>
+          <%= select_tag('student name', options_from_collection_for_select(current_account.students.where(status: [:active, :wait_listed]), :id, :name, selected: params[:id]), { include_blank: true, id: 'reports_student', class: "form-select js-choice" }) %>
         </div>
       </form>
     </div>
@@ -40,3 +40,4 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "controllers/#{params[:controller]}/#{params[:action]}", defer: true %>
 <% end %>
+

@@ -29,11 +29,11 @@ class TrajectoryDetailsController < ApplicationController
   # POST /trajectory_details or /trajectory_details.json
   def create
     @trajectory_detail = current_account.trajectory_details.new(trajectory_detail_params)
-    student_id = trajectory_detail_params[:student_id]
+
     respond_to do |format|
       if @trajectory_detail.save
         format.html do
-          redirect_to student_graph_reports_path(student_id), notice: 'Trajectory detail has been successfully created.'
+          redirect_to student_graph_reports_path(@trajectory_detail.student_id), notice: 'Trajectory detail has been successfully created.'
         end
         format.json { render :show, status: :created, location: @trajectory_detail }
       else
@@ -48,7 +48,7 @@ class TrajectoryDetailsController < ApplicationController
     respond_to do |format|
       if @trajectory_detail.update(trajectory_detail_params)
         format.html do
-          redirect_to student_graph_reports_path,
+          redirect_to student_graph_reports_path(@trajectory_detail.student_id),
                       notice: 'Trajectory detail has been successfully updated.'
         end
         format.json { render :show, status: :ok, location: @trajectory_detail }
@@ -64,7 +64,9 @@ class TrajectoryDetailsController < ApplicationController
     @trajectory_detail.destroy
 
     respond_to do |format|
-      format.html { redirect_to student_graph_reports_path, notice: 'Trajectory detail has been successfully destroyed.' }
+      format.html do
+        redirect_to student_graph_reports_path(@trajectory_detail.student_id), notice: 'Trajectory detail has been successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
