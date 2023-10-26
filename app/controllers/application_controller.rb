@@ -45,10 +45,10 @@ class ApplicationController < ActionController::Base
       ] },
       { url: '/communication', text: 'Communication', class: '', icon: 'micon bi bi-chat-text-fill', models: [:communication], sub_items: [] },
       { text: 'Reports', class: '', icon: 'micon bi bi-bar-chart-line-fill', sub_items: [
-        { text: 'Graph Report', class: '', icon: 'micon bi bi-bar-chart-line-fill', models: [:reports], sub_items: [
-          { url: '/reports/graph', text: 'Trajectories', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports, TrajectoryDetail] },
-          { url: '/reports/books', text: 'Books', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports, Book] },
-          { url: '/reports/grades', text: 'Grades', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports, Grade] }
+        { text: 'Graph Report', class: '', icon: 'micon bi bi-bar-chart-line-fill', models: [TrajectoryDetail, Book, Grade], sub_items: [
+          { url: '/reports/graph', text: 'Trajectories', class: '', icon: 'micon bi bi-graph-up-arrow', models: [TrajectoryDetail] },
+          { url: '/reports/books', text: 'Books', class: '', icon: 'micon bi bi-graph-up-arrow', models: [Book] },
+          { url: '/reports/grades', text: 'Grades', class: '', icon: 'micon bi bi-graph-up-arrow', models: [Grade] }
         ] },
         { url: '/reports/daily', text: 'Daily Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] },
         { url: '/reports/student', text: 'Student Report', class: '', icon: 'micon bi bi-graph-up-arrow', models: [:reports] }
