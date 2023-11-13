@@ -96,6 +96,8 @@ class Ability
     can :manage, Meeting, { klass: { teacher_id: user.id, account_id: user.account_id } }
     can :manage, Notification, { user: { id: user.id, account_id: user.account_id } }
     can :manage, TrajectoryDetail, account_id: user.account_id
+    can :manage, Book, account_id: user.account_id
+    can :manage, Grade, account_id: user.account_id
     can :manage, StudentMeeting, { meeting: { klass: { teacher_id: user.id, account_id: user.account_id } } }
     can :manage, StudentForm, { klass: { teacher_id: user.id, account_id: user.account_id } }
   end
