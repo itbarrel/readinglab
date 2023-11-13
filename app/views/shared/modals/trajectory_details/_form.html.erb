@@ -6,12 +6,10 @@
   <div class="modal-body p-card">
     <div class="row">
       <div class="col-lg-6">
-        <% unless params[:action] == 'edit' %>
           <div class="mb-3">
             <%= f.label :book_id, class: 'fs-0' %>
-            <%= f.collection_select :book_id, current_account.books, :id, :name, { include_blank: true }, { class: 'form-control' } %>
+            <%= f.collection_select :book_id, current_account.books, :id, :name, { include_blank: true }, { class: 'form-control js-choice' }  %>
           </div>
-        <% end %>
         <div class="mb-3">
           <%= f.label :season , class: 'fs-0' %>
           <%= f.select :season, TrajectoryDetail.seasons.map { |key, value| [key.humanize, key] }, {include_blank: true}, {class: 'form-select form-select-md'} %>
