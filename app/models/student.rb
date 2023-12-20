@@ -18,6 +18,8 @@
 #  programs               :string
 #  registration_date      :datetime
 #  school                 :string
+#  session_credit         :integer          default(0)
+#  session_processed_at   :datetime
 #  settings               :jsonb
 #  status                 :integer
 #  created_at             :datetime         not null
@@ -58,6 +60,7 @@ class Student < ApplicationRecord
   has_many :payments, dependent: nil
   has_many :receipts, dependent: :destroy
   has_many :notices, dependent: :destroy
+  has_many :approved_vacations, dependent: :destroy
 
   enum :status, %i[registered scheduled wait_listed active]
   enum :gender, %i[male female others not_mentioned]
@@ -132,7 +135,11 @@ class Student < ApplicationRecord
   end
 
   def next_billing_date
-    payable_meetings&.first&.starts_at
+    operator = credit_sessions.to_i.positive? ? '>' : '<'
+    sorting = credit_sessions.to_i.positive? ? :desc : :asc
+    filtered_meetings = billable_meetings.where("starts_at #{operator} ?", Time.zone.now).order(starts_at: sorting)
+
+    filtered_meetings[credit_sessions.to_i]&.starts_at
   end
 
   def calculated_next_billing_date
@@ -160,8 +167,27 @@ class Student < ApplicationRecord
     return 0 if last_session_processed.blank?
 
     meetings.select do |sm|
-      sm.starts_at >= last_session_processed.beginning_of_month && sm.starts_at <= last_session_processed.end_of_month
+      sm.starts_atcreated_at >= last_session_processed.beginning_of_month && sm.starts_at <= last_session_processed.end_of_month
     end.length
+  end
+
+  def actual_meetings
+    meeting_ids = student_classes.with_deleted.includes([:klass]).map do |x|
+      next if x.klass.blank?
+
+      meets = x.klass.meetings.where('starts_at > ?', x.created_at)
+      meets = meets.where('starts_at < ?', x.deleted_at) if x.deleted_at.present?
+      meets.ids
+    end.flatten
+
+    Meeting.where(id: meeting_ids)
+  end
+
+  def billable_meetings
+    vacation_periods = approved_vacations.map do |vacation|
+      (vacation.start_date.to_date..vacation.end_date.to_date).to_a
+    end.flatten
+    actual_meetings.where.not(starts_at: vacation_periods)
   end
 
   def leave_count
@@ -177,10 +203,9 @@ class Student < ApplicationRecord
   def attended_sessions
     return 0 if last_session_processed.blank?
 
-    student_meetings.select do |sm|
-      sm.created_at >= last_session_processed.beginning_of_month &&
-        sm.created_at <= last_session_processed.end_of_month &&
-        [:present, :absent, 'present', 'absent'].include?(sm.attendance)
+    billable_meetings.select do |bm|
+      bm.created_at >= last_session_processed.beginning_of_month &&
+        bm.created_at <= last_session_processed.end_of_month
     end.length
   end
 
@@ -188,12 +213,14 @@ class Student < ApplicationRecord
     return 0 if last_session_processed.blank?
 
     receipts.select do |receipt|
-      receipt.created_at >= last_session_processed.beginning_of_month && receipt.created_at <= last_session_processed.end_of_month
+      receipt.created_at >= last_session_processed.beginning_of_month && receipt.created_at <= last_session_processed.end_of_month &&
+        receipt.created_at == Time.current.year
     end.sum(&:sessions_count)
   end
 
   def credit_sessions_to_show
-    credit_sessions.to_i + paid_sessions - attended_sessions
+    credit_sessions.to_i
+    # credit_sessions.to_i + paid_sessions - attended_sessions
   end
 
   def meeting_purchased

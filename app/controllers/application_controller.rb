@@ -23,7 +23,8 @@ class ApplicationController < ActionController::Base
       { url: '/rooms', text: 'Rooms', class: '', icon: 'micon bi bi-building-fill', model: Room },
       { url: '/receipt_types', text: 'Receipt Types', class: '', icon: 'micon bi bi-receipt-cutoff', model: ReceiptType },
       { url: '/staffs', text: 'Staff', class: '', icon: 'micon bi bi-person-vcard', model: User },
-      { url: '/vacations', text: 'Vacations', class: '', icon: 'micon bi bi-train-front-fill', model: Vacation }
+      { url: '/vacations', text: 'Vacations', class: '', icon: 'micon bi bi-train-front-fill', model: Vacation },
+      { url: '/approved_vacations', text: 'Approved Vacations', class: '', icon: 'bi bi-check-circle-fill', model: ApprovedVacation }
     ]
     general_items = [
       { url: '/calendar', text: 'Calendar', class: '', icon: 'bi bi-calendar', models: [Klass, Interview], sub_items: [] },

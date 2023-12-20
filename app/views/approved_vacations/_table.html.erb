@@ -1,0 +1,33 @@
+
+<div class="table-responsive">
+  <table class="table table-sm table-striped fs--1 mb-0 overflow-hidden">
+    <thead class="bg-200 text-900">
+      <tr>
+        <th>
+          <div class="form-check fs-0 mb-0 d-flex align-items-center">
+            <input class="form-check-input" id="checkbox-bulk-approved_vacations-select" type="checkbox" data-bulk-select='{"body":"table-approved_vacations-body","actions":"table-approved_vacations-actions","replacedElement":"table-approved_vacations-replace-element"}' />
+          </div>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Student Name</th>
+        <th class="sort pe-1 align-middle white-space-nowrap">Reason</th>
+        <th class="sort pe-1 align-middle white-space-nowrap" >
+         <% if @search.present? %>
+            <%= sort_link(@search, :start_date, default_order: :desc)%>
+          <% end %>
+        </th>
+        <th class="sort pe-1 align-middle white-space-nowrap" >Ends Date</th>
+        <th class="sort pe-1 align-middle white-space-nowrap" ></th>
+
+      </tr>
+    </thead>
+    <tbody class="list" id="table-approved_vacations-body">
+      <% approved_vacations.each_with_index do |approved_vacation, index| %>
+      <%= render 'approved_vacation', approved_vacation: approved_vacation, index: index %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= render 'shared/pagination', query: {}, js_request: false if @pagy.present? %>
+
+
+

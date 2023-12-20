@@ -1,0 +1,4 @@
+$('#addApprovedVacationForm .modal-content').html("<%= j render 'shared/modals/approved_vacations/form', approved_vacation: @approved_vacation, title: 'Approved New Vacation' %>");
+$('#addApprovedVacationForm').modal('show');
+window.choicesInit()
+
