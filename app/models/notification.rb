@@ -29,12 +29,14 @@ class Notification < ApplicationRecord
   # Meeting, Klass, Student
   belongs_to :record, polymorphic: true
 
-  enum :purpose, %i[creation mark_obsolete missing_attendance]
+  enum :purpose, %i[creation mark_obsolete missing_attendance extend_class]
 
   def text
     case purpose
     when :creation, 'creation'
       record_type.to_s
+    when :extend_class, 'extend_class'
+      "#{record&.teacher&.name || 'A Teacher'}'s Class is ending this week"
     when :mark_obsolete, 'mark_obsolete'
       'System has proposed a class'
     when :missing_attendance, 'missing_attendance'
@@ -55,6 +57,8 @@ class Notification < ApplicationRecord
       ' to mark obsolete'
     when :missing_attendance, 'missing_attendance'
       ' '
+    when :extend_class, 'extend_class'
+      '8 classes will be extended'
     end
   end
 
@@ -71,6 +75,8 @@ class Notification < ApplicationRecord
       }
     when :missing_attendance, 'missing_attendance'
       true
+    when :extend_class, 'extend_class'
+      record.extend_meetings(8, record.starts_at)
     end
   end
 
@@ -82,6 +88,8 @@ class Notification < ApplicationRecord
     when :mark_obsolete, 'mark_obsolete'
       true
     when :missing_attendance, 'missing_attendance'
+      true
+    when :extend_class, 'extend_class'
       true
     end
   end
