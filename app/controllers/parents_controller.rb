@@ -83,7 +83,7 @@ class ParentsController < ApplicationController
                                           ])
 
     if pars[:children_attributes].present?
-      pars[:children_attributes].each do |_key, value|
+      pars[:children_attributes].each_value do |value|
         value[:account_id] = current_account.id
       end
     end

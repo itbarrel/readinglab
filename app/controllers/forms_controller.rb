@@ -113,7 +113,7 @@ class FormsController < ApplicationController
                                         ])
 
     if pars[:form_fields_attributes].present?
-      pars[:form_fields_attributes].each do |_key, value|
+      pars[:form_fields_attributes].each_value do |value|
         value['data_type'] = data_type_mapping[value['field_type'].to_sym]
       end
     end
