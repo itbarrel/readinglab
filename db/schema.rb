@@ -229,7 +229,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_01_153810) do
 
   create_table "form_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.jsonb "form_values"
-    t.uuid "user_id", null: false
+    t.uuid "user_id"
     t.uuid "form_id", null: false
     t.uuid "account_id", null: false
     t.string "parent_type", null: false
@@ -564,8 +564,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_01_153810) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "deleted_at"
-    t.integer "session_credit", default: 0
-    t.datetime "session_processed_at"
     t.datetime "last_session_processed"
     t.index ["account_id", "first_name", "last_name", "parent_id", "deleted_at"], name: "students_name", unique: true
     t.index ["account_id"], name: "index_students_on_account_id"
@@ -579,7 +577,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_01_153810) do
     t.integer "status"
     t.uuid "account_id", null: false
     t.uuid "student_id", null: false
-    t.uuid "book_id", null: false
+    t.uuid "book_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"

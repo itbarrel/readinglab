@@ -193,29 +193,19 @@ class Student < ApplicationRecord
   def leave_count
     return 0 if last_session_processed.blank?
 
-    student_meetings.select do |sm|
-      sm.created_at >= last_session_processed.beginning_of_month &&
-        sm.created_at <= last_session_processed.end_of_month &&
-        [:leave, 'leave'].include?(sm.attendance)
-    end.length
+    0
   end
 
   def attended_sessions
     return 0 if last_session_processed.blank?
 
-    billable_meetings.select do |bm|
-      bm.created_at >= last_session_processed.beginning_of_month &&
-        bm.created_at <= last_session_processed.end_of_month
-    end.length
+    0
   end
 
   def paid_sessions
     return 0 if last_session_processed.blank?
 
-    receipts.select do |receipt|
-      receipt.created_at >= last_session_processed.beginning_of_month && receipt.created_at <= last_session_processed.end_of_month &&
-        receipt.created_at == Time.current.year
-    end.sum(&:sessions_count)
+    0
   end
 
   def credit_sessions_to_show
