@@ -1,0 +1,31 @@
+<%= form_for(approved_vacation, id: 'addApprovedVacationForm') do |f| %>
+  <div class="modal-header px-card bg-light border-bottom-0">
+    <h5 class="modal-title"><%= title %></h5>
+    <button class="btn-close me-n1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body p-card">
+    <div class="mb-3">
+      <%= f.label :student_id, class: 'fs-0' %>
+      <%= f.collection_select :student_id,  Student.active.order(:first_name), :id, :name, { include_blank: true }, { class: 'form-select js-choice', data:{ options: { searchEnabled: true }} } %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :reason, class: 'fs-0' %>
+      <%= f.text_field :reason, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :start_date, class: 'fs-0' %>
+      <%= f.date_field :start_date, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :end_date, class: 'fs-0' %>
+      <%= f.date_field :end_date, class: 'form-control datetimepicker', placeholder: "hh:mm /dd/mm/yyyy" %>
+    </div>
+  </div>
+  <div class="card-footer d-flex justify-content-end align-items-center bg-light">
+    <%= f.submit 'Save', class: 'btn btn-primary px-4' %>
+    <%= f.button 'Cancel', class: 'btn btn-default px-4', type: 'button', data: { 'bs-dismiss': 'modal'} %>
+  </div>
+<% end %>
+
+

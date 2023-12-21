@@ -5,22 +5,16 @@
   <td class="phone align-middle white-space-nowrap py-2" ><%= student.paid_sessions %></td>
   <td class="phone align-middle white-space-nowrap py-2" style="padding-right: 10.25rem "><%= student.credit_sessions_to_show %></td>
   <td class="phone align-middle white-space-nowrap py-2" >
-    <% if student.last_session_processed.present? %>
-      <%= l student.last_session_processed, format: :short %>
-    <% end %>
-  </td>
-  <td class="phone align-middle white-space-nowrap py-2" >
     <% if student.next_billing_date.present? %>
       <%= l student.next_billing_date, format: :short %>
     <% end %>
   </td>
   <td class="phone align-middle white-space-nowrap py-2" >
-    <% if student.calculated_next_billing_date.present? %>
-      <%= l student.calculated_next_billing_date, format: :short %>
-    <% else %>
-      <p>Fee is Due</p>
+    <% if student.last_session_processed.present? %>
+      <%= l student.last_session_processed, format: :short %>
     <% end %>
   </td>
+
   <% if current_user.admin? %>
   <td class="align-middle white-space-nowrap py-2 text-end">
     <div class="dropdown font-sans-serif position-static">

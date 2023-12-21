@@ -42,11 +42,16 @@ class Receipt < ApplicationRecord
   before_validation :validate_payable_meetings, on: :create
 
   after_create :create_payments, unless: :skip_callbacks
+  after_create :increment_credit_sessions
 
   def create_payments
     student.payable_meetings.take(sessions_count).each do |meeting|
       payments.create(student:, meeting:)
     end
+  end
+
+  def increment_credit_sessions
+    student.update(credit_sessions: student.credit_sessions.to_i + sessions_count.to_i)
   end
 
   private

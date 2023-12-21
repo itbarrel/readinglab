@@ -11,9 +11,12 @@
     delete_seen_notifications:
       cron: '0 0 * * *'   # # Runs at midnight (00:00) every day
       class: DeleteNotificationsJob
-    process_billing:
-      cron: '0 0 1 * *'   # Runs once per month
-      class: ProcessAllStudentJob
+    # process_billing:
+    #   cron: '0 0 1 * *'   # Runs once per month
+    #   class: ProcessAllStudentJob
+    process_daily_student_billing_job:
+      cron: '0 8 * * *'
+      class: ProcessDailyStudentBillingJob
     attendance_reminder:
       cron: '0 0 * * *'   # Runs at midnight (00:00) every day
       class: AttendanceReminderJob

@@ -6,9 +6,10 @@ class ProcessAllStudentJob
   include Sidekiq::Worker
 
   def perform
-    students = Student.active
-    students = students.where('last_session_processed < ?', 1.month.ago) + students.where(last_session_processed: nil)
-    students.each do |student|
+    Student.active.find_each(batch_size: 50) do |student|
+      student.update(credit_sessions: 0, last_session_processed: nil)
+    end
+    Student.active.each do |student|
       ProcessStudentBillingJob.perform_async(student.id)
     end
   end

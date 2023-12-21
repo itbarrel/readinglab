@@ -16,6 +16,7 @@
 #  range_type         :integer
 #  saturday           :boolean          default(FALSE)
 #  session_range      :integer          default(8)
+#  special_class      :boolean          default(FALSE)
 #  starts_at          :datetime
 #  sunday             :boolean          default(FALSE)
 #  thursday           :boolean          default(FALSE)
