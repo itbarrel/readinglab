@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_25_094736) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_01_153810) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -86,6 +86,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_25_094736) do
     t.datetime "deleted_at"
     t.index ["allocatee_type", "allocatee_id"], name: "index_allocations_on_allocatee"
     t.index ["substance_type", "substance_id"], name: "index_allocations_on_substance"
+  end
+
+  create_table "approved_vacations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "reason"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.uuid "student_id", null: false
+    t.uuid "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["account_id"], name: "index_approved_vacations_on_account_id"
+    t.index ["student_id"], name: "index_approved_vacations_on_student_id"
   end
 
   create_table "archive_form_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -347,6 +360,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_25_094736) do
     t.datetime "updated_at", null: false
     t.boolean "obsolete", default: false
     t.datetime "obsoleted_at"
+    t.boolean "special_class", default: false
     t.index ["account_id"], name: "index_klasses_on_account_id"
     t.index ["attendance_form_id"], name: "index_klasses_on_attendance_form_id"
     t.index ["klass_template_id"], name: "index_klasses_on_klass_template_id"
@@ -656,6 +670,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_25_094736) do
   add_foreign_key "accounts", "account_types"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "approved_vacations", "accounts"
+  add_foreign_key "approved_vacations", "students"
   add_foreign_key "archive_form_details", "accounts"
   add_foreign_key "archive_form_details", "forms"
   add_foreign_key "archive_form_details", "users"

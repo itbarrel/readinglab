@@ -15,7 +15,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  account_id  :uuid             not null
-#  book_id     :uuid
+#  book_id     :uuid             not null
 #  student_id  :uuid             not null
 #
 # Indexes

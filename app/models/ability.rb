@@ -28,6 +28,7 @@ class Ability
     can :manage, VacationType, account_id: user.account_id
     can :manage, Vacation, account_id: user.account_id
     can :manage, StudentMeeting, account_id: user.account_id
+    can :manage, ApprovedVacation, account_id: user.account_id
 
     can :manage, FormField, { form: { account_id: user.account_id } }
     can :manage, Notification, { user: { id: user.id, account_id: user.account_id } }
@@ -63,6 +64,8 @@ class Ability
     can :manage, TrajectoryDetail, account_id: user.account_id
     can :manage, VacationType, account_id: user.account_id
     can :manage, Vacation, account_id: user.account_id
+    can :manage, ApprovedVacation, account_id: user.account_id
+
     can :manage, StudentMeeting, account_id: user.account_id
 
     can :manage, FormField, { form: { account_id: user.account_id } }
