@@ -130,7 +130,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :notifications, only: %i[] do
+  resources :notifications, only: %i[index] do
     member do
       post :read
     end
