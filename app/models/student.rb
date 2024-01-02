@@ -185,7 +185,7 @@ class Student < ApplicationRecord
 
   def billable_meetings
     vacation_periods = approved_vacations.map do |vacation|
-      (vacation.start_date.to_date..vacation.end_date.to_date).to_a
+      (vacation.start_date..vacation.end_date)
     end.flatten
     actual_meetings.where.not(starts_at: vacation_periods)
   end
