@@ -1,0 +1,50 @@
+<div class="card overflow-hidden mb-3">
+  <div class="card-header bg-light">
+    <div class="row flex-between-center">
+      <div class="col-sm-auto">
+        <h5 class="mb-1 mb-md-0">Your Notifications</h5>
+      </div>
+    </div>
+  </div>
+  <div class="card-body fs--1 p-0">
+  <% if @notifications.present?%>
+      <% @notifications.each do |notification| %>
+      <a class="border-bottom-0 notification rounded-0 border-x-0 border-300" href="#!">
+        <div class="notification-avatar">
+          <div class="avatar avatar-xl me-3">
+            <%= image_tag('team/1-thumb.png', class: 'rounded-circle') %>
+          </div>
+        </div>
+        <div class="notification-body">
+          <p class="mb-1"><strong><%= notification.text %></strong> <%= notification.description %></p>
+          <!--<span class="notification-time">
+                      <span class="me-2" role="img" aria-label="Emoji">💬</span>
+                      Just now
+                    </span>-->
+          <% if notification.seen_at.blank? %>
+          <div class="row">
+            <div class="col-2">
+              <%= form_with(url: read_notification_path(notification), method: :post, local: false, class: 'form-inline') do |f| %>
+              <%= f.hidden_field :operation, value: 'affirmative' %>
+              <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
+              <i class="fas fa-check"></i>
+              <% end %>
+              <% end %>
+            </div>
+
+            <div class="col-8">
+              <%= form_with(url: read_notification_path(notification), method: :post, local: false, class: 'form-inline') do |f| %>
+              <%= f.hidden_field :operation, value: 'negative' %>
+              <%= f.button type: :submit, class: 'btn btn-primary btn-sm' do %>
+              <i class="fas fa-times"></i>
+              <% end %>
+              <% end %>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </a>
+    <% end %>
+    <% end %>
+  </div>
+</div>

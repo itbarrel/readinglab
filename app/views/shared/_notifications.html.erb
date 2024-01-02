@@ -9,7 +9,9 @@
         <div class="col-auto">
           <h6 class="card-header-title mb-0">Notifications</h6>
         </div>
-       <!-- <div class="col-auto ps-0 ps-sm-3"><a class="card-link fw-normal" href="#">Mark all as read</a></div>-->
+        <% if notifications.present? && notifications.count > 3  %>
+      <div class="col-auto ps-0 ps-sm-3"><a class="card-link fw-normal" href="/notifications">See all</a></div>
+      <% end %>
       </div>
     </div>
     <div class="scrollbar-overlay" style="max-height:19rem">

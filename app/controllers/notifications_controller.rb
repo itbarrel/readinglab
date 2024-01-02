@@ -3,6 +3,12 @@
 class NotificationsController < ApplicationController
   load_and_authorize_resource
 
+  def index
+    @notifications = Notification.includes([:record]).all
+  end
+
+  def show; end
+
   def read
     operation_response = @notification.send(params[:operation])
 
