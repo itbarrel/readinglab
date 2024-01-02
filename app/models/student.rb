@@ -136,7 +136,7 @@ class Student < ApplicationRecord
 
   def next_billing_date
     operator = credit_sessions.to_i.positive? ? '>' : '<'
-    sorting = credit_sessions.to_i.positive? ? :desc : :asc
+    sorting = credit_sessions.to_i.positive? ? :asc : :desc
     filtered_meetings = billable_meetings.where("starts_at #{operator} ?", Time.zone.now).order(starts_at: sorting)
 
     filtered_meetings[credit_sessions.to_i]&.starts_at
