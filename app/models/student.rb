@@ -184,10 +184,13 @@ class Student < ApplicationRecord
   end
 
   def billable_meetings
-    vacation_periods = approved_vacations.map do |vacation|
+    vacation_periods = Vacation.all.map do |vacation|
+      (vacation.starting_at..vacation.ending_at)
+    end.flatten
+    student_vacation_periods = approved_vacations.map do |vacation|
       (vacation.start_date..vacation.end_date)
     end.flatten
-    actual_meetings.where.not(starts_at: vacation_periods)
+    actual_meetings.where.not(starts_at: vacation_periods + student_vacation_periods)
   end
 
   def leave_count
