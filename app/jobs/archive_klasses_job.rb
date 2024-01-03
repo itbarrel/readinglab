@@ -6,6 +6,8 @@ class ArchiveKlassesJob
   include Sidekiq::Worker
 
   def perform
+    time_to_check = 3.months.ago
+
     obsolete_classes = Klass.working.where('updated_at < ?', time_to_check)
     obsolete_classes.each do |oc|
       next if oc.special_class?

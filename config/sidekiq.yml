@@ -20,6 +20,9 @@
     Class_Extend_Notification_Job:
        cron: '0 0 * * 1'  # Runs once per week (00:00) monday
        class: ClassExtendNotificationJob
-    attendance_reminder:
-      cron: '0 0 * * *'   # Runs at midnight (00:00) every day
-      class: AttendanceReminderJob
+    # attendance_reminder:
+    #   cron: '0 0 * * *'   # Runs at midnight (00:00) every day
+    #   class: AttendanceReminderJob
+    process_student_status_job:
+      cron: '0 0 * * 5'
+      class: ProcessStudentStatusJob
