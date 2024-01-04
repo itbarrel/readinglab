@@ -5,7 +5,7 @@ $("document").ready(function () {
   computeWeather()
 });
 
-const round = (num, decimalPlaces = 0) => {
+const roundNum = (num, decimalPlaces = 0) => {
   num = Math.round(num + "e" + decimalPlaces);
   return Number(num + "e" + -decimalPlaces);
 }
@@ -62,7 +62,7 @@ const computeStudentsReport = () => {
         html += '<div class="d-flex flex-between-center mb-1">'
         html += `<div class="d-flex align-items-center"><span class="dot bg-${8 - index}00"></span>`
         html += `<span class="fw-semi-bold">${status}</span></div>`
-        html += `<div class="d-xxl-none">${round(count/response.total, 2)}%</div></div>`
+        html += `<div class="d-xxl-none">${roundNum(count/response.total, 2)}%</div></div>`
         graphData.push({
           value: response.data[status],
           name: status,
