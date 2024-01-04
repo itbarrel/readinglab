@@ -2,4 +2,4 @@ $("#flash_messages").html("<%= j render 'shared/flash' %>");
 var toastElList = [].slice.call(document.querySelectorAll('.toast'))
 toastElList.map((toastEl) => new window.bootstrap.Toast(toastEl).show())
 
-$('#header-notifications').html("<%= j render 'shared/notifications', notifications: @notifications %>");
+$('#header-notifications').html("<%= j render 'shared/notifications', notifications: @header_notifications %>");

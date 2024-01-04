@@ -5,6 +5,11 @@ $("document").ready(function () {
   computeWeather()
 });
 
+const round = (num, decimalPlaces = 0) => {
+  num = Math.round(num + "e" + decimalPlaces);
+  return Number(num + "e" + -decimalPlaces);
+}
+
 const computeWeeklyAttendanceReport = () => {
   $.ajax({
     url: "/reports/weekly_attendance",
@@ -40,6 +45,7 @@ const computeWeeklyReceiptReport = () => {
 }
 
 const computeStudentsReport = () => {
+
   $.ajax({
     url: "/reports/students",
     dataType: 'script',
@@ -56,7 +62,7 @@ const computeStudentsReport = () => {
         html += '<div class="d-flex flex-between-center mb-1">'
         html += `<div class="d-flex align-items-center"><span class="dot bg-${8 - index}00"></span>`
         html += `<span class="fw-semi-bold">${status}</span></div>`
-        html += `<div class="d-xxl-none">${(count/response.total)}%</div></div>`
+        html += `<div class="d-xxl-none">${round(count/response.total, 2)}%</div></div>`
         graphData.push({
           value: response.data[status],
           name: status,
